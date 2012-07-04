@@ -1,0 +1,49 @@
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/velib" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="120dip"
+            android:layout_height="100dip"
+            android:alpha="0.5"
+  			android:onClick="bnProxiClick"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="109dp"
+            android:layout_marginLeft="30dp"
+            android:text="Stations à proximité" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="120dip"
+            android:alpha="0.5"
+            android:layout_height="100dip"
+            android:onClick="bnListeClick"
+            android:layout_alignBaseline="@+id/button1"
+            android:layout_alignBottom="@+id/button1"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/button1"
+            android:text="liste des stations" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            
+            android:layout_marginTop="31dp"
+            android:text="VELIBDirect, l&apos;info en temps réel, vélo disponibles, la position en carte..."
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
