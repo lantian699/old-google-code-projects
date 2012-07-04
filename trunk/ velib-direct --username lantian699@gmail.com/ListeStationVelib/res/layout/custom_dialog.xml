@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_root"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="10dp"
+              >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom de station:" />
+
+    <TextView android:id="@+id/name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="#FFF"
+              />
+    
+      <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Infos en temps réel:"/>
+      
+      <TextView
+          android:id="@+id/addr"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+      <RelativeLayout 
+          android:orientation="horizontal"
+          android:layout_width="fill_parent"
+      		android:layout_height="wrap_content">
+          <Button 
+              android:layout_width="wrap_content"
+              android:layout_alignParentLeft="true"
+      			android:layout_height="wrap_content"
+      			android:id="@+id/luxian"
+      			android:text="Itinéraire"/>
+          
+         <Button 
+              android:layout_width="wrap_content"
+      			android:layout_height="wrap_content"
+      			android:layout_alignParentRight="true"
+      			android:id="@+id/cancel"
+      			android:text="Annuler"/>
+
+         <TextView
+             android:id="@+id/textView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignBaseline="@+id/luxian"
+             android:layout_alignBottom="@+id/luxian"
+             android:layout_marginLeft="28dp"
+             android:layout_toRightOf="@+id/luxian"
+             android:text="   " />
+          
+      </RelativeLayout>
+      
+</LinearLayout>
