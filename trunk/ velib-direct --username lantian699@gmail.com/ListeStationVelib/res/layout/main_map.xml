@@ -1,33 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
-        
-        
-          <com.google.ads.AdView
+    <com.google.ads.AdView
         android:id="@+id/adMap"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
         android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
         ads:adUnitId="a14eec7a5163bce"
         ads:backgroundColor="#000000"
         ads:keywords="Android application"
         ads:refreshInterval="60"
         ads:testing="false"
         ads:textColor="#FFFFFF" />
-        
-        <com.google.android.maps.MapView
-		 android:id="@+id/mapView"
-		 android:layout_above="@id/adMap"
-		 android:layout_width="fill_parent"
-		 android:layout_height="fill_parent"
-		 android:enabled="true"
-		 android:clickable="true"
-		 android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g"/>
-        
-        
-    </RelativeLayout>
+
+    <com.google.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/adMap"
+        android:apiKey="02Nmd5diySCoU3v811DcfJNAbKjEy1m6QdilIzg"
+        android:clickable="true"
+        android:enabled="true" />
+    <!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" -->
+
+</RelativeLayout>
