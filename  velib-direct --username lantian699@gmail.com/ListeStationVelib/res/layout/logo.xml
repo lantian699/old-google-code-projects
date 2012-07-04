@@ -8,8 +8,8 @@
         <Button
             android:id="@+id/button1"
             android:layout_width="120dip"
-            android:layout_height="100dip"
             android:alpha="0.5"
+            android:layout_height="100dip"
   			android:onClick="bnProxiClick"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
