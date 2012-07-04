@@ -20,12 +20,6 @@ import essai.cnam.ListeStationVelibActivity;
 
 public class InfoStation implements Serializable{
   private static final long serialVersionUID = 5263116456578091144L;
-//   <station>
-//   <available>21</available>
-//   <free>10</free>
-//   <total>31</total>
-//   <ticket>1</ticket>
-//   </station>
   private long time;
   private int available;
   private int free;
@@ -45,9 +39,7 @@ public class InfoStation implements Serializable{
       new ParserXML(url.openStream());
     }catch(Exception e){
        // en mode d�grad�
-        setAvailable(20);
-        setFree(10);
-        setTotal(30);
+      
     }
      
   }
@@ -128,9 +120,7 @@ public class InfoStation implements Serializable{
     	/*if(qName.equals("ticket")){
     		ticket = current.toString() != null;
     	}*/
-/////////////////////////////////////////////////////////
-// A compl�ter
-///////////////////////////////////////////////////////////    	
+  	
 
     }
   }
