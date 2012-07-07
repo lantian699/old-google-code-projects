@@ -1,0 +1,56 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        
+        <TextView android:id="@+id/prefer_station_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        
+        <LinearLayout android:orientation="horizontal"
+            android:background="@drawable/cadre_gris_clair"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            
+            
+            <ImageButton 
+                android:id="@+id/refresh_station"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+         		android:src="@drawable/actualiser_small_default"/>
+            
+            <ImageButton 
+                android:src="@drawable/bike_logo"
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            
+            <TextView 
+                android:text="Dispo"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            
+            <TextView 
+                android:id="@+id/num_free_bike"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@drawable/bubble"
+                android:text="-1"/>
+            
+            <TextView android:text="/"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            
+            <TextView android:text="0"
+                android:id="@+id/num_bike_total"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"/>
+            
+        </LinearLayout>
+
+    </LinearLayout>
