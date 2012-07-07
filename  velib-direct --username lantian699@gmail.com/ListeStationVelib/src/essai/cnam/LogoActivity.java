@@ -47,8 +47,8 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 			
 			List<StationVelib> list = StationVelibDao.queryForAll();
 
-			System.out.println("LogoActivity StationVelibDao = "
-					+ StationVelibDao);
+			System.out.println("LogoActivity StationVelibDao list = "
+					+ list);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

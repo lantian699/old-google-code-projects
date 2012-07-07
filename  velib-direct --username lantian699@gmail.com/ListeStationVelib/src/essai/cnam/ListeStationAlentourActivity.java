@@ -373,7 +373,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 				is = ListeStationAlentourActivity.this.getAssets().open(
 						"stations.xml");
 
-				stations = new ListeDesStationsVelib(is);
+				stations = new ListeDesStationsVelib(is, getApplicationContext());
 				lats = stations.getLats();
 				longs = stations.getLongs();
 
