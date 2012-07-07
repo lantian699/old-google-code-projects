@@ -30,14 +30,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 	
 	
-	/*public static DatabaseHelper getInstance(final Context context) {
+	public static DatabaseHelper getInstance(final Context context) {
 		if (mInstance == null) {
 			mInstance = new DatabaseHelper(context);
 			
 			
 		}
 		return mInstance;
-	}*/
+	}
 
 	
 

@@ -1,4 +1,5 @@
 package velib.model;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.Attributes;
+
+import com.j256.ormlite.dao.Dao;
 
 import android.content.Context;
 import android.location.Location;
@@ -50,13 +53,14 @@ public class ListeDesStationsVelib{
   String[] stAddr =new String[1300];
   int [] stNum = new int [7000];
   int i=0;
+  private Context context;
   // ---------------------------------------------------------------------------
   
  
-  public ListeDesStationsVelib(InputStream in) throws Exception{
+  public ListeDesStationsVelib(InputStream in, Context context) throws Exception{
 	
 	 // new ParserXML(in);
-	  
+	  this.context = context;
 	  new ParserXML(in);
 	}
   
@@ -156,6 +160,15 @@ public class ListeDesStationsVelib{
   			 else
   				station.setOpen(false);
   			
+  			try {
+				Dao<StationVelib, Integer> VelibStationDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+				//List<StationVelib> list = VelibStationDao.queryForAll();
+				VelibStationDao.create(station);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
   			
 			  stations.put(station.getNumber(),station);
 			  noms.put(station.getName(),station.getNumber());

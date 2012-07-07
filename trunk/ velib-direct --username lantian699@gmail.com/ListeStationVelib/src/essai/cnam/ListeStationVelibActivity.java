@@ -53,7 +53,7 @@ public class ListeStationVelibActivity extends ListActivity {
 		is = ListeStationVelibActivity.this.getAssets().open("stations.xml");
 		  
 		  
-		stations = new ListeDesStationsVelib(is);
+		stations = new ListeDesStationsVelib(is, getApplicationContext());
 		
 		
 	} catch (IOException e) {
