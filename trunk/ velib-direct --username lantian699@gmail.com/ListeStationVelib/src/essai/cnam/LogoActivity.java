@@ -4,11 +4,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 import velib.model.DatabaseHelper;
+import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.tools.Log;
+import velib.tools.ParserInfoStation;
+import velib.tools.ParserListVelib;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -27,6 +33,7 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	int alpha = 255;// 透明值255
 	int b = 0;
 	private Dao<StationVelib, Integer> StationVelibDao;
+	public static Context context;
 
 	/**
 	 * 
@@ -40,20 +47,9 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logo);
 
-		try {
-			// StationVelibDao =
-			// DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
-			StationVelibDao = getHelper().getDao(StationVelib.class);
-			
-			List<StationVelib> list = StationVelibDao.queryForAll();
-
-			System.out.println("LogoActivity StationVelibDao list = "
-					+ list);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			Log.e(this, "SQL error", e);
-		}
+		this.context = this;
+		
+		new  getStationFromSite().execute(); 
 
 		imageview = (ImageView) this.findViewById(R.id.imageView5);
 		// textview = (TextView) this.findViewById(R.id.TextView01);
@@ -125,6 +121,70 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 	public void initApp() {
 
+	}
+	
+
+	private class getStationFromSite extends AsyncTask<Void, Void, Void>{
+		
+		 ProgressDialog dialog ;
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+
+			dialog  =  ProgressDialog.show(context, "", "Loading data .....");
+		}
+
+		
+		 
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			
+			try {
+				// StationVelibDao =
+				// DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
+				StationVelibDao = getHelper().getDao(StationVelib.class);
+				List<StationVelib> list = StationVelibDao.queryForAll();
+				Dao<InfoStation, ?> InfoStationDao = getHelper().getDao(InfoStation.class);
+				List<InfoStation> listInfoStation = InfoStationDao.queryForAll();
+
+				if(list.size() == 0)
+				new ParserListVelib(getApplicationContext(), StationVelibDao);
+				
+				
+				
+				if(listInfoStation.size() == 0){
+					for(int i=0; i<list.size(); i++){
+					new ParserInfoStation(getApplicationContext(), InfoStationDao, list.get(i).getNumber());
+					//System.out.println("list size = " + list.size() + "     i= "+i);
+					}
+				}
+
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				Log.e(this, "SQL error", e);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			dialog.dismiss();
+		}
+		
+		
 	}
 
 }

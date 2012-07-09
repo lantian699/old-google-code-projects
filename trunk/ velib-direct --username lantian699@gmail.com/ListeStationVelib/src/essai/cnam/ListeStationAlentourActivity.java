@@ -37,7 +37,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	MapView mapView;
 	Location mostRecentLocation;
 	LocationManager locationManager;
-	ListeDesStationsVelib stations;
+	
 	private static double distanceMetre = 82324.0744;
 	int Rayon = 500;
 	Location[] gareAutour;
@@ -116,7 +116,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 		GeoPoint maposition = new GeoPoint((int) (lat * 1E6),
 				(int) (longs * 1E6));
 
-		InfoStation info = new InfoStation(stNum[h]);
+		InfoStation info = new InfoStation(stNum[h], getApplicationContext());
 		int available = info.getAvailable();
 		int free = info.getFree();
 		int total = info.getTotal();
@@ -348,6 +348,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	public class waitForLocation extends AsyncTask<Void, Void, Void> {
 
 		ProgressDialog dialog;
+		private ListeDesStationsVelib stations;
 
 		@Override
 		protected void onPreExecute() {
