@@ -1,6 +1,7 @@
 package essai.cnam;
 
 import velib.model.*;
+import velib.tools.ParserListVelib;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -22,73 +23,76 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 
 
 import essai.cnam.R;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.j256.ormlite.dao.Dao;
 
 public class ListeStationVelibActivity extends ListActivity {
 	 ListeDesStationsVelib stations ;
 	 InputStream is;
-	 ArrayList<String> list =new ArrayList<String>(); ;
+	 ArrayList<String> listStation =new ArrayList<String>(); ;
 	 StationVelib station;
 	 ListView listView;
+	private Dao<StationVelib, ?> VelibStationDao;
+	private List<StationVelib> listVelib;
 	 
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.main);
 	  
-	  AdView adView = (AdView)this.findViewById(R.id.ad); // show the advertisement
-      adView.loadAd(new AdRequest());
-	 // listView = (ListView)this.findViewById(R.id.list1);
-      
-	  //listView = getListView();
-	  //listView.setTextFilterEnabled(true);
+	  
+	  
 	  try {
-		is = ListeStationVelibActivity.this.getAssets().open("stations.xml");
 		  
 		  
-		stations = new ListeDesStationsVelib(is, getApplicationContext());
-		
-		
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	 
-	
-	
-	list= stations.getList();
+			VelibStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
+			listVelib = VelibStationDao.queryForAll();
+			
+			for(StationVelib station : listVelib){
+				
+				listStation.add(station.getName());
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  
 	
 	  setListAdapter(
-			  new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list));
+			  new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listStation));
 
-	  new AddStringTask().execute();
+	  
+	  ListView listV = (ListView)ListeStationVelibActivity.this.findViewById(android.R.id.list);
+	  listV.setOnItemClickListener(new ItemClickListener());
+
 	  
 	}
 
-	
+	/*
 	private class AddStringTask extends AsyncTask<Void, String, Void> {
 		
 		@Override
 		protected void onPreExecute (){
 			
-			/*ProgressDialog dialog = ProgressDialog.show(ListeStationVelibActivity.this, "", 
-                    "Loading. Please wait...", true);*/
+			ProgressDialog dialog = ProgressDialog.show(ListeStationVelibActivity.this, "", 
+                    "Loading. Please wait...", true);
 			
 		}
 			
 		
 		
-		
+	
 	@Override
 	protected Void doInBackground(Void... unused) {
 	  try {
@@ -100,11 +104,11 @@ public class ListeStationVelibActivity extends ListActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	/*	
+		
 	  for (String  item : stations) {
 	    publishProgress(item);
 	    //SystemClock.sleep(200);
-	  }*/
+	  }
 
 	  return(null);
 	}
@@ -123,19 +127,26 @@ public class ListeStationVelibActivity extends ListActivity {
 	}
 	
   }
+*/
+	
+	
+	
 
-  private class ItemClickListener implements OnItemClickListener{
+	private class ItemClickListener implements OnItemClickListener{
 	 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
-		String item = (String)parent.getItemAtPosition(position);
-		StationVelib st = stations.lireStation(item);
-		InfoStation info = stations.info(st);
-		System.out.println("satation = "+info.getAvailable());
+		
+		
+	//	String item = (String)parent.getItemAtPosition(position);
+		StationVelib st = listVelib.get(position);
+		System.out.println("listVelib = " + listVelib.get(position) );
+		InfoStation info = new InfoStation(st.getNumber(),getApplicationContext());
+		
 		
 		Intent intent = new Intent(getBaseContext(),InfoStationActivity.class);
 		Bundle bundle = new Bundle();
-		bundle.putString("addr", st.getAddress());
+		bundle.putString("addr", st.getName());
 		bundle.putDouble("latitude",  st.getLatitude());
 		bundle.putDouble("longitude",  st.getLongitude());
 		bundle.putInt("available", info.getAvailable());

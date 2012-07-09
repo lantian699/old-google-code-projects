@@ -32,7 +32,7 @@ public class StationVelib extends ModelObject {
 	@DatabaseField
 	private String fullAddress;
 
-	StationVelib() {
+	public StationVelib() {
 
 	}
 	

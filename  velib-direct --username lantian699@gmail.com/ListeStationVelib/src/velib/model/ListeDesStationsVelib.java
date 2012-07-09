@@ -24,6 +24,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.InputSource;
 import org.xml.sax.Attributes;
 
+import velib.tools.ParserListVelib;
+
 import com.j256.ormlite.dao.Dao;
 
 import android.content.Context;
@@ -54,6 +56,7 @@ public class ListeDesStationsVelib{
   int [] stNum = new int [7000];
   int i=0;
   private Context context;
+  Dao<StationVelib, Integer> dao;
   // ---------------------------------------------------------------------------
   
  
@@ -61,7 +64,7 @@ public class ListeDesStationsVelib{
 	
 	 // new ParserXML(in);
 	  this.context = context;
-	  new ParserXML(in);
+	  new ParserListVelib(context,dao);
 	}
   
   
@@ -118,16 +121,23 @@ public class ListeDesStationsVelib{
  
   public InfoStation info(StationVelib st){
 	  
-	  infostation = new InfoStation(st.getNumber());
+	  infostation = new InfoStation(st.getNumber(), context);
 	  
 	return infostation;
 	  
   }
   
   
-  private class ParserXML  extends DefaultHandler implements Serializable{
+  
+  
+  
+/*  private class ParserXML  extends DefaultHandler implements Serializable{
     
-	  URL url = new URL(URL_VELIB_ALL);
+	  *//**
+	 * 
+	 *//*
+	private static final long serialVersionUID = -1153056183204156770L;
+	URL url = new URL(URL_VELIB_ALL);
     public ParserXML(InputStream in) throws Exception{
     //	public ParserXML() throws Exception{
       SAXParserFactory spf = SAXParserFactory.newInstance();
@@ -196,7 +206,7 @@ public class ListeDesStationsVelib{
     
   }//end of parseXML
   
-  
+  */
   
   
 }
