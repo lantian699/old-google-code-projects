@@ -26,6 +26,14 @@ public class InfoStation extends ModelObject {
 
 	private static final long serialVersionUID = 4526974254086931419L;
 	
+	public static final String COLUMN_INFO_ID = "infoStation";
+	public static final String COLUMN_INFO_FREE = "free";
+	public static final String COLUMN_INFO_OPEN = "open";
+	public static final String COLUMN_INFO_TICKET = "ticket";
+	public static final String COLUMN_INFO_AVAILABLE = "available";
+	public static final String COLUMN_INFO_TOTAL = "total";
+	public static final String COLUMN_INFO_UPDATED = "updated";
+	
 	@DatabaseField(columnName = "infoStation", generatedId = true)
 	private long time;
 	@DatabaseField
