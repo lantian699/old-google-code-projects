@@ -1,10 +1,13 @@
 package essai.cnam;
 
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
-import velib.model.ListeDesStationsVelib;
+import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -30,6 +33,9 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 public class ListeStationAlentourActivity extends MapActivity implements
 		LocationListener {
@@ -56,7 +62,16 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	GeoPoint maposition;
 	static Context mCon;
 	private static final String URL_VELIB_INFO = "http://www.velib.paris.fr/service/stationdetails/"; // /number
+	
+	private static Dao<StationVelib, Integer> VelibStationDao ;
+	private static List<StationVelib> listStation;
 
+	
+	ArrayList<Double> latitudes = new ArrayList<Double>();
+	ArrayList<Double> longitudes = new ArrayList<Double>();
+	
+	private static List<StationVelib> listStationSelect = new ArrayList<StationVelib>();
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_map);
@@ -65,6 +80,10 @@ public class ListeStationAlentourActivity extends MapActivity implements
 		// advertisement
 		// adView.loadAd(new AdRequest());
 
+		latitudes.clear();
+		longitudes.clear();
+		listStationSelect.clear();
+		
 		mCon = this;
 		mapView = (MapView) findViewById(R.id.mapView);
 		mapView.setBuiltInZoomControls(true);
@@ -80,14 +99,32 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	static double monLong;
 	int j = 0;
 
-	public void calculateur(Location recentLocation, double[] lats,
-			double[] longs, int length, String[] noms, String[] addr, int[] num) {
+	public void calculateur(Location recentLocation) {
 
 		monLat = recentLocation.getLatitude();
 		monLong = recentLocation.getLongitude();
+		
 		double latDiff = 0.0;
 		double longDiff = 0.0;
 		double distanceDiff = 0.0;
+		
+		listStationSelect.clear();
+		
+		for(int i=0; i< listStation.size(); i++){
+			
+			latDiff = Math.abs(latitudes.get(i) - monLat);
+			longDiff = Math.abs(longitudes.get(i) - monLong);
+			distanceDiff = Math.sqrt(latDiff * latDiff + longDiff * longDiff);
+			
+			if(distanceDiff * distanceMetre < Rayon){
+				
+				listStationSelect.add(listStation.get(i));
+			}
+			
+			System.out.println("listStationSelect = " + listStationSelect +" distance =  " +distanceDiff * distanceMetre + "rayon = "+Rayon);
+		}
+		
+		/*
 		for (int i = 0; i < length - 2; i++) {
 
 			latDiff = Math.abs(lats[i] - monLat);
@@ -103,32 +140,48 @@ public class ListeStationAlentourActivity extends MapActivity implements
 
 				// System.out.println("latAutour =" +latAutour[j-1]+"  "+j);
 			}
-		}
+		}*/
 
 	}
 
-	public void DrawMap(double lat, double longs, int h) {
+	public void DrawMap( StationVelib station) {
 
 		// mapOverlays = mapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.bike);
 		itemOverlay = new VelibItemizedOverlay(drawable, this);
 
-		GeoPoint maposition = new GeoPoint((int) (lat * 1E6),
-				(int) (longs * 1E6));
+		GeoPoint maposition = new GeoPoint((int) (station.getLatitude() * 1E6),(int) (station.getLongitude() * 1E6));
 
-		InfoStation info = new InfoStation(stNum[h], getApplicationContext());
+		/*InfoStation info = new InfoStation(stNum[h], getApplicationContext());
 		int available = info.getAvailable();
 		int free = info.getFree();
-		int total = info.getTotal();
+		int total = info.getTotal();*/
 
 		itemOverlay.setMap(mapView);
 		itemOverlay.setActivity(this);
 		itemOverlay.setInfo(monLat, monLong);
+		
+		Dao<InfoStation, Integer> InfoStationDao;
+		try {
+			InfoStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(InfoStation.class);
+		
+		
+		QueryBuilder<InfoStation, Integer> queryBuilder = InfoStationDao.queryBuilder();
 
-		overlayitem = new OverlayItem(maposition, String.valueOf(latAutour[h])
-				+ "_" + String.valueOf(longAutour[h]), stNoms[h] + "_"
-				+ available + " Vélos disponibles\n" + free
-				+ " vélos en Free\n" + total + " vélos en Total");
+		queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID, station.getId());
+		PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
+		List<InfoStation> infoList = InfoStationDao.query(preparedQuery);
+		
+		System.out.println(" infolist = " + infoList);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		overlayitem = new OverlayItem(maposition, String.valueOf(station.getLatitude())
+				+ "_" + String.valueOf(station.getLongitude()), station.getName() + "_"
+				+ 5 + " Vélos disponibles\n" +5
+				+ " vélos en Free\n" + 5 + " vélos en Total");
 
 		itemOverlay.addOverlay(overlayitem);
 		mapOverlays.add(itemOverlay);
@@ -348,7 +401,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	public class waitForLocation extends AsyncTask<Void, Void, Void> {
 
 		ProgressDialog dialog;
-		private ListeDesStationsVelib stations;
+		
 
 		@Override
 		protected void onPreExecute() {
@@ -371,20 +424,41 @@ public class ListeStationAlentourActivity extends MapActivity implements
 			goToMyLocation();
 
 			try {
-				is = ListeStationAlentourActivity.this.getAssets().open(
-						"stations.xml");
+				VelibStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
+				listStation = VelibStationDao.queryForAll();
+				
+/*				QueryBuilder<StationVelib, Integer> queryBuilder = VelibStationDao.queryBuilder();
+				String arg0 = "latitude";
+				queryBuilder.selectColumns(arg0);
+				PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
+				List<StationVelib> sensList = VelibStationDao.query(preparedQuery);*/
+				
+				latitudes.clear();
+				longitudes.clear();
+				
+				for(StationVelib station : listStation){
+					
+					latitudes.add(station.getLatitude());
+					longitudes.add(station.getLongitude());
+				}
+				
+		
 
-				stations = new ListeDesStationsVelib(is, getApplicationContext());
-				lats = stations.getLats();
-				longs = stations.getLongs();
-
-				System.out.println(stations.getNoms());
-				calculateur(mostRecentLocation, lats, longs,
-						stations.getLength(), stations.getNoms(),
-						stations.getAddr(), stations.getNum());
+				calculateur(mostRecentLocation);
+				
+				
+				for(StationVelib station : listStationSelect){
+					
+					DrawMap(station);
+				}
+				
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				// System.out.println("Garerearfqfdq="+stations.getGareVelib());
 
-				if (j > 0) {
+				/*if (j > 0) {
 					for (int h = 0; h <= j - 1; h++) {
 						DrawMap(latAutour[h], longAutour[h], h);
 						// System.out.println("j="+j);
@@ -405,7 +479,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			locationManager.removeUpdates(ListeStationAlentourActivity.this);
 			return null;
@@ -417,12 +491,12 @@ public class ListeStationAlentourActivity extends MapActivity implements
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 
-			if (j > 0) {
+			if (listStationSelect.size() > 0) {
 
 				dialog.dismiss();
 				Toast.makeText(
 						mCon,
-						String.valueOf(j)
+						String.valueOf(listStationSelect.size())
 								+ " stations de Velib trouvées, veuillez appuyer sur l'écran",
 						Toast.LENGTH_LONG).show();
 			} else {

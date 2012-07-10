@@ -37,7 +37,7 @@ import com.google.ads.AdView;
 import com.j256.ormlite.dao.Dao;
 
 public class ListeStationVelibActivity extends ListActivity {
-	 ListeDesStationsVelib stations ;
+	
 	 InputStream is;
 	 ArrayList<String> listStation =new ArrayList<String>(); ;
 	 StationVelib station;

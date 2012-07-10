@@ -67,6 +67,10 @@ public class StationVelib extends ModelObject {
 	public void setFullAddress(String fullAddress) {
 		this.fullAddress = fullAddress;
 	}
+	
+	public int getId(){
+		return id;
+	}
 
 	public Double getLatitude() {
 		return latitude;
