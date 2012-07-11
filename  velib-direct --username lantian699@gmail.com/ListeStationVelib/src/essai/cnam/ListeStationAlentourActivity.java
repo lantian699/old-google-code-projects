@@ -9,6 +9,7 @@ import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
+import velib.tools.ParserInfoStation;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -58,7 +59,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 	String addr;
 	VelibItemizedOverlay itemOverlay;
 	List<Overlay> mapOverlays;
-	OverlayItem overlayitem;
+	private static OverlayItem overlayitem;
 	GeoPoint maposition;
 	static Context mCon;
 	private static final String URL_VELIB_INFO = "http://www.velib.paris.fr/service/stationdetails/"; // /number
@@ -82,7 +83,6 @@ public class ListeStationAlentourActivity extends MapActivity implements
 
 		latitudes.clear();
 		longitudes.clear();
-		listStationSelect.clear();
 		
 		mCon = this;
 		mapView = (MapView) findViewById(R.id.mapView);
@@ -119,9 +119,21 @@ public class ListeStationAlentourActivity extends MapActivity implements
 			if(distanceDiff * distanceMetre < Rayon){
 				
 				listStationSelect.add(listStation.get(i));
+				
+				Dao<InfoStation, Integer> InfoStationDao;
+				try {
+					InfoStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(InfoStation.class);
+				//	List<InfoStation> listInfoStation = InfoStationDao.queryForAll();
+					new ParserInfoStation(getApplicationContext(), InfoStationDao, listStation.get(i).getNumber(),listStation.get(i).getId());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 			}
 			
-			System.out.println("listStationSelect = " + listStationSelect +" distance =  " +distanceDiff * distanceMetre + "rayon = "+Rayon);
+			//System.out.println("listStationSelect = " + listStationSelect +" distance =  " +distanceDiff * distanceMetre + "rayon = "+Rayon);
 		}
 		
 		/*
@@ -167,24 +179,28 @@ public class ListeStationAlentourActivity extends MapActivity implements
 		
 		
 		QueryBuilder<InfoStation, Integer> queryBuilder = InfoStationDao.queryBuilder();
-
-		queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID, station.getId());
+		queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID_STATION, station.getId());
 		PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
 		List<InfoStation> infoList = InfoStationDao.query(preparedQuery);
 		
-		System.out.println(" infolist = " + infoList);
 		
+		overlayitem = new OverlayItem(maposition, String.valueOf(station.getLatitude())
+				+ "_" + String.valueOf(station.getLongitude()), station.getName() + "_"
+				+ infoList.get(0).getAvailable() + " Vélos disponibles\n" 
+				+ infoList.get(0).getTotal() + " vélos en Total" );
+		
+		itemOverlay.addOverlay(overlayitem);
+		mapOverlays.add(itemOverlay);
+		
+		mapView.postInvalidate();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		overlayitem = new OverlayItem(maposition, String.valueOf(station.getLatitude())
-				+ "_" + String.valueOf(station.getLongitude()), station.getName() + "_"
-				+ 5 + " Vélos disponibles\n" +5
-				+ " vélos en Free\n" + 5 + " vélos en Total");
+		
 
-		itemOverlay.addOverlay(overlayitem);
-		mapOverlays.add(itemOverlay);
+
 
 	}
 
@@ -268,6 +284,9 @@ public class ListeStationAlentourActivity extends MapActivity implements
 				public void onClick(DialogInterface dialog, int item) {
 					// Toast.makeText(getApplicationContext(), items[item],
 					// Toast.LENGTH_SHORT).show();
+					
+					mapOverlays.clear();
+					
 					if (item == 0)
 						Rayon = 500;
 					if (item == 1)
@@ -275,7 +294,7 @@ public class ListeStationAlentourActivity extends MapActivity implements
 					if (item == 2)
 						Rayon = 1500;
 
-					mapOverlays.clear();
+					
 
 					new waitForLocation().execute();
 
@@ -446,6 +465,8 @@ public class ListeStationAlentourActivity extends MapActivity implements
 
 				calculateur(mostRecentLocation);
 				
+				
+			
 				
 				for(StationVelib station : listStationSelect){
 					
