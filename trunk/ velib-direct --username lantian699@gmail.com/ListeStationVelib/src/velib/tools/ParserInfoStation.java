@@ -15,11 +15,15 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 
+import android.R.integer;
 import android.content.Context;
+
 
 public class ParserInfoStation extends DefaultHandler implements Serializable {
 	
@@ -41,13 +45,14 @@ public class ParserInfoStation extends DefaultHandler implements Serializable {
 	private Context context;
 
 
-	private Dao<InfoStation, ?> infoStationDao;
+	private Dao<InfoStation, Integer> infoStationDao;
+	private int idStation;
 	
-	
-	public ParserInfoStation(Context context, Dao<InfoStation, ?> dao, int num) {
+	public ParserInfoStation(Context context, Dao<InfoStation, Integer> dao, int num, int idStation) {
 		try {
 			this.infoStationDao = dao;
 			this.context = context;
+			this.idStation = idStation;
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser sp = spf.newSAXParser();
 			XMLReader xr = sp.getXMLReader();
@@ -101,9 +106,20 @@ public class ParserInfoStation extends DefaultHandler implements Serializable {
 					open = false;
 			infoStation.setOpen(open);
 			
+			infoStation.setStationVelibId(idStation);
 			try {
+				
+				QueryBuilder<InfoStation, Integer> queryBuilder = infoStationDao.queryBuilder();
+				queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID_STATION, idStation);
+				PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
+				List<InfoStation> infoList = infoStationDao.query(preparedQuery);
+				
+
+				
+				if(infoList.size()  == 0)
 				infoStationDao.create(infoStation);
-				//Log.i(this, "une infoStation est cree --->  velib.db");
+				else
+				infoStationDao.update(infoStation);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

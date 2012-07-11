@@ -147,20 +147,20 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 				// DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
 				StationVelibDao = getHelper().getDao(StationVelib.class);
 				List<StationVelib> list = StationVelibDao.queryForAll();
-				Dao<InfoStation, ?> InfoStationDao = getHelper().getDao(InfoStation.class);
-				List<InfoStation> listInfoStation = InfoStationDao.queryForAll();
+				/*Dao<InfoStation, ?> InfoStationDao = getHelper().getDao(InfoStation.class);
+				List<InfoStation> listInfoStation = InfoStationDao.queryForAll();*/
 
 				if(list.size() == 0)
 				new ParserListVelib(getApplicationContext(), StationVelibDao);
 				
 				
 				
-				if(listInfoStation.size() == 0){
+				/*if(listInfoStation.size() == 0){
 					for(int i=0; i<list.size(); i++){
 					new ParserInfoStation(getApplicationContext(), InfoStationDao, list.get(i).getNumber());
 					//System.out.println("list size = " + list.size() + "     i= "+i);
 					}
-				}
+				}*/
 
 				
 				

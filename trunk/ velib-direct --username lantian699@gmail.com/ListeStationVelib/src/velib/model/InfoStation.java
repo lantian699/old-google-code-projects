@@ -26,15 +26,21 @@ public class InfoStation extends ModelObject {
 
 	private static final long serialVersionUID = 4526974254086931419L;
 	
-	public static final String COLUMN_INFO_ID = "infoStation";
+	public static final String COLUMN_INFO_ID = "id";
 	public static final String COLUMN_INFO_FREE = "free";
 	public static final String COLUMN_INFO_OPEN = "open";
 	public static final String COLUMN_INFO_TICKET = "ticket";
 	public static final String COLUMN_INFO_AVAILABLE = "available";
 	public static final String COLUMN_INFO_TOTAL = "total";
 	public static final String COLUMN_INFO_UPDATED = "updated";
+	public static final String COLUMN_INFO_ID_STATION = "StationVelibId";
 	
-	@DatabaseField(columnName = "infoStation", generatedId = true)
+	
+	@DatabaseField(generatedId = true)
+	private int id;
+	@DatabaseField()
+	private int StationVelibId;
+	@DatabaseField
 	private long time;
 	@DatabaseField
 	private int available;
@@ -89,6 +95,12 @@ public class InfoStation extends ModelObject {
 	public int getUpdated(){
 		return updated;
 	}
+	
+	public void setStationVelibId(int stationId){
+		this.StationVelibId = stationId;
+		
+	}
+	
 	public void setAvailable(int available) {
 		this.available = available;
 	}

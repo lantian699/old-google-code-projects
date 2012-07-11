@@ -194,7 +194,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	static boolean isFini =false;
 	private void getInfo(String name, String addr){
 		 List<Overlay> mapOverlays = mapView.getOverlays();
-		 mapOverlays.clear();
+		 
 		
 		isFini =false;
 		 GeoPoint geopoint=new GeoPoint( (int)  (stalat*1E6), (int )(stalong*1E6));
