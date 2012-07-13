@@ -6,6 +6,7 @@ import java.util.List;
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
+import velib.services.LocationService;
 import velib.tools.Log;
 import velib.tools.ParserInfoStation;
 import velib.tools.ParserListVelib;
@@ -33,6 +34,8 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	int alpha = 255;// 透明值255
 	int b = 0;
 	private Dao<StationVelib, Integer> StationVelibDao;
+	private static double latitude;
+	private static double longitude;
 	public static Context context;
 
 	/**
@@ -49,6 +52,9 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 		this.context = this;
 		
+		
+		
+		
 		new  getStationFromSite().execute(); 
 
 		imageview = (ImageView) this.findViewById(R.id.imageView5);
@@ -59,6 +65,9 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		bn1 = (Button) this.findViewById(R.id.button1);
 		bn2 = (Button) this.findViewById(R.id.button2);
 
+		
+		startService(new Intent(context ,LocationService.class));
+		
 		/*
 		 * new Thread(new Runnable() { public void run() { initApp(); //初始化程序
 		 * 
@@ -91,6 +100,14 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 	}
 
+	
+	public void setLocationInfo(double latitude, double longitude){
+		
+		this.latitude = latitude;
+		this.longitude = longitude;
+		
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -185,6 +202,15 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		}
 		
 		
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		stopService(new Intent(context, LocationService.class));
 	}
 
 }
