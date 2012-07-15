@@ -62,7 +62,7 @@ public class InfoStationActivity extends MapActivity {
 		
 		GeoPoint maposition= new GeoPoint((int) (latitude *1E6), (int) (longitude*1E6));
 		OverlayItem overlayitem = new OverlayItem(maposition, addr, String.valueOf(available)+" emplacement libre et "+ String.valueOf(free)+"velo disponibles.");
-		itemOverlay.addOverlay(overlayitem);
+		itemOverlay.addOverlay(overlayitem,null);
 		mapOverlays.add(itemOverlay);
 		MapController mapController = mapView.getController();
 		 mapController.animateTo(maposition);

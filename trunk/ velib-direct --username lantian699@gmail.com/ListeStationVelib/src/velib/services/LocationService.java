@@ -1,7 +1,5 @@
 package velib.services;
 
-import essai.cnam.ListeStationAlentourActivity;
-import essai.cnam.LogoActivity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -15,19 +13,14 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
 
-public class LocationService extends Service implements LocationListener,
-		Runnable {
+public class LocationService extends Service implements LocationListener,Runnable {
 
 	private LocationManager locationManager;
-	private Location mostRecentLocation;
+	private static Location mostRecentLocation;
 	private HandlerThread myHandlerThread;
 	private Handler handler;
 	private boolean isContinous = true;
-	private LogoActivity ecran_accueil = new LogoActivity();
-	private ListeStationAlentourActivity listAlentourActivity = new ListeStationAlentourActivity();
-	
-	private double latitude;
-	private double longitude;
+
 	
 	
 	@Override
@@ -57,12 +50,6 @@ public class LocationService extends Service implements LocationListener,
 		while (isContinous) {
 
 			getLocation();
-			
-		//	ecran_accueil.setLocationInfo(latitude, longitude);
-
-			System.out.println("TestMapActivity latitude = " + latitude + "  longitude = " +longitude);
-			
-			listAlentourActivity.goToMyLocation(latitude, longitude);
 			
 			try {
 				Thread.sleep(500);
@@ -94,10 +81,7 @@ public class LocationService extends Service implements LocationListener,
 			}
 
 		}
-		latitude = mostRecentLocation.getLatitude();
-		longitude = mostRecentLocation.getLongitude();
-		
-		Log.i("LocationService", " Latitude = " + latitude + "  Longitude = " + longitude);
+
 	}
 
 	@Override
@@ -110,6 +94,11 @@ public class LocationService extends Service implements LocationListener,
 		handler.removeCallbacks(this);
 		locationManager.removeUpdates(this);
 
+	}
+	
+	public static Location getRecentLocation(){
+		
+		return mostRecentLocation;
 	}
 
 	@Override
