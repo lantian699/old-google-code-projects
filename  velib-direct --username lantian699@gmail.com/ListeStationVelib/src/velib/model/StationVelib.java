@@ -8,9 +8,10 @@ public class StationVelib extends ModelObject {
 
 	private static final long serialVersionUID = -3774666415177207686L;
 
-	private static final String COLUMN_VELIB_NUMBER = "VelibNumber";
-	private static final String COLUMN_VELIB_NAME = "VelibStationName";
-	private static final String COLUMN_VELIB_ADDRESS = "VelibStationAddress";
+	public static final String COLUMN_VELIB_NUMBER = "number";
+	public static final String COLUMN_VELIB_NAME = "name";
+	public static final String COLUMN_VELIB_ADDRESS = "VelibStationAddress";
+	public static final String COLUMN_VELIB_ID = "id";
 
 	
 	@DatabaseField(generatedId = true)

@@ -2,6 +2,7 @@ package velib.model;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +37,9 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import essai.cnam.R;
 
@@ -45,72 +49,73 @@ import essai.cnam.R;
 public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	private List<OverlayItem> overlays= new ArrayList<OverlayItem>();
 	private Context context;
+	private List<InfoStation> listInfo = new ArrayList<InfoStation>();
 	
-	public VelibItemizedOverlay(Drawable defaultMarker, MapActivity context) {
+	public VelibItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		this.context = context;
 	}
-	public void addOverlay(OverlayItem overlay) {
+	
+	public void addOverlay(OverlayItem overlay, InfoStation infoStation) {
+		listInfo.add(infoStation);
 		overlays.add(overlay);
 	    populate();
 	}
+	
 	@Override
 	protected OverlayItem createItem(int i) {
 	  return overlays.get(i);
 	}
+	
 	@Override
 	public int size() {
 	  return overlays.size();
 	}
-	public void setInfo(double mlat, double mlong){
-		monlat =mlat;
-		monlong = mlong;
-		
-	}
 	
-	static double monlat;
-	 static double monlong;
-	 static double stalat;
-	 static double stalong;
-	 Connection con = new Connection();
+	
 	
 	@Override
 	protected boolean onTap(int index) {
+		
 	  OverlayItem item = overlays.get(index);
-	 // System.out.println("item = "+item.);
-	  
-	  final String info;
-	  
-	  print(item.getSnippet() +"   "+item.getTitle());
-	  try{
-	  if(item.getSnippet()!= null &&  item.getTitle()!= null){
+	  InfoStation infoStation = listInfo.get(index);
+	  try {
 		  
-		 /*
-		  AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-	      dialog.setTitle(item.getTitle());
-	      dialog.setMessage(item.getSnippet());
-	      dialog.show();*/
-	      
-		 
+	   
+		
+	
 		  
-	     // Context mContext = getApplicationContext();
+		  
+		  
+		  if(item.getSnippet()!= null &&  item.getTitle()!= null){
+			  
+			 
+		  
 	      final Dialog dialog= new Dialog(context);
-
 	      dialog.setContentView(R.layout.custom_dialog);
 	      dialog.setTitle("Détail de station");
-	      info = item.getSnippet();
+ 
 	      
-	      String latlg = item.getTitle();
-	      stalat = Double.parseDouble((String)latlg.subSequence(0, latlg.indexOf("_")));
-	      stalong = Double.parseDouble((String)latlg.subSequence(latlg.indexOf("_")+1, latlg.length()));
-	  
+	      	Dao<StationVelib,Integer> StationVelibDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+		    QueryBuilder<StationVelib, Integer> queryBuilder = StationVelibDao.queryBuilder();
+			queryBuilder.where().eq(StationVelib.COLUMN_VELIB_ID,infoStation.getStationVelibId());
+			PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
+			List<StationVelib> listStation = StationVelibDao.query(preparedQuery);
 	      
 	      TextView name = (TextView) dialog.findViewById(R.id.name);
-	      name.setText(info.subSequence(0, info.indexOf("_", 0)));
+	      name.setText(listStation.get(0).getName());
 	 
 	      TextView addr = (TextView) dialog.findViewById(R.id.addr);
-	      addr.setText(info.subSequence(info.indexOf("_")+1, info.length()));
+	      addr.setText(listStation.get(0).getAddress());
 	      
+	     
+	      TextView total = (TextView) dialog.findViewById(R.id.total);
+	      total.setText(String.valueOf(infoStation.getTotal()));
+	      
+	      TextView free = (TextView) dialog.findViewById(R.id.free);
+	      free.setText(String.valueOf(infoStation.getFree()));
+	      
+ 
 	      Button ite = (Button)dialog.findViewById(R.id.luxian);
 	      Button cancel = (Button)dialog.findViewById(R.id.cancel);
 	      dialog.show();
@@ -121,8 +126,8 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				String[] infos ={(String) info.subSequence(0, info.indexOf("_", 0)),(String) info.subSequence(info.indexOf("_")+1, info.length())};
-				new Connection().execute(infos);
+				//String[] infos ={(String) info.subSequence(0, info.indexOf("_", 0)),(String) info.subSequence(info.indexOf("_")+1, info.length())};
+				//new Connection().execute(infos);
 				dialog.dismiss();
 			}
 	    	  
@@ -143,10 +148,6 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 		    	  
 		      });
 	      
-	      print("lat="+stalat+"  "+stalong);
-	      
-	  
-	      
 	  }
 	  else{
 		  
@@ -160,39 +161,16 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	  }catch (Exception e) {
 		// TODO: handle exception
 		  
-		  print("systeme is catched");
-		  
-		  
-		  
-		  AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-	      dialog.setTitle(item.getTitle());
-	      dialog.setMessage(item.getSnippet());
-	      dialog.show();
-		  
+		  e.printStackTrace();
 		  
 	}
 	  return true;
 	}
-	private void print(Object o) {
-		// TODO Auto-generated method stub
-		System.out.println(o);
-	}
+
 	
-	static MapView mapView;
-	
-	public void setMap(MapView map){
-		this.mapView = map;
-	}
-	
-	static MapActivity mAc;
-	public void setActivity(MapActivity a){
-		
-		mAc= a;
-	}
-	
-	
-	static boolean isFini =false;
-	private void getInfo(String name, String addr){
+
+
+	/*private void getInfo(String name, String addr){
 		 List<Overlay> mapOverlays = mapView.getOverlays();
 		 
 		
@@ -255,11 +233,11 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
               
         }  
           
-        /*if (-1 == strResult.indexOf("<status>OK</status>")){  
+        if (-1 == strResult.indexOf("<status>OK</status>")){  
             Toast.makeText(this, "echoue de tracer la ligne!", Toast.LENGTH_SHORT).show();  
             this.finish();  
             
-        }  */
+        }  
           
         int pos = strResult.indexOf("<overview_polyline>");  
         pos = strResult.indexOf("<points>", pos + 1);  
@@ -365,7 +343,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	              
 	        }
 	    	
-	    }
+	    }*/
 	
 	
 }

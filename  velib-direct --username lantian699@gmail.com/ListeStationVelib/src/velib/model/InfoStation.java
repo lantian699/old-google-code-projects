@@ -96,6 +96,11 @@ public class InfoStation extends ModelObject {
 		return updated;
 	}
 	
+	public int getStationVelibId(){
+		return this.StationVelibId;
+		
+	}
+	
 	public void setStationVelibId(int stationId){
 		this.StationVelibId = stationId;
 		
