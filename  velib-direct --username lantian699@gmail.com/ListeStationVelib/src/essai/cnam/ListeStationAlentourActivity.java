@@ -5,6 +5,7 @@ import velib.services.LocationService;
 import velib.tools.Tools;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		Tools.openGPSSettings(this);
 		
 
+//		startService(new Intent(this ,LocationService.class));
+		
 		changeRadius = (Button)findViewById(R.id.change_radius);
 		seLocaliser = (ImageButton)findViewById(R.id.selocaliser);
 		
@@ -125,7 +128,7 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 			
 		case R.id.selocaliser:
 			
-			Tools.goToMyLocation(getApplicationContext(), LocationService.getRecentLocation(), mapView);
+			Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 			
 			
 			break;
@@ -136,5 +139,12 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+//		stopService(new Intent(this, LocationService.class));
+	}
 	
 }

@@ -112,13 +112,7 @@ public class ListeStationVelibActivity extends ListActivity implements TextWatch
 		
 		
 		Intent intent = new Intent(getBaseContext(),InfoStationActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("addr", st.getName());
-		bundle.putDouble("latitude",  st.getLatitude());
-		bundle.putDouble("longitude",  st.getLongitude());
-		bundle.putInt("available", info.getAvailable());
-		bundle.putInt("free", info.getFree());
-		intent.putExtras(bundle);
+		intent.putExtra("station", st);
 		startActivity(intent);
 		
 		//Toast.makeText(ListeStationVelibActivity.this, String.valueOf("{"+st.getLatitude()+", "+st.getLongitude()+", "+info.getAvailable()+", "+info.getFree()+"}"), Toast.LENGTH_SHORT).show();
