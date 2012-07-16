@@ -1,5 +1,8 @@
 package velib.services;
 
+import com.google.android.maps.MapView;
+
+import velib.tools.Tools;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +23,15 @@ public class LocationService extends Service implements LocationListener,Runnabl
 	private HandlerThread myHandlerThread;
 	private Handler handler;
 	private boolean isContinous = true;
+	private Context context;
+	private MapView mapView;
 
-	
+	/*public LocationService(Context context, MapView mapView){
+		
+		this.context = context;
+		this.mapView = mapView;
+		
+	}*/
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -57,6 +67,8 @@ public class LocationService extends Service implements LocationListener,Runnabl
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			//Tools.goToMyLocation(this, mostRecentLocation, null);
 
 		}
 	}
@@ -105,6 +117,7 @@ public class LocationService extends Service implements LocationListener,Runnabl
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 
+	//	Tools.goToMyLocation(this, mostRecentLocation, null);
 	}
 
 	@Override

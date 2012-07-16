@@ -47,7 +47,7 @@ public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 		listStationSelect = Tools.Calculateur_Station_Prox(context, LocationService.getRecentLocation(), Rayon);
 
 		
-		Tools.DrawStationOnMap(context, listStationSelect, mapView);
+		Tools.DrawStationsOnMap(context, listStationSelect, mapView);
 		
 		
 		Tools.goToMyLocation(context, LocationService.getRecentLocation(), mapView);	

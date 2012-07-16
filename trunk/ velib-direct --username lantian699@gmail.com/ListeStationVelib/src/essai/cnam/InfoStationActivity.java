@@ -3,7 +3,10 @@ package essai.cnam;
 
 import java.util.List;
 
+import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
+import velib.services.LocationService;
+import velib.tools.Tools;
 
 import essai.cnam.R;
 import com.google.ads.AdRequest;
@@ -40,33 +43,18 @@ public class InfoStationActivity extends MapActivity {
 		setContentView(R.layout.main_map);
 		
 		 AdView adView = (AdView)this.findViewById(R.id.adMap); // show the advertisement
-	      adView.loadAd(new AdRequest());
-		
-		//intent rcv = getIntent().getIntExtra("latitude", defaultValue);
+	     adView.loadAd(new AdRequest());
+
+	     StationVelib station = (StationVelib) getIntent().getSerializableExtra("station");
 		
 		mapView = (MapView) this.findViewById(R.id.mapView);
 		mapView.setBuiltInZoomControls(true);
 		
-		Bundle bundle = new Bundle();
-        bundle = this.getIntent().getExtras();
+		Tools.DrawOneStationOnMap(this, station, mapView);
+		Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 		
-        addr = bundle.getString("addr");
-		latitude = bundle.getDouble("latitude");
-		longitude = bundle.getDouble("longitude");
-		available = bundle.getInt("available");
-		free = bundle.getInt("free");
-		
-		List<Overlay> mapOverlays = mapView.getOverlays();
-        Drawable drawable = this.getResources().getDrawable(R.drawable.bike);
-		itemOverlay= new VelibItemizedOverlay(drawable,this,mapView);
-		
-		GeoPoint maposition= new GeoPoint((int) (latitude *1E6), (int) (longitude*1E6));
-		OverlayItem overlayitem = new OverlayItem(maposition, addr, String.valueOf(available)+" emplacement libre et "+ String.valueOf(free)+"velo disponibles.");
-		itemOverlay.addOverlay(overlayitem,null);
-		mapOverlays.add(itemOverlay);
-		MapController mapController = mapView.getController();
-		 mapController.animateTo(maposition);
-         mapController.setZoom(15);
+		mapView.getController().setZoom(12);
+	
 
 }
 	

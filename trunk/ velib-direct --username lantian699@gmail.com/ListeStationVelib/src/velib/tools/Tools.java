@@ -115,7 +115,7 @@ public class  Tools {
 	}
 	
 	
-	public static void  DrawStationOnMap(Context context, List<StationVelib> listStationSelect, MapView mapView) {
+	public static void  DrawStationsOnMap(Context context, List<StationVelib> listStationSelect, MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		
@@ -149,6 +149,51 @@ public class  Tools {
 			
 			}
 			
+			
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public static void  DrawOneStationOnMap(Context context, StationVelib station, MapView mapView) {
+
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		
+		
+		Drawable drawable = context.getResources().getDrawable(R.drawable.bike);
+		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(drawable, context, mapView);
+
+		
+		try {
+			Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
+			
+			
+			
+
+				GeoPoint StationPos = new GeoPoint((int) (station.getLatitude() * 1E6),(int) (station.getLongitude() * 1E6));
+				
+				QueryBuilder<InfoStation, Integer> queryBuilder = InfoStationDao.queryBuilder();
+				queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID_STATION,station.getId());
+				PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
+				List<InfoStation> infoList = InfoStationDao.query(preparedQuery);
+				
+				
+				OverlayItem overlayitem = new OverlayItem(StationPos, "station","stationInfo");
+
+				velibItemizedOverlay.addOverlay(overlayitem,infoList.get(0));
+				
+				mapOverlays.add(velibItemizedOverlay);
+			
+				mapView.postInvalidate();
+			
+				MapController mapController = mapView.getController();
+				mapController.animateTo(StationPos);
+				mapController.setZoom(15);
 			
 
 
@@ -364,13 +409,10 @@ public class  Tools {
 
 	public static void refreshScreenData(ListActivity listActivity, Context context, ArrayList<String> stationSearch, ArrayList<String> stations) {
 
-		
-		
-		
-	
+
 			listActivity.setListAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, stationSearch));
 		
-		showVirtualKeyboard(listActivity);
+			showVirtualKeyboard(listActivity);
 
 	}
 	
