@@ -44,15 +44,17 @@ public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 
 
 
+		
 		Tools.goToMyLocation(context, LocationService.getRecentLocation(), mapView);
 
 		listStationSelect = Tools.Calculateur_Station_Prox(context, LocationService.getRecentLocation(), Rayon);
 
 			
 		Tools.DrawStationOnMap(context, listStationSelect, mapView);
-			
-
+		
 		return null;
+			
+	
 
 	}
 
@@ -60,10 +62,13 @@ public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 	protected void onPostExecute(Void result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
-
-		if (listStationSelect.size() > 0) {
+		
+		
 
 		
+		if (listStationSelect.size() > 0) {
+
+			
 			Toast.makeText(
 					context,
 					String.valueOf( "Il y a " + listStationSelect.size()+ " station(s) autour de vous dans un rayon de " + Rayon +"m"),

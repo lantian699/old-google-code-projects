@@ -58,7 +58,7 @@ public class InfoStationActivity extends MapActivity {
 		
 		List<Overlay> mapOverlays = mapView.getOverlays();
         Drawable drawable = this.getResources().getDrawable(R.drawable.bike);
-		itemOverlay= new VelibItemizedOverlay(drawable,this);
+		itemOverlay= new VelibItemizedOverlay(drawable,this,mapView);
 		
 		GeoPoint maposition= new GeoPoint((int) (latitude *1E6), (int) (longitude*1E6));
 		OverlayItem overlayitem = new OverlayItem(maposition, addr, String.valueOf(available)+" emplacement libre et "+ String.valueOf(free)+"velo disponibles.");

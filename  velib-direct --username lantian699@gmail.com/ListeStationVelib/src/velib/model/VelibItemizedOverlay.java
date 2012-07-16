@@ -2,15 +2,36 @@ package velib.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+
+import velib.services.DecodeStationLocationFromInternet;
+import velib.services.LocationService;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -22,18 +43,26 @@ import essai.cnam.R;
 // http://developer.android.com/resources/tutorials/views/hello-mapview.html
 //
 public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implements OnClickListener{
-	private List<OverlayItem> overlays= new ArrayList<OverlayItem>();
-	private Context context;
+	private static List<OverlayItem> overlays= new ArrayList<OverlayItem>();
+	private static Context context;
 	private List<InfoStation> listInfo = new ArrayList<InfoStation>();
 	private  static Dialog dialog;
+	private static MapView mapView;
 	
-	public VelibItemizedOverlay(Drawable defaultMarker, Context context) {
+	public VelibItemizedOverlay(Drawable defaultMarker, Context context, MapView mapView) {
 		super(boundCenterBottom(defaultMarker));
 		this.context = context;
+		this.mapView = mapView;
+	}
+	
+	public VelibItemizedOverlay(Drawable defaultMarker) {
+		super(boundCenterBottom(defaultMarker));
 	}
 	
 	public void addOverlay(OverlayItem overlay, InfoStation infoStation) {
+		if(infoStation != null)
 		listInfo.add(infoStation);
+		
 		overlays.add(overlay);
 	    populate();
 	}
@@ -55,14 +84,10 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 		
 	  OverlayItem item = overlays.get(index);
 	  InfoStation infoStation = listInfo.get(index);
+	  
+	  
 	  try {
-		  
-	   
-		
-	
-		  
-		  
-		  
+
 		  if(item.getSnippet()!= null &&  item.getTitle()!= null){
 			  
 			 
@@ -97,6 +122,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 	      dialog.show();
 	      
 	      btn_itineraire.setOnClickListener(this);
+	      btn_itineraire.setTag(index);
 	      btn_cancel.setOnClickListener(this);
 	         
 	      
@@ -115,17 +141,35 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 		  
 		  e.printStackTrace();
 		  
-	}
+	  }
+	  
 	  return true;
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+
+		InfoStation infoStation;
 		switch (v.getId()) {
 		case R.id.luxian:
+			try{
+			int index = (Integer) dialog.findViewById(R.id.luxian).getTag();
 			
-			System.out.println("hahahahah");
+			infoStation = listInfo.get(index);
+			
+			Dao<StationVelib,Integer> StationVelibDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+		    QueryBuilder<StationVelib, Integer> queryBuilder = StationVelibDao.queryBuilder();
+			queryBuilder.where().eq(StationVelib.COLUMN_VELIB_ID,infoStation.getStationVelibId());
+			PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
+			List<StationVelib> listStation = StationVelibDao.query(preparedQuery);
+			
+			new DecodeStationLocationFromInternet(context, infoStation, listStation.get(0), LocationService.getRecentLocation()).execute();
+			
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
 			break;
 			
 		case R.id.cancel:
@@ -144,60 +188,64 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 	
 
 
-	/*private void getInfo(String name, String addr){
-		 List<Overlay> mapOverlays = mapView.getOverlays();
-		 
+	public static void getInfo(StationVelib station, InfoStation infoStation,  Location recentLocation){
 		
-		isFini =false;
-		 GeoPoint geopoint=new GeoPoint( (int)  (stalat*1E6), (int )(stalong*1E6));
+		double sLatitude = station.getLatitude();
+		double sLongitude = station.getLongitude();
+		
+		double mLatitude = recentLocation.getLatitude();
+		double mLongitude = recentLocation.getLongitude();
+		
+		 List<Overlay> mapOverlays = mapView.getOverlays();
+
+		 GeoPoint Point_Station = new GeoPoint( (int)  (sLatitude*1E6), (int )(sLongitude*1E6));
 		 
-		 String Destination = "http://maps.google.com/maps/api/directions/xml?origin="+monlat+","+monlong +  
-	     	"&destination="+stalat +","+stalong+"&sensor=false&mode=walking";  
+		 String Destination = "http://maps.google.com/maps/api/directions/xml?origin="+mLatitude+","+ mLongitude +  
+	     	"&destination="+sLatitude +","+sLongitude+"&sensor=false&mode=walking";  
 		
 		  List<GeoPoint> pointsdestination = GetPoint(Destination);
 		  
-		  print(pointsdestination);
-		 drawRoute(pointsdestination,Color.RED,1);
+		  drawRoute(pointsdestination,Color.RED,1);
 		 
 		 
 		
 		 
-	        Drawable drawablea = context.getResources().getDrawable(R.drawable.pointer);
-	        Drawable drawableb = context.getResources().getDrawable(R.drawable.bike);
-	        VelibItemizedOverlay itemizedOverlaya = new VelibItemizedOverlay(drawablea,mAc);
-	        VelibItemizedOverlay itemizedOverlayb = new VelibItemizedOverlay(drawableb,mAc);
+	        Drawable Drawable_pointer = context.getResources().getDrawable(R.drawable.pointer);
+	        Drawable Drawable_station = context.getResources().getDrawable(R.drawable.bike);
+	        VelibItemizedOverlay itemizedOverlay_pointer = new VelibItemizedOverlay(Drawable_pointer);
+	        VelibItemizedOverlay itemizedOverlay_station = new VelibItemizedOverlay(Drawable_station);
 	   	 
 	     
 	        
-	        GeoPoint positiona= new GeoPoint((int) (monlat*1E6), (int) (monlong*1E6));
+	        GeoPoint positiona= new GeoPoint((int) (mLatitude*1E6), (int) (mLongitude*1E6));
 	   
 	        OverlayItem overlayitema =  new OverlayItem(positiona, null,"Ma position actuelle" );
-	        OverlayItem overlayitemb =  new OverlayItem(geopoint, null, "Nom de station:\n"+name+"\n"+"Adress:"+addr);
+	        OverlayItem overlayitemb =  new OverlayItem(Point_Station, "infoStation", "infoStation");
 	        
 	        
-	        itemizedOverlaya.addOverlay(overlayitema);
-	        itemizedOverlayb.addOverlay(overlayitemb);
-	        mapOverlays.add(itemizedOverlaya);
-	        mapOverlays.add(itemizedOverlayb);
+	        itemizedOverlay_pointer.addOverlay(overlayitema,null);
+	        itemizedOverlay_station.addOverlay(overlayitemb, infoStation);
+	        mapOverlays.add(itemizedOverlay_pointer);
+	        mapOverlays.add(itemizedOverlay_station);
 		
 		  
-		 mapView.getController().setZoom(15);
-		 isFini= true;
+	        mapView.getController().setZoom(15);
+
 		 
 	}
 	
-	public List<GeoPoint> GetPoint(String url){
+	public static List<GeoPoint> GetPoint(String url){
     	
     	HttpGet get = new HttpGet(url);  
         String strResult = "";  
-       try {  
+        
+        try {  
     	   
             HttpParams httpParameters = new BasicHttpParams();  
             HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);  
             HttpClient httpClient = new DefaultHttpClient(httpParameters);   
               
-            HttpResponse httpResponse = null;  
-            httpResponse = httpClient.execute(get);  
+            HttpResponse httpResponse = httpResponse = httpClient.execute(get);  
               
             if (httpResponse.getStatusLine().getStatusCode() == 200){  
                 strResult = EntityUtils.toString(httpResponse.getEntity());  
@@ -208,8 +256,8 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
         }  
           
         if (-1 == strResult.indexOf("<status>OK</status>")){  
-            Toast.makeText(this, "echoue de tracer la ligne!", Toast.LENGTH_SHORT).show();  
-            this.finish();  
+            Toast.makeText(context, "echoue de tracer la ligne!", Toast.LENGTH_SHORT).show();  
+           // context.finish();  
             
         }  
           
@@ -225,7 +273,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
     	
     }
 	
-	private List<GeoPoint> decodePoly(String encoded) {  
+	private static List<GeoPoint> decodePoly(String encoded) {  
 
 		List<GeoPoint> poly = new ArrayList<GeoPoint>();  
 		int index = 0, len = encoded.length();  
@@ -258,15 +306,16 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 
 		return poly;  
 	}
-	List<Overlay> over;
-	public void drawRoute(List<GeoPoint> points, int couleur, int flag ){  
+	
+	
+	private static List<Overlay> overlayList;
+	public static void drawRoute(List<GeoPoint> points, int couleur, int flag ){  
 
 
 		Polyline mOverlay = new Polyline(points,couleur);  
-		over = mapView.getOverlays();  
+		overlayList = mapView.getOverlays();  
 		if(flag == 1)overlays.clear();
-		over.add(mOverlay);  
-		//overlays.removeAll(pointsdestination);
+		overlayList.add(mOverlay);  
 		
 		if (points.size() >= 2){  
 			MapController mapController = mapView.getController();
@@ -275,49 +324,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 
 		mapView.postInvalidate();  
 	}  
-	
-	 private class Connection extends AsyncTask<String, Long, Boolean>  {
-
-	    	Socket socket;
-	    	ProgressDialog Pdialog;
-	    	
-	    	
-	    	@Override  
-	        protected void onPreExecute() {  
-	            Pdialog = ProgressDialog.show(context , "Patienter", "en cours de calculer...");
-	           // System.out.println("je suis onPreExecute()");
-	            
-	            
-	        }  
-	    	
-	    	protected Boolean doInBackground(String... args) {
-	    		// TODO Auto-generated method stub
-	    		
-	    		
-	    		getInfo(args[0],args[1]);
-	    		publishProgress();
-	    		
-	    		
-	    		
-	    		return null;
-	    	}
-	    	
-	    	@Override
-	    	 protected void onPostExecute(Boolean s) {
-	             // 返回HTML页面的内容
-	    		
-	    		while(isFini == false);
-	    		Pdialog.dismiss();
-	    		
-	         }
-	    	@Override
-	        protected void onProgressUpdate(Long... values) {
-	            // 更新进度
-	          //    System.out.println(""+values[0]);
-	              
-	        }
-	    	
-	    }*/
+		 
 	
 	
 }
