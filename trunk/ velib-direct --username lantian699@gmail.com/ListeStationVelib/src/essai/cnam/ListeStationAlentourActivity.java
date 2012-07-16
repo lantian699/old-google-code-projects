@@ -29,17 +29,19 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		setContentView(R.layout.main_map);
 		
 		Tools.openGPSSettings(this);
+		
 
 		changeRadius = (Button)findViewById(R.id.change_radius);
 		seLocaliser = (ImageButton)findViewById(R.id.selocaliser);
 		
 		mapView = (MapView) findViewById(R.id.mapView);
 		mapView.setBuiltInZoomControls(true);
+		
 
 		changeRadius.setOnClickListener(this);
 		seLocaliser.setOnClickListener(this);
 		
-		Tools.goToMyLocation(getApplicationContext(), LocationService.getRecentLocation(), mapView);
+		Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 
 		new DrawStationInBackground(this, mapView, Rayon).execute();
 
@@ -93,6 +95,7 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 			builder.setItems(items, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {		
 				
+					
 
 					if (item == 0 && Rayon != 500){
 						Rayon = 500;

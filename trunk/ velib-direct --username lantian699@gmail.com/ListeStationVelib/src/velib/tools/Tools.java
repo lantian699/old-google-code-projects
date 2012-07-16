@@ -101,12 +101,12 @@ public class  Tools {
 	public static void  DrawStationOnMap(Context context, List<StationVelib> listStationSelect, MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = context.getResources().getDrawable(R.drawable.bike);
-		VelibItemizedOverlay itemOverlay = new VelibItemizedOverlay(drawable, context);
-
 		
+		
+		Drawable drawable = context.getResources().getDrawable(R.drawable.bike);
+		VelibItemizedOverlay itemOverlay = new VelibItemizedOverlay(drawable, context, mapView);
 
-	
+
 
 		
 		try {
@@ -127,11 +127,14 @@ public class  Tools {
 				OverlayItem overlayitem = new OverlayItem(StationPos, "station","stationInfo");
 
 				itemOverlay.addOverlay(overlayitem,infoList.get(0));
+				
 				mapOverlays.add(itemOverlay);
 			
 			}
-
+			
+			
 			mapView.postInvalidate();
+			//mapView.postInvalidate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -146,7 +149,7 @@ public class  Tools {
 	
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = context.getResources().getDrawable(R.drawable.pointer);
-		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(drawable, context);
+		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(drawable, context, mapView);
 
 		GeoPoint mPosition = new GeoPoint((int) (recentLocation.getLatitude() * 1E6),(int) (recentLocation.getLongitude() * 1E6));
 
