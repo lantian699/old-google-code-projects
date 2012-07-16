@@ -19,7 +19,7 @@ import com.google.android.maps.MapView;
 public class ListeStationAlentourActivity extends MapActivity implements LocationListener, OnClickListener {
 
 	private MapView mapView;
-	private static int Rayon = 500;
+	private static int Rayon = 10000;
 	private Button changeRadius;
 	private ImageButton seLocaliser;
 

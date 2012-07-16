@@ -4,11 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import velib.model.DatabaseHelper;
-import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.services.LocationService;
 import velib.tools.Log;
-import velib.tools.ParserInfoStation;
 import velib.tools.ParserListVelib;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -28,14 +26,9 @@ import com.j256.ormlite.dao.Dao;
 
 public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
-	private Handler mHandler = new Handler();
 	ImageView imageview;
 	Button bn1, bn2;
-	int alpha = 255;// 透明值255
-	int b = 0;
 	private Dao<StationVelib, Integer> StationVelibDao;
-	private static double latitude;
-	private static double longitude;
 	public static Context context;
 
 	/**
@@ -50,17 +43,12 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logo);
 
-		this.context = this;
-		
-		
+		context = this;
 		
 		
 		new  getStationFromSite().execute(); 
 
 		imageview = (ImageView) this.findViewById(R.id.imageView5);
-		// textview = (TextView) this.findViewById(R.id.TextView01);
-		// Log.v("ColaBox", "ColaBox start ...");
-		imageview.setAlpha(alpha);
 
 		bn1 = (Button) this.findViewById(R.id.button1);
 		bn2 = (Button) this.findViewById(R.id.button2);
@@ -101,13 +89,6 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	}
 
 	
-	public void setLocationInfo(double latitude, double longitude){
-		
-		this.latitude = latitude;
-		this.longitude = longitude;
-		
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -136,10 +117,6 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 
 	}
 
-	public void initApp() {
-
-	}
-	
 
 	private class getStationFromSite extends AsyncTask<Void, Void, Void>{
 		
