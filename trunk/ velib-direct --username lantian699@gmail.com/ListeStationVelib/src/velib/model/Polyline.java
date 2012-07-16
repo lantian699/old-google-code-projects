@@ -13,21 +13,12 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
 
-/**
- * Goolge��ͼ֮Polylineʵ��
- * 
- * @author westyi
- */
+
 public class Polyline extends Overlay {
 	List<GeoPoint> points;
 	Paint paint;
 
-	/**
-	 * ���캯��ʹ��GeoPoint List����Polyline
-	 * 
-	 * @param points
-	 *            GeoPoint��List
-	 */
+
 	public Polyline(List<GeoPoint> points, int couleur) {
 		this.points = points;
 		paint = new Paint();
@@ -38,22 +29,13 @@ public class Polyline extends Overlay {
 		paint.setStrokeWidth(5);
 	}
 
-	/**
-	 * ʹ��GeoPoint��List��Paint����������Polyline
-	 * 
-	 * @param points
-	 *            GeoPoint��List�����еĹյ�
-	 * @param paint
-	 *            Paint�����������ƻ�����ʽ
-	 */
+	
 	public Polyline(List<GeoPoint> points, Paint paint) {
 		this.points = points;
 		this.paint = paint;
 	}
 
-	/**
-	 * Google�ĵ�˵���draw��������animatedʱ���õģ�Ҳ���ǿ��ƶ���Ч��ֱ�ӵ�����һ��draw��������
-	 */
+
 	@Override
 	public boolean draw(Canvas canvas, MapView mapView, boolean shadow,
 			long when) {
@@ -61,12 +43,10 @@ public class Polyline extends Overlay {
 		return false;
 	}
 
-	/**
-	 * �����߻��Ƴ��� ֻ�轫�߻��Ƶ�canvas�ϼ��ɣ���Ҫ��Ҫת����γ�ȵ���Ļ���
-	 */
+	
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
-		if (!shadow) {// ���ǻ���shadow��
+		if (!shadow) {
 			Projection projection = mapView.getProjection();
 			if (points != null) {
 				if (points.size() >= 2) {
