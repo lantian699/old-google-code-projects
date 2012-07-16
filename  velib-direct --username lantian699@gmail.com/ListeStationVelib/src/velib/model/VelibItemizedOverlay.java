@@ -1,41 +1,16 @@
 package velib.model;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -46,10 +21,11 @@ import essai.cnam.R;
 //
 // http://developer.android.com/resources/tutorials/views/hello-mapview.html
 //
-public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
+public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implements OnClickListener{
 	private List<OverlayItem> overlays= new ArrayList<OverlayItem>();
 	private Context context;
 	private List<InfoStation> listInfo = new ArrayList<InfoStation>();
+	private  static Dialog dialog;
 	
 	public VelibItemizedOverlay(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
@@ -91,7 +67,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 			  
 			 
 		  
-	      final Dialog dialog= new Dialog(context);
+	      dialog= new Dialog(context);
 	      dialog.setContentView(R.layout.custom_dialog);
 	      dialog.setTitle("Détail de station");
  
@@ -116,37 +92,13 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 	      free.setText(String.valueOf(infoStation.getFree()));
 	      
  
-	      Button ite = (Button)dialog.findViewById(R.id.luxian);
-	      Button cancel = (Button)dialog.findViewById(R.id.cancel);
+	      Button btn_itineraire = (Button)dialog.findViewById(R.id.luxian);
+	      Button btn_cancel = (Button)dialog.findViewById(R.id.cancel);
 	      dialog.show();
 	      
-	      ite.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				//String[] infos ={(String) info.subSequence(0, info.indexOf("_", 0)),(String) info.subSequence(info.indexOf("_")+1, info.length())};
-				//new Connection().execute(infos);
-				dialog.dismiss();
-			}
-	    	  
-	    	  
-	    	  
-	      });
-	      cancel.setOnClickListener(new OnClickListener(){
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-					dialog.dismiss();
-					
-				}
-		    	  
-		    	  
-		    	  
-		      });
+	      btn_itineraire.setOnClickListener(this);
+	      btn_cancel.setOnClickListener(this);
+	         
 	      
 	  }
 	  else{
@@ -165,6 +117,28 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem>{
 		  
 	}
 	  return true;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.luxian:
+			
+			System.out.println("hahahahah");
+			break;
+			
+		case R.id.cancel:
+			
+			dialog.dismiss();
+			
+			break;
+
+		default:
+			break;
+		}
+		
+		
 	}
 
 	
