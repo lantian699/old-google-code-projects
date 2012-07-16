@@ -19,7 +19,7 @@ import com.google.android.maps.MapView;
 public class ListeStationAlentourActivity extends MapActivity implements LocationListener, OnClickListener {
 
 	private MapView mapView;
-	private static int Rayon = 10000;
+	private static int Rayon = 1000;
 	private Button changeRadius;
 	private ImageButton seLocaliser;
 
@@ -40,10 +40,9 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 
 		changeRadius.setOnClickListener(this);
 		seLocaliser.setOnClickListener(this);
-		
-		Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 
 		new DrawStationInBackground(this, mapView, Rayon).execute();
+		
 
 	}
 
@@ -59,7 +58,7 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
 
-		Tools.goToMyLocation(getApplicationContext(), LocationService.getRecentLocation(), mapView);
+		//Tools.goToMyLocation(getApplicationContext(), LocationService.getRecentLocation(), mapView);
 	}
 
 	@Override
