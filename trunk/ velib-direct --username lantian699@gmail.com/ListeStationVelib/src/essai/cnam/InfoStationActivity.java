@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 
 
 
@@ -44,6 +45,8 @@ public class InfoStationActivity extends MapActivity {
 		
 		 AdView adView = (AdView)this.findViewById(R.id.adMap); // show the advertisement
 	     adView.loadAd(new AdRequest());
+	     
+	     findViewById(R.id.change_radius).setVisibility(View.GONE);
 
 	     StationVelib station = (StationVelib) getIntent().getSerializableExtra("station");
 		
