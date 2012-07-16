@@ -30,6 +30,7 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import essai.cnam.R;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +38,10 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 public class  Tools {
@@ -234,7 +239,7 @@ public class  Tools {
             HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);  
             HttpClient httpClient = new DefaultHttpClient(httpParameters);   
               
-            HttpResponse httpResponse = httpResponse = httpClient.execute(get);  
+            HttpResponse httpResponse = httpClient.execute(get);  
               
             if (httpResponse.getStatusLine().getStatusCode() == 200){  
                 strResult = EntityUtils.toString(httpResponse.getEntity());  
@@ -317,6 +322,66 @@ public class  Tools {
 		 
 	
 	
+	/**
+	 * Fonction qui permet de recharger la liste pour le module de recherche
+	 * 
+	 * @param s
+	 */
+
+	public static void setNewListForSearchModule(ListActivity listActivity, Context context,CharSequence searchModule, List<StationVelib> listVelib) {
+
+		
+		ArrayList<String> stationSearch = new ArrayList<String>();
+		ArrayList<String> stations = new ArrayList<String>();
+		stationSearch.clear();
+		stations.clear();
+
+		if (!"".equals(searchModule.toString())) {
+			for (StationVelib station : listVelib) {
+				boolean containsLabel = station.getName() != null &&  station.getName().toLowerCase().contains(searchModule.toString().toLowerCase());
+				boolean containsCodeType =  String.valueOf(station.getNumber()) != null && String.valueOf(station.getNumber()).toLowerCase().contains(searchModule.toString().toLowerCase());
+
+				if (containsLabel || containsCodeType) {
+					stationSearch.add(station.getName());
+				}
+			}
+			
+			Log.d(listActivity, "dataStationSearch.size() : " + stationSearch.size());
+
+			refreshScreenData(listActivity,context,stationSearch, stations);
+			
+		}else{
+			
+			for (StationVelib station : listVelib) {
+				stations.add(station.getName());
+			}
+			listActivity.setListAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, stations));
+		}
+
+		
+
+	}
+
+	public static void refreshScreenData(ListActivity listActivity, Context context, ArrayList<String> stationSearch, ArrayList<String> stations) {
+
+		
+		
+		
+	
+			listActivity.setListAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, stationSearch));
+		
+		showVirtualKeyboard(listActivity);
+
+	}
+	
+	
+	
+	
+	private static void showVirtualKeyboard(ListActivity listActivity) {
+		InputMethodManager in = (InputMethodManager)listActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		in.showSoftInput(((View)listActivity.findViewById(R.id.autoComplete_search_station)), InputMethodManager.SHOW_IMPLICIT);
+	}
+
 	
 
 }

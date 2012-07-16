@@ -2,6 +2,7 @@ package essai.cnam;
 
 import velib.model.*;
 import velib.tools.ParserListVelib;
+import velib.tools.Tools;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -11,11 +12,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,7 +40,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.j256.ormlite.dao.Dao;
 
-public class ListeStationVelibActivity extends ListActivity {
+public class ListeStationVelibActivity extends ListActivity implements TextWatcher {
 	
 	 InputStream is;
 	 ArrayList<String> listStation =new ArrayList<String>(); ;
@@ -44,12 +48,14 @@ public class ListeStationVelibActivity extends ListActivity {
 	 ListView listView;
 	private Dao<StationVelib, ?> VelibStationDao;
 	private List<StationVelib> listVelib;
+	private AutoCompleteTextView searchStation;
 	 
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.main);
 	  
 	  
+	  searchStation =(AutoCompleteTextView) findViewById(R.id.autoComplete_search_station);
 	  
 	  try {
 		  
@@ -69,68 +75,29 @@ public class ListeStationVelibActivity extends ListActivity {
 		}
 	  
 	
-	  setListAdapter(
-			  new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listStation));
+	  setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listStation));
 
 	  
 	  ListView listV = (ListView)ListeStationVelibActivity.this.findViewById(android.R.id.list);
 	  listV.setOnItemClickListener(new ItemClickListener());
 
+	// Le texte de l'autocompletetextview a changé
+	  
+	  searchStation.addTextChangedListener(this);
+		
+	  
+	  
 	  
 	}
 
-	/*
-	private class AddStringTask extends AsyncTask<Void, String, Void> {
-		
-		@Override
-		protected void onPreExecute (){
-			
-			ProgressDialog dialog = ProgressDialog.show(ListeStationVelibActivity.this, "", 
-                    "Loading. Please wait...", true);
-			
-		}
-			
-		
-		
-	
 	@Override
-	protected Void doInBackground(Void... unused) {
-	  try {
-			
-             //   stations = 
-		  
-	
- 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		
-	  for (String  item : stations) {
-	    publishProgress(item);
-	    //SystemClock.sleep(200);
-	  }
-
-	  return(null);
+		searchStation.setText("");
 	}
 
-	@Override
-	protected void onProgressUpdate(String... item) {
-	   ((ArrayAdapter)getListAdapter()).add(item[0]);
-	}
-
-	@Override
-	protected void onPostExecute(Void unused) {
-	  Toast.makeText(ListeStationVelibActivity.this, "Appuyer sur bouton MENU depuis 2 secondes pour chercher les stations", Toast.LENGTH_LONG).show();
-	  ListView listV = (ListView)ListeStationVelibActivity.this.findViewById(android.R.id.list);
-	  listV.setOnItemClickListener(new ItemClickListener());
-	  listV.setTextFilterEnabled(true);
-	}
-	
-  }
-*/
-	
-	
-	
 
 	private class ItemClickListener implements OnItemClickListener{
 	 
@@ -163,6 +130,27 @@ public class ListeStationVelibActivity extends ListActivity {
 	
 	  
   }
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		// TODO Auto-generated method stub
+		
+		Tools.setNewListForSearchModule(this, getApplicationContext(), s, listVelib);
+		
+	}
 
   
  
