@@ -4,10 +4,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
+import velib.model.Polyline;
 import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
+import velib.services.LocationService;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -21,6 +32,7 @@ import essai.cnam.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -104,7 +116,7 @@ public class  Tools {
 		
 		
 		Drawable drawable = context.getResources().getDrawable(R.drawable.bike);
-		VelibItemizedOverlay itemOverlay = new VelibItemizedOverlay(drawable, context, mapView);
+		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(drawable, context, mapView);
 
 
 
@@ -126,15 +138,14 @@ public class  Tools {
 				
 				OverlayItem overlayitem = new OverlayItem(StationPos, "station","stationInfo");
 
-				itemOverlay.addOverlay(overlayitem,infoList.get(0));
+				velibItemizedOverlay.addOverlay(overlayitem,infoList.get(0));
 				
-				mapOverlays.add(itemOverlay);
+				mapOverlays.add(velibItemizedOverlay);
 			
 			}
 			
 			
-			mapView.postInvalidate();
-			//mapView.postInvalidate();
+
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -159,11 +170,152 @@ public class  Tools {
 		mapOverlays.add(velibItemizedOverlay);
 
 		MapController mapController = mapView.getController();
-
 		mapController.animateTo(mPosition);
 		mapController.setZoom(15);
 		
 	}
+	
+	
+	public static void getInfo(Context context, StationVelib station, InfoStation infoStation,  Location recentLocation, MapView mapView){
+		
+		double sLatitude = station.getLatitude();
+		double sLongitude = station.getLongitude();
+		
+		double mLatitude = recentLocation.getLatitude();
+		double mLongitude = recentLocation.getLongitude();
+		
+		 List<Overlay> mapOverlays = mapView.getOverlays();
+
+		 GeoPoint Point_Station = new GeoPoint( (int)  (sLatitude*1E6), (int )(sLongitude*1E6));
+		 
+		 String Destination = "http://maps.google.com/maps/api/directions/xml?origin="+mLatitude+","+ mLongitude +  
+	     	"&destination="+sLatitude +","+sLongitude+"&sensor=false&mode=walking";  
+		
+		  List<GeoPoint> pointsdestination = GetPoint(context, Destination);
+		  
+		  drawRoute(pointsdestination,Color.RED,1, mapView);
+		 
+		 
+		
+		 
+	        Drawable Drawable_pointer = context.getResources().getDrawable(R.drawable.pointer);
+	        Drawable Drawable_station = context.getResources().getDrawable(R.drawable.bike);
+	        
+	        VelibItemizedOverlay itemizedOverlay_pointer = new VelibItemizedOverlay(Drawable_pointer);
+	        VelibItemizedOverlay itemizedOverlay_station = new VelibItemizedOverlay(Drawable_station);
+	   	 
+	     
+	        
+	        GeoPoint positiona= new GeoPoint((int) (mLatitude*1E6), (int) (mLongitude*1E6));
+	   
+	        OverlayItem overlayitema =  new OverlayItem(positiona, null,"Ma position actuelle" );
+	        OverlayItem overlayitemb =  new OverlayItem(Point_Station, "infoStation", "infoStation");
+	        
+	        
+	        itemizedOverlay_pointer.addOverlay(overlayitema,null);
+	        itemizedOverlay_station.addOverlay(overlayitemb, infoStation);
+	        mapOverlays.add(itemizedOverlay_pointer);
+	        mapOverlays.add(itemizedOverlay_station);
+		
+		  
+	        mapView.getController().setZoom(15);
+
+		 
+	}
+	
+	public static List<GeoPoint> GetPoint(Context context, String url){
+    	
+    	HttpGet get = new HttpGet(url);  
+        String strResult = "";  
+        
+        try {  
+    	   
+            HttpParams httpParameters = new BasicHttpParams();  
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);  
+            HttpClient httpClient = new DefaultHttpClient(httpParameters);   
+              
+            HttpResponse httpResponse = httpResponse = httpClient.execute(get);  
+              
+            if (httpResponse.getStatusLine().getStatusCode() == 200){  
+                strResult = EntityUtils.toString(httpResponse.getEntity());  
+            }  
+        } catch (Exception e) {  
+           
+              
+        }  
+          
+        if (-1 == strResult.indexOf("<status>OK</status>")){  
+            Toast.makeText(context, "echoue de tracer la ligne!", Toast.LENGTH_SHORT).show();  
+           // context.finish();  
+            
+        }  
+          
+        int pos = strResult.indexOf("<overview_polyline>");  
+        pos = strResult.indexOf("<points>", pos + 1);  
+        if(pos == -1) return null;
+        int pos2 = strResult.indexOf("</points>", pos);  
+        strResult = strResult.substring(pos + 8, pos2);  
+          
+        return decodePoly(strResult); 
+        
+       // return points;
+    	
+    }
+	
+	private static List<GeoPoint> decodePoly(String encoded) {  
+
+		List<GeoPoint> poly = new ArrayList<GeoPoint>();  
+		int index = 0, len = encoded.length();  
+		int lat = 0, lng = 0;  
+
+		while (index < len) {  
+			int b, shift = 0, result = 0;  
+			do {  
+				b = encoded.charAt(index++) - 63;  
+				result |= (b & 0x1f) << shift;  
+				shift += 5;  
+			} while (b >= 0x20);  
+			int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));  
+			lat += dlat;  
+
+			shift = 0;  
+			result = 0;  
+			do {  
+				b = encoded.charAt(index++) - 63;  
+				result |= (b & 0x1f) << shift;  
+				shift += 5;  
+			} while (b >= 0x20);  
+			int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));  
+			lng += dlng;  
+
+			GeoPoint p = new GeoPoint((int) (((double) lat / 1E5) * 1E6),  
+					(int) (((double) lng / 1E5) * 1E6));  
+			poly.add(p);  
+		}  
+
+		return poly;  
+	}
+	
+	
+
+	public static  void drawRoute(List<GeoPoint> points, int couleur, int flag, MapView mapView ){  
+
+
+		Polyline mOverlay = new Polyline(points,couleur);  
+		List<Overlay> overlayList = mapView.getOverlays();  
+
+		overlayList.clear();
+		overlayList.add(mOverlay);  
+		
+		if (points.size() >= 2){  
+			MapController mapController = mapView.getController();
+			mapController.animateTo(points.get(0));  
+		}  
+
+		mapView.postInvalidate();  
+	}  
+		 
+	
 	
 	
 

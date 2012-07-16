@@ -2,9 +2,12 @@ package velib.services;
 
 import java.net.Socket;
 
+import com.google.android.maps.MapView;
+
 import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
+import velib.tools.Tools;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,14 +25,15 @@ public class DecodeStationLocationFromInternet extends AsyncTask<Void, Void, Voi
     	private StationVelib station;
     	private InfoStation infoStation;
     	private Location recentLocation;
+    	private MapView mapView;
     	
-    	public DecodeStationLocationFromInternet(Context context, InfoStation infoStation, StationVelib station, Location recentLocation){
+    	public DecodeStationLocationFromInternet(Context context, InfoStation infoStation, StationVelib station, Location recentLocation, MapView mapView){
     		
     		this.context = context;
     		this.station = station;
     		this.infoStation = infoStation;
     		this.recentLocation = recentLocation;
-    		
+    		this.mapView = mapView;
     	}
     		
     	
@@ -44,7 +48,8 @@ public class DecodeStationLocationFromInternet extends AsyncTask<Void, Void, Voi
     		// TODO Auto-generated method stub
     		
     		
-			VelibItemizedOverlay.getInfo(station, infoStation, recentLocation);
+			//VelibItemizedOverlay.getInfo(station, infoStation, recentLocation);
+    		Tools.getInfo(context, station, infoStation, recentLocation, mapView);
   	
     		return null;
     	}

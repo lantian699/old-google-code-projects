@@ -42,17 +42,22 @@ public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 	@Override
 	protected Void doInBackground(Void... params) {
 
-
-
 		
-		Tools.goToMyLocation(context, LocationService.getRecentLocation(), mapView);
 
 		listStationSelect = Tools.Calculateur_Station_Prox(context, LocationService.getRecentLocation(), Rayon);
 
-			
+		
 		Tools.DrawStationOnMap(context, listStationSelect, mapView);
 		
+		
+		Tools.goToMyLocation(context, LocationService.getRecentLocation(), mapView);	
+		
+		mapView.postInvalidate();
+		
+		
 		return null;
+		
+		
 			
 	
 
@@ -62,8 +67,7 @@ public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 	protected void onPostExecute(Void result) {
 		// TODO Auto-generated method stub
 		super.onPostExecute(result);
-		
-		
+
 
 		
 		if (listStationSelect.size() > 0) {

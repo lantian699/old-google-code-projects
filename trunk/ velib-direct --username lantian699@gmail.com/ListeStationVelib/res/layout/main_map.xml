@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill_vertical|fill_horizontal"
-        android:apiKey="02Nmd5diySCq6cxbWY5yr1SO1aceiS34H_bwKDg"
+        android:apiKey="02Nmd5diySCoU3v811DcfJNAbKjEy1m6QdilIzg"
         android:clickable="true"
         android:enabled="true" />
     	<!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->
