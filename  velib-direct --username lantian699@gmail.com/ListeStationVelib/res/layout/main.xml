@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    
+    android:layout_height="fill_parent" 
     android:orientation="vertical" >
 
+	<!-- Ce LinearLayout est là pour que "autoComplete_search" ne reçoive pas le focus au lancement de l'activité -->
+    <LinearLayout
+		    android:focusable="true" android:focusableInTouchMode="true"
+		    android:layout_width="0px" android:layout_height="0px"/>
+			
+		<AutoCompleteTextView android:id="@+id/autoComplete_search_station"
+	    	android:nextFocusUp="@id/autoComplete_search_station"
+	    	android:nextFocusLeft="@id/autoComplete_search_station"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:completionThreshold="2"
+			android:hint="Nom de Station"
+			android:drawableLeft="@drawable/icon_search"/>
+        
     
-        <com.google.ads.AdView
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+    
+     <com.google.ads.AdView
         android:id="@+id/ad"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -18,12 +37,6 @@
         ads:keywords="Android application"
         ads:refreshInterval="60"
         ads:testing="false"
-        ads:textColor="#FFFFFF" />
-    <ListView
-        android:id="@id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/ad">
-    </ListView>
+        ads:textColor="#FFFFFF" />
     
-</RelativeLayout>
+</LinearLayout>
