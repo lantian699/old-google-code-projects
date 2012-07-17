@@ -74,7 +74,7 @@ public class ParserListVelib extends DefaultHandler implements Serializable {
 				List<StationVelib> list = VelibStationDao.queryForAll();*/
 				stationVelibDao.create(station);
 
-			//	Log.i(this, "une station Velib est cree --->  velib.db");
+				Log.i(this, "station "+station.getName()+" --->  velib.db");
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

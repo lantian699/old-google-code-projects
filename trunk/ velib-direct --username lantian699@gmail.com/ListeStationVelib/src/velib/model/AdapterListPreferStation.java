@@ -1,6 +1,7 @@
 package velib.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import velib.views.PreferStationCellView;
 
@@ -13,13 +14,18 @@ public class AdapterListPreferStation extends BaseAdapter{
 	
 	private Context context;
 	private Runnable myScreenRefreshCallback;
-
-	/* CONSTRUCTEUR */
-	public AdapterListPreferStation(Context context, ArrayList<String> listeTournees, Runnable screenCallback) {
-		super();
-		this.context = context;
+	private List<InfoStation> listInfoStation;
 	
-		myScreenRefreshCallback = screenCallback;
+	
+	
+	/* CONSTRUCTEUR */
+	public AdapterListPreferStation(Context context, List<InfoStation> listInfoStation, Runnable screenCallback) {
+		super();
+		
+		this.context = context;
+		this.listInfoStation = listInfoStation;
+		this.myScreenRefreshCallback = screenCallback;
+	
 	}
 
 	
@@ -32,23 +38,23 @@ public class AdapterListPreferStation extends BaseAdapter{
 		if (cell == null) {
 			cell = new PreferStationCellView(context);
 		}
-
 		
-		//cell.setData(tournee, activer, myScreenRefreshCallback);
-
+		InfoStation infoStationPrefer = (InfoStation) listInfoStation.get(position);
+		cell.setData(infoStationPrefer,  myScreenRefreshCallback);
+		
 		return cell;
 	}
 	
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return listInfoStation.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return null;
+		return listInfoStation.get(position);
 	}
 
 	@Override

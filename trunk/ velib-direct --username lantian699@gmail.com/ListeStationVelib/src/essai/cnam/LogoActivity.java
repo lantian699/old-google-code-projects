@@ -1,21 +1,14 @@
 package essai.cnam;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import velib.model.DatabaseHelper;
 import velib.model.StationVelib;
+import velib.model.getStationFromSite;
 import velib.services.LocationService;
-import velib.tools.Log;
-import velib.tools.ParserListVelib;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +39,7 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		context = this;
 		
 		
-		new  getStationFromSite().execute(); 
+		//new  getStationFromSite(this).execute(); 
 
 		imageview = (ImageView) this.findViewById(R.id.imageView5);
 
@@ -118,7 +111,7 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 	}
 
 
-	private class getStationFromSite extends AsyncTask<Void, Void, Void>{
+/*	private class getStationFromSite extends AsyncTask<Void, Void, Void>{
 		
 		 ProgressDialog dialog ;
 		
@@ -141,20 +134,20 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 				// DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
 				StationVelibDao = getHelper().getDao(StationVelib.class);
 				List<StationVelib> list = StationVelibDao.queryForAll();
-				/*Dao<InfoStation, ?> InfoStationDao = getHelper().getDao(InfoStation.class);
-				List<InfoStation> listInfoStation = InfoStationDao.queryForAll();*/
+				Dao<InfoStation, ?> InfoStationDao = getHelper().getDao(InfoStation.class);
+				List<InfoStation> listInfoStation = InfoStationDao.queryForAll();
 
 				if(list.size() == 0)
 				new ParserListVelib(getApplicationContext(), StationVelibDao);
 				
 				
 				
-				/*if(listInfoStation.size() == 0){
+				if(listInfoStation.size() == 0){
 					for(int i=0; i<list.size(); i++){
 					new ParserInfoStation(getApplicationContext(), InfoStationDao, list.get(i).getNumber());
 					//System.out.println("list size = " + list.size() + "     i= "+i);
 					}
-				}*/
+				}
 
 				
 				
@@ -180,7 +173,7 @@ public class LogoActivity extends OrmLiteBaseActivity<DatabaseHelper> {
 		
 		
 	}
-	
+	*/
 	
 	@Override
 	protected void onDestroy() {

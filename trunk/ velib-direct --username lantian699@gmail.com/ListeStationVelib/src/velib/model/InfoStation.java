@@ -34,7 +34,9 @@ public class InfoStation extends ModelObject {
 	public static final String COLUMN_INFO_TOTAL = "total";
 	public static final String COLUMN_INFO_UPDATED = "updated";
 	public static final String COLUMN_INFO_ID_STATION = "StationVelibId";
+	public static final String COLUMN_INFO_ISPREFERED= "isPrefered";
 	
+	private static Context context;
 	
 	@DatabaseField(generatedId = true)
 	private int id;
@@ -54,13 +56,20 @@ public class InfoStation extends ModelObject {
 	private boolean open;
 	@DatabaseField
 	private int updated;
+	@DatabaseField
+	private int isPrefered;
+	
+	
 
-	private static Context context;
-
-/*	public InfoStation(StationVelib st) {
-		this(st.getNumber());
+	public int getIsPrefered() {
+		return isPrefered;
 	}
-*/
+
+	public void setIsPrefered(int isPrefered) {
+		this.isPrefered = isPrefered;
+	}
+
+
 	
 	public InfoStation(){
 		

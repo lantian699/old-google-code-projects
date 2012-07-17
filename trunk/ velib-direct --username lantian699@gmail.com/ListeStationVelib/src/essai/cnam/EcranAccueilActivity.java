@@ -1,8 +1,16 @@
 package essai.cnam;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import velib.model.AdapterListPreferStation;
+import velib.model.DatabaseHelper;
+import velib.model.InfoStation;
+import velib.model.getStationFromSite;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,12 +33,13 @@ public class EcranAccueilActivity extends Activity{
 		
 		setContentView(R.layout.accueil);
 		
+
+			list_prefer_station = (ListView)findViewById(R.id.list_prefer_station);
+			
+			new  getStationFromSite(this, list_prefer_station).execute(); 
+			
+			
 		
-		this.list_prefer_station = (ListView)findViewById(R.id.list_prefer_station);
 		
-		
-		adapter_prefer = new AdapterListPreferStation(getApplicationContext(), listPre, screenCallback);
-		
-		this.list_prefer_station.setAdapter(adapter_prefer);
 	}
 }
