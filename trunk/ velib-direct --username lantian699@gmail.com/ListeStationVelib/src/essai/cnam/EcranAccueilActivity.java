@@ -11,6 +11,8 @@ import velib.model.AdapterListPreferStation;
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.getStationFromSite;
+import velib.services.LocationService;
+import velib.tools.Tools;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,9 +39,11 @@ public class EcranAccueilActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.accueil);
 		
+		Tools.openGPSSettings(this);
+		
+		startService(new Intent(this, LocationService.class));
 
 		list_prefer_station = (ListView)findViewById(R.id.list_prefer_station);
 		btn_list = (Button)findViewById(R.id.btn_list);
@@ -87,6 +91,13 @@ public class EcranAccueilActivity extends Activity implements OnClickListener{
 		
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		stopService(new Intent(this, LocationService.class));
+	}
 
 
 

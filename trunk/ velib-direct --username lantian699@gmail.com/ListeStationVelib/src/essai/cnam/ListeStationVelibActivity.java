@@ -7,10 +7,13 @@ import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.tools.Log;
+import velib.tools.ParserInfoStation;
 import velib.tools.Tools;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -29,6 +32,7 @@ public class ListeStationVelibActivity extends Activity implements TextWatcher {
 	private Dao<StationVelib, Integer> VelibStationDao;
 	private List<StationVelib> listVelib;
 	private AutoCompleteTextView searchStation;
+	private Activity context;
 	
 	 
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,22 +44,28 @@ public class ListeStationVelibActivity extends Activity implements TextWatcher {
 	  listView = (ListView) findViewById(R.id.listprincipal);
 	  
 	  try {
-		  
-		  
-			VelibStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
-			listVelib = VelibStationDao.queryForAll();
-			Log.i(this, "StationVelib size = "+ listVelib.size());
+					  
+					  
+					VelibStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
+					listVelib = VelibStationDao.queryForAll();
+					Log.i(this, "StationVelib size = "+ listVelib.size());
+						
+					listView.setAdapter(new AdapterListPrincipal(this, listVelib));
+			
+					listView.setOnItemClickListener(new ItemClickListener());
+			
+					
+					searchStation.addTextChangedListener(this);
+					
+			  	} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-			listView.setAdapter(new AdapterListPrincipal(this, listVelib));
-	
-			listView.setOnItemClickListener(new ItemClickListener());
-	
-			searchStation.addTextChangedListener(this);
+				
 		
-	  	} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	  
+		
 	  
 	  
 	}

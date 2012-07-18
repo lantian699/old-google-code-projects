@@ -2,26 +2,25 @@ package essai.cnam;
 
 import java.util.List;
 
-import com.google.android.maps.MapView;
-
 import velib.model.StationVelib;
 import velib.services.LocationService;
 import velib.tools.Tools;
-
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.google.android.maps.MapView;
 
 public class DrawStationInBackground extends AsyncTask<Void, Void, Void>{
 
 	ProgressDialog dialog;
 	private List<StationVelib> listStationSelect;
-	private Context context;
+	private Activity context;
 	private MapView mapView;
 	private int Rayon;
 	
-	public DrawStationInBackground(Context context, MapView mapView, int Rayon){
+	public DrawStationInBackground(Activity context, MapView mapView, int Rayon){
 		
 		this.context = context;
 		this.mapView = mapView;
