@@ -26,7 +26,6 @@
             
             <ImageButton 
                 android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
                 android:id="@+id/refresh_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,9 +41,10 @@
                 android:layout_marginRight="3dp"
                 android:background="@drawable/bubble"
                	android:layout_gravity="center"
+               	android:gravity="center"
                 android:text="-1"
                 android:textColor="#FFFFFF"
-                android:textSize="25dp" />
+                android:textSize="18dp" />
             
             <TextView 
                 android:id="@+id/num_total_bike"
@@ -56,12 +56,13 @@
                 android:textSize="25dp"/>
             
             <ImageButton 
+                android:id="@+id/delete_station"
                 android:layout_gravity="center"
-                android:id="@+id/refresh_station"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+				android:layout_marginLeft="50dp"
                 android:background="@drawable/spacer"
+                android:gravity="right"
          		android:src="@drawable/cross_bleu"/>
             
             
