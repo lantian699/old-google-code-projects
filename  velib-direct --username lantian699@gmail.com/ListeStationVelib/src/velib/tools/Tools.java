@@ -118,7 +118,7 @@ public class  Tools {
 	}
 	
 	
-	public static void  DrawStationsOnMap(Context context, List<StationVelib> listStationSelect, MapView mapView) {
+	public static void  DrawStationsOnMap(Activity context, List<StationVelib> listStationSelect, MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		
@@ -163,7 +163,7 @@ public class  Tools {
 	}
 	
 	
-	public static void  DrawOneStationOnMap(Context context, StationVelib station, MapView mapView) {
+	public static void  DrawOneStationOnMap(Activity context, StationVelib station, MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		
@@ -208,7 +208,7 @@ public class  Tools {
 	}
 	
 	
-	public static void goToMyLocation(Context context, Location recentLocation, MapView mapView) {
+	public static void goToMyLocation(Activity context, Location recentLocation, MapView mapView) {
 		
 	
 		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -422,6 +422,26 @@ public class  Tools {
 		in.showSoftInput(((View)listActivity.findViewById(R.id.autoComplete_search_station)), InputMethodManager.SHOW_IMPLICIT);
 	}
 
+	
+	public static void marquerIsPrefered(Activity context, StationVelib station, boolean isPrefered){
+		
+		try {
+			Dao<StationVelib, Integer> stationDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+			
+			if(isPrefered)
+			station.setIsPrefered(1);
+			else 
+			station.setIsPrefered(0);
+			
+			stationDao.update(station);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 }

@@ -83,7 +83,7 @@ public class getStationFromSite extends AsyncTask<Void, Void, Void>{
 			
 			if(listStation.size() > 0){
 		
-			AdapterListPreferStation adapter_prefer = new AdapterListPreferStation(context, listStation, null);
+			AdapterListPreferStation adapter_prefer = new AdapterListPreferStation(context, listStation, listView,  null);
 		
 			listView.setAdapter(adapter_prefer);
 			

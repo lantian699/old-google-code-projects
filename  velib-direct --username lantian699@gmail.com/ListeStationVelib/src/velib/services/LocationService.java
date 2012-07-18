@@ -26,12 +26,6 @@ public class LocationService extends Service implements LocationListener,Runnabl
 	private Context context;
 	private MapView mapView;
 
-	/*public LocationService(Context context, MapView mapView){
-		
-		this.context = context;
-		this.mapView = mapView;
-		
-	}*/
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -79,15 +73,14 @@ public class LocationService extends Service implements LocationListener,Runnabl
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		String provider = locationManager.getBestProvider(criteria, true);
 		// In order to make sure the device is getting the location, request
 		// updates.
 		locationManager.requestLocationUpdates(provider, 1l, 0f, this);
 		mostRecentLocation = locationManager.getLastKnownLocation(provider);
 		if (mostRecentLocation == null) {
-			mostRecentLocation = locationManager
-					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			mostRecentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			if (mostRecentLocation == null) {
 				Log.i("location", "Unknown Location!");
 			}

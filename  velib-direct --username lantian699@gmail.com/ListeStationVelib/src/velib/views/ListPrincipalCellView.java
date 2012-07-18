@@ -12,7 +12,10 @@ import essai.cnam.R;
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
+import velib.tools.ParserInfoStation;
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -62,11 +65,10 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		// TODO Auto-generated method stub
 		
 		
-		System.out.println("buttonView = " + buttonView.getParent());
-		
 		LinearLayout listLayout = (LinearLayout) buttonView.getParent();
 		
 		TextView tv_station_name = (TextView)listLayout.findViewById(R.id.stationname);
+
 		
 		String stationName =tv_station_name.getText().toString();
 		
@@ -78,12 +80,36 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 			PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
 			List<StationVelib> listStation = listStaionDao.query(preparedQuery);
 			
-			StationVelib station = listStation.get(0);
+			final StationVelib station = listStation.get(0);
 			if(isChecked){
+				
 				station.setIsPrefered(1);
+				final Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
+				
+				Runnable thread = new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							
+							
+							new ParserInfoStation(context, InfoStationDao, station.getNumber(), station.getId());
+							
+							
+						}
+					};
+					
+					HandlerThread myHandlerThread = new HandlerThread("getInfoStation");
+					myHandlerThread.start();
+
+					Handler handler = new Handler(myHandlerThread.getLooper());
+					handler.post(thread);
+				
 			}else{
+				
 				station.setIsPrefered(0);
 			}
+			
 			listStaionDao.update(station);
 		
 		}catch (Exception e) {
