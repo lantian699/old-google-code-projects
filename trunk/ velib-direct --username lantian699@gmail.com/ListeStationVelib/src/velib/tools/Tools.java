@@ -28,6 +28,8 @@ import com.google.android.maps.OverlayItem;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+
+import essai.cnam.AdapterListPrincipal;
 import essai.cnam.R;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -42,6 +44,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class  Tools {
@@ -373,46 +376,41 @@ public class  Tools {
 	 * @param s
 	 */
 
-	public static void setNewListForSearchModule(ListActivity listActivity, Context context,CharSequence searchModule, List<StationVelib> listVelib) {
+	public static void setNewListForSearchModule(ListView listView, Context context,CharSequence searchModule, List<StationVelib> listVelib) {
 
 		
-		ArrayList<String> stationSearch = new ArrayList<String>();
-		ArrayList<String> stations = new ArrayList<String>();
-		stationSearch.clear();
-		stations.clear();
+		List<StationVelib> stationSearch = null ;
 
+	
 		if (!"".equals(searchModule.toString())) {
 			for (StationVelib station : listVelib) {
 				boolean containsLabel = station.getName() != null &&  station.getName().toLowerCase().contains(searchModule.toString().toLowerCase());
 				boolean containsCodeType =  String.valueOf(station.getNumber()) != null && String.valueOf(station.getNumber()).toLowerCase().contains(searchModule.toString().toLowerCase());
 
 				if (containsLabel || containsCodeType) {
-					stationSearch.add(station.getName());
+					stationSearch.add(station);
 				}
 			}
 			
-			Log.d(listActivity, "dataStationSearch.size() : " + stationSearch.size());
+			Log.d(listView, "dataStationSearch.size() : " + stationSearch.size());
 
-			refreshScreenData(listActivity,context,stationSearch, stations);
+			refreshScreenData(listView,context,stationSearch);
 			
 		}else{
-			
-			for (StationVelib station : listVelib) {
-				stations.add(station.getName());
-			}
-			listActivity.setListAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, stations));
+	
+			listView.setAdapter(new AdapterListPrincipal(context, listVelib));
 		}
 
 		
 
 	}
 
-	public static void refreshScreenData(ListActivity listActivity, Context context, ArrayList<String> stationSearch, ArrayList<String> stations) {
+	public static void refreshScreenData(ListView listView, Context context, List<StationVelib> stationSearch) {
 
 
-			listActivity.setListAdapter(new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1, stationSearch));
+			listView.setAdapter(new AdapterListPrincipal(context, stationSearch));
 		
-			showVirtualKeyboard(listActivity);
+
 
 	}
 	

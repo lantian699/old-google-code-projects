@@ -39,19 +39,19 @@ public class PreferStationCellView extends LinearLayout{
 	
 	
 	
-	public void setData(InfoStation infoStation, Runnable screenCallback){
+	public void setData(StationVelib station, Runnable screenCallback){
 		
 		try{
-		Dao<StationVelib, Integer> listStationDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
-		QueryBuilder<StationVelib, Integer> queryBuilder = listStationDao.queryBuilder();
-		queryBuilder.where().eq(StationVelib.COLUMN_VELIB_ID,infoStation.getStationVelibId());
-		PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
-		List<StationVelib> listStation = listStationDao.query(preparedQuery);
+		Dao<InfoStation, Integer> listInfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
+		QueryBuilder<InfoStation, Integer> queryBuilder = listInfoStationDao.queryBuilder();
+		queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID_STATION,station.getId());
+		PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
+		List<InfoStation> listStation = listInfoStationDao.query(preparedQuery);
 		
 	
-		StationName.setText("Station - "+listStation.get(0).getName());
-		Free.setText(String.valueOf(infoStation.getFree()));
-		Total.setText(String.valueOf("/"+infoStation.getTotal()));
+		StationName.setText("Station - "+station.getName());
+		Free.setText(String.valueOf(listStation.get(0).getFree()));
+		Total.setText(String.valueOf("/"+listStation.get(0).getTotal()));
 		
 		}catch (Exception e) {
 			// TODO: handle exception

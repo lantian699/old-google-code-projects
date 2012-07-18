@@ -14,16 +14,16 @@ public class AdapterListPreferStation extends BaseAdapter{
 	
 	private Context context;
 	private Runnable myScreenRefreshCallback;
-	private List<InfoStation> listInfoStation;
+	private List<StationVelib> listStation;
 	
 	
 	
 	/* CONSTRUCTEUR */
-	public AdapterListPreferStation(Context context, List<InfoStation> listInfoStation, Runnable screenCallback) {
+	public AdapterListPreferStation(Context context, List<StationVelib> listStation, Runnable screenCallback) {
 		super();
 		
 		this.context = context;
-		this.listInfoStation = listInfoStation;
+		this.listStation = listStation;
 		this.myScreenRefreshCallback = screenCallback;
 	
 	}
@@ -39,8 +39,8 @@ public class AdapterListPreferStation extends BaseAdapter{
 			cell = new PreferStationCellView(context);
 		}
 		
-		InfoStation infoStationPrefer = (InfoStation) listInfoStation.get(position);
-		cell.setData(infoStationPrefer,  myScreenRefreshCallback);
+		StationVelib station = listStation.get(position);
+		cell.setData(station,  myScreenRefreshCallback);
 		
 		return cell;
 	}
@@ -48,13 +48,13 @@ public class AdapterListPreferStation extends BaseAdapter{
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return listInfoStation.size();
+		return listStation.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return listInfoStation.get(position);
+		return listStation.get(position);
 	}
 
 	@Override

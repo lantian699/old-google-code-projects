@@ -57,6 +57,7 @@ public class ParserListVelib extends DefaultHandler implements Serializable {
 			station.setFullAddress(attributes.getValue("fullAddress"));
 			station.setLatitude(Double.parseDouble(attributes.getValue("lat")));
 			station.setLongitude(Double.parseDouble(attributes.getValue("lng")));
+			station.setIsPrefered(0);
 
 			if (attributes.getValue("bonus").equals("1"))
 				station.setBonus(true);
