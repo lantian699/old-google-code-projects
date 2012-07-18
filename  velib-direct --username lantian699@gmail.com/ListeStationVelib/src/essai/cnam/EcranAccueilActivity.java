@@ -45,7 +45,7 @@ public class EcranAccueilActivity extends Activity implements OnClickListener{
 		btn_list = (Button)findViewById(R.id.btn_list);
 		btn_prox = (Button)findViewById(R.id.btn_prox);
 			
-		new  getStationFromSite(this, list_prefer_station).execute(); 
+		
 
 		btn_list.setOnClickListener(this);
 		btn_prox.setOnClickListener(this);
@@ -53,6 +53,13 @@ public class EcranAccueilActivity extends Activity implements OnClickListener{
 	}
 
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		new  getStationFromSite(this, list_prefer_station).execute(); 
+	}
 
 	@Override
 	public void onClick(View v) {
