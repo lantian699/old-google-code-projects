@@ -379,7 +379,7 @@ public class  Tools {
 	public static void setNewListForSearchModule(ListView listView, Context context,CharSequence searchModule, List<StationVelib> listVelib) {
 
 		
-		List<StationVelib> stationSearch = null ;
+		ArrayList<StationVelib> stationSearch = new ArrayList<StationVelib>();
 
 	
 		if (!"".equals(searchModule.toString())) {

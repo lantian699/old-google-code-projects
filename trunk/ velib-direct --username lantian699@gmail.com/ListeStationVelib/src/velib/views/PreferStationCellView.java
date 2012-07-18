@@ -11,6 +11,7 @@ import velib.model.InfoStation;
 import velib.model.StationVelib;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import essai.cnam.R;
@@ -31,6 +32,12 @@ public class PreferStationCellView extends LinearLayout{
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		inflater.inflate(R.layout.list_prefer_station, this);
+		
+		LayoutParams params = (LayoutParams) getLayoutParams();
+		params.height = LayoutParams.WRAP_CONTENT;
+		params.width = 450;
+		
+		setLayoutParams(params);
 		
 		StationName = (TextView)findViewById(R.id.prefer_station_name);
 		Free = (TextView) findViewById(R.id.num_free_bike);
