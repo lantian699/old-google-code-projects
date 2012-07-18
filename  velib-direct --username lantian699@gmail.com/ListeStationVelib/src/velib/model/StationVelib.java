@@ -12,6 +12,7 @@ public class StationVelib extends ModelObject {
 	public static final String COLUMN_VELIB_NAME = "name";
 	public static final String COLUMN_VELIB_ADDRESS = "VelibStationAddress";
 	public static final String COLUMN_VELIB_ID = "id";
+	public static final String COLUMN_VELIB_ISPREFERED= "isPrefered";
 
 	
 	@DatabaseField(generatedId = true)
@@ -32,6 +33,17 @@ public class StationVelib extends ModelObject {
 	private Boolean bonus;
 	@DatabaseField
 	private String fullAddress;
+	@DatabaseField
+	private int isPrefered;
+	
+	
+	public int getIsPrefered() {
+		return isPrefered;
+	}
+
+	public void setIsPrefered(int isPrefered) {
+		this.isPrefered = isPrefered;
+	}
 
 	public StationVelib() {
 

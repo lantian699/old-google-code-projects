@@ -56,18 +56,7 @@ public class InfoStation extends ModelObject {
 	private boolean open;
 	@DatabaseField
 	private int updated;
-	@DatabaseField
-	private int isPrefered;
 	
-	
-
-	public int getIsPrefered() {
-		return isPrefered;
-	}
-
-	public void setIsPrefered(int isPrefered) {
-		this.isPrefered = isPrefered;
-	}
 
 
 	

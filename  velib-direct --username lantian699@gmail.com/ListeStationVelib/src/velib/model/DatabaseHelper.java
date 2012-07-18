@@ -58,8 +58,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase,
-			ConnectionSource connectionSource, int oldVersion, int newVersion) {
+	public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 		try {
 			TableUtils.dropTable(connectionSource, StationVelib.class, true);
 			TableUtils.dropTable(connectionSource, InfoStation.class, true);

@@ -1,54 +1,35 @@
 package essai.cnam;
 
-import velib.model.*;
-import velib.tools.ParserListVelib;
-import velib.tools.Tools;
+import java.sql.SQLException;
+import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import velib.model.DatabaseHelper;
+import velib.model.InfoStation;
+import velib.model.StationVelib;
+import velib.tools.Log;
+import velib.tools.Tools;
+import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-
-
-import essai.cnam.R;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 import com.j256.ormlite.dao.Dao;
 
-public class ListeStationVelibActivity extends ListActivity implements TextWatcher {
+public class ListeStationVelibActivity extends Activity implements TextWatcher {
 	
-	 InputStream is;
-	 ArrayList<String> listStation =new ArrayList<String>(); ;
-	 StationVelib station;
-	 ListView listView;
-	private Dao<StationVelib, ?> VelibStationDao;
+	
+
+	private ListView listView;
+	private Dao<StationVelib, Integer> VelibStationDao;
 	private List<StationVelib> listVelib;
 	private AutoCompleteTextView searchStation;
+	
 	 
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
@@ -56,36 +37,25 @@ public class ListeStationVelibActivity extends ListActivity implements TextWatch
 	  
 	  
 	  searchStation =(AutoCompleteTextView) findViewById(R.id.autoComplete_search_station);
+	  listView = (ListView) findViewById(R.id.listprincipal);
 	  
 	  try {
 		  
 		  
 			VelibStationDao = DatabaseHelper.getInstance(getApplicationContext()).getDao(StationVelib.class);
 			listVelib = VelibStationDao.queryForAll();
-			
-			for(StationVelib station : listVelib){
+			Log.i(this, "StationVelib size = "+ listVelib.size());
 				
-				listStation.add(station.getName());
-				
-			}
-			
-		} catch (SQLException e) {
+			listView.setAdapter(new AdapterListPrincipal(this, listVelib));
+	
+			listView.setOnItemClickListener(new ItemClickListener());
+	
+			searchStation.addTextChangedListener(this);
+		
+	  	} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	  
-	
-	  setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listStation));
-
-	  
-	  ListView listV = (ListView)ListeStationVelibActivity.this.findViewById(android.R.id.list);
-	  listV.setOnItemClickListener(new ItemClickListener());
-
-	// Le texte de l'autocompletetextview a changé
-	  
-	  searchStation.addTextChangedListener(this);
-		
-	  
 	  
 	  
 	}
@@ -142,7 +112,7 @@ public class ListeStationVelibActivity extends ListActivity implements TextWatch
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		// TODO Auto-generated method stub
 		
-		Tools.setNewListForSearchModule(this, getApplicationContext(), s, listVelib);
+		Tools.setNewListForSearchModule(listView, getApplicationContext(), s, listVelib);
 		
 	}
 

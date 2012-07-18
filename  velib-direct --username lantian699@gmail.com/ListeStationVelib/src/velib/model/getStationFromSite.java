@@ -73,17 +73,17 @@ public class getStationFromSite extends AsyncTask<Void, Void, Void>{
 		
 		try{
 			
-			Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
-			QueryBuilder<InfoStation, Integer> queryBuilder = InfoStationDao.queryBuilder();
-			queryBuilder.where().eq(InfoStation.COLUMN_INFO_ISPREFERED,"1");
-			PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
-			List<InfoStation> infoList = InfoStationDao.query(preparedQuery);
+			Dao<StationVelib, Integer> stationVelibDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+			QueryBuilder<StationVelib, Integer> queryBuilder = stationVelibDao.queryBuilder();
+			queryBuilder.where().eq(StationVelib.COLUMN_VELIB_ISPREFERED,"1");
+			PreparedQuery<StationVelib> preparedQuery = queryBuilder.prepare();
+			List<StationVelib> listStation = stationVelibDao.query(preparedQuery);
 		
-			Log.i(context, "Prefer Station --> "+infoList.size());
+			Log.i(context, "Prefer Station --> "+listStation.size());
 			
-			if(infoList.size() > 0){
+			if(listStation.size() > 0){
 		
-			AdapterListPreferStation adapter_prefer = new AdapterListPreferStation(context, infoList, null);
+			AdapterListPreferStation adapter_prefer = new AdapterListPreferStation(context, listStation, null);
 		
 			listView.setAdapter(adapter_prefer);
 			
