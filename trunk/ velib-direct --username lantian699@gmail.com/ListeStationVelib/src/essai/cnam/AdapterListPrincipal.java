@@ -20,6 +20,7 @@ public class AdapterListPrincipal extends BaseAdapter{
 		
 		this.context = context;
 		this.listStation = listStation;
+		
 	}
 	
 	@Override
