@@ -2,13 +2,7 @@ package velib.views;
 
 import java.util.List;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.PreparedUpdate;
-import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.UpdateBuilder;
-
-import essai.cnam.R;
+import velib.model.AnActionModeOfEpicProportions;
 import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
@@ -23,14 +17,22 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.ActionMode;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+
+import essai.cnam.R;
+
 public class ListPrincipalCellView extends LinearLayout implements OnCheckedChangeListener{
 	
 	private TextView tv_station_name;
 	private CheckBox cb_isPrefered;
-	private Context context;
-	
+	private SherlockActivity context;
+	private ActionMode mMode;
 
-	public ListPrincipalCellView(Context context) {
+	public ListPrincipalCellView(SherlockActivity context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
@@ -38,7 +40,7 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		inflater.inflate(R.layout.list_station, this);
+		inflater.inflate(R.layout.list_station_detail, this);
 		
 		tv_station_name = (TextView)findViewById(R.id.stationname);
 		cb_isPrefered = (CheckBox)findViewById(R.id.checkbox_prefer);
@@ -65,6 +67,10 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		// TODO Auto-generated method stub
 		
 		
+		
+		
+		
+		
 		LinearLayout listLayout = (LinearLayout) buttonView.getParent();
 		
 		TextView tv_station_name = (TextView)listLayout.findViewById(R.id.stationname);
@@ -83,6 +89,7 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 			final StationVelib station = listStation.get(0);
 			if(isChecked){
 				
+				mMode = context.startActionMode(new AnActionModeOfEpicProportions(context));
 				station.setIsPrefered(1);
 				final Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
 				

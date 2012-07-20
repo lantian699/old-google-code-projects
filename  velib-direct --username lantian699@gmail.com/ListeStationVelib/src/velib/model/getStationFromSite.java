@@ -81,15 +81,21 @@ public class getStationFromSite extends AsyncTask<Void, Void, Void>{
 		
 			Log.i(context, "Prefer Station --> "+listStation.size());
 			
-			if(listStation.size() > 0){
-		
+			
 			AdapterListPreferStation adapter_prefer = new AdapterListPreferStation(context, listStation, listView,  null);
-		
+			
 			listView.setAdapter(adapter_prefer);
 			
-			context.findViewById(R.id.title).setVisibility(View.GONE);
-			
+			if(listStation.size() > 0){
 		
+			context.findViewById(R.id.ll_add_list).setVisibility(View.GONE);
+			context.findViewById(R.id.list_prefer_station).setVisibility(View.VISIBLE);
+		
+		}else{
+			
+			context.findViewById(R.id.list_prefer_station).setVisibility(View.GONE);
+			context.findViewById(R.id.ll_add_list).setVisibility(View.VISIBLE);
+			
 		}
 		
 		}catch (Exception e) {

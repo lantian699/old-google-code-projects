@@ -4,19 +4,18 @@ import java.util.List;
 
 import velib.model.StationVelib;
 import velib.views.ListPrincipalCellView;
-import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+
+import com.actionbarsherlock.app.SherlockActivity;
 
 public class AdapterListPrincipal extends BaseAdapter{
 
-	private Context context;
+	private SherlockActivity context;
 	private List<StationVelib> listStation;
 	
-	public AdapterListPrincipal(Context context, List<StationVelib> listStation){
+	public AdapterListPrincipal(SherlockActivity context, List<StationVelib> listStation){
 		
 		this.context = context;
 		this.listStation = listStation;
