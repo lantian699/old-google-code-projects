@@ -3,6 +3,7 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
+    android:background="@drawable/background_green_light"
     android:orientation="vertical" >
 
 	<!-- Ce LinearLayout est là pour que "autoComplete_search" ne reçoive pas le focus au lancement de l'activité -->
@@ -10,18 +11,13 @@
 		    android:focusable="true" android:focusableInTouchMode="true"
 		    android:layout_width="0px" android:layout_height="0px"/>
 			
-		<AutoCompleteTextView android:id="@+id/autoComplete_search_station"
-	    	android:nextFocusUp="@id/autoComplete_search_station"
-	    	android:nextFocusLeft="@id/autoComplete_search_station"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:completionThreshold="2"
-			android:hint="Nom de Station"
-			android:drawableLeft="@drawable/icon_search"/>
+		
         
     
     <ListView
         android:id="@+id/listprincipal"
+        android:layout_weight="1"
+        android:cacheColorHint="#99D9EA"
         android:layout_width="fill_parent" 
         android:layout_height="fill_parent">
     </ListView>
@@ -38,5 +34,12 @@
         ads:refreshInterval="60"
         ads:testing="false"
         ads:textColor="#FFFFFF" />
+     
+     <velib.views.ToolBar
+         android:paddingTop="5dp"
+         android:paddingBottom="5dp"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         ></velib.views.ToolBar>
     
 </LinearLayout>

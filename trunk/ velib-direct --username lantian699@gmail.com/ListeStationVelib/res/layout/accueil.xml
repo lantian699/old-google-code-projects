@@ -1,20 +1,15 @@
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Vous n&apos;avez pas choisi les stations préférées" />
         
         <ImageView 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scaleType="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:background="@drawable/background_green_light"
             android:src="@drawable/logo_velib"/>
         
@@ -24,8 +19,41 @@
             android:layout_weight="1"
             android:layout_width="fill_parent"     
             android:layout_height="wrap_content"      
-            android:cacheColorHint="#99D9EA">   
+            android:cacheColorHint="#99D9EA"
+            android:visibility="gone">   
         </ListView>
+        
+        
+        <FrameLayout 
+            android:id="@+id/ll_add_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:background="@drawable/background_green_light"
+            >
+            
+            <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/view_add_list_background"
+            android:onClick="viewAddListIsClicked"
+            android:clickable="true"/>
+            
+            <TextView 
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter les stations préférées en cliquant dessus"
+            android:textColor="#FFFFFF"
+                />
+            
+        </FrameLayout>
+        
 
         
       <velib.views.ToolBar

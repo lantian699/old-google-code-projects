@@ -5,15 +5,22 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <ImageButton
+
+        
+        <ImageButton
         android:id="@+id/btn_go_station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/spacer"
+		android:background="@drawable/spacer"
         android:contentDescription="go station"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:src="@drawable/ic_gps_station_proximite"/>
 
+    
+ 
+        
     <ImageButton
         android:id="@+id/btn_go_list"
         android:layout_width="wrap_content"
@@ -21,6 +28,10 @@
         android:layout_weight="1"
         android:background="@drawable/spacer"
         android:contentDescription="go list"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:src="@drawable/ic_list_station" />
+
+    
 
 </LinearLayout>
