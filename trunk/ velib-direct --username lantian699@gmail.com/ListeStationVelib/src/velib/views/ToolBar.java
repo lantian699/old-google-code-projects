@@ -1,14 +1,18 @@
 package velib.views;
 
+import velib.tools.Log;
 import essai.cnam.ListeStationAlentourActivity;
 import essai.cnam.ListeStationVelibActivity;
 import essai.cnam.R;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.view.View.OnClickListener;
 
@@ -17,13 +21,13 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 	public static final int HIGHLIGHT_GPS_STATION= 0;
 	public static final int HIGHLIGHT_LIST = 1;
 	
-	private Context context;
+	private Context mContext;
 
 	public ToolBar(Context context, AttributeSet attrs) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		this.context = context;
+		this.mContext = context;
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.toolbar, this);
@@ -33,6 +37,7 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 		
 		Drawable drawable = getResources().getDrawable(R.drawable.toolbar_green_dark_background);
 		setBackgroundDrawable(drawable);
+		//setPadding(0, 10, 0, 10);
 	}
 
 
@@ -45,8 +50,8 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 			
 			Intent intent = new Intent();
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.setClass(context, ListeStationAlentourActivity.class);
-			context.startActivity(intent);
+			intent.setClass(mContext, ListeStationAlentourActivity.class);
+			mContext.startActivity(intent);
 			
 			break;
 			
@@ -54,8 +59,8 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 			
 			Intent intent_list = new Intent();
 			intent_list.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent_list.setClass(context, ListeStationVelibActivity.class);
-			context.startActivity(intent_list);
+			intent_list.setClass(mContext, ListeStationVelibActivity.class);
+			mContext.startActivity(intent_list);
 			
 			break;
 
@@ -63,6 +68,35 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 			break;
 		}
 		
+	}
+	
+	
+	public static void setHighLight(Context context, int var){
+		ImageButton imgbtn = null;
+		
+		if(!(context instanceof Activity)){
+			Log.w(context, "context n'est pas une activite !");
+			return;
+		}
+		switch(var){
+		case ToolBar.HIGHLIGHT_GPS_STATION :
+			Log.d(context, "activation du bouton GPS");
+			imgbtn = ((ImageButton) ((Activity) context).findViewById(R.id.btn_go_station));
+			if(imgbtn != null){
+				imgbtn.setBackgroundColor(Color.rgb(255,127,39));
+			}
+			break;
+		case ToolBar.HIGHLIGHT_LIST :
+			Log.d(context, "activation du bouton liste");
+			imgbtn = ((ImageButton) ((Activity) context).findViewById(R.id.btn_go_list));
+			if(imgbtn != null){
+				imgbtn.setBackgroundColor(Color.rgb(255,127,39));
+			}
+			break;
+			
+		default :
+			Log.w(context, "setHighLight : cas non gere : " + var);
+		}
 	}
 
 }

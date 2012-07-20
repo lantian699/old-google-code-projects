@@ -3,9 +3,10 @@ package essai.cnam;
 
 import velib.services.LocationService;
 import velib.tools.Tools;
+import velib.views.ToolBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -23,26 +24,36 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 	private static int Rayon = 1000;
 	private Button changeRadius;
 	private ImageButton seLocaliser;
-
+	private Button zoomup;
+	private Button zoomdown;
+	
+	private static int ZOOM = 15;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_map);
+		setContentView(R.layout.act_list_alentour_map);
 		
 		Tools.openGPSSettings(this);
 		
+		ToolBar.setHighLight(this, ToolBar.HIGHLIGHT_GPS_STATION);
 
 //		startService(new Intent(this ,LocationService.class));
 		
 		changeRadius = (Button)findViewById(R.id.change_radius);
 		seLocaliser = (ImageButton)findViewById(R.id.selocaliser);
+		zoomup = (Button) findViewById(R.id.zoomup);
+		zoomdown = (Button) findViewById(R.id.zoomdown);
+		zoomup.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		zoomdown.setBackgroundColor(Color.argb(125, 0, 0, 0));
 		
 		mapView = (MapView) findViewById(R.id.mapView);
-		mapView.setBuiltInZoomControls(true);
+		mapView.setBuiltInZoomControls(false);
 		
 
 		changeRadius.setOnClickListener(this);
 		seLocaliser.setOnClickListener(this);
+		zoomup.setOnClickListener(this);
+		zoomdown.setOnClickListener(this);
 
 		new DrawStationInBackground(this, mapView, Rayon).execute();
 		
@@ -131,6 +142,20 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 			Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 			
 			
+			break;
+			
+		case R.id.zoomup:
+			
+			mapView.getController().setZoom(ZOOM+1);
+			ZOOM = ZOOM+1;
+			
+			break;
+			
+		case R.id.zoomdown:
+			
+			mapView.getController().setZoom(ZOOM-1);
+			
+			ZOOM = ZOOM-1;
 			break;
 
 		default:

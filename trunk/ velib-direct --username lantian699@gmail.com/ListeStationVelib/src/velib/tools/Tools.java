@@ -20,6 +20,7 @@ import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
 import velib.services.LocationService;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -52,7 +53,7 @@ public class  Tools {
 	public static final int CODE_ACTIVITY_GPS_VERIFICATION = 0; 
 	private static final double DISTANCE_UNITAIRE = 82324.0744;
 	
-	/* Ce fonction est pour vérifier que si le module GPS est bien allumé 
+	/* Ce fonction est pour vérifier que si le module GPS est bien allumÃ© 
 	 * 
 	 */
 	
@@ -63,15 +64,15 @@ public class  Tools {
             return;
         }
 
-        Toast.makeText(context, "GPS est éteint !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "GPS est Ã©teint !", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-        context.startActivityForResult(intent,CODE_ACTIVITY_GPS_VERIFICATION); //此为设置完成后返回到获取界面
+        context.startActivityForResult(intent,CODE_ACTIVITY_GPS_VERIFICATION); //æ­¤ä¸ºè®¾ç½®å®Œæˆ�å�Žè¿”å›žåˆ°èŽ·å�–ç•Œé�¢
        
     }
 	
 	
 	/*
-	 * c'est pour calculer les stations proches de l'utilisateur dans un rayon défini
+	 * c'est pour calculer les stations proches de l'utilisateur dans un rayon dÃ©fini
 	 */
 	
 	public static List<StationVelib> Calculateur_Station_Prox(Context context, Location recentLocation, int Rayon) {
@@ -376,7 +377,7 @@ public class  Tools {
 	 * @param s
 	 */
 
-	public static void setNewListForSearchModule(ListView listView, Context context,CharSequence searchModule, List<StationVelib> listVelib) {
+	public static void setNewListForSearchModule(ListView listView, SherlockActivity context,CharSequence searchModule, List<StationVelib> listVelib) {
 
 		
 		ArrayList<StationVelib> stationSearch = new ArrayList<StationVelib>();
@@ -405,7 +406,7 @@ public class  Tools {
 
 	}
 
-	public static void refreshScreenData(ListView listView, Context context, List<StationVelib> stationSearch) {
+	public static void refreshScreenData(ListView listView, SherlockActivity context, List<StationVelib> stationSearch) {
 
 
 			listView.setAdapter(new AdapterListPrincipal(context, stationSearch));

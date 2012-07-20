@@ -9,12 +9,8 @@ import velib.services.LocationService;
 import velib.tools.Tools;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Shader.TileMode;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,7 +18,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class EcranAccueilActivity extends FirstScreenActivity implements OnClickListener{
+public class EcranAccueilActivity extends FirstScreenActivity {
 
 	private ListView list_prefer_station;
 	private ArrayList<String> listPre = new ArrayList<String>();
@@ -56,13 +52,8 @@ public class EcranAccueilActivity extends FirstScreenActivity implements OnClick
 		startService(new Intent(this, LocationService.class));
 
 		list_prefer_station = (ListView)findViewById(R.id.list_prefer_station);
-/*		btn_list = (Button)findViewById(R.id.btn_list);
-		btn_prox = (Button)findViewById(R.id.btn_prox);
-			
 		
-
-		btn_list.setOnClickListener(this);
-		btn_prox.setOnClickListener(this);*/
+		new  getStationFromSite(this, list_prefer_station).execute(); 
 		
 	}
 
@@ -94,34 +85,19 @@ public class EcranAccueilActivity extends FirstScreenActivity implements OnClick
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-		new  getStationFromSite(this, list_prefer_station).execute(); 
-	}
-
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	/*	switch (v.getId()) {
-		case R.id.btn_prox:
-			Intent intent = new Intent(this, ListeStationAlentourActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			
-			break;
-			
-		case R.id.btn_list:
-			
-			Intent intent_list = new Intent(this, ListeStationVelibActivity.class);
-			intent_list.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent_list);
-			
-			break;
-
-		default:
-			break;
-		}*/
 		
 	}
+
+	
+	public void viewAddListIsClicked(View v){
+		
+		Intent intent_list = new Intent();
+		intent_list.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent_list.setClass(this, ListeStationVelibActivity.class);
+		startActivity(intent_list);
+		
+	}
+
 
 	@Override
 	protected void onDestroy() {
