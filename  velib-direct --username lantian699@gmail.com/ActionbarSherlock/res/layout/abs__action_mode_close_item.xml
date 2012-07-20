@@ -27,5 +27,5 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center"
                android:scaleType="fitCenter"
-               android:src="?attr/actionModeCloseDrawable" />
+               android:src="@drawable/abs__ic_cab_canceled_holo_lignt" />
 </com.actionbarsherlock.internal.nineoldandroids.widget.NineLinearLayout>
