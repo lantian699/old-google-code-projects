@@ -17,8 +17,6 @@ package com.actionbarsherlock.internal.widget;
 
 import java.util.List;
 import java.util.TooManyListenersException;
-
-import velib.model.InfoStation;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -31,7 +29,6 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
@@ -44,8 +41,7 @@ import com.actionbarsherlock.internal.view.menu.ActionMenuPresenter;
 import com.actionbarsherlock.internal.view.menu.ActionMenuView;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.view.ActionMode;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
+
 
 /**
  * @hide
