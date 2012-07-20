@@ -15,11 +15,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+
+import com.actionbarsherlock.R;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.j256.ormlite.dao.Dao;
@@ -44,6 +48,8 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 	  
 	  ToolBar.setHighLight(this, ToolBar.HIGHLIGHT_LIST);
 	  listView = (ListView) findViewById(R.id.listprincipal);
+
+	  
 	  
 	  try {
 					  

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -47,6 +48,8 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		
 		cb_isPrefered.setOnCheckedChangeListener(this);
 		
+	
+		
 	}
 
 	
@@ -65,12 +68,27 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		// TODO Auto-generated method stub
+		/*
+		View closeButton = (View) context.findViewById(R.id.abs__action_mode_close_button);
 		
+		System.out.println("parent view = " + closeButton);
 		
+		if (closeButton != null) {
+			
+			closeButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+					
+					cb_isPrefered.setChecked(false);
+				}
+			});
+			
+		}
 		
-		
-		
-		
+		*/
 		LinearLayout listLayout = (LinearLayout) buttonView.getParent();
 		
 		TextView tv_station_name = (TextView)listLayout.findViewById(R.id.stationname);
@@ -89,7 +107,7 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 			final StationVelib station = listStation.get(0);
 			if(isChecked){
 				
-				mMode = context.startActionMode(new AnActionModeOfEpicProportions(context));
+				//mMode = context.startActionMode(new AnActionModeOfEpicProportions(context));
 				station.setIsPrefered(1);
 				final Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
 				
