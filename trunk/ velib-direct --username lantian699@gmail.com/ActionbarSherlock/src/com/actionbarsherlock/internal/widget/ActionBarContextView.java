@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 package com.actionbarsherlock.internal.widget;
-
-import java.util.List;
-import java.util.TooManyListenersException;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -30,7 +28,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.actionbarsherlock.R;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator;
 import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.AnimatorListener;
 import com.actionbarsherlock.internal.nineoldandroids.animation.AnimatorSet;
@@ -41,7 +38,6 @@ import com.actionbarsherlock.internal.view.menu.ActionMenuPresenter;
 import com.actionbarsherlock.internal.view.menu.ActionMenuView;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.view.ActionMode;
-
 
 /**
  * @hide
@@ -69,17 +65,17 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
     private static final int ANIMATE_IN = 1;
     private static final int ANIMATE_OUT = 2;
     
-    private SherlockActivity context;
+    private Context context;
 
-    public ActionBarContextView(SherlockActivity context) {
-        this(context, null);
+    public ActionBarContextView(Context context) {
+        this(context,null);
         
         this.context = context;
         
         
     }
 
-    public ActionBarContextView(SherlockActivity context, AttributeSet attrs) {
+    public ActionBarContextView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.actionModeStyle);
     }
 
@@ -216,22 +212,13 @@ public class ActionBarContextView extends AbsActionBarView implements AnimatorLi
             addView(mClose);
         } else if (mClose.getParent() == null) {
             addView(mClose);
+            
         }
 
         View closeButton = mClose.findViewById(R.id.abs__action_mode_close_button);
         closeButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	
-            
-        		
-            	if(context instanceof SherlockActivity){
-            		
-            		System.out.println("contextdqs sqdsqgsgqsdgsd = " );
-            		
-            		
-            		
-            	}
-            	
+	
                 mode.finish();
             }
         });
