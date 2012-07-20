@@ -23,12 +23,18 @@ public class AnActionModeOfEpicProportions implements ActionMode.Callback {
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         //Used to put dark icons on light action bar
-       /* boolean isLight = true;
+        boolean isLight = true;
 
-        menu.add("Save")
-            .setIcon(isLight ? R.drawable.ic_compose_inverse : R.drawable.ic_compose)
+  /*      menu.add("Supprimer")
+            .setIcon( R.drawable.abs__ic_cab_canceled_holo_lignt)
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
-;
+        
+        menu.add("Valider")
+        .setIcon( R.drawable.abs__ic_cab_done_holo_dark)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    
+  
+
 
         return true;
     }
