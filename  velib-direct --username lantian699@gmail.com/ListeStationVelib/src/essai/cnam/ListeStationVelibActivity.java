@@ -5,21 +5,14 @@ import java.util.List;
 
 import velib.activitymodel.FirstScreenActivity;
 import velib.model.DatabaseHelper;
-import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.tools.Log;
 import velib.tools.Tools;
 import velib.views.ToolBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
@@ -59,9 +52,7 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 					Log.i(this, "StationVelib size = "+ listVelib.size());
 						
 					listView.setAdapter(new AdapterListPrincipal(this, listVelib));
-			
-					listView.setOnItemClickListener(new ItemClickListener());
-			
+
 					
 			  	} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -114,31 +105,28 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 	    }
 	
 
-	private class ItemClickListener implements OnItemClickListener{
-	 
-	@Override
+	/*@Override
 	public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
 		
 		
 	//	String item = (String)parent.getItemAtPosition(position);
-		StationVelib st = listVelib.get(position);
+		StationVelib station = listVelib.get(position);
 		System.out.println("listVelib = " + listVelib.get(position) );
-		InfoStation info = new InfoStation(st.getNumber(),getApplicationContext());
+		InfoStation info = new InfoStation(station.getNumber(),context);
 		
 		
 		Intent intent = new Intent(getBaseContext(),InfoStationActivity.class);
-		intent.putExtra("station", st);
+		intent.putExtra("station", station);
 		startActivity(intent);
 		
 		//Toast.makeText(ListeStationVelibActivity.this, String.valueOf("{"+st.getLatitude()+", "+st.getLongitude()+", "+info.getAvailable()+", "+info.getFree()+"}"), Toast.LENGTH_SHORT).show();
-		
-	}
+
 	
 	
 	
 	
 	  
-  }
+  }*/
 
 	@Override
 	public void afterTextChanged(Editable s) {

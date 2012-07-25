@@ -1,6 +1,7 @@
 package velib.views;
 
 import velib.tools.Log;
+import essai.cnam.EcranAccueilActivity;
 import essai.cnam.ListeStationAlentourActivity;
 import essai.cnam.ListeStationVelibActivity;
 import essai.cnam.R;
@@ -21,13 +22,13 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 	public static final int HIGHLIGHT_GPS_STATION= 0;
 	public static final int HIGHLIGHT_LIST = 1;
 	
-	private Context mContext;
+	private Activity mContext;
 
 	public ToolBar(Context context, AttributeSet attrs) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		this.mContext = context;
+		this.mContext = (Activity) context;
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.toolbar, this);
@@ -60,7 +61,7 @@ public class ToolBar extends LinearLayout implements OnClickListener{
 			Intent intent_list = new Intent();
 			intent_list.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent_list.setClass(mContext, ListeStationVelibActivity.class);
-			mContext.startActivity(intent_list);
+			mContext.startActivityForResult(intent_list, EcranAccueilActivity.REQUEST_CODE_ACTIVITY_LIST);
 			
 			break;
 

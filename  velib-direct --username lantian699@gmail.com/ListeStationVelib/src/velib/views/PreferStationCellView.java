@@ -9,8 +9,10 @@ import velib.model.StationVelib;
 import velib.model.getStationFromSite;
 import velib.tools.Log;
 import velib.tools.ParserInfoStation;
+import velib.tools.Tools;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -22,9 +24,10 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
+import essai.cnam.InfoStationActivity;
 import essai.cnam.R;
 
-public class PreferStationCellView extends LinearLayout{
+public class PreferStationCellView extends LinearLayout implements OnClickListener{
 
 	private Activity context;
 	private TextView StationName;
@@ -33,6 +36,8 @@ public class PreferStationCellView extends LinearLayout{
 	private ImageButton actualiser;
 	private ImageButton supprimer;
 	private ListView listView;
+	private LinearLayout ll_prefer_station;
+	private StationVelib station;
 
 	public PreferStationCellView(Activity context, ListView listView) {
 		super(context);
@@ -51,13 +56,17 @@ public class PreferStationCellView extends LinearLayout{
 		Total = (TextView)findViewById(R.id.num_total_bike);
 		actualiser = (ImageButton) findViewById(R.id.refresh_station);
 		supprimer = (ImageButton) findViewById(R.id.delete_station);
+		ll_prefer_station = (LinearLayout)findViewById(R.id.ll_prefer_station);
 		
+		ll_prefer_station.setOnClickListener(this);
 		
 	}
 	
 	
 	
 	public void setData(final StationVelib station, Runnable screenCallback){
+		
+		this.station = station;
 		
 		try{
 		Dao<InfoStation, Integer> listInfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
@@ -67,7 +76,7 @@ public class PreferStationCellView extends LinearLayout{
 		List<InfoStation> infoList = listInfoStationDao.query(preparedQuery);
 		
 	
-		StationName.setText("Station - "+station.getName());
+		StationName.setText(Tools.StringUtilsSeperator(station.getName()));
 		Free.setText(String.valueOf(infoList.get(0).getFree()));
 		Total.setText(String.valueOf("/"+infoList.get(0).getTotal()));
 		
@@ -120,6 +129,28 @@ public class PreferStationCellView extends LinearLayout{
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+		switch (v.getId()) {
+		case R.id.ll_prefer_station:
+			
+			System.out.println("listVelib = " +station );
+
+			Intent intent = new Intent(context,InfoStationActivity.class);
+			intent.putExtra("station", station);
+			context.startActivity(intent);
+			
+			break;
+
+		default:
+			break;
 		}
 	}
 

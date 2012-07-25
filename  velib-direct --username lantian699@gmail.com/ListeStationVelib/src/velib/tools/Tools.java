@@ -444,5 +444,12 @@ public class  Tools {
 		
 	}
 	
+	public static String StringUtilsSeperator(String s){
+		
+		s = s.substring(s.indexOf("-")+2, s.length());
+		
+		return s;
+		
+	}
 
 }
