@@ -1,17 +1,13 @@
 package essai.cnam;
 
-import java.util.ArrayList;
-
 import velib.activitymodel.FirstScreenActivity;
-import velib.model.AdapterListPreferStation;
 import velib.model.getStationFromSite;
 import velib.services.LocationService;
 import velib.tools.Tools;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,14 +15,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class EcranAccueilActivity extends FirstScreenActivity {
+	
+	public static final int REQUEST_CODE_ACTIVITY_LIST = 0;
 
 	private ListView list_prefer_station;
-	private ArrayList<String> listPre = new ArrayList<String>();
-	private Runnable screenCallback;
-	private Context context;
-	private AdapterListPreferStation adapter_prefer;
-	private Button btn_prox;
-	private Button btn_list;
+
 	
 	
 	
@@ -61,7 +54,7 @@ public class EcranAccueilActivity extends FirstScreenActivity {
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Used to put dark icons on light action bar
-        boolean isLight = true;
+		
         menu.add("menu")
             .setIcon(R.drawable.abs__ic_menu_moreoverflow_holo_dark )
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -94,10 +87,48 @@ public class EcranAccueilActivity extends FirstScreenActivity {
 		Intent intent_list = new Intent();
 		intent_list.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent_list.setClass(this, ListeStationVelibActivity.class);
-		startActivity(intent_list);
+		startActivityForResult(intent_list, REQUEST_CODE_ACTIVITY_LIST);
 		
 	}
 
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch (requestCode) {
+		case REQUEST_CODE_ACTIVITY_LIST:
+			
+			new  getStationFromSite(this, list_prefer_station).execute(); 
+			
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			
+			System.exit(0);
+			
+			break;
+
+		default:
+			break;
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	
 
 	@Override
 	protected void onDestroy() {

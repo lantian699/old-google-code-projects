@@ -1,5 +1,6 @@
 package velib.views;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import velib.model.AnActionModeOfEpicProportions;
@@ -7,7 +8,9 @@ import velib.model.DatabaseHelper;
 import velib.model.InfoStation;
 import velib.model.StationVelib;
 import velib.tools.ParserInfoStation;
+import velib.tools.Tools;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,16 +27,20 @@ import com.actionbarsherlock.view.ActionMode;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
-
+import android.view.View.OnClickListener;
+import essai.cnam.InfoStationActivity;
 import essai.cnam.R;
 
-public class ListPrincipalCellView extends LinearLayout implements OnCheckedChangeListener{
+public class ListPrincipalCellView extends LinearLayout implements OnCheckedChangeListener, OnClickListener{
 	
 	private TextView tv_station_name;
 	private CheckBox cb_isPrefered;
 	private SherlockActivity context;
-	private ActionMode mMode;
-
+	private TextView free;
+	private TextView total;
+	private LinearLayout ll_list_station;
+	private StationVelib station;
+	
 	public ListPrincipalCellView(SherlockActivity context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -43,27 +51,81 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		
 		inflater.inflate(R.layout.list_station_detail, this);
 		
-		tv_station_name = (TextView)findViewById(R.id.stationname);
+		tv_station_name = (TextView)findViewById(R.id.list_station_name);
 		cb_isPrefered = (CheckBox)findViewById(R.id.checkbox_prefer);
+		free = (TextView) findViewById(R.id.num_free_bike_principal);
+		total = (TextView)findViewById(R.id.num_total_bike_principal);
+		ll_list_station = (LinearLayout) findViewById(R.id.ll_list_station);
+		
 		
 		cb_isPrefered.setOnCheckedChangeListener(this);
-		
+		ll_list_station.setOnClickListener(this);
 	
 		
 	}
 
 	
-	public void setData(StationVelib station){
+	public void setData(final StationVelib station){
 		
-		tv_station_name.setText(station.getName());
+		this.station = station;
 		
-		if(station.getIsPrefered() == 0)
-			cb_isPrefered.setChecked(false);
-		else
-			cb_isPrefered.setChecked(true);
+		
+		try {
+			final Dao<InfoStation, Integer> infoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
+			
+		
+			
+			
+			Runnable thread = new Runnable() {
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					
+					
+					new ParserInfoStation(context, infoStationDao, station.getNumber(), station.getId());
+					
+				}
+			};
+			
+			HandlerThread myHandlerThread = new HandlerThread("getInfoStation");
+			myHandlerThread.start();
+
+			Handler handler = new Handler(myHandlerThread.getLooper());
+			handler.post(thread);
+			
+			
+			QueryBuilder<InfoStation, Integer> queryBuilder = infoStationDao.queryBuilder();
+			queryBuilder.where().eq(InfoStation.COLUMN_INFO_ID_STATION,station.getId());
+			PreparedQuery<InfoStation> preparedQuery = queryBuilder.prepare();
+			List<InfoStation> infoList = infoStationDao.query(preparedQuery);
+			
+			
+			if(infoList.size() > 0){
+				
+				InfoStation infoStation = infoList.get(0);
+				free.setText(String.valueOf(infoStation.getFree()));
+				total.setText("/"+String.valueOf(infoStation.getTotal()));
+			}
+			tv_station_name.setText(Tools.StringUtilsSeperator(station.getName()));
+			
+			
+			if(station.getIsPrefered() == 0)
+				cb_isPrefered.setChecked(false);
+			else
+				cb_isPrefered.setChecked(true);
+		
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
+	
+	
+	
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -89,9 +151,11 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		}
 		
 		*/
-		LinearLayout listLayout = (LinearLayout) buttonView.getParent();
 		
-		TextView tv_station_name = (TextView)listLayout.findViewById(R.id.stationname);
+		
+		LinearLayout listLayout = (LinearLayout) buttonView.getParent().getParent();
+		
+		TextView tv_station_name = (TextView)listLayout.findViewById(R.id.list_station_name);
 
 		
 		String stationName =tv_station_name.getText().toString();
@@ -107,28 +171,7 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 			final StationVelib station = listStation.get(0);
 			if(isChecked){
 				
-				//mMode = context.startActionMode(new AnActionModeOfEpicProportions(context));
 				station.setIsPrefered(1);
-				final Dao<InfoStation, Integer> InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
-				
-				Runnable thread = new Runnable() {
-						
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							
-							
-							new ParserInfoStation(context, InfoStationDao, station.getNumber(), station.getId());
-							
-							
-						}
-					};
-					
-					HandlerThread myHandlerThread = new HandlerThread("getInfoStation");
-					myHandlerThread.start();
-
-					Handler handler = new Handler(myHandlerThread.getLooper());
-					handler.post(thread);
 				
 			}else{
 				
@@ -143,6 +186,28 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 		}
 		
 		
+		
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+		switch (v.getId()) {
+		case R.id.ll_list_station:
+			
+			System.out.println("listVelib = " +station );
+
+			Intent intent = new Intent(context,InfoStationActivity.class);
+			intent.putExtra("station", station);
+			context.startActivity(intent);
+			
+			break;
+
+		default:
+			break;
+		}
 		
 	}
 }
