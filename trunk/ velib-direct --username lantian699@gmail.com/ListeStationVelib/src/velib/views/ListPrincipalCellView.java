@@ -21,6 +21,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.ActionMode;
@@ -107,7 +108,11 @@ public class ListPrincipalCellView extends LinearLayout implements OnCheckedChan
 				free.setText(String.valueOf(infoStation.getFree()));
 				total.setText("/"+String.valueOf(infoStation.getTotal()));
 			}
-			tv_station_name.setText(Tools.StringUtilsSeperator(station.getName()));
+			else {
+				
+				Toast.makeText(context, "Vous n'avez pas de connexion Internet.", Toast.LENGTH_SHORT).show();
+			}
+			tv_station_name.setText(station.getName());
 			
 			
 			if(station.getIsPrefered() == 0)

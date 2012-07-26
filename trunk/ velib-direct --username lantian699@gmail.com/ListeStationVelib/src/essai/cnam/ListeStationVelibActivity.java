@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.view.Menu;
@@ -36,7 +37,7 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.act_list_station_velib);
 	  
-	 
+	  Toast.makeText(this, "Cochez la case pour choisir votre station préférée", Toast.LENGTH_LONG).show();
 	  
 	  
 	  ToolBar.setHighLight(this, ToolBar.HIGHLIGHT_LIST);

@@ -48,7 +48,7 @@ public class getStationFromSite extends AsyncTask<Void, Void, Void>{
 			  Dao<StationVelib, Integer> StationVelibDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
 			  List<StationVelib> list = StationVelibDao.queryForAll();
 			
-				if(list.size() == 0)
+				if(list.size() <= 1200)
 				new ParserListVelib(context, StationVelibDao);
 			
 

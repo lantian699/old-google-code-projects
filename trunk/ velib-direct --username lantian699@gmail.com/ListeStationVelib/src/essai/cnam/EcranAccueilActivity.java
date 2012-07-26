@@ -68,7 +68,12 @@ public class EcranAccueilActivity extends FirstScreenActivity {
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //This uses the imported MenuItem from ActionBarSherlock
-        Toast.makeText(this, "Got click: " + item.toString(), Toast.LENGTH_SHORT).show();
+        
+        Intent intent = new Intent();
+        intent.setClass(this, AProposActivity.class);
+        startActivity(intent);
+        
+        
         return true;
     }
 

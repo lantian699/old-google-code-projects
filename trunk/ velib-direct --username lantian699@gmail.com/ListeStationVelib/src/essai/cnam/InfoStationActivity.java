@@ -5,8 +5,14 @@ import velib.model.StationVelib;
 import velib.model.VelibItemizedOverlay;
 import velib.services.LocationService;
 import velib.tools.Tools;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -15,7 +21,7 @@ import com.google.android.maps.MapView;
 
 
 
-public class InfoStationActivity extends MapActivity {
+public class InfoStationActivity extends MapActivity implements OnClickListener {
 	
 	MapView mapView;
 	Double latitude;
@@ -23,9 +29,11 @@ public class InfoStationActivity extends MapActivity {
 	int  available;
 	int free;
 	String addr;
-	
+	private Button zoomup;
+	private Button zoomdown;
 	VelibItemizedOverlay itemOverlay;
-
+	private ImageButton seLocaliser;
+	private static int ZOOM = 15;
 	
 	public void onCreate(Bundle savedInstanceState) 
 	{
@@ -41,6 +49,18 @@ public class InfoStationActivity extends MapActivity {
 		
 		mapView = (MapView) this.findViewById(R.id.mapView);
 		mapView.setBuiltInZoomControls(true);
+		seLocaliser = (ImageButton)findViewById(R.id.selocaliser);
+		zoomup = (Button) findViewById(R.id.zoomup);
+		zoomdown = (Button) findViewById(R.id.zoomdown);
+		
+		
+		
+		zoomup.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		zoomdown.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		
+		zoomup.setOnClickListener(this);
+		zoomdown.setOnClickListener(this);
+		seLocaliser.setOnClickListener(this);
 		
 		Tools.DrawOneStationOnMap(this, station, mapView);
 		Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
@@ -56,5 +76,36 @@ public class InfoStationActivity extends MapActivity {
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		
+		case R.id.selocaliser:
+			
+			Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
+			break;
+			
+		case R.id.zoomup:
+			
+			mapView.getController().setZoom(ZOOM+1);
+			ZOOM = ZOOM+1;
+			
+			break;
+			
+		case R.id.zoomdown:
+			
+			mapView.getController().setZoom(ZOOM-1);
+			
+			ZOOM = ZOOM-1;
+			break;
+
+		default:
+			break;
+		}
 	}
 }
