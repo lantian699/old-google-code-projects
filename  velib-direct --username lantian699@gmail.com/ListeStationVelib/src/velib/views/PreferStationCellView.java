@@ -76,7 +76,7 @@ public class PreferStationCellView extends LinearLayout implements OnClickListen
 		List<InfoStation> infoList = listInfoStationDao.query(preparedQuery);
 		
 	
-		StationName.setText(Tools.StringUtilsSeperator(station.getName()));
+		StationName.setText(station.getName());
 		Free.setText(String.valueOf(infoList.get(0).getFree()));
 		Total.setText(String.valueOf("/"+infoList.get(0).getTotal()));
 		

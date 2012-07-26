@@ -19,7 +19,15 @@
         android:src="@drawable/ic_gps_station_proximite"/>
 
     
- 
+ 	<LinearLayout 
+ 	    android:background="#FF7F27"
+ 	    android:gravity="center"
+ 	    android:layout_marginTop="5dp"
+ 	    android:layout_marginBottom="5dp"
+ 	    android:layout_height="fill_parent"
+ 	    android:layout_width="1dp">
+ 	    
+ 	</LinearLayout>
         
     <ImageButton
         android:id="@+id/btn_go_list"
