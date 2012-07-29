@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import velib.activitymodel.FirstScreenActivity;
+import velib.activitymodel.SecondScreenActivity;
 import velib.model.DatabaseHelper;
 import velib.model.StationVelib;
 import velib.tools.Log;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,9 +22,11 @@ import android.widget.Toast;
 import com.actionbarsherlock.R;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.j256.ormlite.dao.Dao;
 
-public class ListeStationVelibActivity extends FirstScreenActivity implements TextWatcher {
+public class ListeStationVelibActivity extends SecondScreenActivity implements TextWatcher {
 	
 	
 
@@ -37,7 +41,11 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.act_list_station_velib);
 	  
+	  AdView adView = (AdView)this.findViewById(R.id.ad_list); // show the advertisement
+	    adView.loadAd(new AdRequest());
+	    
 	  Toast.makeText(this, "Cochez la case pour choisir votre station préférée", Toast.LENGTH_LONG).show();
+	  
 	  
 	  
 	  ToolBar.setHighLight(this, ToolBar.HIGHLIGHT_LIST);
@@ -128,6 +136,13 @@ public class ListeStationVelibActivity extends FirstScreenActivity implements Te
 	
 	  
   }*/
+	 
+	 
+	 @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return super.onKeyDown(keyCode, event);
+	}
 
 	@Override
 	public void afterTextChanged(Editable s) {

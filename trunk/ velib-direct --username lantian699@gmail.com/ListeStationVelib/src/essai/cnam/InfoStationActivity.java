@@ -7,8 +7,10 @@ import velib.services.LocationService;
 import velib.tools.Tools;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -57,6 +59,8 @@ public class InfoStationActivity extends MapActivity implements OnClickListener 
 		
 		zoomup.setBackgroundColor(Color.argb(125, 0, 0, 0));
 		zoomdown.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		seLocaliser.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		
 		
 		zoomup.setOnClickListener(this);
 		zoomdown.setOnClickListener(this);
@@ -66,7 +70,7 @@ public class InfoStationActivity extends MapActivity implements OnClickListener 
 		Tools.goToMyLocation(this, LocationService.getRecentLocation(), mapView);
 		
 		mapView.getController().setZoom(12);
-	
+		mapView.setBuiltInZoomControls(false);
 
 }
 	
@@ -79,6 +83,28 @@ public class InfoStationActivity extends MapActivity implements OnClickListener 
 	}
 
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, EcranAccueilActivity.class);
+			startActivity(intent);
+			
+			break;
+
+		default:
+			break;
+		}
+		
+		
+		
+		return super.onKeyDown(keyCode, event);
+	}
 
 	@Override
 	public void onClick(View v) {

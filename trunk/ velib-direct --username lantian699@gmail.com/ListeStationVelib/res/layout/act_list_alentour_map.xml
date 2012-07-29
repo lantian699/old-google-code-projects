@@ -18,7 +18,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:apiKey="02Nmd5diySCpaKU8E4djnDtmjotRfqCvcRyhq6A"
+        android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g"
         android:clickable="true"
         android:enabled="true" />
     	<!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->
@@ -44,6 +44,7 @@
            android:layout_width="wrap_content"
            android:src="@drawable/selocaliser"
            android:alpha="0.5"
+           android:layout_marginLeft="10dp"
            android:layout_gravity="bottom|left"
            android:layout_marginBottom="60dp"
            />
@@ -96,18 +97,8 @@
             android:textColor="#FFFFFF"/>
         
     </LinearLayout>
-       
-       <velib.views.ToolBar
-         android:layout_gravity="bottom"
-         android:layout_height="wrap_content"
-         android:layout_width="fill_parent">
-         
-     </velib.views.ToolBar>
-       
-   </FrameLayout>
     
-    
-     <com.google.ads.AdView
+            <com.google.ads.AdView
         android:id="@+id/adMap"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -117,9 +108,17 @@
         ads:keywords="Android application"
         ads:refreshInterval="60"
         ads:testing="false"
+        android:layout_gravity="top"
         ads:textColor="#FFFFFF" />
-     
-     
-    
+       
+       <velib.views.ToolBar
+         android:layout_gravity="bottom"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent">
+         
+     </velib.views.ToolBar>
+       
+   </FrameLayout>
+       
 
 </LinearLayout>
