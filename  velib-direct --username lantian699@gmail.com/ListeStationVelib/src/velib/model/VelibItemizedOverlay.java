@@ -101,7 +101,7 @@ public  class VelibItemizedOverlay extends ItemizedOverlay<OverlayItem> implemen
 		  
 	      dialog= new Dialog(context);
 	      dialog.setContentView(R.layout.custom_dialog);
-	      dialog.setTitle("DÃ©tail de station");
+	      dialog.setTitle("Détail de station");
  
 	      
 	      	final Dao<StationVelib,Integer> StationVelibDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);

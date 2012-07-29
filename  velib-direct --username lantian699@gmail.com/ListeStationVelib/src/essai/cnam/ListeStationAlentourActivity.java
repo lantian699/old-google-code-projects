@@ -6,22 +6,27 @@ import velib.tools.Tools;
 import velib.views.ToolBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.actionbarsherlock.R;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
 public class ListeStationAlentourActivity extends MapActivity implements LocationListener, OnClickListener {
 
 	private MapView mapView;
-	private static int Rayon = 1000;
+	private static int Rayon = 500;
 	private Button changeRadius;
 	private ImageButton seLocaliser;
 	private Button zoomup;
@@ -35,6 +40,9 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		
 		Tools.openGPSSettings(this);
 		
+		AdView adView = (AdView)this.findViewById(R.id.adMap); // show the advertisement
+	    adView.loadAd(new AdRequest());
+		
 		ToolBar.setHighLight(this, ToolBar.HIGHLIGHT_GPS_STATION);
 
 //		startService(new Intent(this ,LocationService.class));
@@ -45,11 +53,14 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		zoomdown = (Button) findViewById(R.id.zoomdown);
 		zoomup.setBackgroundColor(Color.argb(125, 0, 0, 0));
 		zoomdown.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		changeRadius.setBackgroundColor(Color.argb(125, 0, 0, 0));
+		seLocaliser.setBackgroundColor(Color.argb(125, 0, 0, 0));
+
 		
 		mapView = (MapView) findViewById(R.id.mapView);
 		mapView.setBuiltInZoomControls(false);
 		
-
+		changeRadius.setText(String.valueOf(Rayon)+"M");
 		changeRadius.setOnClickListener(this);
 		seLocaliser.setOnClickListener(this);
 		zoomup.setOnClickListener(this);
@@ -112,6 +123,7 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 
 					if (item == 0 && Rayon != 500){
 						Rayon = 500;
+						
 						new DrawStationInBackground(ListeStationAlentourActivity.this, mapView, Rayon).execute();
 					}
 					
@@ -125,7 +137,7 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 					}
 
 					
-					
+					changeRadius.setText(String.valueOf(Rayon)+"M");
 
 				}
 			});
@@ -163,7 +175,30 @@ public class ListeStationAlentourActivity extends MapActivity implements Locatio
 		}
 		
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.setClass(this, EcranAccueilActivity.class);
+			startActivity(intent);
+			
+			break;
 
+		default:
+			break;
+		}
+		
+		
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

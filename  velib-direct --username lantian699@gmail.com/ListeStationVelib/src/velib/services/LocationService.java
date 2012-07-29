@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 public class LocationService extends Service implements LocationListener,Runnable {
 
@@ -83,6 +84,7 @@ public class LocationService extends Service implements LocationListener,Runnabl
 			mostRecentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 			if (mostRecentLocation == null) {
 				Log.i("location", "Unknown Location!");
+				Toast.makeText(context, "Unknown Location!", Toast.LENGTH_SHORT).show();
 			}
 
 		}

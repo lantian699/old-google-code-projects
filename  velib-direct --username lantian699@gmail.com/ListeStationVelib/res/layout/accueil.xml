@@ -1,5 +1,4 @@
-
-   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -55,12 +54,26 @@
             
         </FrameLayout>
         
+        <com.google.ads.AdView
+          	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	        android:id="@+id/ad_accueil"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        ads:adSize="BANNER"
+	        ads:adUnitId="a14eec7a5163bce"
+	        ads:backgroundColor="#000000"
+	        ads:keywords="Android application"
+	        ads:refreshInterval="60"
+	        ads:testing="false"
+	        ads:textColor="#FFFFFF" />
 
         
       <velib.views.ToolBar
           android:paddingTop="5dp"
           android:paddingBottom="5dp"
           android:layout_width="fill_parent"
-          android:layout_height="wrap_content"/>     
+          android:layout_height="wrap_content"/>    
+          
+
         
     </LinearLayout>

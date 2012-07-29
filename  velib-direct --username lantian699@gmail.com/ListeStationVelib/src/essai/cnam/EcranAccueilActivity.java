@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 public class EcranAccueilActivity extends FirstScreenActivity {
 	
@@ -30,6 +31,9 @@ public class EcranAccueilActivity extends FirstScreenActivity {
 		setContentView(R.layout.accueil);
 		
 		Tools.openGPSSettings(this);
+		
+		AdView adView = (AdView)this.findViewById(R.id.ad_accueil); // show the advertisement
+	    adView.loadAd(new AdRequest());
 		
 		/*
 		 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -118,17 +122,6 @@ public class EcranAccueilActivity extends FirstScreenActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_BACK:
-			
-			System.exit(0);
-			
-			break;
-
-		default:
-			break;
-		}
 		
 		return super.onKeyDown(keyCode, event);
 	}
