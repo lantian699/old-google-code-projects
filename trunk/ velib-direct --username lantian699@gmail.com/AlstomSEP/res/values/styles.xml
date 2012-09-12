@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    <string name="login">Login</string>
+    <string name="password">mot de passe</string>
+
+</resources>
