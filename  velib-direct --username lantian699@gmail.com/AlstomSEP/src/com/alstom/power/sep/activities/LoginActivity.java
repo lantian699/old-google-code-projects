@@ -27,6 +27,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		login_edit = (EditText) findViewById(R.id.loginEditText);
 		password_edit = (EditText) findViewById(R.id.mdpEditText);
+		btn_ok = (Button) findViewById(R.id.okButton);
 		
 		btn_ok.setOnClickListener(this);
 		
@@ -38,7 +39,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		case R.id.okButton:
 			
 			Intent intent = new Intent();
-			intent.setClass(getApplication(), cls);
+			intent.setClass(getApplication(), MyProjectActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			this.finish();
