@@ -3,7 +3,8 @@ package com.alstom.power.sep.fragments;
 import com.alstom.power.sep.R;
 import com.alstom.power.sep.adapters.AssistanceRequestAdapter;
 import com.alstom.power.sep.adapters.SectionedAdapter;
-import com.alstom.power.sep.adapters.TreatmentAdapter;
+import com.alstom.power.sep.adapters.TreatmentDateAdapter;
+import com.alstom.power.sep.adapters.TreatmentFlashageAdapter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +19,9 @@ public class TreatmentSectionFragment extends Fragment {
 	private ListView listTreatment;
 	private SectionedAdapter sectionedAdapter;
 	private String nomSeparator;
-	private TreatmentAdapter  treatmentAdapter;
-
+	private TreatmentDateAdapter  treatmentDateAdapter;
+	private TreatmentFlashageAdapter treatmentFlashageAdapter;
+	
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,13 @@ public class TreatmentSectionFragment extends Fragment {
     	
     	nomSeparator = "Treatment";
     	
-    	treatmentAdapter = new TreatmentAdapter(getActivity(), 2);
+    	treatmentDateAdapter = new TreatmentDateAdapter(getActivity(), 2);
+    	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 1);
     	
     	
     	
-    	sectionedAdapter.addSection(nomSeparator, treatmentAdapter);
-    	
+    	sectionedAdapter.addSection(nomSeparator, treatmentDateAdapter);
+    	sectionedAdapter.addSection("Flashing et photo", treatmentFlashageAdapter);
     	
     	
     }
