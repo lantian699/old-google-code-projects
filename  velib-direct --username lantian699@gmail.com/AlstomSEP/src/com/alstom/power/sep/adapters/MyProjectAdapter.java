@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class AdapterMyProject extends BaseAdapter{
+public class MyProjectAdapter extends BaseAdapter{
 	private Context context;
 	private List<Project> listProjects;
 	
-	public AdapterMyProject(Context context, List<Project> listProjects){
+	public MyProjectAdapter(Context context, List<Project> listProjects){
 		
 		this.context = context;
 		this.listProjects = listProjects;

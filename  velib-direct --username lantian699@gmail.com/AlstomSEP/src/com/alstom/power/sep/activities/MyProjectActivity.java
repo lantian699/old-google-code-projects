@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alstom.power.sep.R;
-import com.alstom.power.sep.adapters.AdapterMyProject;
+import com.alstom.power.sep.adapters.MyProjectAdapter;
 import com.alstom.power.sep.models.Project;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class MyProjectActivity extends Activity{
+public class MyProjectActivity extends Activity implements OnItemClickListener{
 	
 	private ListView list_myproject;
-	private AdapterMyProject adapterMyProject;
+	private MyProjectAdapter adapterMyProject;
 	private List<Project> listProjects;
 	
 	
@@ -30,8 +34,9 @@ public class MyProjectActivity extends Activity{
 		
 		listProjects = simulationOfProjects();
 		
-		adapterMyProject = new AdapterMyProject(this,listProjects);
+		adapterMyProject = new MyProjectAdapter(this,listProjects);
 		list_myproject.setAdapter(adapterMyProject);
+		list_myproject.setOnItemClickListener(this);
 		
 	}
 
@@ -43,7 +48,7 @@ public class MyProjectActivity extends Activity{
 		for(int i=0; i<20; i++){
 			
 			Project project = new Project();
-			project.setName("Project "+i);
+			project.setName(getString(R.string.project)+i);
 			project.setType("Type "+i);
 			
 			listProjects.add(project);
@@ -51,6 +56,20 @@ public class MyProjectActivity extends Activity{
 		}
 		
 		return listProjects;
+		
+	}
+
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+		
+		System.out.println("view = " + listProjects.get(position));
+		
+		Intent intent = new Intent();
+		intent.setClass(this, TaskFragmentActivity.class);
+		intent.putExtra("project", listProjects.get(position));
+		
+		startActivity(intent);
+		
 		
 	}
 

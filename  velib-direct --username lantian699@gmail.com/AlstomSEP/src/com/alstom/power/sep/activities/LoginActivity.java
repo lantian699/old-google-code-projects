@@ -42,7 +42,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 			intent.setClass(getApplication(), MyProjectActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
-			this.finish();
 			
 			break;
 

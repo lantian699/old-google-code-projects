@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">AlstomSEP</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="project">Projetct </string>
+    <string name="type">Type </string>
+    <string name="title_treatment">treatment</string>
+    <string name="title_DA">DA</string>
+    <string name="title_detail">Detail</string>
+    <string name="society">Society</string>
+    <string name="enter_addr">address</string>
+    <string name="geo_coordinate">Site geocodage</string>
+    <string name="telephone">Telephone</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="contact_emil">Contact Email</string>
+    
+    
+
+</resources>
