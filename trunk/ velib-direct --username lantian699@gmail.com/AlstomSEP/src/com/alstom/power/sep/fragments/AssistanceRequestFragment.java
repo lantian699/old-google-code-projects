@@ -20,7 +20,6 @@ public class AssistanceRequestFragment extends Fragment{
 	 private ListView listRequest;
 	 private SectionedAdapter sectionedAdapter;
 	 private AssistanceRequestAdapter requestAdapter;
-	 private String nomSeparator;
 	private Request request;
 		
 	 
@@ -29,15 +28,12 @@ public class AssistanceRequestFragment extends Fragment{
 	    	super.onCreate(savedInstanceState);
 	    
 	    	sectionedAdapter = new SectionedAdapter(getActivity());
-	    	
-	    	nomSeparator = "Assistance Request";
-	    	
 	    	simulationRequest();
 	    	
 	    	requestAdapter = new AssistanceRequestAdapter(getActivity(), request);
 	    	
 	    	
-	    	sectionedAdapter.addSection(nomSeparator, requestAdapter);
+	    	sectionedAdapter.addSection(getString(R.string.title_request), requestAdapter);
 	    	
 	    	
 	    	

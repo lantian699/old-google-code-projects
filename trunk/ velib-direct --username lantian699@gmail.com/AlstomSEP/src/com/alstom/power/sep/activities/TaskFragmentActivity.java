@@ -9,8 +9,8 @@ import com.alstom.power.sep.R.menu;
 import com.alstom.power.sep.R.string;
 import com.alstom.power.sep.fragments.AssistanceRequestFragment;
 import com.alstom.power.sep.fragments.DetailSectionFragment;
-import com.alstom.power.sep.fragments.DummySectionFragment;
 import com.alstom.power.sep.fragments.TreatmentSectionFragment;
+
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

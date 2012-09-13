@@ -17,10 +17,8 @@ import com.alstom.power.sep.models.Project;
 
 public class DetailSectionFragment extends Fragment{
 
-    public static final String ARG_SECTION_NUMBER = "section_number";
     private SectionedAdapter sectionedAdapter;
     private DetailSectionAdapter detailSectionAdapter;
-	private String nomSeparator;
 	private Enterprise enterprise;
 	private Project project;
 	private ListView listDetail;
@@ -34,12 +32,11 @@ public class DetailSectionFragment extends Fragment{
     
     	sectionedAdapter = new SectionedAdapter(getActivity());
     	simulationEnterprise();
-    	nomSeparator = "Enterprise Detail";
     	
-    	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise, project, nomSeparator);
+    	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise);
     	
     	
-    	sectionedAdapter.addSection(nomSeparator, detailSectionAdapter);
+    	sectionedAdapter.addSection(getString(R.string.title_detail), detailSectionAdapter);
     	
     	
     	
