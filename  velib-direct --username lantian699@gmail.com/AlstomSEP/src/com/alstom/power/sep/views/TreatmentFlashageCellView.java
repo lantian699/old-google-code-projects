@@ -6,6 +6,7 @@ import com.google.zxing.client.android.CaptureActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 
 	private Activity context;
 	private ImageView btn_flashage;
+	private ImageView btn_photo;
 	private LinearLayout view_photo;
 	private LinearLayout view_flash;
 	
@@ -32,11 +34,13 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	    this.context = (Activity) context;
 	    
 	    btn_flashage = (ImageView)findViewById(R.id.btn_flashage);
+	    btn_photo = (ImageView)findViewById(R.id.btn_photo);
 	    view_photo = (LinearLayout)findViewById(R.id.view_photo);
 	    view_flash = (LinearLayout)findViewById(R.id.view_flash);
 	    
 	    
 	    btn_flashage.setOnClickListener(this);
+	    btn_photo.setOnClickListener(this);
 	    
 	}
 	
@@ -65,6 +69,11 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 			context.startActivityForResult(intent, 0);
 			
 			break;
+			
+		case R.id.btn_photo:
+			Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			
+			context.startActivityForResult(intent_photo, 0);
 
 		default:
 			break;

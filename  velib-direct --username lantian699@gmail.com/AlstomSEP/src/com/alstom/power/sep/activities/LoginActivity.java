@@ -2,6 +2,8 @@ package com.alstom.power.sep.activities;
 
 
 import com.alstom.power.sep.R;
+import com.google.zxing.client.android.CaptureActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			intent.setClass(getApplication(), MyProjectActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
-			
+
 			break;
 
 		default:
