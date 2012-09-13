@@ -24,6 +24,11 @@
     <string name="start_date_title">Predictive start date</string>
     <string name="end_date_title">Predictive end date</string>
     <string name="title_chronopost">Chronopost number</string>
+    <string name="title_photo">Take a photo</string>
+    <string name="title_request">Assistance Request</string>
+    <string name="title_treatment">Treatment</string>
+    <string name="title_flash">Flashing and Photo</string>
+    
     
     
 

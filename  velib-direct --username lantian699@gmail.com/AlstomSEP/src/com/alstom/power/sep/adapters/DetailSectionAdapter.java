@@ -1,33 +1,24 @@
 package com.alstom.power.sep.adapters;
 
-import java.util.ArrayList;
-
-import com.alstom.power.sep.models.Enterprise;
-import com.alstom.power.sep.models.Project;
-import com.alstom.power.sep.views.DetailSectionCellView;
-import com.alstom.power.sep.views.MyProjectCellView;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.alstom.power.sep.models.Enterprise;
+import com.alstom.power.sep.views.DetailSectionCellView;
+
 public class DetailSectionAdapter extends BaseAdapter{
 	
-	private ArrayList<String[]> pData;
-	private String nomSeparator;
 	private Context context;
 	private Enterprise enterprise;
-	private Project project;
+
 	
 	
-	public DetailSectionAdapter(Context context, Enterprise enterprise, Project project,String nomSeparator){
+	public DetailSectionAdapter(Context context, Enterprise enterprise){
 		
 		this.context = context;
-		this.pData = pData;
-		this.nomSeparator = nomSeparator;
 		this.enterprise = enterprise;
-		this.project = project;
 		
 	}
 
@@ -54,7 +45,7 @@ public class DetailSectionAdapter extends BaseAdapter{
 		}
 		
 		
-		view.setData(enterprise, project, position);
+		view.setData(enterprise, position);
 
 		return view;
 	}

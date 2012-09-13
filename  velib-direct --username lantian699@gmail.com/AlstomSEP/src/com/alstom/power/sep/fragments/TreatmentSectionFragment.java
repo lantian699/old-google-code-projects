@@ -1,24 +1,21 @@
 package com.alstom.power.sep.fragments;
 
-import com.alstom.power.sep.R;
-import com.alstom.power.sep.adapters.AssistanceRequestAdapter;
-import com.alstom.power.sep.adapters.SectionedAdapter;
-import com.alstom.power.sep.adapters.TreatmentDateAdapter;
-import com.alstom.power.sep.adapters.TreatmentFlashageAdapter;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.alstom.power.sep.R;
+import com.alstom.power.sep.adapters.SectionedAdapter;
+import com.alstom.power.sep.adapters.TreatmentDateAdapter;
+import com.alstom.power.sep.adapters.TreatmentFlashageAdapter;
 
 public class TreatmentSectionFragment extends Fragment {
 	
 	private ListView listTreatment;
 	private SectionedAdapter sectionedAdapter;
-	private String nomSeparator;
 	private TreatmentDateAdapter  treatmentDateAdapter;
 	private TreatmentFlashageAdapter treatmentFlashageAdapter;
 	
@@ -28,16 +25,13 @@ public class TreatmentSectionFragment extends Fragment {
     	super.onCreate(savedInstanceState);
     
     	sectionedAdapter = new SectionedAdapter(getActivity());
-    	
-    	nomSeparator = "Treatment";
-    	
     	treatmentDateAdapter = new TreatmentDateAdapter(getActivity(), 2);
-    	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 1);
+    	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 2);
     	
     	
     	
-    	sectionedAdapter.addSection(nomSeparator, treatmentDateAdapter);
-    	sectionedAdapter.addSection("Flashing et photo", treatmentFlashageAdapter);
+    	sectionedAdapter.addSection(getString(R.string.title_treatment), treatmentDateAdapter);
+    	sectionedAdapter.addSection(getString(R.string.title_flash), treatmentFlashageAdapter);
     	
     	
     }

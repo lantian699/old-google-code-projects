@@ -27,7 +27,7 @@ public class DetailSectionCellView extends LinearLayout{
 	}
 	
 	
-	public void setData(Enterprise enterprise, Project project, int position){
+	public void setData(Enterprise enterprise, int position){
 		
 		switch (position) {
 		case 0:

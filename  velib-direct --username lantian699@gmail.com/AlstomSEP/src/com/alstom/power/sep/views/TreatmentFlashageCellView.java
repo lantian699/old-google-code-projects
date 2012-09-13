@@ -20,6 +20,8 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 
 	private Activity context;
 	private ImageView btn_flashage;
+	private LinearLayout view_photo;
+	private LinearLayout view_flash;
 	
 
 	public TreatmentFlashageCellView(Context context) {
@@ -30,6 +32,9 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	    this.context = (Activity) context;
 	    
 	    btn_flashage = (ImageView)findViewById(R.id.btn_flashage);
+	    view_photo = (LinearLayout)findViewById(R.id.view_photo);
+	    view_flash = (LinearLayout)findViewById(R.id.view_flash);
+	    
 	    
 	    btn_flashage.setOnClickListener(this);
 	    
@@ -38,7 +43,14 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	
 	public void setData(int position){
 		
-		
+		if(position == 0){
+			view_photo.setVisibility(View.GONE);
+			view_flash.setVisibility(View.VISIBLE);
+		}
+		else if(position == 1){
+			view_flash.setVisibility(View.GONE);
+			view_photo.setVisibility(View.VISIBLE);
+		}
 		
 	}
 
