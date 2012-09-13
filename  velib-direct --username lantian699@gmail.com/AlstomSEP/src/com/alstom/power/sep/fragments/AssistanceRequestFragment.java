@@ -1,10 +1,12 @@
 package com.alstom.power.sep.fragments;
 
 import com.alstom.power.sep.R;
+import com.alstom.power.sep.adapters.AssistanceRequestAdapter;
 import com.alstom.power.sep.adapters.DetailSectionAdapter;
 import com.alstom.power.sep.adapters.SectionedAdapter;
 import com.alstom.power.sep.models.Enterprise;
 import com.alstom.power.sep.models.Project;
+import com.alstom.power.sep.models.Request;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,15 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class AssistanceRequestActivity extends Fragment{
+public class AssistanceRequestFragment extends Fragment{
 	
-	 private ListView listDetail;
-	 public static final String ARG_SECTION_NUMBER = "section_number";
+	 private ListView listRequest;
 	 private SectionedAdapter sectionedAdapter;
-	 private DetailSectionAdapter detailSectionAdapter;
+	 private AssistanceRequestAdapter requestAdapter;
 	 private String nomSeparator;
-	 private Enterprise enterprise;
-	 private Project project;
+	private Request request;
 		
 	 
 	 @Override
@@ -30,12 +30,14 @@ public class AssistanceRequestActivity extends Fragment{
 	    
 	    	sectionedAdapter = new SectionedAdapter(getActivity());
 	    	
-	    	nomSeparator = "Enterprise Detail";
+	    	nomSeparator = "Assistance Request";
 	    	
-	    	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise, project, nomSeparator);
+	    	simulationRequest();
+	    	
+	    	requestAdapter = new AssistanceRequestAdapter(getActivity(), request);
 	    	
 	    	
-	    	sectionedAdapter.addSection(nomSeparator, detailSectionAdapter);
+	    	sectionedAdapter.addSection(nomSeparator, requestAdapter);
 	    	
 	    	
 	    	
@@ -45,9 +47,18 @@ public class AssistanceRequestActivity extends Fragment{
 	@Override
      public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		  View view = inflater.inflate(R.layout.fragment_detail, container, false);
-		  listDetail = (ListView) view.findViewById(R.id.list_ent_detail);
-		  listDetail.setAdapter(sectionedAdapter);
+		  listRequest = (ListView) view.findViewById(R.id.list_ent_detail);
+		  listRequest.setAdapter(sectionedAdapter);
 		 return view;
      }
+	
+	public void simulationRequest(){
+		request = new Request();
+		request.setNumbre("124");
+		request.setTitle("Title request 1");
+		request.setDescription("It is the description of request 1");
+		request.setDeadLine("July 12 12:00");
+		request.setIncidentClientNumber("2343");
+	}
 
 }
