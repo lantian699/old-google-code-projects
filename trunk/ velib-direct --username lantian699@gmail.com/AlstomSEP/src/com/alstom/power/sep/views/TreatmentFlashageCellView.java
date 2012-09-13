@@ -18,7 +18,11 @@ import android.view.View.OnClickListener;;
 
 
 public class TreatmentFlashageCellView extends LinearLayout implements OnClickListener{
+	
+	
 
+	public static final int REQUEST_CODE_FLASH = 0;
+	public static final int REQUEST_CODE_PHOTO = 1;
 	private Activity context;
 	private ImageView btn_flashage;
 	private ImageView btn_photo;
@@ -66,14 +70,14 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 			Intent intent = new Intent();
 			intent.setClass(context, CaptureActivity.class);
 			//intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-			context.startActivityForResult(intent, 0);
+			context.startActivityForResult(intent, REQUEST_CODE_FLASH);
 			
 			break;
 			
 		case R.id.btn_photo:
 			Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			
-			context.startActivityForResult(intent_photo, 0);
+			context.startActivityForResult(intent_photo, REQUEST_CODE_PHOTO);
 
 		default:
 			break;

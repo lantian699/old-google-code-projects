@@ -10,12 +10,14 @@ import com.alstom.power.sep.R.string;
 import com.alstom.power.sep.fragments.AssistanceRequestFragment;
 import com.alstom.power.sep.fragments.DetailSectionFragment;
 import com.alstom.power.sep.fragments.TreatmentSectionFragment;
+import com.alstom.power.sep.views.TreatmentFlashageCellView;
 
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -73,13 +75,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         return true;
     }
 
-    
-
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
-     * sections of the app.
-     */
+   
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	
     	ArrayList<Fragment> listFragment = new ArrayList<Fragment>();
@@ -141,6 +137,27 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 		
 	}
 
+	
+	 @Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			// TODO Auto-generated method stub
+			super.onActivityResult(requestCode, resultCode, data);
+			
+			switch (requestCode) {
+			case TreatmentFlashageCellView.REQUEST_CODE_FLASH:
+				System.out.println("REQUEST CODE FLASH");
+				
+				break;
+				
+			case TreatmentFlashageCellView.REQUEST_CODE_PHOTO:
+				System.out.println("REQUEST CODE PHOTO");
+				break;
+
+			default:
+				break;
+			}
+			
+		}
    
 		
 	

@@ -1,5 +1,6 @@
 package com.alstom.power.sep.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import com.alstom.power.sep.R;
 import com.alstom.power.sep.adapters.SectionedAdapter;
 import com.alstom.power.sep.adapters.TreatmentDateAdapter;
 import com.alstom.power.sep.adapters.TreatmentFlashageAdapter;
+import com.alstom.power.sep.views.TreatmentDateCellView;
+import com.alstom.power.sep.views.TreatmentFlashageCellView;
 
 public class TreatmentSectionFragment extends Fragment {
 	
@@ -45,4 +48,7 @@ public class TreatmentSectionFragment extends Fragment {
 		 return view;
     }
 
+	
+	
+	
 }
