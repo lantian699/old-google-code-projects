@@ -1,12 +1,16 @@
 package com.alstom.power.sep.activities;
 
+import java.util.ArrayList;
+
 import com.alstom.power.sep.R;
 import com.alstom.power.sep.R.id;
 import com.alstom.power.sep.R.layout;
 import com.alstom.power.sep.R.menu;
 import com.alstom.power.sep.R.string;
+import com.alstom.power.sep.fragments.AssistanceRequestFragment;
 import com.alstom.power.sep.fragments.DetailSectionFragment;
 import com.alstom.power.sep.fragments.DummySectionFragment;
+import com.alstom.power.sep.fragments.TreatmentSectionFragment;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -77,24 +81,24 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
      * sections of the app.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    	
+    	ArrayList<Fragment> listFragment = new ArrayList<Fragment>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-        	// TODO Auto-generated method stub
-        	return super.instantiateItem(container, position);
+            
+            listFragment.clear();
+            listFragment.add(new DetailSectionFragment());
+            listFragment.add(new AssistanceRequestFragment());
+            listFragment.add(new TreatmentSectionFragment());
         }
         
         
        @Override
-        public Fragment getItem(int i) {
-            Fragment fragment = new DetailSectionFragment();
-            
-            return fragment;
-        }
+        public Fragment getItem(int position) {
+    	   
+    	   return listFragment.get(position);
+      }
 
         @Override
         public int getCount() {
@@ -122,8 +126,13 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 		
 	}
 
-	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+	public void onTabSelected(Tab tab, FragmentTransaction arg1) {
 		// TODO Auto-generated method stub
+		
+		if (mViewPager != null) {
+			mViewPager.setCurrentItem(tab.getPosition());
+		}
+		
 		
 	}
 
