@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class TreatmentAdapter extends BaseAdapter{
+public class TreatmentDateAdapter extends BaseAdapter{
 	
 	private Context context;
 	private int listCount;
 
-	public TreatmentAdapter(Context context, int listCount){
+	public TreatmentDateAdapter(Context context, int listCount){
 		this.context = context;
 		this.listCount = listCount;
 		
