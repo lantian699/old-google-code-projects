@@ -1,7 +1,7 @@
 package com.alstom.power.lean.views;
 
 import com.alstom.power.lean.models.Project;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

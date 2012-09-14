@@ -20,7 +20,7 @@ import com.alstom.power.lean.managers.TaskListManager;
 import com.alstom.power.lean.models.Task;
 import com.alstom.power.lean.views.TreatmentDateCellView;
 import com.alstom.power.lean.views.TreatmentFlashageCellView;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 public class TreatmentSectionFragment extends Fragment {
 	

@@ -4,7 +4,7 @@ package com.alstom.power.lean.adapters;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 import android.content.Context;
 import android.view.View;

@@ -1,7 +1,7 @@
 package com.alstom.power.lean.activities;
 
 
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 import com.google.zxing.client.android.CaptureActivity;
 
 import android.app.Activity;
