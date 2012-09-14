@@ -31,7 +31,7 @@
         </activity>
         <activity android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".activities.StepActivity"></activity>
+        <activity android:name="com.alstom.power.lean.activities.StepActivity"></activity>
         
     </application>
     <uses-permission android:name = "android.permission.CAMERA" />
