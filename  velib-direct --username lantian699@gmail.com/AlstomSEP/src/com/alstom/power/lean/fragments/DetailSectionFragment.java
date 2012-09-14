@@ -12,7 +12,7 @@ import com.alstom.power.lean.adapters.DetailSectionAdapter;
 import com.alstom.power.lean.adapters.SectionedAdapter;
 import com.alstom.power.lean.models.Enterprise;
 import com.alstom.power.lean.models.Project;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 
 public class DetailSectionFragment extends Fragment{

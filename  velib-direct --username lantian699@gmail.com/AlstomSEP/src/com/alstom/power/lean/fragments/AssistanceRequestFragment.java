@@ -6,7 +6,7 @@ import com.alstom.power.lean.adapters.SectionedAdapter;
 import com.alstom.power.lean.models.Enterprise;
 import com.alstom.power.lean.models.Project;
 import com.alstom.power.lean.models.Request;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

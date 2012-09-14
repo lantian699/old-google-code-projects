@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alstom.power.lean.models.Request;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 public class AssistanceRequestCellView extends LinearLayout{
 

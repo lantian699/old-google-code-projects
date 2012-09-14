@@ -5,7 +5,7 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
-        xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.power.sep"
+        xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.power.lean"
         style="@style/myMargeTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

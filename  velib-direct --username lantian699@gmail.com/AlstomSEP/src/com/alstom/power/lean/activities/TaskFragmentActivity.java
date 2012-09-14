@@ -8,11 +8,8 @@ import com.alstom.power.lean.fragments.TreatmentSectionFragment;
 import com.alstom.power.lean.managers.TaskListManager;
 import com.alstom.power.lean.views.TaskListCellView;
 import com.alstom.power.lean.views.TreatmentFlashageCellView;
-import com.alstom.power.sep.R;
-import com.alstom.power.sep.R.id;
-import com.alstom.power.sep.R.layout;
-import com.alstom.power.sep.R.menu;
-import com.alstom.power.sep.R.string;
+import com.alstom.power.lean.R;
+
 
 
 import android.app.ActionBar;

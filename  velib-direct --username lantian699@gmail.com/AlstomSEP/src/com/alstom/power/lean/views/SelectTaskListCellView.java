@@ -5,7 +5,7 @@ import com.alstom.power.lean.activities.TaskFragmentActivity;
 import com.alstom.power.lean.managers.ChangeObserver;
 import com.alstom.power.lean.managers.TaskListManager;
 import com.alstom.power.lean.models.Task;
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 import android.app.Activity;
 import android.content.Context;

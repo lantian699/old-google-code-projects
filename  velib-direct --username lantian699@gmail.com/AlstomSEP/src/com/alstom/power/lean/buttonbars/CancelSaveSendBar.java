@@ -1,7 +1,7 @@
 package com.alstom.power.lean.buttonbars;
 
 
-import com.alstom.power.sep.R;
+import com.alstom.power.lean.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
