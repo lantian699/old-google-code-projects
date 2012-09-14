@@ -44,7 +44,7 @@ public class SelectTaskListCellView extends LinearLayout{
 	
 	public void setData(final Task task, final int position){
 		
-		select_task_label.setText(task.getLabel());
+		select_task_label.setText(task.getName());
 		
 		
 	}

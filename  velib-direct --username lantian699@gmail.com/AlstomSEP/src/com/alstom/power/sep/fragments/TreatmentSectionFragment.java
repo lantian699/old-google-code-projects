@@ -76,6 +76,7 @@ public class TreatmentSectionFragment extends Fragment {
 		listTasks.clear();
 		
 		Task task1 = new Task();
+		task1.setName("TASK A");
 		task1.setLabel("Accept the intervention");
 		task1.setDate("may 12 12:00 - 14:30");
 		task1.setMandatory(true);
@@ -84,6 +85,7 @@ public class TreatmentSectionFragment extends Fragment {
 		listTasks.add(task1);
 		
 		Task task2 = new Task();
+		task2.setName("TASK B");
 		task2.setLabel("Arrival at the site");
 		task2.setDate("may 12 12:30 - ");
 		task2.setMandatory(true);
@@ -92,6 +94,7 @@ public class TreatmentSectionFragment extends Fragment {
 		listTasks.add(task2);
 		
 		Task task3 = new Task();
+		task3.setName("TASK C");
 		task3.setLabel("Temperature mesurement");
 		task3.setDate("---");
 		task3.setMandatory(false);
@@ -101,6 +104,7 @@ public class TreatmentSectionFragment extends Fragment {
 		
 		
 		Task task4 = new Task();
+		task4.setName("TASK D");
 		task4.setLabel("Communication");
 		task4.setDate("---");
 		task4.setMandatory(true);
