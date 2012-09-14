@@ -27,7 +27,7 @@ public class Tools {
 				GeoPoint StationPos = new GeoPoint((int) (factory.getLatitude() * 1E6),(int) (factory.getLongitude() * 1E6));
 		
 				
-				OverlayItem overlayitem = new OverlayItem(StationPos, context.getString(R.string.title_dialog_factory),factory.getName()+"\n"+factory.getAddress());
+				OverlayItem overlayitem = new OverlayItem(StationPos, factory.getName(), factory.getAddress());
 
 				velibItemizedOverlay.addOverlay(overlayitem);
 				
@@ -37,7 +37,7 @@ public class Tools {
 			
 				MapController mapController = mapView.getController();
 				mapController.animateTo(StationPos);
-				mapController.setZoom(12);
+				mapController.setZoom(10);
 			
 
 
