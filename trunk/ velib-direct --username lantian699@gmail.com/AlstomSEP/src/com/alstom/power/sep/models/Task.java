@@ -10,13 +10,23 @@ public class Task extends ModelObject{
 	private static final long serialVersionUID = 743718237794767050L;
 	
 	private String label;
+	private String name;
 	private String date;
 	private boolean isMandatory;
 	private boolean isValidated;
 	private boolean isProcessing;
+	
 
 	
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getLabel() {
 		return label;
 	}
