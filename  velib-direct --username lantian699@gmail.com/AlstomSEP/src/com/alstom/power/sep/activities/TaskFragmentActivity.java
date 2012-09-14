@@ -10,6 +10,8 @@ import com.alstom.power.sep.R.string;
 import com.alstom.power.sep.fragments.AssistanceRequestFragment;
 import com.alstom.power.sep.fragments.DetailSectionFragment;
 import com.alstom.power.sep.fragments.TreatmentSectionFragment;
+import com.alstom.power.sep.managers.TaskListManager;
+import com.alstom.power.sep.views.TaskListCellView;
 import com.alstom.power.sep.views.TreatmentFlashageCellView;
 
 
@@ -35,8 +37,10 @@ import android.widget.TextView;
 
 public class TaskFragmentActivity extends FragmentActivity implements ActionBar.TabListener {
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
+	private SectionsPagerAdapter mSectionsPagerAdapter;
+	private ViewPager mViewPager;
+	private TaskListManager taskListManager;
+	private static int pos_terminate = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,10 +87,12 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             
+            taskListManager = new TaskListManager();
+            
             listFragment.clear();
             listFragment.add(new DetailSectionFragment());
             listFragment.add(new AssistanceRequestFragment());
-            listFragment.add(new TreatmentSectionFragment());
+            listFragment.add(new TreatmentSectionFragment(taskListManager));
         }
         
         
@@ -152,6 +158,23 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 			case TreatmentFlashageCellView.REQUEST_CODE_PHOTO:
 				System.out.println("REQUEST CODE PHOTO");
 				break;
+				
+			case TaskListCellView.REQUEST_CODE_STEP_LIST:
+				
+				taskListManager.notifyChange();
+
+			default:
+				break;
+			}
+			
+			switch (resultCode) {
+			case StepActivity.RESULT_CODE_TERMINATE:
+				
+				System.out.println("RESULT CODE TERMINATE");
+				taskListManager.notifyChange();
+				pos_terminate++;
+				
+				break;
 
 			default:
 				break;
@@ -159,6 +182,9 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 			
 		}
    
+	 public static int getPosTerminate(){
+		 return pos_terminate;
+	 }
 		
 	
 }

@@ -28,6 +28,17 @@
     <string name="title_request">Assistance Request</string>
     <string name="title_treatment">Treatment</string>
     <string name="title_flash">Flashing and Photo</string>
+    <string name="title_task_list">Task List</string>
+    <string name="tra_etape_description">Description</string>
+    <string name="tra_etape_debut">Start date and time</string>
+    <string name="tra_etape_fin">End date and time</string>
+    <string name="tra_etape_commentaire">Comments</string>
+    <string name="bouton_annuler">Cancel</string>
+    <string name="bouton_sauvegarder">Save</string>
+    <string name="bouton_envoyer">Send</string>
+    <string name="button_start">Start</string>
+    <string name="button_terminate">Terminate</string>
+    <string name="title_select_task">Choose the tasks</string>
     
     
     

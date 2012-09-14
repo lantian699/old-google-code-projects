@@ -74,8 +74,7 @@
                 android:id="@+id/btn_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/code_barre_clic"
-                android:src="@drawable/code_barre" />
+                android:src="@drawable/take_a_photo" />
         </LinearLayout>
     </LinearLayout>
 

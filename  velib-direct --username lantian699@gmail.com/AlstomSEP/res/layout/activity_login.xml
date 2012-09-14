@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_vertical"
+    android:background="@drawable/back_alstom"
     android:paddingLeft="56dp"
     android:paddingRight="56dp" >
 
