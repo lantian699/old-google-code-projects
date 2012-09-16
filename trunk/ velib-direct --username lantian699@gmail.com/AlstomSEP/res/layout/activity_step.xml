@@ -156,7 +156,7 @@
             android:layout_toRightOf="@+id/dateAttribut"
             android:background="@drawable/edittext_date_background" />
 
-        <com.alstom.power.sep.buttonbars.CancelSaveSendBar
+        <com.alstom.power.lean.buttonbars.CancelSaveSendBar
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/spinnerEtape"

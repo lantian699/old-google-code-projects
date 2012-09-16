@@ -1,6 +1,9 @@
 package com.alstom.power.lean.fragments;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.alstom.power.lean.activities.MyProjectActivity;
 import com.alstom.power.lean.adapters.DetailSectionAdapter;
 import com.alstom.power.lean.adapters.SectionedAdapter;
 import com.alstom.power.lean.models.Enterprise;
+import com.alstom.power.lean.models.Factory;
 import com.alstom.power.lean.models.Project;
+import com.alstom.power.lean.models.Task;
 import com.alstom.power.lean.R;
 
 
@@ -22,6 +28,7 @@ public class DetailSectionFragment extends Fragment{
 	private Enterprise enterprise;
 	private Project project;
 	private ListView listDetail;
+	private Factory factory;
     
     public DetailSectionFragment() {
     }
@@ -33,7 +40,7 @@ public class DetailSectionFragment extends Fragment{
     	sectionedAdapter = new SectionedAdapter(getActivity());
     	simulationEnterprise();
     	
-    	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise);
+    	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise,factory);
     	
     	
     	sectionedAdapter.addSection(getString(R.string.title_detail), detailSectionAdapter);
@@ -52,10 +59,14 @@ public class DetailSectionFragment extends Fragment{
 
 	 private void simulationEnterprise(){
 		 
+		 
+		 ArrayList<Factory> listFactory = MyProjectActivity.simulationFactory();
+		 factory = listFactory.get(0);
+		 
 		 enterprise = new Enterprise();
 		 enterprise.setName("Alstom");
 		 enterprise.setAddress("12 Rue alma paris");
-		 enterprise.setGeoCordinate("12.345555 34.4455544");
+		 enterprise.setGeoCordinate(factory.getLatitude() + " "+factory.getLongitude() );
 		 enterprise.setTelephone("06 72 82 72 24");
 		 enterprise.setContactName("Jean vincent");
 		 enterprise.setContactEmail("dede@de.ceo");

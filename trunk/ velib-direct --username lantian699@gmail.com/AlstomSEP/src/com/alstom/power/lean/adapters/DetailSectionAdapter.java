@@ -6,19 +6,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.alstom.power.lean.models.Enterprise;
+import com.alstom.power.lean.models.Factory;
 import com.alstom.power.lean.views.DetailSectionCellView;
 
 public class DetailSectionAdapter extends BaseAdapter{
 	
 	private Context context;
 	private Enterprise enterprise;
+	private Factory factory;
 
 	
 	
-	public DetailSectionAdapter(Context context, Enterprise enterprise){
+	public DetailSectionAdapter(Context context, Enterprise enterprise, Factory factory){
 		
 		this.context = context;
 		this.enterprise = enterprise;
+		this.factory = factory;
 		
 	}
 
@@ -45,7 +48,7 @@ public class DetailSectionAdapter extends BaseAdapter{
 		}
 		
 		
-		view.setData(enterprise, position);
+		view.setData(enterprise,factory, position);
 
 		return view;
 	}

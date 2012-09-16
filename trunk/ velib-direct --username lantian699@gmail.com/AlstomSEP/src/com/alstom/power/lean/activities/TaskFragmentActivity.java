@@ -24,6 +24,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -57,10 +58,11 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+                actionBar.setSelectedNavigationItem(position);    
             }
         });
-
+        
+     
         // For each of the sections in the app, add a tab to the action bar.
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
             actionBar.addTab(
@@ -91,6 +93,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
             listFragment.add(new AssistanceRequestFragment());
             listFragment.add(new TreatmentSectionFragment(taskListManager));
         }
+        
         
         
        @Override
@@ -131,6 +134,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 		if (mViewPager != null) {
 			mViewPager.setCurrentItem(tab.getPosition());
 		}
+		
 		
 		
 	}
