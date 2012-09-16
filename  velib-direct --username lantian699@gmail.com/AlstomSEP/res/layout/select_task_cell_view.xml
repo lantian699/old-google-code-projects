@@ -1,8 +1,14 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <CheckBox
             android:id="@+id/cb_task"
             android:layout_width="wrap_content"
@@ -14,5 +20,14 @@
             android:layout_height="wrap_content"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        </LinearLayout>
+        
+        
+        <ListView 
+            android:id="@+id/list_small_task"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp" 
+            android:visibility="gone">
+            
+        </ListView>
     </LinearLayout>
