@@ -38,9 +38,17 @@
             android:screenOrientation="landscape"></activity>
         <activity android:name="com.alstom.power.lean.activities.StepActivity"></activity>
         
+         <activity android:name=".pdfviewer.PdfViewerActivity" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="application/pdf"/>
+            </intent-filter>
+        </activity>
         
-        
-        
+         <activity android:name=".model3d.Model3DTurbineActivity"></activity> 
+     
         
     </application>
     <uses-permission android:name = "android.permission.CAMERA" />
