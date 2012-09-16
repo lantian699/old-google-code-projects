@@ -1,14 +1,17 @@
 package com.alstom.power.lean.activities;
 
 import java.util.ArrayList;
-
 import com.alstom.power.lean.fragments.AssistanceRequestFragment;
 import com.alstom.power.lean.fragments.DetailSectionFragment;
 import com.alstom.power.lean.fragments.TreatmentSectionFragment;
 import com.alstom.power.lean.managers.TaskListManager;
+import com.alstom.power.lean.model3d.Model3DTurbineActivity;
+import com.alstom.power.lean.models.ModelObject;
+import com.alstom.power.lean.pdfviewer.PdfViewerActivity;
 import com.alstom.power.lean.views.TaskListCellView;
 import com.alstom.power.lean.views.TreatmentFlashageCellView;
 import com.alstom.power.lean.R;
+import com.android.opgl.test.Run;
 
 
 
@@ -17,6 +20,7 @@ import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -78,6 +82,33 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	// TODO Auto-generated method stub
+    	
+    	switch (item.getItemId()) {
+		case R.id.menu_pdf:
+			Uri uri = Uri.parse("file:///sdcard/Download/2140ESI_8P_Post_BTS-DUT_BD.pdf");
+	        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        intent.setClass(this, PdfViewerActivity.class);
+	        startActivity(intent);
+			
+			break;
+			
+		case R.id.menu_3d:
+			
+			Intent in = new Intent();
+			in.setClass(this, Model3DTurbineActivity.class);
+			startActivity(in);
+			
+			break;
+
+		default:
+			break;
+		}
+    	
+    	return super.onOptionsItemSelected(item);
+    }
    
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	
@@ -86,8 +117,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
             
-            taskListManager = new TaskListManager();
-            
+            taskListManager = new TaskListManager();         
             listFragment.clear();
             listFragment.add(new DetailSectionFragment());
             listFragment.add(new AssistanceRequestFragment());
