@@ -25,7 +25,7 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 	private ListView list_myproject;
 	private MyProjectAdapter adapterMyProject;
 	private ArrayList<Project> listProjects;
-	private ArrayList<Factory> listFactory;
+	private static ArrayList<Factory> listFactory;
 	
 	
 	@Override
@@ -43,7 +43,7 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 		list_myproject.setAdapter(adapterMyProject);
 		list_myproject.setOnItemClickListener(this);
 		
-		simulationFactory();
+		listFactory = simulationFactory();
 		
 	}
 	
@@ -107,7 +107,7 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 		
 	}
 	
-	public void simulationFactory(){
+	public static ArrayList<Factory>  simulationFactory(){
 		
 		listFactory = new ArrayList<Factory>();
 		listFactory.clear();
@@ -142,7 +142,7 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 		factory4.setAddress("48 Rue Albert Dhalenne 93400 Saint-Ouen");
 		listFactory.add(factory4);
 		
-		
+		return listFactory;
 	}
 
 }
