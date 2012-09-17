@@ -9,12 +9,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:apiKey="02Nmd5diySCoU3v811DcfJNAbKjEy1m6QdilIzg"
+        android:apiKey="02Nmd5diySCrzojFQoLhzrZSIVB-YosXM7KtwCA"
         android:clickable="true"
         android:enabled="true" />
     	<!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->
-       	<!--02Nmd5diySCq6cxbWY5yr1SO1aceiS34H_bwKDg Thinkpad -->
+       	<!--02Nmd5diySCq6cxbWY5yr1SO1aceiS34H_bwKDg Thinkpad x220-->
        	<!--02Nmd5diySCoU3v811DcfJNAbKjEy1m6QdilIzg Poste fixe -->
-       	<!--02Nmd5diySCpaKU8E4djnDtmjotRfqCvcRyhq6A Poste fixe bureau -->
+       	<!--02Nmd5diySCrzojFQoLhzrZSIVB-YosXM7KtwCA Thinkpad T410 -->
 
     </LinearLayout>
