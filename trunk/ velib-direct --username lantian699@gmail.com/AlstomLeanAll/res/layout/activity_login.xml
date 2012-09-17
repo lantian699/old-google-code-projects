@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_alstom"
+    android:paddingLeft="56dp"
+    android:paddingRight="56dp" >
+
+    <View
+        android:id="@+id/loginBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/loginEditText"
+        android:layout_alignLeft="@+id/loginEditText"
+        android:layout_alignRight="@+id/loginEditText"
+        android:layout_alignTop="@+id/loginEditText"
+        android:layout_margin="4dp"
+        android:background="@drawable/login_background" />
+
+    <EditText
+        android:id="@+id/loginEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:hint="@string/login"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@android:color/primary_text_dark"
+        android:textColor="@android:color/primary_text_dark" />
+
+    <View
+        android:id="@+id/mdpBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mdpEditText"
+        android:layout_alignLeft="@+id/mdpEditText"
+        android:layout_alignRight="@+id/mdpEditText"
+        android:layout_alignTop="@+id/mdpEditText"
+        android:layout_margin="4dp"
+        android:background="@drawable/login_background" />
+
+    <EditText
+        android:id="@+id/mdpEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginEditText"
+        android:layout_marginTop="29dp"
+        android:hint="@string/password"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:textColorHint="@android:color/primary_text_dark"
+        android:textColor="@android:color/primary_text_dark" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mdpEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:background="@drawable/login_ok_button_background"
+        android:text="@android:string/ok"
+        android:textColor="@android:color/primary_text_dark" />
+
+    <!-- <ImageView -->
+    <!-- android:id="@+id/fleche" -->
+    <!-- android:layout_marginTop="29dp" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="50dp" -->
+    <!-- android:layout_below="@+id/okButton" -->
+    <!-- android:layout_alignParentLeft="true" -->
+    <!-- android:src="@drawable/login_fleche" /> -->
+    
+    <!--
+         <Button
+        android:id="@+id/realignLink"
+        style="@android:style/Widget.Holo.Button"
+        android:textColor="@android:color/primary_text_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/okButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="29dp"
+        android:background="@android:color/transparent"
+        android:text="@string/realign"
+        android:drawableLeft="@drawable/login_fleche" />
+    -->
+
+    
+
+</RelativeLayout>
