@@ -25,11 +25,13 @@
             android:padding="8dp" >
 
             <EditText
-                android:id="@+id/texte_numero_kit_retour"
-                android:layout_width="0dip"
+                android:id="@+id/edit_text_part_num"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.65"
-                android:ems="10" >
+                android:text="0129838392"
+                android:ems="10"
+                android:hint="Part number" >
             </EditText>
 
             <ImageView
@@ -39,6 +41,13 @@
                 android:background="@drawable/code_barre_clic"
                 android:src="@drawable/code_barre" />
         </LinearLayout>
+        
+        <Button 
+            android:id="@+id/btn_part_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"/>
+        
     </LinearLayout>
 
     <LinearLayout

@@ -5,10 +5,10 @@
     <string name="menu_settings">Settings</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
-    <string name="project">Projetct </string>
+    <string name="project">Activity </string>
     <string name="type">Type </string>
     <string name="title_treatment">treatment</string>
-    <string name="title_DA">DA</string>
+    <string name="title_DA">Project</string>
     <string name="title_detail">Detail</string>
     <string name="society">Society</string>
     <string name="enter_addr">address</string>

@@ -76,7 +76,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
         }
     }
 
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_task_fragment, menu);
         return true;
@@ -108,7 +108,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 		}
     	
     	return super.onOptionsItemSelected(item);
-    }
+    }*/
    
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
     	
