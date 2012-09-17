@@ -176,25 +176,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {
 			// TODO Auto-generated method stub
 			super.onActivityResult(requestCode, resultCode, data);
-			
-			switch (requestCode) {
-			case TreatmentFlashageCellView.REQUEST_CODE_FLASH:
-				System.out.println("REQUEST CODE FLASH");
-				
-				break;
-				
-			case TreatmentFlashageCellView.REQUEST_CODE_PHOTO:
-				System.out.println("REQUEST CODE PHOTO");
-				break;
-				
-			case TaskListCellView.REQUEST_CODE_STEP_LIST:
-				
-				taskListManager.notifyChange();
-
-			default:
-				break;
-			}
-			
+		
 			switch (resultCode) {
 			case StepActivity.RESULT_CODE_TERMINATE:
 				
