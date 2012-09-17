@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:duplicateParentState="true"
+    android:paddingRight="4dp" >
+
+    <TextView
+        android:id="@+id/nom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="4dp"
+        android:singleLine="true"
+        android:text="enterprise - city"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/nom"
+        android:layout_below="@+id/nom"
+        android:text="type"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/date"
+        style="textColorSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/type"
+        android:layout_below="@+id/type"
+        android:layout_marginBottom="4dp"
+        android:text="yo"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#8C8C8C" />
+
+    <TextView
+        android:id="@+id/date2"
+        style="textColorSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/date"
+        android:layout_alignParentRight="true"
+        android:text="july 13 23:00"
+        android:textColor="@color/TexteListeOrange" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="8dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/BandeauRouge" >
+    </View>
+
+    <ImageView
+        android:id="@+id/activite_not_refresh"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignRight="@+id/date2"
+        android:layout_margin="8dp"
+        android:layout_alignTop="@+id/nom"
+        android:background="@drawable/no_refresh" />
+
+</RelativeLayout>
