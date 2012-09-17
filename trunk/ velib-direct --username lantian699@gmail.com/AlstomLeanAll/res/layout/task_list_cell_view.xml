@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/etapeRow"
+     style="@style/myMargeTab" >
+    
+  
+	    <ImageView
+	        android:id="@+id/valider"
+	        android:layout_width="25dp"
+	        android:layout_height="25dp"
+	        android:layout_alignParentLeft="true"
+	 		android:layout_centerInParent="true"
+	 		android:padding="4dp"
+	        android:src="@drawable/btn_check_buttonless_on" />
+	    
+	    <ImageView
+	        android:id="@+id/star"
+	        android:layout_width="20dp"
+	        android:layout_height="20dp"
+	         android:layout_alignBaseline="@+id/valider"
+        	android:layout_toRightOf="@+id/valider"
+        	android:layout_centerInParent="true"
+        	android:padding="4dp"
+	        android:src="@drawable/obligatoire" />
+	    
+	    <TextView
+	        android:id="@+id/etapeDate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	       
+        	android:layout_toRightOf="@+id/star"
+	        android:layout_marginLeft="4dp"
+	        android:singleLine="true"
+	        android:text="Etape Date"
+	        android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+	        
+	    
+	    <TextView
+	        android:id="@+id/etape"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/etapeDate"
+        	android:layout_alignLeft="@+id/etapeDate"
+        	android:layout_toRightOf="@+id/star"   
+	        android:singleLine="true"
+	        android:text="Etape 1"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        />
+	    
+	    <ImageView 
+	        android:id="@+id/ic_next" 
+	        android:layout_width="14dp"
+	        android:layout_height="14dp"        
+	        android:layout_alignParentRight="true"
+	        android:layout_centerInParent="true"
+	        android:src="@drawable/ic_ab_next_holo_light" />
+</RelativeLayout>

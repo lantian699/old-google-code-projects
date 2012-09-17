@@ -95,12 +95,12 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
 		
-		System.out.println("view = " + listProjects.get(position));
 		
-		/*Intent intent = new Intent();
+		Intent intent = new Intent();
 		intent.setClass(this, TaskFragmentActivity.class);
 		intent.putExtra("project", listProjects.get(position));
-		startActivity(intent);*/
+		startActivity(intent);
+		
 		
 		
 	}
