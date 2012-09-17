@@ -24,8 +24,10 @@ public class MyProjectModeTabletActivity extends FragmentActivity
         implements MyProjectListFragment.Callbacks {
 
     private boolean mTwoPane;
+	private TaskListManager taskListManager;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
+	private static int pos_terminate;
     
     
     @Override
@@ -33,6 +35,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
+        pos_terminate = 0;
         if (findViewById(R.id.activity_detail_container_1) != null) {
             mTwoPane = true;
             ((MyProjectListFragment) getSupportFragmentManager()
@@ -80,6 +83,31 @@ public class MyProjectModeTabletActivity extends FragmentActivity
 		
 		return super.onOptionsItemSelected(item);
 	}
+    
+    
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	
+		switch (resultCode) {
+		case StepActivity.RESULT_CODE_TERMINATE:
+			
+			System.out.println("RESULT CODE TERMINATE");
+			taskListManager.notifyChange();
+			pos_terminate++;
+			
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+
+    public static int getPosTerminate(){
+	 return pos_terminate;
+    }
 
     
     @Override
@@ -104,7 +132,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity
             .commit();
             
             
-            TaskListManager taskListManager = new TaskListManager();;
+            taskListManager = new TaskListManager();;
 			TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
             
             getSupportFragmentManager().beginTransaction()

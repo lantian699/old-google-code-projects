@@ -3,6 +3,7 @@ package com.alstom.lean.all.views;
 
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.activities.StepActivity;
 import com.alstom.lean.all.activities.TaskFragmentActivity;
 import com.alstom.lean.all.managers.ChangeObserver;
@@ -91,6 +92,7 @@ public class TaskListCellView extends LinearLayout{
 			@Override
 			public void onChange() {
 	
+				if(context instanceof TaskFragmentActivity){
 				if(position == TaskFragmentActivity.getPosTerminate()-1){
 					
 					refreshStepColumn(TASK_PROCESSED);
@@ -102,7 +104,20 @@ public class TaskListCellView extends LinearLayout{
 					refreshStepColumn(TASK_IN_PROCESSING);
 				}
 		
-				
+				}else{
+					
+					if(position == MyProjectModeTabletActivity.getPosTerminate()-1){
+						
+						refreshStepColumn(TASK_PROCESSED);
+						
+					}	
+					
+					if(position == MyProjectModeTabletActivity.getPosTerminate() ||
+							MyProjectModeTabletActivity.getPosTerminate() + 1 == position){
+						refreshStepColumn(TASK_IN_PROCESSING);
+					}
+					
+				}
 			}
 		});
 		
