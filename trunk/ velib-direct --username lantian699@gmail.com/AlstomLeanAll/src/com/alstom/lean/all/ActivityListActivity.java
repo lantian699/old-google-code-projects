@@ -16,7 +16,7 @@ public class ActivityListActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
-        if (findViewById(R.id.activity_detail_container) != null) {
+        if (findViewById(R.id.activity_detail_container_1) != null) {
             mTwoPane = true;
             ((ActivityListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.activity_list))
