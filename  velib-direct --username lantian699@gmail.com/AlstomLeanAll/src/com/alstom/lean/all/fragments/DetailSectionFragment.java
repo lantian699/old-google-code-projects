@@ -8,6 +8,7 @@ import java.util.List;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.MyProjectActivity;
 import com.alstom.lean.all.adapters.DetailSectionAdapter;
+import com.alstom.lean.all.adapters.SectionedAdapter;
 import com.alstom.lean.all.models.Enterprise;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
@@ -29,6 +30,7 @@ public class DetailSectionFragment extends Fragment{
 	private Project project;
 	private ListView listDetail;
 	private Factory factory;
+	private SectionedAdapter sectionedAdapter;
     
     public DetailSectionFragment() {
     }
@@ -40,9 +42,10 @@ public class DetailSectionFragment extends Fragment{
     
     	simulationEnterprise();
     	
+    	sectionedAdapter = new SectionedAdapter(getActivity());
     	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise,factory);
     	
-    	
+    	sectionedAdapter.addSection(getString(R.string.title_detail), detailSectionAdapter);
     	
     	
     	
@@ -53,7 +56,7 @@ public class DetailSectionFragment extends Fragment{
      public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		  View view = inflater.inflate(R.layout.fragment_detail, container, false);
 		  listDetail = (ListView) view.findViewById(R.id.list_ent_detail);
-		  listDetail.setAdapter(detailSectionAdapter);
+		  listDetail.setAdapter(sectionedAdapter);
 		 return view;
      }
 
