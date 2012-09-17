@@ -44,13 +44,13 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	    this.context = (Activity) context;
 	    
 	    btn_flashage = (ImageView)findViewById(R.id.btn_flashage);
-	    btn_photo = (ImageView)findViewById(R.id.btn_photo);
+	    btn_photo = (ImageView)findViewById(R.id.btn_photo_view);
 	    view_photo = (LinearLayout)findViewById(R.id.view_photo);
 	    view_flash = (LinearLayout)findViewById(R.id.view_flash);
 	    btn_part_num = (Button)findViewById(R.id.btn_part_number);
 	    edit_part_num = (EditText)findViewById(R.id.edit_text_part_num);
 	    
-	    
+	
 	    btn_flashage.setOnClickListener(this);
 	    btn_photo.setOnClickListener(this);
 	    btn_part_num.setOnClickListener(this);
@@ -83,11 +83,12 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 			
 			break;
 			
-		case R.id.btn_photo:
+		case R.id.btn_photo_view:
 			Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			
-			context.startActivityForResult(intent_photo, REQUEST_CODE_PHOTO);
+			context.startActivity(intent_photo);
 			
+			break;
 			
 		case R.id.btn_part_number:
 			
@@ -99,8 +100,7 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 				intent_part_num.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent_part_num.putExtra(EXTRA_NAME_PART_NUMBER, partNumber);
 				context.startActivity(intent_part_num);
-				
-				
+			
 			}
 			
 			break;
