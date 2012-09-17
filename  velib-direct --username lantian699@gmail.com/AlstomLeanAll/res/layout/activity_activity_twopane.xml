@@ -9,15 +9,23 @@
     android:showDividers="middle"
     tools:context=".ActivityListActivity">
 
-    <fragment android:name="com.alstom.lean.all.ActivityListFragment"
+    <fragment android:name="com.alstom.lean.all.fragments.MyProjectListFragment"
         android:id="@+id/activity_list"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <FrameLayout android:id="@+id/activity_detail_container"
+    <FrameLayout android:id="@+id/activity_detail_container_1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3" />
+        android:layout_weight="1" />
+    <FrameLayout android:id="@+id/activity_detail_container_2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <FrameLayout android:id="@+id/activity_detail_container_3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>
