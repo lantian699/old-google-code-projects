@@ -6,6 +6,7 @@ import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.activities.StepActivity;
 import com.alstom.lean.all.activities.TaskFragmentActivity;
+import com.alstom.lean.all.fragments.StepFragment;
 import com.alstom.lean.all.managers.ChangeObserver;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Task;
@@ -15,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -106,18 +108,25 @@ public class TaskListCellView extends LinearLayout{
 		
 				}else{
 					
-					if(position == MyProjectModeTabletActivity.getPosTerminate()-1){
+					
+					if(position == StepFragment.getPosTerminate()-1){
 						
 						refreshStepColumn(TASK_PROCESSED);
 						
 					}	
 					
-					if(position == MyProjectModeTabletActivity.getPosTerminate() ||
-							MyProjectModeTabletActivity.getPosTerminate() + 1 == position){
+					if(position == StepFragment.getPosTerminate() ||
+							StepFragment.getPosTerminate() + 1 == position){
 						refreshStepColumn(TASK_IN_PROCESSING);
 					}
 					
 				}
+			}
+
+			@Override
+			public void onChange(String res) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
@@ -153,10 +162,19 @@ public class TaskListCellView extends LinearLayout{
 				@Override
 				public void onClick(View v) {
 
+					
+					if(context instanceof TaskFragmentActivity){
 					Intent intent = new Intent();
 					intent.setClass(context, StepActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivityForResult(intent, REQUEST_CODE_STEP_LIST);
+					}else{
+						
+						StepFragment fragment = new StepFragment(context,taskListManager);
+						
+						((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+						.replace(R.id.activity_detail_container_2, fragment).commit();
+					}
 					
 				}
 			});

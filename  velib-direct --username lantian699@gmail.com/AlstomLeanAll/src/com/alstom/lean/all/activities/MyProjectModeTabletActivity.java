@@ -12,22 +12,23 @@ import com.alstom.lean.all.ActivityDetailActivity;
 import com.alstom.lean.all.ActivityDetailFragment;
 import com.alstom.lean.all.ActivityListFragment;
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.flashage.CaptureFlashageActivity;
 import com.alstom.lean.all.fragments.AssistanceRequestFragment;
 import com.alstom.lean.all.fragments.DetailSectionFragment;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
+import com.alstom.lean.all.fragments.PartNumberDetailFragment;
 import com.alstom.lean.all.fragments.TreatmentSectionFragment;
 import com.alstom.lean.all.managers.TaskListManager;
+import com.alstom.lean.all.model3d.Model3DFragment;
 import com.alstom.lean.all.models.Factory;
 
 
-public class MyProjectModeTabletActivity extends FragmentActivity
-        implements MyProjectListFragment.Callbacks {
+public class MyProjectModeTabletActivity extends FragmentActivity implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
 
     private boolean mTwoPane;
-	private TaskListManager taskListManager;
+	private static TaskListManager taskListManager = new TaskListManager();;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
-	private static int pos_terminate;
     
     
     @Override
@@ -35,7 +36,8 @@ public class MyProjectModeTabletActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
-        pos_terminate = 0;
+        
+        
         if (findViewById(R.id.activity_detail_container_1) != null) {
             mTwoPane = true;
             ((MyProjectListFragment) getSupportFragmentManager()
@@ -54,6 +56,10 @@ public class MyProjectModeTabletActivity extends FragmentActivity
     	return true;
     }
 
+    public static TaskListManager getTaskListManager(){
+    	
+    	return taskListManager;
+    }
     
     
     @Override
@@ -91,11 +97,15 @@ public class MyProjectModeTabletActivity extends FragmentActivity
 		super.onActivityResult(requestCode, resultCode, data);
 	
 		switch (resultCode) {
-		case StepActivity.RESULT_CODE_TERMINATE:
+		
 			
-			System.out.println("RESULT CODE TERMINATE");
-			taskListManager.notifyChange();
-			pos_terminate++;
+		case CaptureFlashageActivity.RESULT_CODE_CAPTURE_ACTIVITY:
+
+			String res = data.getStringExtra(CaptureFlashageActivity.BAR_CODE_RESULT);
+			System.out.println("RESULT_CODE_CAPTURE_ACTIVITY " +res);
+			taskListManager.notifyBarcodeChange(res);
+			
+			
 			
 			break;
 
@@ -104,10 +114,6 @@ public class MyProjectModeTabletActivity extends FragmentActivity
 		}
 		
 	}
-
-    public static int getPosTerminate(){
-	 return pos_terminate;
-    }
 
     
     @Override
@@ -126,18 +132,17 @@ public class MyProjectModeTabletActivity extends FragmentActivity
             
             
             AssistanceRequestFragment fragmentDA = new AssistanceRequestFragment();
-            
             getSupportFragmentManager().beginTransaction()
             .replace(R.id.activity_detail_container_2, fragmentDA)
             .commit();
             
             
-            taskListManager = new TaskListManager();;
+           /* taskListManager = new TaskListManager();;
 			TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
             
             getSupportFragmentManager().beginTransaction()
             .replace(R.id.activity_detail_container_3, fragmentTreat)
-            .commit();
+            .commit();*/
             
             
            

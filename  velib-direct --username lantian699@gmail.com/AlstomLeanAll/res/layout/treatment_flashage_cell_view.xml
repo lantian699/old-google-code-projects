@@ -29,9 +29,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.65"
-                android:text="0129838392"
                 android:ems="10"
+                android:inputType="number"
                 android:hint="Part number" >
+                <requestFocus />
             </EditText>
 
             <ImageView
@@ -56,7 +57,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
+        
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+            
+            <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,17 +74,12 @@
             android:text="@string/title_photo"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp" >
-
             <EditText
                 android:id="@+id/texte_photo"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.65"
+                android:visibility="gone"
                 android:ems="10" >
             </EditText>
 
@@ -86,5 +90,7 @@
                 android:src="@drawable/take_a_photo" />
         </LinearLayout>
     </LinearLayout>
+
+
 
 </LinearLayout>

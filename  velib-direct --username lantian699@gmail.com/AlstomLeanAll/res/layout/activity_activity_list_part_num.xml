@@ -1,0 +1,8 @@
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:name="com.alstom.lean.all.fragments.PartNumberDetailFragment"
+        android:id="@+id/activity_list_part_num"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:context=".activities.PartNumTabletActivity"/>

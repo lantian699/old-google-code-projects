@@ -64,6 +64,15 @@
         android:layout_alignRight="@+id/date2"
         android:layout_margin="8dp"
         android:layout_alignTop="@+id/nom"
+        android:visibility="gone"
         android:background="@drawable/no_refresh" />
+    <Button
+        android:id="@+id/btn_treatment"
+        android:focusable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/date2"
+        android:layout_alignTop="@+id/nom"
+        android:text="@string/title_treatment"/>
 
 </RelativeLayout>

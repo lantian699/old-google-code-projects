@@ -8,7 +8,7 @@ import android.os.Handler;
 public class TaskListManager {
 	
 	private List<ChangeObserver> observers = new CopyOnWriteArrayList<ChangeObserver>();
-	//private List<ChangeObserver> observersForSearch = new CopyOnWriteArrayList<ChangeObserver>();
+	private List<ChangeObserver> observersForBarcode = new CopyOnWriteArrayList<ChangeObserver>();
 	private Handler mHandler;
 	
 	
@@ -39,25 +39,25 @@ public class TaskListManager {
 	}
 	
 	
-	/*public void registerSearchChangeObserver(ChangeObserver observer) {
-		synchronized (observersForSearch) {
-			observersForSearch.add(observer);
+	public void registerBarcodeChangeObserver(ChangeObserver observer) {
+		synchronized (observersForBarcode) {
+			observersForBarcode.add(observer);
 		}
 	}
 	
 	
-	public void notifySearchChange() {
+	public void notifyBarcodeChange(final String res) {
 		
-		synchronized (observersForSearch) {
-			for (final ChangeObserver observer : observersForSearch) {
+		synchronized (observersForBarcode) {
+			for (final ChangeObserver observer : observersForBarcode) {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						observer.onChange();						
+						observer.onChange(res);						
 					}
 				});
 			}
 		}
-	}*/
+	}
 
 }

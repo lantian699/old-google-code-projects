@@ -1,6 +1,7 @@
 package com.alstom.lean.all.adapters;
 
 
+import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.views.TreatmentFlashageCellView;
 
 import android.content.Context;
@@ -12,10 +13,12 @@ public class TreatmentFlashageAdapter extends BaseAdapter{
 	
 	private Context context;
 	private int listCount;
+	private TaskListManager manager;
 
-	public TreatmentFlashageAdapter(Context context, int listCount){
+	public TreatmentFlashageAdapter(Context context, int listCount, TaskListManager manager){
 		this.context = context;
 		this.listCount = listCount;
+		this.manager = manager;
 		
 	}
 
@@ -37,7 +40,7 @@ public class TreatmentFlashageAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup arg2) {
 		TreatmentFlashageCellView view = (TreatmentFlashageCellView) convertView;
 		if (view == null) {
-			view = new TreatmentFlashageCellView(context);
+			view = new TreatmentFlashageCellView(context, manager);
 		}
 		
 		

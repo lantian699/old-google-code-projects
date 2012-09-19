@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:background="#C3C3C3"
-    android:layout_height="wrap_content" >
 
-    <RelativeLayout
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+       
         xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
         style="@style/myMargeTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:orientation="vertical"
+     	android:layout_width="fill_parent"
+     	android:layout_height="fill_parent" >
 
         <TextView
             android:id="@+id/descriptionTitre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:singleLine="true"
             android:text="@string/tra_etape_description"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -24,8 +23,6 @@
             android:id="@+id/etape_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/descriptionTitre"
-            android:layout_below="@+id/descriptionTitre"
             android:ellipsize="end"
             android:maxLines="3"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -35,65 +32,58 @@
             android:id="@+id/dateDebut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/etape_description"
-            android:layout_below="@+id/etape_description"
             android:layout_marginTop="15dp"
             android:singleLine="true"
             android:text="@string/tra_etape_debut"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/dateChoixDebut"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/dateDebut"
-            android:layout_below="@+id/dateDebut"
             android:background="@drawable/edittext_date_background" />
 
         <TextView
             android:id="@+id/heureChoixDebut"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateChoixDebut"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/dateChoixDebut"
             android:background="@drawable/edittext_date_background" >
         </TextView>
+        </LinearLayout>
 
+        
         <TextView
             android:id="@+id/dateFin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/dateChoixDebut"
-            android:layout_below="@+id/dateChoixDebut"
             android:layout_marginTop="15dp"
             android:singleLine="true"
             android:text="@string/tra_etape_fin"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/dateChoixFin"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/dateFin"
-            android:layout_below="@+id/dateFin"
             android:background="@drawable/edittext_date_background" />
 
         <TextView
             android:id="@+id/heureChoixFin"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateChoixFin"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/dateChoixFin"
             android:background="@drawable/edittext_date_background" />
-
+		
+        </LinearLayout>
         <TextView
             android:id="@+id/commentaire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/dateChoixFin"
-            android:layout_below="@+id/dateChoixFin"
             android:layout_marginTop="15dp"
             android:singleLine="true"
             android:text="@string/tra_etape_commentaire"
@@ -103,8 +93,6 @@
             android:id="@+id/comm"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/commentaire"
-            android:layout_below="@+id/commentaire"
             android:lines="3" 
             android:gravity="top"
             android:hint="">
@@ -114,8 +102,6 @@
             android:id="@+id/libelle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/comm"
-            android:layout_below="@+id/comm"
             android:layout_marginTop="15dp"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -124,43 +110,31 @@
             android:id="@+id/attributEtape"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/libelle"
-            android:layout_below="@+id/libelle"
-            android:layout_centerHorizontal="true"
             android:hint="" >
         </EditText>
         
         <Spinner
             android:id="@+id/spinnerEtape"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/libelle"
-            android:layout_below="@+id/libelle"
-            android:layout_centerHorizontal="true" />
-        
+            android:layout_height="wrap_content" />
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
        <TextView
             android:id="@+id/dateAttribut"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/libelle"
-            android:layout_below="@+id/libelle"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/edittext_date_background" />
 
         <TextView
             android:id="@+id/heureAttribut"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateAttribut"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/dateAttribut"
             android:background="@drawable/edittext_date_background" />
-
+	</LinearLayout>
         <com.alstom.lean.all.buttonbars.CancelSaveSendBar
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerEtape"
-            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_marginTop="30dip"
             cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
@@ -169,6 +143,5 @@
 
         
 
-    </RelativeLayout>
-
+    </LinearLayout>
 </ScrollView>
