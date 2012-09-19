@@ -49,7 +49,7 @@ public class TreatmentSectionFragment extends Fragment {
     	sectionedAdapter = new SectionedAdapter(getActivity());
     	treatmentDateAdapter = new TreatmentDateAdapter(getActivity(), 2);
     	taskListAdapter = new TaskListAdapter(getActivity(), listTasks,taskListManager, 4);
-    	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 2);
+    	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 2, taskListManager);
     	selectTaskAdapter = new SelectTaskAdapter(getActivity(), listTasks, listTasks.size());
     	
     	

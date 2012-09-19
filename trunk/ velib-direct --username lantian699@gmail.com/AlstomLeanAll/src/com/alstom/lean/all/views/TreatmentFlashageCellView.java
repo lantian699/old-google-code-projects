@@ -4,12 +4,18 @@ package com.alstom.lean.all.views;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.PartNumberDetailActivity;
+import com.alstom.lean.all.activities.TaskFragmentActivity;
+import com.alstom.lean.all.flashage.CaptureFlashageActivity;
+import com.alstom.lean.all.fragments.PartNumberDetailFragment;
+import com.alstom.lean.all.managers.ChangeObserver;
+import com.alstom.lean.all.managers.TaskListManager;
 import com.google.zxing.client.android.CaptureActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -34,14 +40,16 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	private LinearLayout view_flash;
 	private Button btn_part_num;
 	private EditText edit_part_num;
+	private TaskListManager taskListManager;
 	
 
-	public TreatmentFlashageCellView(Context context) {
+	public TreatmentFlashageCellView(Context context, TaskListManager manager) {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    inflater.inflate(R.layout.treatment_flashage_cell_view, this);
 	    
 	    this.context = (Activity) context;
+	    this.taskListManager = manager;
 	    
 	    btn_flashage = (ImageView)findViewById(R.id.btn_flashage);
 	    btn_photo = (ImageView)findViewById(R.id.btn_photo_view);
@@ -54,6 +62,19 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 	    btn_flashage.setOnClickListener(this);
 	    btn_photo.setOnClickListener(this);
 	    btn_part_num.setOnClickListener(this);
+	    
+	    taskListManager.registerBarcodeChangeObserver(new ChangeObserver() {
+			
+			@Override
+			public void onChange(String res) {
+				edit_part_num.setText(res);
+			}
+
+			@Override
+			public void onChange() {
+			
+			}
+		});
 	    
 	}
 	
@@ -77,7 +98,7 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 		case R.id.btn_flashage:
 			
 			Intent intent = new Intent();
-			intent.setClass(context, CaptureActivity.class);
+			intent.setClass(context, CaptureFlashageActivity.class);
 			//intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 			context.startActivityForResult(intent, REQUEST_CODE_FLASH);
 			
@@ -93,13 +114,22 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 		case R.id.btn_part_number:
 			
 			String partNumber = edit_part_num.getText().toString();
+			
+			
 			if(partNumber != ""){
-				
+				if(context instanceof TaskFragmentActivity){
 				Intent intent_part_num = new Intent();
 				intent_part_num.setClass(context, PartNumberDetailActivity.class);
 				intent_part_num.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				intent_part_num.putExtra(EXTRA_NAME_PART_NUMBER, partNumber);
 				context.startActivity(intent_part_num);
+				
+			}else {
+				
+				PartNumberDetailFragment fragment = new PartNumberDetailFragment(context,partNumber);
+				((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
+				.replace(R.id.activity_detail_container_2, fragment).commit();
+			}
 			
 			}
 			

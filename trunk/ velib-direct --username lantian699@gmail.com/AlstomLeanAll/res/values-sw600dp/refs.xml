@@ -1,3 +1,4 @@
 <resources>
-    <item type="layout" name="activity_activity_list">@layout/activity_activity_twopane</item>
+    <item type="layout" name="activity_activity_list">@layout/activity_activity_threepane</item>
+    <item type="layout" name="activity_activity_list_part_num">@layout/activity_activity_twopane</item>
 </resources>

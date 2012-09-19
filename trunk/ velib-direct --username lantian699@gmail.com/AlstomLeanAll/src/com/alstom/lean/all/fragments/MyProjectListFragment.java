@@ -3,6 +3,8 @@ package com.alstom.lean.all.fragments;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,8 +17,10 @@ import android.widget.TextView;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.ActivityListFragment.Callbacks;
+import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.MyProjectAdapter;
 import com.alstom.lean.all.dummy.DummyContent;
+import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
 
@@ -43,6 +47,8 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
     };
 
     public MyProjectListFragment() {
+    	
+    	
     }
 
     @Override
@@ -54,7 +60,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		
 		listProjects = simulationOfProjects();
 		
-		adapterMyProject = new MyProjectAdapter(getActivity(),listProjects);
+		
 		
 		
 		
@@ -68,6 +74,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         View rootView = inflater.inflate(R.layout.activity_myproject, container, false);
         list_myproject = (ListView) rootView.findViewById(R.id.list_myproject);
         list_myproject.setOnItemClickListener(this);
+        adapterMyProject = new MyProjectAdapter(getActivity(),listProjects, MyProjectModeTabletActivity.getTaskListManager());
         list_myproject.setAdapter(adapterMyProject);
         return rootView;
     }
@@ -108,9 +115,18 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
     
     
     @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
     	// TODO Auto-generated method stub
     	mCallbacks.onItemSelected(position);
+    	
+    	
+    	/* if (list_myproject.getTag() != null){
+             ((View)list_myproject.getTag()).setBackgroundColor(Color.TRANSPARENT);
+         }
+    	 list_myproject.setTag(view);
+    	view.setBackgroundResource(R.drawable.list_activated_holo);
+    	
+    	System.out.println("view = "+view + "pos = "+position);*/
     }
     
     
