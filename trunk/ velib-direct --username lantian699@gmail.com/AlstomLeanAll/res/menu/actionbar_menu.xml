@@ -1,8 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/menu_map" 
-        android:title="forward" 
+        android:title="MAP" 
         android:icon="@drawable/map_icon" 
+        android:showAsAction="ifRoom|withText">
+        
+    </item>
+    
+     <item android:id="@+id/add_doc" 
+        android:title="Add Doc" 
         android:showAsAction="ifRoom|withText">
         
     </item>

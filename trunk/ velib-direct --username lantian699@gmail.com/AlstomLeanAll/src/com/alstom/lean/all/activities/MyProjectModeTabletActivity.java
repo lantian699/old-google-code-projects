@@ -1,6 +1,10 @@
 package com.alstom.lean.all.activities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +33,12 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
 	private static TaskListManager taskListManager = new TaskListManager();;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
+    
+    
+    private static String CLIENT_ID = "274072239927.apps.googleusercontent.com";
+    private static String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+
+    private static String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
     
     
     @Override
@@ -80,6 +90,10 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
 			startActivity(intent);
 			
 			break;
+			
+		case R.id.add_doc:
+			
+			break;
 
 		default:
 			break;
@@ -90,6 +104,8 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
 		return super.onOptionsItemSelected(item);
 	}
     
+    
+
     
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
