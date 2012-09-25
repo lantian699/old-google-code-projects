@@ -20,13 +20,21 @@
             android:layout_height="wrap_content"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Button 
+            android:id="@+id/btn_add_subtask"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="100dp"
+            android:text="+"
+            android:textSize="14dp"/>
         </LinearLayout>
         
         
         <ListView 
             android:id="@+id/list_small_task"
             android:layout_width="fill_parent"
-            android:layout_height="150dp" 
+            android:layout_height="200dp" 
             android:visibility="gone">
             
         </ListView>

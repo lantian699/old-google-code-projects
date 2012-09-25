@@ -17,6 +17,7 @@ public class ImageDisplayActivity extends Activity{
 
 		
 		
+		
 		int resID = getIntent().getIntExtra(PartNumberDetailFragment.RESOURCE_ID, -1);
 		imageView = new ImageView(this);
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);

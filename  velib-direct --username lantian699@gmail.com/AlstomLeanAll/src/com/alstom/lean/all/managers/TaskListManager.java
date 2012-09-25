@@ -9,6 +9,7 @@ public class TaskListManager {
 	
 	private List<ChangeObserver> observers = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeObserver> observersForBarcode = new CopyOnWriteArrayList<ChangeObserver>();
+	private List<ChangeObserver> observersAddMesure = new CopyOnWriteArrayList<ChangeObserver>();
 	private Handler mHandler;
 	
 	
@@ -47,6 +48,28 @@ public class TaskListManager {
 	
 	
 	public void notifyBarcodeChange(final String res) {
+		
+		synchronized (observersForBarcode) {
+			for (final ChangeObserver observer : observersForBarcode) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(res);						
+					}
+				});
+			}
+		}
+	}
+	
+	
+	public void registerAddMesureChangeObserver(ChangeObserver observer) {
+		synchronized (observersForBarcode) {
+			observersForBarcode.add(observer);
+		}
+	}
+	
+	
+	public void notifyAddMesureChange(final String res) {
 		
 		synchronized (observersForBarcode) {
 			for (final ChangeObserver observer : observersForBarcode) {
