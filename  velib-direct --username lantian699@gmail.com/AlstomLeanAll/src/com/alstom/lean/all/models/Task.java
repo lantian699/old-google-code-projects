@@ -1,90 +1,93 @@
 package com.alstom.lean.all.models;
 
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Node;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable
 public class Task extends ModelObject{
 	
 	private static final long serialVersionUID = 743718237794767050L;
-	
-	private String label;
-	private String name;
-	private String date;
-	private boolean isMandatory;
-	private boolean isValidated;
-	private boolean isProcessing;
-	
 
+	@DatabaseField
+	private String name;
+	@DatabaseField
+	private File recordSheet;
+	@DatabaseField
+	private String workInstruction;
+	@DatabaseField
+	private String begin;
+	@DatabaseField
+	private String end;
+	@DatabaseField
+	private String status;
+	@DatabaseField
+	private boolean requiresWitnessPoint;
+	@DatabaseField
+	private ArrayList<Task> listSubTasks;
 	
 	
+	
+	public ArrayList<Task> getListSubTasks() {
+		return listSubTasks;
+	}
+	public void setListSubTasks(ArrayList<Task> listSubTasks) {
+		this.listSubTasks = listSubTasks;
+	}
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getLabel() {
-		return label;
+	public File getRecordSheet() {
+		return recordSheet;
 	}
-
-	public void setLabel(String label) {
-		this.label = label;
+	public void setRecordSheet(File recordSheet) {
+		this.recordSheet = recordSheet;
 	}
-
-	public String getDate() {
-		return date;
+	public String getWorkInstruction() {
+		return workInstruction;
 	}
-
-	public void setDate(String date) {
-		this.date = date;
+	public void setWorkInstruction(String workInstruction) {
+		this.workInstruction = workInstruction;
 	}
-
-	public boolean isMandatory() {
-		return isMandatory;
+	public String getBegin() {
+		return begin;
 	}
-
-	public void setMandatory(boolean isMandatory) {
-		this.isMandatory = isMandatory;
+	public void setBegin(String begin) {
+		this.begin = begin;
 	}
-
-	public boolean isValidated() {
-		return isValidated;
+	public String getEnd() {
+		return end;
 	}
-
-	public void setValidated(boolean isValidated) {
-		this.isValidated = isValidated;
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public boolean isRequiresWitnessPoint() {
+		return requiresWitnessPoint;
+	}
+	public void setRequiresWitnessPoint(boolean requiresWitnessPoint) {
+		this.requiresWitnessPoint = requiresWitnessPoint;
 	}
 	
+	
+	
+	
+	
 
-	public boolean isProcessing() {
-		return isProcessing;
-	}
-
-	public void setProcessing(boolean isProcessing) {
-		this.isProcessing = isProcessing;
-	}
-
-	@Override
-	public void loadIdFromNode(Node node) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Map<Class<? extends ModelObject>, List<Node>> loadFromNode(Node node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

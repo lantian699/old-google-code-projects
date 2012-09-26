@@ -12,15 +12,15 @@ public abstract class ModelObject implements Serializable {
 
 	private static final long serialVersionUID = -8030699721740683823L;
 
-	public abstract void loadIdFromNode(Node node);
+/*	public abstract void loadIdFromNode(Node node);
 
-	/**
+	*//**
 	 * Set all properties of an object from a node
 	 * 
 	 * @param node
 	 *            node to parse
 	 * @return Subclass of ModelObject to populate with subnodes
-	 */
+	 *//*
 	public abstract Map<Class<? extends ModelObject>, List<Node>> loadFromNode(Node node);
 
 	public abstract Object getId();
@@ -40,5 +40,5 @@ public abstract class ModelObject implements Serializable {
 		int hash = 3;
 		hash = 89 * hash + (this.getId() == null ? 0 : this.getId().hashCode());
 		return hash;
-	}
+	}*/
 }

@@ -57,6 +57,7 @@ public static final int RESULT_CODE_TERMINATE = 3;
 			context.getSupportFragmentManager().beginTransaction()
 			.remove(this).commit();
 			
+			
 		//	taskListManager.notifyAddMesureChange();
 			break;
 	

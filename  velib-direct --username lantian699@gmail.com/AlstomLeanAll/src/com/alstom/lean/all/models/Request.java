@@ -61,22 +61,6 @@ public class Request extends ModelObject{
 
 	
 
-	@Override
-	public void loadIdFromNode(Node node) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Map<Class<? extends ModelObject>, List<Node>> loadFromNode(Node node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

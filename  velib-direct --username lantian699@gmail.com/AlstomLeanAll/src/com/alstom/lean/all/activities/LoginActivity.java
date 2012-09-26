@@ -3,10 +3,12 @@ package com.alstom.lean.all.activities;
 
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.spreadsheet.SynchronizationTask;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,7 +24,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.activity_login);
 		
@@ -32,6 +33,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		btn_ok = (Button) findViewById(R.id.okButton);
 		
 		btn_ok.setOnClickListener(this);
+		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+		new SynchronizationTask(this).execute();
 		
 	}
 

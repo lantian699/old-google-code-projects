@@ -64,7 +64,7 @@ public class TaskListCellView extends LinearLayout{
 	}
 	
 	
-	public void setData(final Task task, final int position){
+	/*public void setData(final Task task, final int position){
 		
 		this.task = task;
 		this.position = position;
@@ -197,7 +197,7 @@ public class TaskListCellView extends LinearLayout{
 		}
 		
 	}
-	
+	*/
 		
 
 }

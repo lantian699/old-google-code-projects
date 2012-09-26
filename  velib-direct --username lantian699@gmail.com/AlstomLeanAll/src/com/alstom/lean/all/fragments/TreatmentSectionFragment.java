@@ -29,7 +29,7 @@ public class TreatmentSectionFragment extends Fragment {
 	private SectionedAdapter sectionedAdapter;
 	private TreatmentDateAdapter  treatmentDateAdapter;
 	private TreatmentFlashageAdapter treatmentFlashageAdapter;
-	private TaskListAdapter taskListAdapter;
+//	private TaskListAdapter taskListAdapter;
 	private List<Task> listTasks;
 	private TaskListManager taskListManager;
 	private SelectTaskAdapter selectTaskAdapter;
@@ -44,18 +44,18 @@ public class TreatmentSectionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     
-    	simulationTaskList();
+    	
     	
     	sectionedAdapter = new SectionedAdapter(getActivity());
     	treatmentDateAdapter = new TreatmentDateAdapter(getActivity(), 2);
-    	taskListAdapter = new TaskListAdapter(getActivity(), listTasks,taskListManager, 4);
+    	//taskListAdapter = new TaskListAdapter(getActivity(), listTasks,taskListManager, 4);
     	treatmentFlashageAdapter = new TreatmentFlashageAdapter(getActivity(), 2, taskListManager);
     	selectTaskAdapter = new SelectTaskAdapter(getActivity(), listTasks, listTasks.size());
     	
     	
     	
     	sectionedAdapter.addSection(getString(R.string.title_treatment), treatmentDateAdapter);
-    	sectionedAdapter.addSection(getString(R.string.title_task_list), taskListAdapter);
+    //	sectionedAdapter.addSection(getString(R.string.title_task_list), taskListAdapter);
     	sectionedAdapter.addSection(getString(R.string.title_select_task), selectTaskAdapter);
     	sectionedAdapter.addSection(getString(R.string.title_flash), treatmentFlashageAdapter);
     	
@@ -71,7 +71,7 @@ public class TreatmentSectionFragment extends Fragment {
 		 return view;
     }
 
-	public void simulationTaskList(){
+	/*public void simulationTaskList(){
 		
 		listTasks = new ArrayList<Task>();
 		listTasks.clear();
@@ -112,7 +112,7 @@ public class TreatmentSectionFragment extends Fragment {
 		task4.setValidated(false);
 		task4.setProcessing(false);
 		listTasks.add(task4);
-	}
+	}*/
 	
 	
 }
