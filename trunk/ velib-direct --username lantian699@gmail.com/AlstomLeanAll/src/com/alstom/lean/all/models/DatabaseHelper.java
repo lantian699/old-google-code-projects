@@ -38,7 +38,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.clearTable(connectionSource, Project.class);
 			TableUtils.clearTable(connectionSource, Person.class);
-			TableUtils.clearTable(connectionSource, Task.class);
 			TableUtils.clearTable(connectionSource, Plant.class);
 			TableUtils.clearTable(connectionSource, Block.class);
 			TableUtils.clearTable(connectionSource, Unit.class);
@@ -61,7 +60,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			TableUtils.createTable(connectionSource, Project.class);
 			TableUtils.createTable(connectionSource, Person.class);
-			TableUtils.createTable(connectionSource, Task.class);
 			TableUtils.createTable(connectionSource, Plant.class);
 			TableUtils.createTable(connectionSource, Block.class);
 			TableUtils.createTable(connectionSource, Unit.class);
@@ -83,7 +81,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			
 			TableUtils.dropTable(connectionSource, Project.class, true);
 			TableUtils.dropTable(connectionSource, Person.class, true);
-			TableUtils.dropTable(connectionSource, Task.class, true);
 			TableUtils.dropTable(connectionSource, Plant.class, true);
 			TableUtils.dropTable(connectionSource, Block.class, true);
 			TableUtils.dropTable(connectionSource, Unit.class, true);

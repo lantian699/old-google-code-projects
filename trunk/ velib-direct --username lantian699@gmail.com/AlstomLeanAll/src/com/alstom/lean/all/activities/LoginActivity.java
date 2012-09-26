@@ -3,6 +3,7 @@ package com.alstom.lean.all.activities;
 
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.spreadsheet.SynchronizationTask;
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private String login;
 	private String password;
 	private Button btn_ok;
+	private DatabaseHelper dataHelper;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		btn_ok.setOnClickListener(this);
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
-		new SynchronizationTask(this).execute();
+		
+		dataHelper = DatabaseHelper.getInstance(this);
+		new SynchronizationTask(this, dataHelper).execute();
 		
 	}
 

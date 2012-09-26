@@ -25,7 +25,7 @@ public class Project extends ModelObject{
 	@DatabaseField
 	private String type;
 	@DatabaseField
-	private Location location;
+	private String location;
 	
 	
 	
@@ -41,10 +41,10 @@ public class Project extends ModelObject{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Location getLocation() {
+	public String getLocation() {
 		return location;
 	}
-	public void setLocation(Location location) {
+	public void setLocation(String location) {
 		this.location = location;
 	}
 	

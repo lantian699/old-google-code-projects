@@ -14,6 +14,8 @@ public class Plant extends ModelObject{
 	private String name;
 	@DatabaseField
 	private String plantId;
+	@DatabaseField
+	private String projectName;
 	
 	
 	public String getName() {
@@ -27,6 +29,12 @@ public class Plant extends ModelObject{
 	}
 	public void setPlantId(String plantId) {
 		this.plantId = plantId;
+	}
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	
