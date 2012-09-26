@@ -50,7 +50,7 @@ public class TaskListAdapter extends BaseAdapter {
 		}
 		
 		Task task = listTasks.get(position);
-		view.setData(task, position);
+	//	view.setData(task, position);
 
 		return view;
 		

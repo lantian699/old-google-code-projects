@@ -7,6 +7,7 @@ import org.vudroid.R.id;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.fragments.StepFragment;
+import com.alstom.lean.all.fragments.TaskMesureFragment;
 import com.alstom.lean.all.models.Task;
 
 
@@ -88,10 +89,10 @@ public class SelectTaskListCellView extends LinearLayout{
 				    	switch (item) {
 						case 0:
 							
-							StepFragment stepFragment = new StepFragment(SelectTaskListCellView.this.context, null);
+							TaskMesureFragment mesureFragment = new TaskMesureFragment(SelectTaskListCellView.this.context, null);
 							
 							SelectTaskListCellView.this.context.getSupportFragmentManager().beginTransaction()
-							.replace(R.id.activity_detail_container_2, stepFragment).commit();
+							.replace(R.id.activity_detail_container_2, mesureFragment).commit();
 							
 							break;
 

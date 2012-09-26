@@ -1,31 +1,25 @@
 package com.alstom.lean.all.models;
 
-
-import java.util.List;
-import java.util.Map;
-
-import org.w3c.dom.Node;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import android.location.Location;
-
 @DatabaseTable
-public class Project extends ModelObject{
-	
+public class System extends ModelObject{
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2166171668458005335L;
-	
+	private static final long serialVersionUID = -2661466639658814122L;
 
 	@DatabaseField
-	private String name;
+	private  String name;
 	@DatabaseField
 	private String type;
 	@DatabaseField
-	private Location location;
+	private String systemId;
+	@DatabaseField
+	private String unitId;
+	
 	
 	
 	
@@ -41,13 +35,18 @@ public class Project extends ModelObject{
 	public void setType(String type) {
 		this.type = type;
 	}
-	public Location getLocation() {
-		return location;
+	public String getSystemId() {
+		return systemId;
 	}
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setSystemId(String systemId) {
+		this.systemId = systemId;
+	}
+	public String getUnitId() {
+		return unitId;
+	}
+	public void setUnitId(String unitId) {
+		this.unitId = unitId;
 	}
 	
 	
-
 }
