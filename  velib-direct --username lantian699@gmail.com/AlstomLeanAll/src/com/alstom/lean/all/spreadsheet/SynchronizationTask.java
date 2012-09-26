@@ -1,14 +1,22 @@
 package com.alstom.lean.all.spreadsheet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.alstom.lean.all.models.Block;
+import com.alstom.lean.all.models.DatabaseHelper;
+import com.alstom.lean.all.models.Plant;
+import com.alstom.lean.all.models.Unit;
 import com.alstom.lean.all.spreadsheet.Worksheet.Table;
+import com.alstom.lean.all.tools.Tools;
 import com.google.api.services.spreadsheet.client.SpreadsheetClient;
 import com.google.api.services.spreadsheet.model.ListEntry;
 import com.google.api.services.spreadsheet.model.ListFeed;
 import com.google.api.services.spreadsheet.url.ListUrl;
+import com.j256.ormlite.dao.Dao;
 
 
 
@@ -50,19 +58,20 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	private ProgressDialog dialog;
 	private List<ContentValues> allValues;
 	
-	private static final String PREF_SPREADSHEET_KEY = "spreadsheetKey"; // same as in settings.xml
+	 // same as in settings.xml
 	// Change this key for a different source spreadsheet
 	private String spreadsheetKey;
 	private SpreadsheetClient client;
+	private DatabaseHelper dataHelper;
 	
-	public SynchronizationTask(Activity mainActivity) {
+	public SynchronizationTask(Activity mainActivity, DatabaseHelper dataHelper) {
 		super();
 		mMainActivity = mainActivity;
-
-			SharedPreferences settings = mainActivity.getSharedPreferences(TAG, 0);
-			long millis = settings.getLong(KEY_LAST_SYNC, 0);
-			lastSyncTime = new Time();
-			lastSyncTime.set(millis);
+		this.dataHelper = dataHelper;
+		SharedPreferences settings = mainActivity.getSharedPreferences(TAG, 0);
+		long millis = settings.getLong(KEY_LAST_SYNC, 0);
+		lastSyncTime = new Time();
+		lastSyncTime.set(millis);
 	}
 
 	@Override
@@ -84,13 +93,9 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 			
 			for (Table table:Table.values()) 
-				try {
-					allValues = getAll(requestInitializer, table);
-				} catch (IOException e) {
-					errorMessage = e.getMessage();
-					Log.e(TAG, errorMessage, e);
-					return IO_EXCEPTION;
-				}
+			
+				Tools.getAll(dataHelper,requestInitializer, table);
+				
 		}
 		catch (IllegalArgumentException e) {
 			errorMessage = e.getMessage();
@@ -106,27 +111,7 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	}
 	
 	
-	public List<ContentValues> getAll(SpreadsheetAndroidRequestInitializer requestInitializer, Table table) throws IOException{
-		
-		spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
-		client = new SpreadsheetClient(requestInitializer.createRequestFactory());
-		
-		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
-		
-		
-		ListFeed listFeed = client.listFeed().list().execute(listUrl);
-		List<ContentValues> contentValuess = new ArrayList<ContentValues>(listFeed.getEntries().size());
-		System.out.println("Table = " + table);
-		for (ListEntry listEntry:listFeed.getEntries()){
-			System.out.println("list = " + listEntry.customElements);
-			
-			
-			
-		}
-		
-		
-		return contentValuess;
-	}
+	
 	
 	
 	private void getContentsValuesFromListEntry(ListEntry listEntry) {

@@ -1,22 +1,47 @@
 package com.alstom.lean.all.tools;
 
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.models.Block;
+import com.alstom.lean.all.models.ComponentLevel1;
+import com.alstom.lean.all.models.ComponentLevel2;
+import com.alstom.lean.all.models.ComponentLevel3;
+import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
+import com.alstom.lean.all.models.Mesurement;
+import com.alstom.lean.all.models.Person;
+import com.alstom.lean.all.models.Plant;
+import com.alstom.lean.all.models.Project;
+import com.alstom.lean.all.models.System;
+import com.alstom.lean.all.models.Task;
+import com.alstom.lean.all.models.Unit;
+import com.alstom.lean.all.models.VisualInspection;
+import com.alstom.lean.all.spreadsheet.SpreadsheetAndroidRequestInitializer;
+import com.alstom.lean.all.spreadsheet.Worksheet;
+import com.alstom.lean.all.spreadsheet.Worksheet.Table;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.google.api.services.spreadsheet.client.SpreadsheetClient;
+import com.google.api.services.spreadsheet.model.ListEntry;
+import com.google.api.services.spreadsheet.model.ListFeed;
+import com.google.api.services.spreadsheet.url.ListUrl;
+import com.j256.ormlite.dao.Dao;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 
 public class Tools {
 	
+	private static final String PREF_SPREADSHEET_KEY = "spreadsheetKey";
 	
 	public static void  DrawOneStationOnMap(Activity context,Factory factory , MapView mapView) {
 
@@ -45,5 +70,111 @@ public class Tools {
 
 
 	}
+	
+	
+	public static void getAll(DatabaseHelper dataHelper, SpreadsheetAndroidRequestInitializer requestInitializer, Table table){
+		
+		try {
+		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
+		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
+		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
+		ListFeed listFeed = client.listFeed().list().execute(listUrl);
+		
+		Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
+		Dao<Block, ?> blockDao = dataHelper.getDao(Block.class);
+		Dao<Unit, ?> unitDao = dataHelper.getDao(Unit.class);
+		Dao<System, ?> systemDao = dataHelper.getDao(System.class);
+		Dao<ComponentLevel1, ?> cp1Dao = dataHelper.getDao(ComponentLevel1.class);
+		Dao<ComponentLevel2, ?> cp2Dao = dataHelper.getDao(ComponentLevel2.class);
+		Dao<ComponentLevel3, ?> cp3Dao = dataHelper.getDao(ComponentLevel3.class);
+		Dao<Project, ?> projectDao = dataHelper.getDao(Project.class);
+		Dao<Person, ?> personDao = dataHelper.getDao(Person.class);
+		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
+		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
+		
+		for (ListEntry listEntry:listFeed.getEntries()){
+					
+			Map<String, String> content = listEntry.customElements;
+					
+			if(table.toString().equals(Worksheet.TABLE_NAME_PLANT)){
+				Plant plant = new Plant();
+				
+				plant.setName(content.get(Worksheet.TABLE_PLANT_COLUMN_NAME));
+				plant.setPlantId(content.get(Worksheet.TABLE_PLANT_COLUMN_ID));
+				plant.setProjectName(content.get(Worksheet.TABLE_PLANT_COLUMN_PROJECT_NAME));
+				
+				plantDao.create(plant);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_BLOCK)){
+				Block block = new Block();
+				
+				block.setName(content.get(Worksheet.TABLE_BLOCK_COLUMN_NAME));
+				block.setBlockId(content.get(Worksheet.TABLE_BLOCK_COLUMN_ID));
+				block.setPlantId(content.get(Worksheet.TABLE_PLANT_COLUMN_ID));
+				
+				blockDao.create(block);				
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_UNIT)){
+				Unit unit = new Unit();
+						
+				unit.setName(Worksheet.TABLE_UNIT_COLUMN_NAME);
+				unit.setUntiId(Worksheet.TABLE_UNIT_COLUMN_ID);
+				unit.setBlockId(Worksheet.TABLE_BLOCK_COLUMN_ID);
+						
+				unitDao.create(unit);				
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_SYSTEM)){	
+				System system = new System();
+				
+				system.setName(content.get(Worksheet.TABLE_SYSTEM_COLUMN_NAME));
+				system.setSystemId(content.get(Worksheet.TABLE_SYSTEM_COLUMN_ID));
+				system.setType(content.get(Worksheet.TABLE_SYSTEM_COLUMN_TYPE));
+				system.setUnitId(content.get(Worksheet.TABLE_UNIT_COLUMN_ID));
+				
+				systemDao.create(system);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP1)){	
+				ComponentLevel1 cp1 = new ComponentLevel1();
+				
+				cp1.setName(content.get(Worksheet.TABLE_CP1_COLUMN_NAME));
+				cp1.setCP1Id(content.get(Worksheet.TABLE_CP1_COLUMN_ID));
+				cp1.setSystemId(content.get(Worksheet.TABLE_SYSTEM_COLUMN_ID));
+				
+				cp1Dao.create(cp1);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP2)){	
+				ComponentLevel2 cp2 = new ComponentLevel2();
+				
+				cp2.setName(content.get(Worksheet.TABLE_CP2_COLUMN_NAME));
+				cp2.setCP1Id(content.get(Worksheet.TABLE_CP2_COLUMN_ID));
+				cp2.setCP1Id(content.get(Worksheet.TABLE_CP1_COLUMN_ID));
+				
+				cp2Dao.create(cp2);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP3)){	
+				ComponentLevel3 cp3 = new ComponentLevel3();
+				
+				cp3.setName(content.get(Worksheet.TABLE_CP3_COLUMN_NAME));
+				cp3.setCP3Id(content.get(Worksheet.TABLE_CP3_COLUMN_ID));
+				cp3.setCP2Id(content.get(Worksheet.TABLE_CP2_COLUMN_ID));
+				
+				cp3Dao.create(cp3);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_PROJECT)){	
+				Project project = new Project();
+				
+				project.setLocation(content.get(Worksheet.TABLE_PROJECT_COLUMN_LOCATION));
+				project.setName(content.get(Worksheet.TABLE_PROJECT_COLUMN_NAME));
+				
+				projectDao.create(project);
+			}
+			
+		
+		}
+		
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
 
 }

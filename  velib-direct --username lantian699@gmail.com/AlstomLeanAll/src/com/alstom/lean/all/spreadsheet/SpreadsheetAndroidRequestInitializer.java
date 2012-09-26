@@ -37,7 +37,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	private static final int REQUEST_AUTHENTICATE = 0;
 
 	final static HttpTransport transport = AndroidHttp.newCompatibleTransport();
-	SharedPreferences settings;
+	public SharedPreferences settings;
 
 	// google account you must log in to on your phone
 	private String accountName;
