@@ -2,9 +2,15 @@ package com.alstom.lean.all.activities;
 
 
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.models.DatabaseHelper;
+import com.alstom.lean.all.models.InspectionTask;
+import com.alstom.lean.all.models.VisualInspection;
 import com.alstom.lean.all.spreadsheet.SynchronizationTask;
+import com.j256.ormlite.dao.Dao;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,10 +42,22 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		btn_ok.setOnClickListener(this);
 		PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+
+		try {
+			dataHelper = DatabaseHelper.getInstance(this);
 		
-		dataHelper = DatabaseHelper.getInstance(this);
-		new SynchronizationTask(this, dataHelper).execute();
 		
+		
+			Dao<VisualInspection, ?> visualInspDao = dataHelper.getDao(VisualInspection.class);
+			List<VisualInspection> listInsp = visualInspDao.queryForAll();
+			
+		//	if(listInsp.size() == 0)
+			new SynchronizationTask(this, dataHelper).execute();
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onClick(View v) {

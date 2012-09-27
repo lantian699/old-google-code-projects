@@ -112,22 +112,7 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	
 	
 	
-	
-	
-	private void getContentsValuesFromListEntry(ListEntry listEntry) {
-	
-		//rowValues.put(CustomersColumns.KEY_SIEBEL_ID, listEntry.getSelfLink());
-		//rowValues.put(ActivitiesStruct.KEY_SPREADSHEET_LAST_UPDATE_DATE, listEntry.updated);
-		/*for (String key:listEntry.customElements.keySet()){
-			if (listEntry.customElements.get(key)!=null){
-				
-				
-			}
-		}*/
-		
-		
-	
-	}
+
 
 /*	private void synchronizeRow(SpreadSheetDb spreadSheetDb, Table t, ContentValues values) {
 		
