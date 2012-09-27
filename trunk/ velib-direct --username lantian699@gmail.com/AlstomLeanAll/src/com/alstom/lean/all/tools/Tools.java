@@ -176,7 +176,14 @@ public class Tools {
 				person.setEmail(content.get(Worksheet.TABLE_PERSON_COLUMN_EMAIL));
 				
 				personDao.create(person);
-			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
+			}/*else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	
+				Task task = new Task();
+				
+				task.setBegin(content.get(Worksheet.TABLE_TASK_COLUMN_BEGIN));
+				task.setEnd(content.get(Worksheet.TABLE_TASK_COLUMN_END));
+				task.setl
+			
+			}*/else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
 				VisualInspection inspection = new VisualInspection();
 				
 				inspection.setKey(content.get(Worksheet.TABLE_INSPECTION_COLUMN_KEY));

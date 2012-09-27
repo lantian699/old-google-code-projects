@@ -11,25 +11,34 @@ import org.w3c.dom.Node;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable
 public class Task extends ModelObject{
 	
 	private static final long serialVersionUID = 743718237794767050L;
-
+	
+	@DatabaseField
 	private String name;
+	@DatabaseField
 	private File recordSheet;
+	@DatabaseField
 	private String workInstruction;
+	@DatabaseField
 	private String begin;
+	@DatabaseField
 	private String end;
+	@DatabaseField
 	private String status;
+	@DatabaseField
 	private boolean requiresWitnessPoint;
-	private ArrayList<Task> listSubTasks;
+	@DatabaseField
+	private ArrayList<String> listSubTasks;
 	
 	
 	
-	public ArrayList<Task> getListSubTasks() {
+	public ArrayList<String> getListSubTasks() {
 		return listSubTasks;
 	}
-	public void setListSubTasks(ArrayList<Task> listSubTasks) {
+	public void setListSubTasks(ArrayList<String> listSubTasks) {
 		this.listSubTasks = listSubTasks;
 	}
 	public String getName() {
