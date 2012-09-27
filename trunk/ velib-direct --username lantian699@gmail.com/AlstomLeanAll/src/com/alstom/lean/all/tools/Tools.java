@@ -42,6 +42,8 @@ import android.graphics.drawable.Drawable;
 public class Tools {
 	
 	private static final String PREF_SPREADSHEET_KEY = "spreadsheetKey";
+	public static final String _UPDATED = "updated";
+    public static final String KEY_SIEBEL_ID = "siebelid";
 	
 	public static void  DrawOneStationOnMap(Activity context,Factory factory , MapView mapView) {
 
@@ -78,6 +80,7 @@ public class Tools {
 		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
 		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
 		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
+//		java.lang.System.out.println("url = "+listUrl);
 		ListFeed listFeed = client.listFeed().list().execute(listUrl);
 		
 		Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
@@ -96,6 +99,7 @@ public class Tools {
 					
 			Map<String, String> content = listEntry.customElements;
 					
+			
 			if(table.toString().equals(Worksheet.TABLE_NAME_PLANT)){
 				Plant plant = new Plant();
 				
@@ -105,6 +109,9 @@ public class Tools {
 				
 				plantDao.create(plant);
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_BLOCK)){
+				
+				
+				
 				Block block = new Block();
 				
 				block.setName(content.get(Worksheet.TABLE_BLOCK_COLUMN_NAME));
@@ -160,6 +167,41 @@ public class Tools {
 				project.setName(content.get(Worksheet.TABLE_PROJECT_COLUMN_NAME));
 				
 				projectDao.create(project);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_PERSON)){	
+				Person person = new Person();
+				
+				person.setName(content.get(Worksheet.TABLE_PERSON_COLUMN_NAME));
+				person.setProfile(content.get(Worksheet.TABLE_PERSON_COLUMN_PROFILE));
+				person.setTelNumber(content.get(Worksheet.TABLE_PERSON_COLUMN_TEL));
+				person.setEmail(content.get(Worksheet.TABLE_PERSON_COLUMN_EMAIL));
+				
+				personDao.create(person);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
+				VisualInspection inspection = new VisualInspection();
+				
+				inspection.setKey(content.get(Worksheet.TABLE_INSPECTION_COLUMN_KEY));
+				inspection.setDescription(content.get(Worksheet.TABLE_INSPECTION_COLUMN_DESCRIPTION));
+				inspection.setValue(content.get(Worksheet.TABLE_INSPECTION_COLUMN_VALUE));
+				
+				inspectionDao.create(inspection);
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_MESUREMENT)){	
+				Mesurement mesurement = new Mesurement();
+				
+				mesurement.setSelfUrl(listEntry.getSelfLink());
+				mesurement.setUpdateTime(listEntry.updated);
+				mesurement.setDescription(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION);
+				mesurement.setKey(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_KEY));
+				mesurement.setLabel(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_LABEL));
+				mesurement.setUnit(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_UNIT));
+				mesurement.setValue(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE));
+				mesurement.setRule(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_RULE));
+				
+				mesurementDao.create(mesurement);
+				
+				
+				ListEntry listEntryModified = client.listEntry().get().execute(new ListUrl(mesurement.getSelfUrl()));
+				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION, "this is a test");
+				client.listFeed().update().execute(listEntryModified);
 			}
 			
 		

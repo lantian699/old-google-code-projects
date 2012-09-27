@@ -82,66 +82,41 @@ public class Worksheet {
 		PLANT{
 		    public String toString() {
 		        return "od6";
-		    }
-		    public String getName(){
-		    	return TABLE_NAME_PLANT;
-		    }
-		    
+		    }    
 		}, 
 		BLOCK{
 		    public String toString() {
 		        return "od7";
-		    }
-		    public String getName(){
-		    	return "BLOCK";
 		    }
 		}, 
 		UNIT{
 		    public String toString() {
 		        return "od4";
 		    }
-		    public String getName(){
-		    	return "UNIT";
-		    }
 		},
 		SYSTEM{
 		    public String toString() {
 		        return "od5";
-		    }
-		    public String getName(){
-		    	return "SYSTEM";
 		    }
 		},
 		CP1{
 		    public String toString() {
 		        return "oda";
 		    }
-		    public String getName(){
-		    	return "CP1";
-		    }
 		},
 		CP2{
 		    public String toString() {
 		        return "odb";
-		    }
-		    public String getName(){
-		    	return "CP2";
 		    }
 		},
 		CP3{
 		    public String toString() {
 		        return "od8";
 		    }
-		    public String getName(){
-		    	return "CP3";
-		    }
 		},
 		PROJECT{
 		    public String toString() {
 		        return "od9";
-		    }
-		    public String getName(){
-		    	return "PROJECT";
 		    }
 		},
 		
@@ -149,17 +124,11 @@ public class Worksheet {
 		    public String toString() {
 		        return "ocy";
 		    }
-		    public String getName(){
-		    	return "PERSON";
-		    }
 		},
 		
 		TASK{
 		    public String toString() {
 		        return "ocz";
-		    }
-		    public String getName(){
-		    	return "TASK";
 		    }
 		}
 		,
@@ -167,16 +136,10 @@ public class Worksheet {
 		    public String toString() {
 		        return "ocw";
 		    }
-		    public String getName(){
-		    	return "VISUALINSPECTION";
-		    }
 		},
 		MESUREMENT{
 		    public String toString() {
 		        return "ocx";
-		    }
-		    public String getName(){
-		    	return "MESUREMENT";
 		    }
 		}
 	}

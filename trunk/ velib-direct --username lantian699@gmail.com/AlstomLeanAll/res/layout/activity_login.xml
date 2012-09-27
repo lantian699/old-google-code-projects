@@ -24,7 +24,6 @@
         android:layout_marginTop="400dp"
         android:layout_marginLeft="400dp"
         android:hint="@string/login"
-        android:imeOptions="actionNext"
         android:inputType="textEmailAddress"
         android:textColorHint="@android:color/primary_text_dark"
         android:textColor="@android:color/primary_text_dark" />
@@ -48,7 +47,6 @@
         android:layout_marginTop="29dp"
         android:hint="@string/password"
         android:layout_marginLeft="400dp"
-        android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:textColorHint="@android:color/primary_text_dark"
         android:textColor="@android:color/primary_text_dark" />

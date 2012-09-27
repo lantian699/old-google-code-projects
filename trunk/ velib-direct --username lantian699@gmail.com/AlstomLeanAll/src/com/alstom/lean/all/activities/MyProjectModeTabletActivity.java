@@ -1,10 +1,6 @@
 package com.alstom.lean.all.activities;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,18 +8,12 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.alstom.lean.all.ActivityDetailActivity;
-import com.alstom.lean.all.ActivityDetailFragment;
-import com.alstom.lean.all.ActivityListFragment;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.flashage.CaptureFlashageActivity;
 import com.alstom.lean.all.fragments.AssistanceRequestFragment;
 import com.alstom.lean.all.fragments.DetailSectionFragment;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
-import com.alstom.lean.all.fragments.PartNumberDetailFragment;
-import com.alstom.lean.all.fragments.TreatmentSectionFragment;
 import com.alstom.lean.all.managers.TaskListManager;
-import com.alstom.lean.all.model3d.Model3DFragment;
 import com.alstom.lean.all.models.Factory;
 
 
@@ -33,13 +23,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
 	private static TaskListManager taskListManager = new TaskListManager();;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
-    
-    
-    private static String CLIENT_ID = "274072239927.apps.googleusercontent.com";
-    private static String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
-
-    private static String REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
-    
+ 
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
