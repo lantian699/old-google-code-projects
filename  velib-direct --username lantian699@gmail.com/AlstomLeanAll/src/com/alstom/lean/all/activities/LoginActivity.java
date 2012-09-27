@@ -51,7 +51,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			Dao<VisualInspection, ?> visualInspDao = dataHelper.getDao(VisualInspection.class);
 			List<VisualInspection> listInsp = visualInspDao.queryForAll();
 			
-		//	if(listInsp.size() == 0)
+			if(listInsp.size() == 0)
 			new SynchronizationTask(this, dataHelper).execute();
 				
 			

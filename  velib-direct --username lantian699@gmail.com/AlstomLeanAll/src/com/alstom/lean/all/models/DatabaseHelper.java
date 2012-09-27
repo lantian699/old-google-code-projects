@@ -45,6 +45,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.clearTable(connectionSource, ComponentLevel1.class);
 			TableUtils.clearTable(connectionSource, ComponentLevel2.class);
 			TableUtils.clearTable(connectionSource, ComponentLevel3.class);
+			TableUtils.clearTable(connectionSource, Task.class);
 			TableUtils.clearTable(connectionSource, VisualInspection.class);
 			TableUtils.clearTable(connectionSource, Mesurement.class);
 
@@ -67,6 +68,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, ComponentLevel1.class);
 			TableUtils.createTable(connectionSource, ComponentLevel2.class);
 			TableUtils.createTable(connectionSource, ComponentLevel3.class);
+			TableUtils.createTable(connectionSource, Task.class);
 			TableUtils.createTable(connectionSource, VisualInspection.class);
 			TableUtils.createTable(connectionSource, Mesurement.class);
 
@@ -88,6 +90,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, ComponentLevel1.class, true);
 			TableUtils.dropTable(connectionSource, ComponentLevel2.class, true);
 			TableUtils.dropTable(connectionSource, ComponentLevel3.class, true);
+			TableUtils.dropTable(connectionSource, Task.class, true);
 			TableUtils.dropTable(connectionSource, VisualInspection.class, true);
 			TableUtils.dropTable(connectionSource, Mesurement.class, true);
 
