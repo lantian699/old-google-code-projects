@@ -15,11 +15,13 @@ import com.alstom.lean.all.fragments.DetailSectionFragment;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Factory;
+import com.alstom.lean.all.models.Project;
 
 
-public class MyProjectModeTabletActivity extends FragmentActivity implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
+public class MyProjectModeTabletActivity extends FragmentActivity  {//implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
 
     private boolean mTwoPane;
+	private Project project;
 	private static TaskListManager taskListManager = new TaskListManager();;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
@@ -30,13 +32,24 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
+        project = new Project();
+        project.setDescription("oui,t magna, noa imperdiet, lorem purus tempor enim, id accumsan elit");
+        project.setStartDate("2012/02/10 12:20");
+        project.setEndDate("2012/02/12 13:20");
+        project.setName("BADEN PROJECT");
         
         
-        if (findViewById(R.id.activity_detail_container_1) != null) {
+        if (findViewById(R.id.activity_detail_container_0) != null) {
             mTwoPane = true;
-            ((MyProjectListFragment) getSupportFragmentManager()
+           /* ((MyProjectListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.activity_list))
-                    .setActivateOnItemClick(true);
+                    .setActivateOnItemClick(true);*/
+            MyProjectListFragment fragment = new MyProjectListFragment(project);
+            
+            getSupportFragmentManager().beginTransaction()
+            .replace(R.id.activity_detail_container_0, fragment)
+            .commit();
+            
         }
         
         simulationFactory();
@@ -116,7 +129,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
 	}
 
     
-    @Override
+    /*@Override
     public void onItemSelected(int position) {
         if (mTwoPane) {
          //   Bundle arguments = new Bundle();
@@ -137,12 +150,12 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
             .commit();
             
             
-           /* taskListManager = new TaskListManager();;
+            taskListManager = new TaskListManager();;
 			TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
             
             getSupportFragmentManager().beginTransaction()
             .replace(R.id.activity_detail_container_3, fragmentTreat)
-            .commit();*/
+            .commit();
             
             
            
@@ -152,7 +165,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity implements MyP
            
             startActivity(detailIntent);
         }
-    }
+    }*/
     
     
 public static ArrayList<Factory>  simulationFactory(){

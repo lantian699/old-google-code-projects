@@ -9,8 +9,12 @@
     android:showDividers="middle"
     tools:context=".ActivityListActivity">
 
-    <fragment android:name="com.alstom.lean.all.fragments.MyProjectListFragment"
-        android:id="@+id/activity_list"
+   <!--  <fragment android:name="com.alstom.lean.all.fragments.MyProjectListFragment"
+        android:id="@+id/activity_list" 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" /> -->
+     <FrameLayout android:id="@+id/activity_detail_container_0"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

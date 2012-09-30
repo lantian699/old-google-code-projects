@@ -1,0 +1,43 @@
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ImageView
+            android:id="@+id/img_type_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tx_task_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_type_task"
+            android:layout_marginLeft="19dp"
+            android:layout_toRightOf="@+id/img_type_task"
+            android:text="May 12 12:00 - 14:30"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tx_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_type_task"
+            android:layout_alignLeft="@+id/tx_task_date"
+            android:text="Visual inspect rotor 1"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tx_task_name"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_ab_next_holo_light" />
+
+    </RelativeLayout>

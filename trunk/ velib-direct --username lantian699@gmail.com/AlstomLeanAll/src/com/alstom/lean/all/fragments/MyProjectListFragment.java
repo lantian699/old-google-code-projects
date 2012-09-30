@@ -2,11 +2,14 @@ package com.alstom.lean.all.fragments;
 
 import java.util.ArrayList;
 
+import javax.crypto.spec.PSource;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.MyProjectAdapter;
 import com.alstom.lean.all.dummy.DummyContent;
 import com.alstom.lean.all.managers.TaskListManager;
+import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
 
@@ -29,13 +33,14 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 	public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";
 	private ListView list_myproject;
 	private MyProjectAdapter adapterMyProject;
-	private ArrayList<Project> listProjects;
 	private static ArrayList<Factory> listFactory;
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 	
-	private Callbacks mCallbacks = activityCallbacks;
+//	private Callbacks mCallbacks = activityCallbacks;
+	private Project project;
+	private DatabaseHelper dataHelper;
 
-    public interface Callbacks {
+   /* public interface Callbacks {
 
         public void onItemSelected(int position);
     }
@@ -45,25 +50,17 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         public void onItemSelected(int position) {
         }
     };
-
-    public MyProjectListFragment() {
+*/
+    public MyProjectListFragment(Project project) { 	
     	
-    	
+    	this.project = project;
+    	this.dataHelper = DatabaseHelper.getInstance(getActivity());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        
-		listProjects = new ArrayList<Project>();
-		
-		listProjects = simulationOfProjects();
-		
-		
-		
-		
-		
 		listFactory = simulationFactory();
         
     }
@@ -74,12 +71,12 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         View rootView = inflater.inflate(R.layout.activity_myproject, container, false);
         list_myproject = (ListView) rootView.findViewById(R.id.list_myproject);
         list_myproject.setOnItemClickListener(this);
-        adapterMyProject = new MyProjectAdapter(getActivity(),listProjects, MyProjectModeTabletActivity.getTaskListManager());
+        adapterMyProject = new MyProjectAdapter(getActivity(),project);
         list_myproject.setAdapter(adapterMyProject);
         return rootView;
     }
     
-    private ArrayList<Project> simulationOfProjects() {
+   /* private ArrayList<Project> simulationOfProjects() {
 
 		listProjects.clear();
 		
@@ -95,9 +92,9 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		
 		return listProjects;
 		
-	}
+	}*/
     
-    @Override
+   /* @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (!(activity instanceof Callbacks)) {
@@ -112,24 +109,52 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         super.onDetach();
         mCallbacks = activityCallbacks;
     }
+    */
     
-    
-    @Override
+   @Override
     public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
     	// TODO Auto-generated method stub
-    	mCallbacks.onItemSelected(position);
+  //  	mCallbacks.onItemSelected(position);
+	   
+	   FragmentManager supportManager = getActivity().getSupportFragmentManager();
+
+	   switch (position) {
+	case 1:
+		DetailSectionFragment fragment = new DetailSectionFragment();
+        
+        supportManager.beginTransaction()
+                .replace(R.id.activity_detail_container_1, fragment)
+                .commit();
+        
+        
+        AssistanceRequestFragment fragmentDA = new AssistanceRequestFragment();
+        supportManager.beginTransaction()
+        .replace(R.id.activity_detail_container_2, fragmentDA)
+        .commit();
+		
+		
+		break;
+		
+	case 2:
+		TaskListFragment taskFragment = new TaskListFragment(project, dataHelper);
+        
+        supportManager.beginTransaction()
+                .replace(R.id.activity_detail_container_1, taskFragment)
+                .commit();
+        
+        
+		
+		
+		break;
+
+	default:
+		break;
+	}
     	
-    	
-    	/* if (list_myproject.getTag() != null){
-             ((View)list_myproject.getTag()).setBackgroundColor(Color.TRANSPARENT);
-         }
-    	 list_myproject.setTag(view);
-    	view.setBackgroundResource(R.drawable.list_activated_holo);
-    	
-    	System.out.println("view = "+view + "pos = "+position);*/
+
     }
     
-    
+   
     public void setActivateOnItemClick(boolean activateOnItemClick) {
         list_myproject.setChoiceMode(activateOnItemClick
                 ? ListView.CHOICE_MODE_SINGLE

@@ -71,6 +71,7 @@ public class Worksheet {
 	public static final String TABLE_MESUREMENT_COLUMN_RULE = "rule";
 	public static final String TABLE_MESUREMENT_COLUMN_HIGH = "high";
 	public static final String TABLE_MESUREMENT_COLUMN_LOW = "low";
+	public static final Object TABLE_TASK_COLUMN_TYPE = "type";
 	
 	
 

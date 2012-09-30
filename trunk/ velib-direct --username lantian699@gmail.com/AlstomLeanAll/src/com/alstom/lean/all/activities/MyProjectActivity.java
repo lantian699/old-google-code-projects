@@ -37,7 +37,7 @@ public class MyProjectActivity extends ActionBarActivity implements OnItemClickL
 		
 		listProjects = simulationOfProjects();
 		
-		adapterMyProject = new MyProjectAdapter(this,listProjects,null);
+		adapterMyProject = new MyProjectAdapter(this,listProjects.get(0));
 		list_myproject.setAdapter(adapterMyProject);
 		list_myproject.setOnItemClickListener(this);
 		

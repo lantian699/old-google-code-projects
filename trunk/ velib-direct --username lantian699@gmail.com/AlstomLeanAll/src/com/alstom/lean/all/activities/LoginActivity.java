@@ -8,6 +8,7 @@ import java.util.List;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.InspectionTask;
+import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.models.VisualInspection;
 import com.alstom.lean.all.spreadsheet.SynchronizationTask;
 import com.j256.ormlite.dao.Dao;
@@ -48,10 +49,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 		
 		
 		
-			Dao<VisualInspection, ?> visualInspDao = dataHelper.getDao(VisualInspection.class);
-			List<VisualInspection> listInsp = visualInspDao.queryForAll();
+			Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
+			List<Task> listTask = taskDao.queryForAll();
 			
-			if(listInsp.size() == 0)
+			System.out.println("lissTask = "+listTask);
+			
+			if(listTask.size() == 0)
 			new SynchronizationTask(this, dataHelper).execute();
 				
 			

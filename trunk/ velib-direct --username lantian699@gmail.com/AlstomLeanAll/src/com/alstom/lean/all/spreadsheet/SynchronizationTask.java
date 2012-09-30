@@ -12,9 +12,8 @@ import com.alstom.lean.all.models.Plant;
 import com.alstom.lean.all.models.Unit;
 import com.alstom.lean.all.spreadsheet.Worksheet.Table;
 import com.alstom.lean.all.tools.Tools;
+
 import com.google.api.services.spreadsheet.client.SpreadsheetClient;
-import com.google.api.services.spreadsheet.model.ListEntry;
-import com.google.api.services.spreadsheet.model.ListFeed;
 import com.google.api.services.spreadsheet.url.ListUrl;
 import com.j256.ormlite.dao.Dao;
 
@@ -77,7 +76,7 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	@Override
 	protected void onPreExecute() {
 		
-		dialog = ProgressDialog.show(mMainActivity, "", "Please wait for data download ...");
+		//dialog = ProgressDialog.show(mMainActivity, "", "Please wait for data download ...");
 		
 	
 	}
@@ -217,6 +216,6 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	@Override
 	protected void onPostExecute(Integer result) {
 		
-		dialog.dismiss();	
+		//dialog.dismiss();	
 	}
 }
