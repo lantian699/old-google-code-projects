@@ -194,6 +194,7 @@ public class Tools {
 				inspection.setKey(content.get(Worksheet.TABLE_INSPECTION_COLUMN_KEY));
 				inspection.setDescription(content.get(Worksheet.TABLE_INSPECTION_COLUMN_DESCRIPTION));
 				inspection.setValue(content.get(Worksheet.TABLE_INSPECTION_COLUMN_VALUE));
+				inspection.setParent(content.get(Worksheet.TABLE_INSPECTION_COLUMN_PARENT));
 				
 				inspectionDao.create(inspection);
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_MESUREMENT)){	
@@ -207,6 +208,7 @@ public class Tools {
 				mesurement.setUnit(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_UNIT));
 				mesurement.setValue(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE));
 				mesurement.setRule(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_RULE));
+				mesurement.setParent(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_PARENT));
 				
 				mesurementDao.create(mesurement);
 				

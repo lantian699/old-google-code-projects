@@ -136,14 +136,14 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		break;
 		
 	case 2:
-		TaskListFragment taskFragment = new TaskListFragment(project, dataHelper);
-        
-        supportManager.beginTransaction()
-                .replace(R.id.activity_detail_container_1, taskFragment)
-                .commit();
-        
-        
 		
+		TaskListFragment taskFragment = new TaskListFragment(project, dataHelper);
+        supportManager.beginTransaction().replace(R.id.activity_detail_container_1, taskFragment).commit();
+        
+        
+        Fragment removeFragment = supportManager.findFragmentById(R.id.activity_detail_container_2);
+        if(removeFragment != null)
+		supportManager.beginTransaction().remove(removeFragment).commit();
 		
 		break;
 

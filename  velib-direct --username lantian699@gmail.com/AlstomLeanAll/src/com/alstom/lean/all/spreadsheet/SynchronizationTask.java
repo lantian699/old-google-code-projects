@@ -76,7 +76,7 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	@Override
 	protected void onPreExecute() {
 		
-		//dialog = ProgressDialog.show(mMainActivity, "", "Please wait for data download ...");
+		dialog = ProgressDialog.show(mMainActivity, "", "Please wait for data download ...");
 		
 	
 	}
@@ -216,6 +216,6 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	@Override
 	protected void onPostExecute(Integer result) {
 		
-		//dialog.dismiss();	
+		dialog.dismiss();	
 	}
 }

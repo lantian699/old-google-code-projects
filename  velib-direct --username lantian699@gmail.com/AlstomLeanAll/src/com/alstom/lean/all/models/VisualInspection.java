@@ -10,6 +10,7 @@ public class VisualInspection extends ModelObject{
 	 * 
 	 */
 	private static final long serialVersionUID = -1915072194977539505L;
+	public static final String TABLE_INSPECTION_COLUMN_PARENT = "parent";
 
 	@DatabaseField
 	private String description;
@@ -19,8 +20,17 @@ public class VisualInspection extends ModelObject{
 	private String value;
 	@DatabaseField
 	private String attachment;
+	@DatabaseField
+	private String parent;
 	
 	
+	
+	public String getParent() {
+		return parent;
+	}
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 	public String getDescription() {
 		return description;
 	}

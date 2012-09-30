@@ -31,11 +31,12 @@ public class TaskListCellView extends LinearLayout{
 	private static final int TASK_WAIT_FOR_PROCESS = 0;
 	private static final int TASK_IN_PROCESSING = 1;
 	private static final int TASK_PROCESSED = 2;*/
-	public static final String TASK_TYPE_VI = "visualInspection";
+	public static final String TASK_TYPE_VI = "vi";
 	public static final String TASK_TYPE_MESURE = "mesure";
 	public static final Object TASK_TYPE_FINDING = "finding";
 	private Activity context;
-	private TextView taskDate;
+	private TextView startDate;
+	private TextView endDate;
 	private TextView taskLabel;
 	private ImageView imgTaskType;
 	public TaskListManager taskListManager;
@@ -49,7 +50,8 @@ public class TaskListCellView extends LinearLayout{
 	    this.context = (Activity) context;
 	    this.taskListManager = taskListManager;
 	    
-	    taskDate = (TextView) findViewById(R.id.tx_task_date);
+	    startDate = (TextView) findViewById(R.id.tx_task_start_date);
+	    endDate = (TextView)findViewById(R.id.tx_task_end_date);
 	    taskLabel = (TextView)findViewById(R.id.tx_task_name);
 	    imgTaskType = (ImageView)findViewById(R.id.img_type_task);
 	    
@@ -59,7 +61,8 @@ public class TaskListCellView extends LinearLayout{
 	
 	public void setData(Task task, int position){
 		
-		taskDate.setText(task.getBegin() + task.getEnd());
+		startDate.setText(task.getBegin());
+		endDate.setText(task.getEnd());
 		taskLabel.setText(task.getName());
 		
 		
@@ -77,6 +80,7 @@ public class TaskListCellView extends LinearLayout{
 			
 	
 	}
+	
 	
 	/*public void setData(final Task task, final int position){
 		

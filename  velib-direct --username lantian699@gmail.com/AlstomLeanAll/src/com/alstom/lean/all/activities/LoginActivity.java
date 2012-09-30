@@ -52,7 +52,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 			List<Task> listTask = taskDao.queryForAll();
 			
-			System.out.println("lissTask = "+listTask);
+			
 			
 			if(listTask.size() == 0)
 			new SynchronizationTask(this, dataHelper).execute();

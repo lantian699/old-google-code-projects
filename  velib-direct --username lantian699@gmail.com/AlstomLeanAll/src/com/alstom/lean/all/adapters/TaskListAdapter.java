@@ -30,9 +30,9 @@ public class TaskListAdapter extends BaseAdapter {
 		return listTasks.size();
 	}
 
-	public Object getItem(int arg0) {
+	public Task getItem(int position) {
 		// TODO Auto-generated method stub
-		return null;
+		return listTasks.get(position);
 	}
 
 	public long getItemId(int arg0) {

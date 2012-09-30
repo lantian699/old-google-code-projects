@@ -1,0 +1,158 @@
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/title_td_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/tx_td_description"
+            android:layout_width="fill_parent"
+          	android:padding="5dp"
+            android:layout_height="100dp"
+            android:layout_alignLeft="@+id/title_td_description"
+            android:layout_below="@+id/title_td_description"
+            android:layout_marginTop="15dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tx_td_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tx_td_description"
+            android:layout_alignLeft="@+id/tx_td_description"
+            android:layout_marginBottom="38dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Key" />
+
+        <EditText
+            android:id="@+id/edit_td_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tx_td_key"
+            android:layout_alignBottom="@+id/tx_td_key"
+            android:layout_marginLeft="38dp"
+            android:layout_toRightOf="@+id/tx_td_key"
+            android:ems="10"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/title_td_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tx_td_description"
+            android:layout_alignLeft="@+id/tx_td_description"
+            android:text="Value"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edit_td_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/edit_td_key"
+            android:layout_alignTop="@+id/title_td_value"
+            android:ems="10"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/title_td_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tx_td_description"
+            android:layout_below="@+id/edit_td_value"
+            android:layout_marginTop="14dp"
+            android:text="Unit"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edit_td_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/edit_td_value"
+            android:layout_alignTop="@+id/title_td_unit"
+            android:ems="10"
+            android:visibility="gone"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/title_td_attach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tx_td_description"
+            android:layout_below="@+id/edit_td_value"
+            android:layout_marginTop="97dp"
+            android:text="Attachment"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/title_part_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/title_td_attach"
+            android:layout_below="@+id/title_td_attach"
+            android:layout_marginTop="24dp"
+            android:text="Part number"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/edit_td_part_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/title_part_num"
+            android:layout_alignBottom="@+id/title_part_num"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/title_part_num"
+            android:ems="10"
+            android:inputType="number" />
+
+        <ImageView
+            android:id="@+id/btn_bar_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/title_part_num"
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/edit_td_part_num"
+            android:src="@drawable/code_barre_clic" />
+
+        <TextView
+            android:id="@+id/title_td_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/title_part_num"
+            android:layout_below="@+id/btn_bar_code"
+            android:layout_marginTop="22dp"
+            android:text="Take a photo"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageButton
+            android:id="@+id/btn_take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/btn_bar_code"
+            android:layout_alignTop="@+id/title_td_photo"
+            android:src="@drawable/take_a_photo" />
+
+        <Button
+            android:id="@+id/btn_take_mesure"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_take_photo"
+            android:layout_marginTop="22dp"
+            android:layout_toRightOf="@+id/title_td_attach"
+            android:background="@drawable/login_ok_button_background"
+            android:text="TAKE MESUREMENT" />
+
+    </RelativeLayout>

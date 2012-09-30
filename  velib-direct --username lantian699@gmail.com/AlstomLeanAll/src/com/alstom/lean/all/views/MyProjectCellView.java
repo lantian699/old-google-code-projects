@@ -29,6 +29,7 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	private TextView titleListName;
 	private FragmentActivity context;
 	private Button btn_add_finding;
+	private Button btn_home;
 	private RelativeLayout rl_project_detail;
 
 	public MyProjectCellView(Context context) {
@@ -45,8 +46,10 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	    rl_project_detail = (RelativeLayout)findViewById(R.id.rl_project_detail);
 	    titleListName = (TextView)findViewById(R.id.title_list_name);
 	    
+	    btn_home = (Button)findViewById(R.id.btn_home);
 	    btn_add_finding = (Button)findViewById(R.id.btn_add_finding);
 	    btn_add_finding.setOnClickListener(this);
+	    btn_home.setOnClickListener(this);
 	    
 	}
 	
@@ -123,6 +126,11 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 			.remove(fragment).commit();*/
 	        
 	        
+			break;
+			
+		case R.id.btn_home:
+			
+			context.finish();
 			break;
 
 		default:

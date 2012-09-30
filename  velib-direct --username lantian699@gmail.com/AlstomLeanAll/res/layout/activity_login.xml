@@ -17,12 +17,14 @@
         android:layout_margin="4dp"
         android:background="@drawable/login_background" />
 
+    <FrameLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/loginEditText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:layout_marginLeft="400dp"
+		android:layout_gravity="center"
         android:hint="@string/login"
         android:inputType="textEmailAddress"
         android:textColorHint="@android:color/primary_text_dark"
@@ -32,10 +34,6 @@
         android:id="@+id/mdpBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/mdpEditText"
-        android:layout_alignLeft="@+id/mdpEditText"
-        android:layout_alignRight="@+id/mdpEditText"
-        android:layout_alignTop="@+id/mdpEditText"
         android:layout_margin="4dp"
         android:background="@drawable/login_background" />
 
@@ -43,10 +41,9 @@
         android:id="@+id/mdpEditText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginEditText"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
         android:hint="@string/password"
-        android:layout_marginLeft="400dp"
         android:inputType="textPassword"
         android:textColorHint="@android:color/primary_text_dark"
         android:textColor="@android:color/primary_text_dark" />
@@ -79,12 +76,11 @@
         android:id="@+id/okButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/mdpBackground"
-        android:layout_below="@+id/mdpBackground"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="150dp"
+		android:layout_gravity="center"
         android:background="@drawable/login_ok_button_background"
         android:text="@android:string/ok"
         android:textColor="@android:color/primary_text_dark" />
+    </FrameLayout>
 
 </RelativeLayout>
