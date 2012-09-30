@@ -27,42 +27,56 @@ import android.widget.TextView;
 
 public class TaskListCellView extends LinearLayout{
 	
-	public static final int REQUEST_CODE_STEP_LIST = 3;
+/*	public static final int REQUEST_CODE_STEP_LIST = 3;
 	private static final int TASK_WAIT_FOR_PROCESS = 0;
 	private static final int TASK_IN_PROCESSING = 1;
-	private static final int TASK_PROCESSED = 2;
+	private static final int TASK_PROCESSED = 2;*/
+	public static final String TASK_TYPE_VI = "visualInspection";
+	public static final String TASK_TYPE_MESURE = "mesure";
+	public static final Object TASK_TYPE_FINDING = "finding";
 	private Activity context;
-	private TextView stepDate;
-	private TextView stepLabel;
-	private ImageView validate;
-	private ImageView mandatory;
-	private ImageView openActivity;
+	private TextView taskDate;
+	private TextView taskLabel;
+	private ImageView imgTaskType;
 	public TaskListManager taskListManager;
-	private RelativeLayout stepRow;
-	private int position;
-	private Task task;
 	
 
 	public TaskListCellView(Context context, TaskListManager taskListManager) {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    inflater.inflate(R.layout.task_list_cell_view, this);
+	    inflater.inflate(R.layout.task_list_cell_view_mod, this);
 	    
 	    this.context = (Activity) context;
 	    this.taskListManager = taskListManager;
 	    
-	    
-	    stepDate = (TextView)findViewById(R.id.etapeDate);
-	    stepLabel = (TextView)findViewById(R.id.etape);
-	    validate = (ImageView)findViewById(R.id.valider);
-	    mandatory = (ImageView)findViewById(R.id.star);
-	    openActivity = (ImageView)findViewById(R.id.ic_next);
-	    stepRow = (RelativeLayout)findViewById(R.id.etapeRow);
-	    
+	    taskDate = (TextView) findViewById(R.id.tx_task_date);
+	    taskLabel = (TextView)findViewById(R.id.tx_task_name);
+	    imgTaskType = (ImageView)findViewById(R.id.img_type_task);
 	    
 	    
 	}
 	
+	
+	public void setData(Task task, int position){
+		
+		taskDate.setText(task.getBegin() + task.getEnd());
+		taskLabel.setText(task.getName());
+		
+		
+		
+		if(task.getType().equals(TASK_TYPE_VI)){
+			
+			imgTaskType.setImageResource(R.drawable.icon_task_vi);
+		}
+		else if(task.getType().equals(TASK_TYPE_MESURE)){
+			imgTaskType.setImageResource(R.drawable.icon_task_mesure);
+		}
+		else if(task.getType().equals(TASK_TYPE_FINDING)){
+			imgTaskType.setImageResource(R.drawable.icon_task_fi);
+		}
+			
+	
+	}
 	
 	/*public void setData(final Task task, final int position){
 		

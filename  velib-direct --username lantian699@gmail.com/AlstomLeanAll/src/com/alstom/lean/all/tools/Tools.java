@@ -34,6 +34,7 @@ import com.google.api.services.spreadsheet.client.SpreadsheetClient;
 import com.google.api.services.spreadsheet.model.ListEntry;
 import com.google.api.services.spreadsheet.model.ListFeed;
 import com.google.api.services.spreadsheet.url.ListUrl;
+
 import com.j256.ormlite.dao.Dao;
 
 import android.app.Activity;
@@ -48,7 +49,7 @@ public class Tools {
 	public static void  DrawOneStationOnMap(Activity context,Factory factory , MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		
+			
 		
 		Drawable drawable = context.getResources().getDrawable(R.drawable.pointer);
 		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(drawable, context, mapView);
@@ -76,11 +77,12 @@ public class Tools {
 	
 	public static void getAll(DatabaseHelper dataHelper, SpreadsheetAndroidRequestInitializer requestInitializer, Table table){
 		
+		
 		try {
 		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
 		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
 		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
-//		java.lang.System.out.println("url = "+listUrl);
+		java.lang.System.out.println("url = "+listUrl);
 		ListFeed listFeed = client.listFeed().list().execute(listUrl);
 		
 		Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
@@ -92,6 +94,7 @@ public class Tools {
 		Dao<ComponentLevel3, ?> cp3Dao = dataHelper.getDao(ComponentLevel3.class);
 		Dao<Project, ?> projectDao = dataHelper.getDao(Project.class);
 		Dao<Person, ?> personDao = dataHelper.getDao(Person.class);
+		Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
 		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
 		
@@ -109,9 +112,7 @@ public class Tools {
 				
 				plantDao.create(plant);
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_BLOCK)){
-				
-				
-				
+
 				Block block = new Block();
 				
 				block.setName(content.get(Worksheet.TABLE_BLOCK_COLUMN_NAME));
@@ -176,14 +177,18 @@ public class Tools {
 				person.setEmail(content.get(Worksheet.TABLE_PERSON_COLUMN_EMAIL));
 				
 				personDao.create(person);
-			}/*else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	
 				Task task = new Task();
 				
 				task.setBegin(content.get(Worksheet.TABLE_TASK_COLUMN_BEGIN));
 				task.setEnd(content.get(Worksheet.TABLE_TASK_COLUMN_END));
-				task.setl
+				task.setName(content.get(Worksheet.TABLE_TASK_COLUMN_NAME));
+				task.setStatus(content.get(Worksheet.TABLE_TASK_COLUMN_STATUS));
+				task.setParentProject(content.get(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME));
+				task.setType(content.get(Worksheet.TABLE_TASK_COLUMN_TYPE));
+				taskDao.create(task);
 			
-			}*/else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
+			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
 				VisualInspection inspection = new VisualInspection();
 				
 				inspection.setKey(content.get(Worksheet.TABLE_INSPECTION_COLUMN_KEY));
@@ -206,9 +211,9 @@ public class Tools {
 				mesurementDao.create(mesurement);
 				
 				
-				ListEntry listEntryModified = client.listEntry().get().execute(new ListUrl(mesurement.getSelfUrl()));
+				/*ListEntry listEntryModified = client.listEntry().get().execute(new ListUrl(mesurement.getSelfUrl()));
 				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION, "this is a test");
-				client.listFeed().update().execute(listEntryModified);
+				client.listFeed().update().execute(listEntryModified);*/
 			}
 			
 		

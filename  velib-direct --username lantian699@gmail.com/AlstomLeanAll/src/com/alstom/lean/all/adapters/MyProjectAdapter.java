@@ -17,27 +17,25 @@ import android.widget.BaseAdapter;
 
 public class MyProjectAdapter extends BaseAdapter{
 	private Context context;
-	private List<Project> listProjects;
-	private TaskListManager manager;
+	private Project project;
 	
-	public MyProjectAdapter(Context context, List<Project> listProjects, TaskListManager manager){
+	public MyProjectAdapter(Context context, Project project){
 		
 		this.context = context;
-		this.listProjects = listProjects;
-		this.manager = manager;
+		this.project = project;
 		
 	}
 
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return listProjects.size();
+		return 6;
 	}
 
-	public Project getItem(int position) {
+	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		
-		return listProjects.get(position);
+		return null;
 	}
 
 	public long getItemId(int arg0) {
@@ -49,11 +47,9 @@ public class MyProjectAdapter extends BaseAdapter{
 		
 		MyProjectCellView view = (MyProjectCellView) convertView;
 		if (view == null) {
-			view = new MyProjectCellView(context, manager);
+			view = new MyProjectCellView(context);
 		}
-
-		Project project = getItem(position);
-		view.setData(project);
+		view.setData(project, position);
 
 		return view;
 	}

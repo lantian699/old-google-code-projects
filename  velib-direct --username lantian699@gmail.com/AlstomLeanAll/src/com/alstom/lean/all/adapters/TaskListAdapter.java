@@ -15,13 +15,11 @@ import android.widget.BaseAdapter;
 public class TaskListAdapter extends BaseAdapter {
 	
 	private Context context;
-	private int listCount;
 	private List<Task> listTasks;
 	private TaskListManager taskListManager;
 
-	public TaskListAdapter(Context context,List<Task> listTasks, TaskListManager taskListManager, int listCount){
+	public TaskListAdapter(Context context,List<Task> listTasks, TaskListManager taskListManager){
 		this.context = context;
-		this.listCount = listCount;
 		this.listTasks = listTasks;
 		this.taskListManager = taskListManager;
 		
@@ -29,7 +27,7 @@ public class TaskListAdapter extends BaseAdapter {
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return listCount;
+		return listTasks.size();
 	}
 
 	public Object getItem(int arg0) {
@@ -50,7 +48,7 @@ public class TaskListAdapter extends BaseAdapter {
 		}
 		
 		Task task = listTasks.get(position);
-	//	view.setData(task, position);
+		view.setData(task, position);
 
 		return view;
 		

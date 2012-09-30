@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alstom.lean.all.R;
@@ -21,41 +22,82 @@ import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Project;
 public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	
-	private TextView name;
-	private TextView type;
-	private TextView date_1;
-	private TextView date_2;
-	private TaskListManager taskListManager;
+	private TextView projectName;
+	private TextView startDate;
+	private TextView endDate;
+	private TextView description;
+	private TextView titleListName;
 	private FragmentActivity context;
-	private Button btn_treat;
+	private Button btn_add_finding;
+	private RelativeLayout rl_project_detail;
 
-
-	public MyProjectCellView(Context context, TaskListManager manager) {
+	public MyProjectCellView(Context context) {
 		super(context);
 		
 		this.context = (FragmentActivity) context;
-		this.taskListManager = manager;
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	    inflater.inflate(R.layout.my_projet_cell_view, this);
+	    inflater.inflate(R.layout.my_project_cell_view_mod, this);
 	    
-	    name = (TextView) findViewById(R.id.nom);
-	    type = (TextView) findViewById(R.id.type);
-	    date_1 = (TextView) findViewById(R.id.date);
-	    date_2 = (TextView) findViewById(R.id.date2);
-	    btn_treat = (Button)findViewById(R.id.btn_treatment);
+	    projectName = (TextView)findViewById(R.id.project_name);
+	    startDate = (TextView)findViewById(R.id.tx_start_date);
+	    endDate = (TextView)findViewById(R.id.tx_end_date);
+	    description = (TextView)findViewById(R.id.tx_description);
+	    rl_project_detail = (RelativeLayout)findViewById(R.id.rl_project_detail);
+	    titleListName = (TextView)findViewById(R.id.title_list_name);
 	    
-	    if(((MyProjectModeTabletActivity)context).findViewById(R.id.activity_detail_container_2) == null)
-	    	btn_treat.setVisibility(View.GONE);
+	    btn_add_finding = (Button)findViewById(R.id.btn_add_finding);
+	    btn_add_finding.setOnClickListener(this);
 	    
-	    
-	    btn_treat.setOnClickListener(this);
 	}
 	
 	
-	public void setData(Project project){
+	public void setData(Project project, int position){
 		
-		name.setText(project.getName());
-		type.setText(project.getType());
+		switch (position) {
+		case 0:
+			projectName.setText(project.getName());
+			startDate.setText(project.getStartDate());
+			endDate.setText(project.getEndDate());
+			description.setText(project.getDescription());
+			
+			break;
+			
+		case 1:
+			rl_project_detail.setVisibility(View.GONE);
+			titleListName.setVisibility(View.VISIBLE);
+			titleListName.setText("DETAILS/REQUEST");
+			
+			break;
+		case 2:
+			rl_project_detail.setVisibility(View.GONE);
+			titleListName.setVisibility(View.VISIBLE);
+			titleListName.setText("TASKS");
+			break;
+		case 3:
+			rl_project_detail.setVisibility(View.GONE);
+			titleListName.setVisibility(View.VISIBLE);
+			titleListName.setText("COMPONENTS");
+			break;
+		case 4:
+			rl_project_detail.setVisibility(View.GONE);
+			titleListName.setVisibility(View.VISIBLE);
+			titleListName.setText("DOCUMENTS");
+			break;
+			
+		case 5:
+			titleListName.setVisibility(View.GONE);
+			rl_project_detail.setVisibility(View.GONE);
+			btn_add_finding.setVisibility(View.VISIBLE);
+			
+			break;
+
+		default:
+			
+			
+			break;
+		}
+		
+		
 	}
 
 
@@ -64,10 +106,10 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 		// TODO Auto-generated method stub
 		
 		switch (v.getId()) {
-		case R.id.btn_treatment:
+		case R.id.btn_add_finding:
 			
 			
-			TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
+		/*	TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
 	        
 	        context.getSupportFragmentManager().beginTransaction()
 	        .replace(R.id.activity_detail_container_1, fragmentTreat)
@@ -78,7 +120,7 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 			
 	        if(fragment != null)
 	        context.getSupportFragmentManager().beginTransaction()
-			.remove(fragment).commit();
+			.remove(fragment).commit();*/
 	        
 	        
 			break;

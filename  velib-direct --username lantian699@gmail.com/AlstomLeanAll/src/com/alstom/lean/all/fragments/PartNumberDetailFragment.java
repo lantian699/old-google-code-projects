@@ -24,7 +24,6 @@ import com.alstom.lean.all.activities.ImageDisplayActivity;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.activities.PartNumTabletActivity;
 import com.alstom.lean.all.activities.TaskFragmentActivity;
-import com.alstom.lean.all.fragments.MyProjectListFragment.Callbacks;
 import com.alstom.lean.all.model3d.Model3DTurbineActivity;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
 
@@ -37,7 +36,7 @@ public class PartNumberDetailFragment extends  ListFragment{
 	private Context context;
 	private String partNum;
 	private ArrayAdapter<String> listPartAdapter;
-	private Callbacks mCallbacks;
+//	private Callbacks mCallbacks;
 	private int mActivatedPosition;
 	
 	public PartNumberDetailFragment(){

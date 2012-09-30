@@ -26,9 +26,33 @@ public class Project extends ModelObject{
 	private String type;
 	@DatabaseField
 	private String location;
+	@DatabaseField
+	private String startDate;
+	@DatabaseField
+	private String endDate;
+	@DatabaseField
+	private String description;
 	
 	
 	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getName() {
 		return name;
 	}

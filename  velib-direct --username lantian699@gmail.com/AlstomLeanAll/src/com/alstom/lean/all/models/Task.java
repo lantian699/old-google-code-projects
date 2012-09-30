@@ -16,10 +16,12 @@ public class Task extends ModelObject{
 	
 	private static final long serialVersionUID = 743718237794767050L;
 	
+	public static final String TABLE_TASK_COLUMN = "parentProject";
+	
 	@DatabaseField
 	private String name;
 	@DatabaseField
-	private File recordSheet;
+	private String recordSheet;
 	@DatabaseField
 	private String workInstruction;
 	@DatabaseField
@@ -31,15 +33,25 @@ public class Task extends ModelObject{
 	@DatabaseField
 	private boolean requiresWitnessPoint;
 	@DatabaseField
-	private ArrayList<String> listSubTasks;
+	private String type;
+	@DatabaseField
+	private String parentProject;
 	
 	
 	
-	public ArrayList<String> getListSubTasks() {
-		return listSubTasks;
+	
+	
+	public String getParentProject() {
+		return parentProject;
 	}
-	public void setListSubTasks(ArrayList<String> listSubTasks) {
-		this.listSubTasks = listSubTasks;
+	public void setParentProject(String parentProject) {
+		this.parentProject = parentProject;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getName() {
 		return name;
@@ -47,10 +59,10 @@ public class Task extends ModelObject{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public File getRecordSheet() {
+	public String getRecordSheet() {
 		return recordSheet;
 	}
-	public void setRecordSheet(File recordSheet) {
+	public void setRecordSheet(String recordSheet) {
 		this.recordSheet = recordSheet;
 	}
 	public String getWorkInstruction() {
