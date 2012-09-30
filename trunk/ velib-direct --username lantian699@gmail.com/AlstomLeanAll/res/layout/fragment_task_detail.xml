@@ -1,0 +1,23 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/list_task_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" >
+        </ListView>
+        
+         <com.alstom.lean.all.buttonbars.CancelSaveSendBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dip"
+            cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
+            cancelSaveSendBar:cancelSaveSendButton3="@string/button_terminate" />
+
+    </LinearLayout>

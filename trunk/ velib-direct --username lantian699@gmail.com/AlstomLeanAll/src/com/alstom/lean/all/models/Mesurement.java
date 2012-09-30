@@ -7,10 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class Mesurement extends ModelObject{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -1051026845347916111L;
+	public static final String TABLE_MESURE_COLUMN_PARENT = "parent";
 
 	@DatabaseField
 	private String description;
@@ -30,7 +29,17 @@ public class Mesurement extends ModelObject{
 	private String selfUrl;
 	@DatabaseField
 	private String updateTime;
+	@DatabaseField
+	private String parent;
+	
 
+	
+	public String getParent() {
+		return parent;
+	}
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 	public String getSelfUrl() {
 		return selfUrl;
 	}

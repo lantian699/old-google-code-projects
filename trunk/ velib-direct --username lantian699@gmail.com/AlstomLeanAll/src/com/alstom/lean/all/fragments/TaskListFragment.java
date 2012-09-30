@@ -4,13 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.alstom.lean.all.R;
@@ -22,18 +21,18 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
-public class TaskListFragment extends ListFragment implements OnItemClickListener{
+public class TaskListFragment extends Fragment implements OnItemClickListener{
 
 	private ListView taskListView;
 	private TaskListAdapter adapter;
 	private List<Task> listTasks;
 	private Project project;
-	private DatabaseHelper helper;
+	private DatabaseHelper dataHelper;
 	
 	
 	public TaskListFragment(Project project, DatabaseHelper helper){
 		this.project = project;
-		this.helper = helper;
+		this.dataHelper = helper;
 	}
 	
 	@Override
@@ -42,7 +41,7 @@ public class TaskListFragment extends ListFragment implements OnItemClickListene
 	    
 	    
 	    try {
-			Dao<Task, ?> taskDao = helper.getDao(Task.class);
+			Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 			QueryBuilder<Task, ?> queryBuilder = taskDao.queryBuilder();
 			queryBuilder.where().eq(Task.TABLE_TASK_COLUMN, project.getName());
 			PreparedQuery<Task> preparedQuery = queryBuilder.prepare();
@@ -70,8 +69,10 @@ public class TaskListFragment extends ListFragment implements OnItemClickListene
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+		TaskDetailFragment fragment = new TaskDetailFragment(getActivity(), null, listTasks.get(position), dataHelper);
+		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.activity_detail_container_2, fragment).commit();
 		
 	}
 }

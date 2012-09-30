@@ -1,7 +1,8 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent" 
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/img_type_task"
@@ -10,25 +11,34 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="28dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:id="@+id/tx_task_date"
+            android:id="@+id/tx_task_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/img_type_task"
             android:layout_marginLeft="19dp"
             android:layout_toRightOf="@+id/img_type_task"
             android:text="May 12 12:00 - 14:30"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/tx_task_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tx_task_start_date"
+            android:layout_below="@+id/tx_task_start_date"
+            android:text="end date"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/tx_task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/img_type_task"
-            android:layout_alignLeft="@+id/tx_task_date"
+            android:layout_alignLeft="@+id/tx_task_end_date"
+            android:layout_below="@+id/img_type_task"
             android:text="Visual inspect rotor 1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -36,7 +46,7 @@
             android:id="@+id/flash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tx_task_name"
+            android:layout_alignBottom="@+id/img_type_task"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_ab_next_holo_light" />
 

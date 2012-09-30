@@ -20,6 +20,7 @@ import com.alstom.lean.all.models.Project;
 
 public class MyProjectModeTabletActivity extends FragmentActivity  {//implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
 
+	
     private boolean mTwoPane;
 	private Project project;
 	private static TaskListManager taskListManager = new TaskListManager();;
@@ -36,7 +37,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
         project.setDescription("oui,t magna, noa imperdiet, lorem purus tempor enim, id accumsan elit");
         project.setStartDate("2012/02/10 12:20");
         project.setEndDate("2012/02/12 13:20");
-        project.setName("BADEN PROJECT");
+        project.setName("ALBA");
         
         
         if (findViewById(R.id.activity_detail_container_0) != null) {
