@@ -55,23 +55,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/tx_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/title_start_date"
-            android:layout_alignBottom="@+id/title_start_date"
-            android:layout_centerHorizontal="true"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/tx_end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tx_start_date"
-            android:layout_alignTop="@+id/title_end_date"
-            android:text="TextView" />
-
-        <TextView
             android:id="@+id/title_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +71,22 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/title_description"
             android:padding="5dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tx_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/title_end_date"
+            android:layout_below="@+id/title_end_date"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/tx_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/title_end_date"
+            android:layout_below="@+id/title_start_date"
             android:text="TextView" />
 
     </RelativeLayout> 

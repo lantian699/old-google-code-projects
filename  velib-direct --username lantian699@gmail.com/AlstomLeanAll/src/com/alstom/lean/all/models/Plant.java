@@ -8,6 +8,9 @@ public class Plant extends ModelObject{
 
 	
 	private static final long serialVersionUID = -514139835119095532L;
+
+
+	public static final String TABLE_PLANT_COLUMN_PROJECT_NAME = "projectName";
 	
 
 	@DatabaseField

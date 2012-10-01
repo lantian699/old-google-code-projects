@@ -11,6 +11,8 @@ public class Unit extends ModelObject{
 	 */
 	private static final long serialVersionUID = -4410068852945636321L;
 
+	public static final String TABLE_UNIT_COLUMN_BLOCK_ID = "blockId";
+
 	@DatabaseField
 	private String name;
 	@DatabaseField

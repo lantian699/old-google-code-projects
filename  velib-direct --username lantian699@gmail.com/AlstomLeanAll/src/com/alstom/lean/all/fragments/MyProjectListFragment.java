@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 //	private Callbacks mCallbacks = activityCallbacks;
 	private Project project;
 	private DatabaseHelper dataHelper;
+	private TaskListManager taskListManager;
 
    /* public interface Callbacks {
 
@@ -51,10 +54,11 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         }
     };
 */
-    public MyProjectListFragment(Project project) { 	
+    public MyProjectListFragment(Project project, TaskListManager manager) { 	
     	
     	this.project = project;
     	this.dataHelper = DatabaseHelper.getInstance(getActivity());
+    	this.taskListManager = manager;
     }
 
     @Override
@@ -120,6 +124,11 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 
 	   switch (position) {
 	case 1:
+		
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_1)).setVisibility(View.VISIBLE);
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_2)).setVisibility(View.VISIBLE);
+		((LinearLayout) getActivity().findViewById(R.id.activity_detail_container_hide)).setVisibility(View.GONE);
+		
 		DetailSectionFragment fragment = new DetailSectionFragment();
         
         supportManager.beginTransaction()
@@ -137,13 +146,28 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		
 	case 2:
 		
-		TaskListFragment taskFragment = new TaskListFragment(project, dataHelper);
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_1)).setVisibility(View.VISIBLE);
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_2)).setVisibility(View.VISIBLE);
+		((LinearLayout) getActivity().findViewById(R.id.activity_detail_container_hide)).setVisibility(View.GONE);
+		
+		TaskListFragment taskFragment = new TaskListFragment(project, dataHelper, taskListManager);
         supportManager.beginTransaction().replace(R.id.activity_detail_container_1, taskFragment).commit();
         
         
         Fragment removeFragment = supportManager.findFragmentById(R.id.activity_detail_container_2);
         if(removeFragment != null)
 		supportManager.beginTransaction().remove(removeFragment).commit();
+		
+		break;
+		
+	case 3 :
+		
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_1)).setVisibility(View.GONE);
+		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_2)).setVisibility(View.GONE);
+		((LinearLayout) getActivity().findViewById(R.id.activity_detail_container_hide)).setVisibility(View.VISIBLE);
+		
+		ComponentListFragment cpFragment = new ComponentListFragment(project, dataHelper);
+        supportManager.beginTransaction().replace(R.id.activity_detail_sub_container_1, cpFragment).commit();
 		
 		break;
 

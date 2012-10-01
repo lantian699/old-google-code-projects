@@ -24,17 +24,15 @@ public class CancelSaveSendBar extends LinearLayout{
 		TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CancelSaveSendBar, 0, 0);
 		
 		String text = array.getString(R.styleable.CancelSaveSendBar_cancelSaveSendButton1);
-		if (text != null)
+		if (text != null){
 			((Button) findViewById(R.id.cancelsavesendbar_cancel)).setText(text);
-		
+			((Button) findViewById(R.id.cancelsavesendbar_cancel)).setClickable(false);
+		}
 		text = array.getString(R.styleable.CancelSaveSendBar_cancelSaveSendButton2);
-		if (text != null)
-			((Button) findViewById(R.id.cancelsavesendbar_save)).setText(text);
-		
-		text = array.getString(R.styleable.CancelSaveSendBar_cancelSaveSendButton3);
-		if (text != null)
+		if (text != null){
 			((Button) findViewById(R.id.cancelsavesendbar_send)).setText(text);
-		
+			((Button) findViewById(R.id.cancelsavesendbar_send)).setClickable(false);
+		}
 		array.recycle();
 	}
 }

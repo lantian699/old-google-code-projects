@@ -6,11 +6,4 @@
         android:showAsAction="ifRoom|withText">
         
     </item>
-    
-     <item android:id="@+id/add_doc" 
-        android:title="Add Doc" 
-        android:showAsAction="ifRoom|withText">
-        
-    </item>
-
 </menu>

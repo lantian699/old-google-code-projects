@@ -5,7 +5,7 @@
     android:layout_height="fill_parent">
     <LinearLayout
        
-        xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
+       
         style="@style/myMargeTab"
         android:orientation="vertical"
      	android:layout_width="fill_parent"
@@ -133,13 +133,13 @@
             android:background="@drawable/edittext_date_background" />
 	</LinearLayout>
         <com.alstom.lean.all.buttonbars.CancelSaveSendBar
+            xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dip"
             cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
-            cancelSaveSendBar:cancelSaveSendButton2="@string/button_start"
-            cancelSaveSendBar:cancelSaveSendButton3="@string/button_terminate" />
+            cancelSaveSendBar:cancelSaveSendButton2="@string/button_terminate"/>
 
         
 

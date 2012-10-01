@@ -45,7 +45,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
            /* ((MyProjectListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.activity_list))
                     .setActivateOnItemClick(true);*/
-            MyProjectListFragment fragment = new MyProjectListFragment(project);
+            MyProjectListFragment fragment = new MyProjectListFragment(project, taskListManager);
             
             getSupportFragmentManager().beginTransaction()
             .replace(R.id.activity_detail_container_0, fragment)
@@ -86,10 +86,6 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			intent.putExtras(bundle);
 			
 			startActivity(intent);
-			
-			break;
-			
-		case R.id.add_doc:
 			
 			break;
 

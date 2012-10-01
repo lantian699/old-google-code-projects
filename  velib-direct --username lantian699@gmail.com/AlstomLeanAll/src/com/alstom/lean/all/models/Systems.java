@@ -4,12 +4,14 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class System extends ModelObject{
+public class Systems extends ModelObject{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2661466639658814122L;
+
+	public static final String TABLE_SYSTEM_COLUMN_UNIT_ID = "unitId";
 
 	@DatabaseField
 	private  String name;

@@ -10,13 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.adapters.TaskListAdapter;
+import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.models.Task;
+import com.alstom.lean.all.views.TaskListCellView;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -28,11 +33,13 @@ public class TaskListFragment extends Fragment implements OnItemClickListener{
 	private List<Task> listTasks;
 	private Project project;
 	private DatabaseHelper dataHelper;
+	private TaskListManager taskListManager;
 	
 	
-	public TaskListFragment(Project project, DatabaseHelper helper){
+	public TaskListFragment(Project project, DatabaseHelper helper, TaskListManager manager){
 		this.project = project;
 		this.dataHelper = helper;
+		this.taskListManager = manager;
 	}
 	
 	@Override
@@ -71,7 +78,18 @@ public class TaskListFragment extends Fragment implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-		TaskDetailFragment fragment = new TaskDetailFragment(getActivity(), null, listTasks.get(position), dataHelper);
+		
+		ImageView flash = (ImageView) view.findViewById(R.id.flash);		
+		flash.setVisibility(View.VISIBLE);
+		
+		Object tag = flash.getTag();
+		if(tag != null){
+			((TaskListCellView) tag).findViewById(R.id.flash).setVisibility(View.INVISIBLE);
+		}
+		
+		flash.setTag(view);
+//		System.out.println("layout = " + view + " "+view.getParent());
+		TaskDetailFragment fragment = new TaskDetailFragment(getActivity(), taskListManager, listTasks.get(position), dataHelper);
 		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.activity_detail_container_2, fragment).commit();
 		
 	}
