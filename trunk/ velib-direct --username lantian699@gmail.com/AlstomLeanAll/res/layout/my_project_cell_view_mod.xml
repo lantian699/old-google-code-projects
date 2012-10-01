@@ -3,63 +3,76 @@
     android:layout_height="fill_parent"
     android:minHeight="80dp"
     android:orientation="vertical">
-    <RelativeLayout 
-        android:id="@+id/rl_project_detail"
+    
+    <LinearLayout 
+        android:id="@+id/ll_project_detail"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+ 		<LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <Button
             android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+
             android:text="Return" />
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
             android:id="@+id/title_project"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@+id/btn_home"
+            android:layout_marginLeft="10dp"
             android:text="Project Name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        
+
         <TextView
             android:id="@+id/project_name"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/title_project"
-            android:layout_below="@+id/title_project"
             android:text="TextView" />
-
+		</LinearLayout>
+        </LinearLayout>
+        
+ 	
         <TextView
             android:id="@+id/title_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/btn_home"
             android:layout_marginTop="26dp"
             android:text="Start Date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/tx_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/title_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_start_date"
             android:layout_marginTop="20dp"
             android:text="End Date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+         <TextView
+            android:id="@+id/tx_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
         <TextView
             android:id="@+id/title_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_end_date"
             android:layout_marginTop="16dp"
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -68,28 +81,10 @@
             android:id="@+id/tx_description"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_description"
             android:padding="5dp"
             android:text="TextView" />
-
-        <TextView
-            android:id="@+id/tx_end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/title_end_date"
-            android:layout_below="@+id/title_end_date"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/tx_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/title_end_date"
-            android:layout_below="@+id/title_start_date"
-            android:text="TextView" />
-
-    </RelativeLayout> 
+	</LinearLayout>
+        
     <TextView 
         android:id="@+id/title_list_name"
         android:layout_width="fill_parent"
