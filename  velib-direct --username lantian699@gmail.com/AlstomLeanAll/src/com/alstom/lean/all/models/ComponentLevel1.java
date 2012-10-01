@@ -11,6 +11,9 @@ public class ComponentLevel1 extends ModelObject{
 	 */
 	private static final long serialVersionUID = -3825674904197361530L;
 
+
+	public static final String TABLE_CP1_COLUMN_SYSTEM_ID = "systemId";
+
 	
 	@DatabaseField
 	private String name;

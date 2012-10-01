@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.models.Block;
+import com.alstom.lean.all.models.ComponentLevel1;
+import com.alstom.lean.all.models.ComponentLevel2;
+import com.alstom.lean.all.models.ComponentLevel3;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.ModelObject;
 import com.alstom.lean.all.models.Plant;
@@ -121,7 +124,25 @@ public class ComponentListFragment extends ListFragment{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}		
+		}else if( model instanceof Systems ){
+			try {	
+				Systems system = (Systems) model;
+				Dao<ComponentLevel1, ?> cp1Dao = dataHelper.getDao(ComponentLevel1.class);
+				QueryBuilder<ComponentLevel1, ?> queryBuilder = cp1Dao.queryBuilder();
+				queryBuilder.where().eq(ComponentLevel1.TABLE_CP1_COLUMN_SYSTEM_ID, system.getSystemId());
+				PreparedQuery<ComponentLevel1> preparedQuery = queryBuilder.prepare();
+				List<ComponentLevel1> listCp1 = cp1Dao.query(preparedQuery);
+				
+				for(ComponentLevel1 cp1 : listCp1){
+					listModelName.add(cp1.getName());
+					listModel.add(cp1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		
+		
 		
 	}
 	
@@ -141,6 +162,9 @@ public class ComponentListFragment extends ListFragment{
 		}else if(listModel.get(position) instanceof Unit){
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_4, fragment).commit();
+		}else if(listModel.get(position) instanceof Systems){
+			getActivity().getSupportFragmentManager().beginTransaction()
+			.replace(R.id.activity_detail_sub_container_5, fragment).commit();
 		}
 	}
 

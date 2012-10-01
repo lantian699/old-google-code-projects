@@ -30,7 +30,7 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	private FragmentActivity context;
 	private Button btn_add_finding;
 	private Button btn_home;
-	private RelativeLayout rl_project_detail;
+	private LinearLayout ll_project_detail;
 
 	public MyProjectCellView(Context context) {
 		super(context);
@@ -43,8 +43,9 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	    startDate = (TextView)findViewById(R.id.tx_start_date);
 	    endDate = (TextView)findViewById(R.id.tx_end_date);
 	    description = (TextView)findViewById(R.id.tx_description);
-	    rl_project_detail = (RelativeLayout)findViewById(R.id.rl_project_detail);
+	    ll_project_detail = (LinearLayout)findViewById(R.id.ll_project_detail);
 	    titleListName = (TextView)findViewById(R.id.title_list_name);
+	    
 	    
 	    btn_home = (Button)findViewById(R.id.btn_home);
 	    btn_add_finding = (Button)findViewById(R.id.btn_add_finding);
@@ -66,30 +67,30 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 			break;
 			
 		case 1:
-			rl_project_detail.setVisibility(View.GONE);
+			ll_project_detail.setVisibility(View.GONE);
 			titleListName.setVisibility(View.VISIBLE);
 			titleListName.setText("DETAILS/REQUEST");
 			
 			break;
 		case 2:
-			rl_project_detail.setVisibility(View.GONE);
+			ll_project_detail.setVisibility(View.GONE);
 			titleListName.setVisibility(View.VISIBLE);
 			titleListName.setText("TASKS");
 			break;
 		case 3:
-			rl_project_detail.setVisibility(View.GONE);
+			ll_project_detail.setVisibility(View.GONE);
 			titleListName.setVisibility(View.VISIBLE);
 			titleListName.setText("COMPONENTS");
 			break;
 		case 4:
-			rl_project_detail.setVisibility(View.GONE);
+			ll_project_detail.setVisibility(View.GONE);
 			titleListName.setVisibility(View.VISIBLE);
 			titleListName.setText("DOCUMENTS");
 			break;
 			
 		case 5:
 			titleListName.setVisibility(View.GONE);
-			rl_project_detail.setVisibility(View.GONE);
+			ll_project_detail.setVisibility(View.GONE);
 			btn_add_finding.setVisibility(View.VISIBLE);
 			
 			break;

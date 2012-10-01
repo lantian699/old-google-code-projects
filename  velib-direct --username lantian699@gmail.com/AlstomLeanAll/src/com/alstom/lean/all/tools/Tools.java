@@ -123,9 +123,9 @@ public class Tools {
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_UNIT)){
 				Unit unit = new Unit();
 						
-				unit.setName(Worksheet.TABLE_UNIT_COLUMN_NAME);
-				unit.setUntiId(Worksheet.TABLE_UNIT_COLUMN_ID);
-				unit.setBlockId(Worksheet.TABLE_BLOCK_COLUMN_ID);
+				unit.setName(content.get(Worksheet.TABLE_UNIT_COLUMN_NAME));
+				unit.setUntiId(content.get(Worksheet.TABLE_UNIT_COLUMN_ID));
+				unit.setBlockId(content.get(Worksheet.TABLE_BLOCK_COLUMN_ID));
 						
 				unitDao.create(unit);				
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_SYSTEM)){	
