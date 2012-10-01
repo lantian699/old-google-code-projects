@@ -39,6 +39,7 @@ public class TaskListCellView extends LinearLayout{
 	private TextView endDate;
 	private TextView taskLabel;
 	private ImageView imgTaskType;
+	private ImageView flash;
 	public TaskListManager taskListManager;
 	
 
@@ -54,7 +55,8 @@ public class TaskListCellView extends LinearLayout{
 	    endDate = (TextView)findViewById(R.id.tx_task_end_date);
 	    taskLabel = (TextView)findViewById(R.id.tx_task_name);
 	    imgTaskType = (ImageView)findViewById(R.id.img_type_task);
-	    
+	    flash = (ImageView)findViewById(R.id.flash);
+	    flash.setVisibility(View.INVISIBLE);
 	    
 	}
 	

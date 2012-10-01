@@ -12,12 +12,6 @@
             android:layout_height="wrap_content"
             android:text="@string/bouton_annuler" />
         
-        <Button
-            android:id="@+id/cancelsavesendbar_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/bouton_sauvegarder" />
         
         <Button
             android:id="@+id/cancelsavesendbar_send"

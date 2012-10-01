@@ -59,7 +59,7 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 	    sectionedAdapter = new SectionedAdapter(getActivity());
 	    
 	    listViewTask = (ListView)rootView.findViewById(R.id.list_task_detail);
-	    adapter = new TaskDetailAdapter(getActivity(), task, dataHelper); 
+	    adapter = new TaskDetailAdapter(getActivity(), task, dataHelper,taskListManager); 
 	    
 	    sectionedAdapter.addSection(task.getName(), adapter);
 	    listViewTask.setAdapter(sectionedAdapter);

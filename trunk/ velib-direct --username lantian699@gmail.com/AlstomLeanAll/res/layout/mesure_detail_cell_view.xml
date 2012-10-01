@@ -1,0 +1,44 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/tx_md_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="103" />
+        
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit_md_value"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" >
+
+        </EditText>
+        
+         <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tx_md_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.15 - 0.17" />
+        </LinearLayout>
+        
+         <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tx_md_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mm" />
+
+    </LinearLayout>

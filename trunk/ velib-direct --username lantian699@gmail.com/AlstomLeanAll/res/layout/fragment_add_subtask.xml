@@ -208,8 +208,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dip"
             cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
-            cancelSaveSendBar:cancelSaveSendButton2="@string/button_start"
-            cancelSaveSendBar:cancelSaveSendButton3="@string/button_terminate" />
+            cancelSaveSendBar:cancelSaveSendButton2="@string/button_start"/>
 
         
 

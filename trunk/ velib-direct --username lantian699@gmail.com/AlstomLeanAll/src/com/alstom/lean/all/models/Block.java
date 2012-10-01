@@ -7,6 +7,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Block extends ModelObject{
 
 	private static final long serialVersionUID = -1690125103937575237L;
+
+	public static final String TABLE_BLOCK_COLUMN_PLANT_ID = "plantId";
 	
 	@DatabaseField
 	private String name;

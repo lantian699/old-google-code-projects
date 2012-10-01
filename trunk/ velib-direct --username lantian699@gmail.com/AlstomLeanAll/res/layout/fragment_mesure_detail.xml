@@ -1,18 +1,25 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="fill_parent" >
 
+        <TextView
+            android:id="@+id/title_md_mesure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <ListView
-            android:id="@+id/list_task_detail"
+            android:id="@+id/list_mesure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3" >
+            android:layout_weight="1" >
         </ListView>
         
-         <com.alstom.lean.all.buttonbars.CancelSaveSendBar
+        <com.alstom.lean.all.buttonbars.CancelSaveSendBar
+            xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

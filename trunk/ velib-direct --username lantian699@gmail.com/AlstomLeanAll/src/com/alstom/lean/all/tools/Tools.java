@@ -18,7 +18,7 @@ import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.Person;
 import com.alstom.lean.all.models.Plant;
 import com.alstom.lean.all.models.Project;
-import com.alstom.lean.all.models.System;
+import com.alstom.lean.all.models.Systems;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.models.Unit;
 import com.alstom.lean.all.models.VisualInspection;
@@ -88,7 +88,7 @@ public class Tools {
 		Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
 		Dao<Block, ?> blockDao = dataHelper.getDao(Block.class);
 		Dao<Unit, ?> unitDao = dataHelper.getDao(Unit.class);
-		Dao<System, ?> systemDao = dataHelper.getDao(System.class);
+		Dao<Systems, ?> systemDao = dataHelper.getDao(Systems.class);
 		Dao<ComponentLevel1, ?> cp1Dao = dataHelper.getDao(ComponentLevel1.class);
 		Dao<ComponentLevel2, ?> cp2Dao = dataHelper.getDao(ComponentLevel2.class);
 		Dao<ComponentLevel3, ?> cp3Dao = dataHelper.getDao(ComponentLevel3.class);
@@ -129,7 +129,7 @@ public class Tools {
 						
 				unitDao.create(unit);				
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_SYSTEM)){	
-				System system = new System();
+				Systems system = new Systems();
 				
 				system.setName(content.get(Worksheet.TABLE_SYSTEM_COLUMN_NAME));
 				system.setSystemId(content.get(Worksheet.TABLE_SYSTEM_COLUMN_ID));
@@ -209,6 +209,8 @@ public class Tools {
 				mesurement.setValue(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE));
 				mesurement.setRule(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_RULE));
 				mesurement.setParent(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_PARENT));
+				mesurement.setHigh(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_HIGH));
+				mesurement.setLow(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_LOW));
 				
 				mesurementDao.create(mesurement);
 				
