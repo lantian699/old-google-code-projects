@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 	private Project project;
 	private DatabaseHelper dataHelper;
 	private TaskListManager taskListManager;
-	private static String PDF_GT26_PLAN_2D = "gt26_plan_2d.pdf";
+	public static String PDF_GT26_PLAN_2D = "gt26_plan_2d.pdf";
 	public static final String RESOURCE_ID = "resourceID";
    /* public interface Callbacks {
 
@@ -199,7 +200,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		        switch (item) {
 				case 0:
 					
-					boolean save = copyFile(PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+PDF_GT26_PLAN_2D);
+					boolean save = copyFile(PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+PDF_GT26_PLAN_2D, getResources());
 					Uri uri = Uri.parse("file:///mnt/sdcard/"+PDF_GT26_PLAN_2D);
 //					Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
 					if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
@@ -312,7 +313,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		return listFactory;
 	}
 
-    public boolean copyFile(String from, String to) {
+    public static boolean copyFile(String from, String to, Resources res) {
 
 	    try {
 	        int bytesum = 0;
@@ -320,7 +321,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 	       File oldfile = new File(to);
 	   
 	        if(!oldfile.exists()){
-	            InputStream inStream = getResources().getAssets().open(from);
+	            InputStream inStream = res.getAssets().open(from);
 	            OutputStream fs = new BufferedOutputStream(new FileOutputStream(to));
 	            byte[] buffer = new byte[8192];
 	            while ((byteread = inStream.read(buffer)) != -1) {

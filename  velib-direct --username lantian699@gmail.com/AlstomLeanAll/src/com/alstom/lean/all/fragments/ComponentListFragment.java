@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.activities.ImageDisplayActivity;
+import com.alstom.lean.all.model3d.Model3DTurbineActivity;
 import com.alstom.lean.all.models.Block;
 import com.alstom.lean.all.models.ComponentLevel1;
 import com.alstom.lean.all.models.ComponentLevel2;
@@ -16,24 +18,41 @@ import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.models.Systems;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.models.Unit;
+import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ComponentListFragment extends ListFragment{
+public class ComponentListFragment extends Fragment implements OnItemClickListener, OnClickListener{
 	
 	private List<String> listModelName;
 	private ModelObject model;
 	private ArrayAdapter<String> adapter;
 	private DatabaseHelper dataHelper;
 	private List<ModelObject> listModel;
-	
+	private ListView listViewComponent;
+	private TextView title_component;
+	private Button btn_component_info;
 	
 	ComponentListFragment (ModelObject model, DatabaseHelper dataHelper){
 		
@@ -45,12 +64,25 @@ public class ComponentListFragment extends ListFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+			
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_component_list, container, false);
 		
+		title_component = (TextView)view.findViewById(R.id.title_component_list);
+		btn_component_info = (Button) view.findViewById(R.id.btn_component_info);
+		btn_component_info.setOnClickListener(this);
 		setListData();
 		
+		listViewComponent = (ListView) view.findViewById(R.id.list_component);
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, listModelName);
-		setListAdapter(adapter);
+		listViewComponent.setAdapter(adapter);
+		listViewComponent.setOnItemClickListener(this);
 		
+		return view;
 	}
 	
 	private void setListData(){
@@ -73,6 +105,7 @@ public class ComponentListFragment extends ListFragment{
 					listModelName.add(plant.getName());
 					listModel.add(plant);
 				}
+				title_component.setText("PLANT");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -89,6 +122,7 @@ public class ComponentListFragment extends ListFragment{
 					listModelName.add(block.getName());
 					listModel.add(block);
 				}
+				title_component.setText("BLOCK");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -105,6 +139,7 @@ public class ComponentListFragment extends ListFragment{
 					listModelName.add(unit.getName());
 					listModel.add(unit);
 				}
+				title_component.setText("UNIT");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -121,6 +156,7 @@ public class ComponentListFragment extends ListFragment{
 					listModelName.add(system.getName());
 					listModel.add(system);
 				}
+				title_component.setText("SYSTEM");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -137,6 +173,7 @@ public class ComponentListFragment extends ListFragment{
 					listModelName.add(cp1.getName());
 					listModel.add(cp1);
 				}
+				title_component.setText("COMPONENT LEVEL");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -146,11 +183,11 @@ public class ComponentListFragment extends ListFragment{
 		
 	}
 	
+
+
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
 		// TODO Auto-generated method stub
-		super.onListItemClick(l, v, position, id);
-		
 		ComponentListFragment fragment = new ComponentListFragment(listModel.get(position), dataHelper);
 		
 		if(listModel.get(position) instanceof Plant){
@@ -166,6 +203,77 @@ public class ComponentListFragment extends ListFragment{
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_5, fragment).commit();
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_component_info:
+			
+			final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("DOCUMENTS");
+			builder.setItems(items, new DialogInterface.OnClickListener() {
+			    public void onClick(DialogInterface dialog, int item) {
+			        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+			        
+			        switch (item) {
+					case 0:
+						
+						boolean save = MyProjectListFragment.copyFile(MyProjectListFragment.PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+MyProjectListFragment.PDF_GT26_PLAN_2D, getResources());
+						Uri uri = Uri.parse("file:///mnt/sdcard/"+MyProjectListFragment.PDF_GT26_PLAN_2D);
+//						Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
+						if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+
+							 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+							 intent.setClass(getActivity(), PdfViewerActivity.class);
+							 startActivity(intent);
+					 
+						}
+						
+						break;
+						
+					case 1:
+						
+						Intent intent = new Intent();
+						intent.setClass(getActivity(), ImageDisplayActivity.class);
+						intent.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
+						startActivity(intent);
+						break;
+
+					case 2:
+						
+						Intent intent_model = new Intent();
+						intent_model.setClass(getActivity(), ImageDisplayActivity.class);
+						intent_model.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_model);
+						startActivity(intent_model);
+						
+						break;
+						
+					case 3:
+						
+						Intent in = new Intent();
+						in.setClass(getActivity(), Model3DTurbineActivity.class);
+						startActivity(in);
+						
+						break;
+						
+					default:
+						break;
+					}
+			        
+			    }
+			});
+			AlertDialog alert = builder.create();
+			alert.show();
+			
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 }
