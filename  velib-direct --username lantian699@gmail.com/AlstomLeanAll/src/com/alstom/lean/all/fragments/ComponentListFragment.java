@@ -209,6 +209,7 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_component_info:
+		
 			
 			final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
 			
