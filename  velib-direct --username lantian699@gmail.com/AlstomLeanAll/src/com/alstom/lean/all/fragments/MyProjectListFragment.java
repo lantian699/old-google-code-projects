@@ -1,13 +1,23 @@
 package com.alstom.lean.all.fragments;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.crypto.spec.PSource;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -19,16 +29,20 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.ActivityListFragment.Callbacks;
+import com.alstom.lean.all.activities.ImageDisplayActivity;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.MyProjectAdapter;
 import com.alstom.lean.all.dummy.DummyContent;
 import com.alstom.lean.all.managers.TaskListManager;
+import com.alstom.lean.all.model3d.Model3DTurbineActivity;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
+import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
 
 public class MyProjectListFragment extends Fragment implements OnItemClickListener {
 
@@ -42,7 +56,8 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 	private Project project;
 	private DatabaseHelper dataHelper;
 	private TaskListManager taskListManager;
-
+	private static String PDF_GT26_PLAN_2D = "gt26_plan_2d.pdf";
+	public static final String RESOURCE_ID = "resourceID";
    /* public interface Callbacks {
 
         public void onItemSelected(int position);
@@ -170,6 +185,69 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
         supportManager.beginTransaction().replace(R.id.activity_detail_sub_container_1, cpFragment).commit();
 		
 		break;
+		
+	case 4:
+		
+		final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("DOCUMENTS");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+		        
+		        switch (item) {
+				case 0:
+					
+					boolean save = copyFile(PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+PDF_GT26_PLAN_2D);
+					Uri uri = Uri.parse("file:///mnt/sdcard/"+PDF_GT26_PLAN_2D);
+//					Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
+					if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+
+						 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+						 intent.setClass(getActivity(), PdfViewerActivity.class);
+						 startActivity(intent);
+				 
+					}
+					
+					break;
+					
+				case 1:
+					
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), ImageDisplayActivity.class);
+					intent.putExtra(RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
+					startActivity(intent);
+					break;
+
+				case 2:
+					
+					Intent intent_model = new Intent();
+					intent_model.setClass(getActivity(), ImageDisplayActivity.class);
+					intent_model.putExtra(RESOURCE_ID, R.drawable.gt26_model);
+					startActivity(intent_model);
+					
+					break;
+					
+				case 3:
+					
+					Intent in = new Intent();
+					in.setClass(getActivity(), Model3DTurbineActivity.class);
+					startActivity(in);
+					
+					break;
+					
+				default:
+					break;
+				}
+		        
+		    }
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		
+		break;
+		
 
 	default:
 		break;
@@ -234,5 +312,29 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		return listFactory;
 	}
 
+    public boolean copyFile(String from, String to) {
+
+	    try {
+	        int bytesum = 0;
+	        int byteread = 0;
+	       File oldfile = new File(to);
+	   
+	        if(!oldfile.exists()){
+	            InputStream inStream = getResources().getAssets().open(from);
+	            OutputStream fs = new BufferedOutputStream(new FileOutputStream(to));
+	            byte[] buffer = new byte[8192];
+	            while ((byteread = inStream.read(buffer)) != -1) {
+	                bytesum += byteread;
+	                fs.write(buffer, 0, byteread);
+	            }
+	            inStream.close();
+	            fs.close();
+	        }
+	        return true;
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        return false;
+	    }
+	}
 
 }
