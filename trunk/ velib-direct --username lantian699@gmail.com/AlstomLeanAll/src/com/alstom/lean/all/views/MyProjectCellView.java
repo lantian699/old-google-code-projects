@@ -28,7 +28,6 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	private TextView description;
 	private TextView titleListName;
 	private FragmentActivity context;
-	private Button btn_add_finding;
 	private Button btn_home;
 	private LinearLayout ll_project_detail;
 
@@ -48,8 +47,6 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 	    
 	    
 	    btn_home = (Button)findViewById(R.id.btn_home);
-	    btn_add_finding = (Button)findViewById(R.id.btn_add_finding);
-	    btn_add_finding.setOnClickListener(this);
 	    btn_home.setOnClickListener(this);
 	    
 	}
@@ -88,12 +85,6 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 			titleListName.setText("DOCUMENTS");
 			break;
 			
-		case 5:
-			titleListName.setVisibility(View.GONE);
-			ll_project_detail.setVisibility(View.GONE);
-			btn_add_finding.setVisibility(View.VISIBLE);
-			
-			break;
 
 		default:
 			

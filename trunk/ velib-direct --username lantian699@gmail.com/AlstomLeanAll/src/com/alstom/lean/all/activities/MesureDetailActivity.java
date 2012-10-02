@@ -4,6 +4,7 @@ package com.alstom.lean.all.activities;
 import java.sql.SQLException;
 import java.util.List;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,7 @@ import android.widget.Button;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.fragments.MesureDetailFragment;
+import com.alstom.lean.all.fragments.MesureDocumentFragment;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
@@ -32,6 +34,7 @@ public class MesureDetailActivity extends FragmentActivity{
 	private List<Mesurement> listMesure;
 	private Button btn_terminate;
 	private TaskListManager taskListManager;
+	private static String PDF_GT26_PLAN_2D = "gt26_plan_2d.pdf";
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -60,7 +63,9 @@ public class MesureDetailActivity extends FragmentActivity{
 		Fragment fragment = new MesureDetailFragment(listMesure, task, taskListManager, dataHelper);
 		getSupportFragmentManager().beginTransaction().replace(R.id.activity_mesure_detail_container_2, fragment).commit();
 		
-	
+		Uri uri = Uri.parse("file:///mnt/sdcard/"+PDF_GT26_PLAN_2D);
+		Fragment fragment_document = new MesureDocumentFragment(uri);
+		getSupportFragmentManager().beginTransaction().replace(R.id.activity_mesure_detail_container_1, fragment_document).commit();
 	}
 	
 	@Override
@@ -69,7 +74,6 @@ public class MesureDetailActivity extends FragmentActivity{
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			
-			taskListManager.notifyAddMesureChange("");
 			finish();
 			break;
 

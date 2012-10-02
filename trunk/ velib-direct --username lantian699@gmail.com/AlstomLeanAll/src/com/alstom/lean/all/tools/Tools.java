@@ -30,6 +30,8 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.services.spreadsheet.client.SpreadsheetClient;
 import com.google.api.services.spreadsheet.model.ListEntry;
 import com.google.api.services.spreadsheet.model.ListFeed;
@@ -39,6 +41,7 @@ import com.j256.ormlite.dao.Dao;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 public class Tools {
 	
@@ -202,7 +205,7 @@ public class Tools {
 				
 				mesurement.setSelfUrl(listEntry.getSelfLink());
 				mesurement.setUpdateTime(listEntry.updated);
-				mesurement.setDescription(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION);
+				mesurement.setDescription(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION));
 				mesurement.setKey(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_KEY));
 				mesurement.setLabel(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_LABEL));
 				mesurement.setUnit(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_UNIT));
@@ -225,7 +228,6 @@ public class Tools {
 		
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

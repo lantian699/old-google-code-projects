@@ -1,0 +1,187 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent" >
+
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/finding_edit_title"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/finding_edit_id"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+           <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TYPE"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/finding_edit_type"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+             <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/finding_edit_category"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>     
+        
+        </LinearLayout>
+        
+              <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/finding_edit_description"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>     
+        
+        </LinearLayout>
+        
+               <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Spinner 
+          android:id="@+id/finding_spinner_status"
+          android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          />   
+        
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_require"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REQUIRES WP"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Spinner 
+          android:id="@+id/finding_spinner_require"
+          android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          />   
+        
+        </LinearLayout>
+
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_attachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ATTACHMENT"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Button 
+          android:id="@+id/finding_btn_attachment"
+          android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="photo"/>
+        
+        </LinearLayout>
+
+         <Button
+             android:id="@+id/finding_create"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="50dp"
+             android:layout_marginTop="50dp"
+             android:text="Create Finding" />
+
+    </LinearLayout>

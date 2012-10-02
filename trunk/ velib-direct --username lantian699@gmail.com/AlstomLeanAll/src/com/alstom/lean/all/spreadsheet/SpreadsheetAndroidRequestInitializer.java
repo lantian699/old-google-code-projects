@@ -43,19 +43,13 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	
 	private static final String AUTH_TOKEN_TYPE = "wise"; // spreadsheet service
 	private static final int REQUEST_AUTHENTICATE = 0;
-//	private static final String AUTH_TOKEN_TYPE = "oauth2:https://spreadsheets.google.com/feeds";  
-	
-	
+//	private static final String AUTH_TOKEN_TYPE = "oauth2:https://spreadsheets.google.com/feeds";  		
 	final static HttpTransport transport = AndroidHttp.newCompatibleTransport();
 	public SharedPreferences settings;
-
 	// google account you must log in to on your phone
-	private String accountName;
-	GoogleAccountManager accountManager;
-
-	String authToken;
-
-	
+	private  String accountName;
+	private GoogleAccountManager accountManager;
+	private String authToken;
 	private Activity mainActivity;
 
 	static final String PREF_ACCOUNT_NAME = "accountName"; // same as in settings.xml
@@ -70,15 +64,39 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 		this.accountManager = new GoogleAccountManager(mainActivity);
 		
 		accountName = settings.getString(PREF_ACCOUNT_NAME, null);	
-		
+		Account account = accountManager.getAccountByName(accountName);
 		System.out.println("account name = "+accountName);
 		
-				
-		gotAccount();
+		accountManager.getAccountManager().getAuthToken(account, AUTH_TOKEN_TYPE, true,
+				new AccountManagerCallback<Bundle>() {
+					public void run(AccountManagerFuture<Bundle> future) {
+						try {
+							
+							Bundle bundle = future.getResult();
+							if (bundle.containsKey(AccountManager.KEY_INTENT)) {
+								Intent intent = bundle
+										.getParcelable(AccountManager.KEY_INTENT);
+								int flags = intent.getFlags();
+								flags &= ~Intent.FLAG_ACTIVITY_NEW_TASK;
+								intent.setFlags(flags);
+								SpreadsheetAndroidRequestInitializer.this.mainActivity
+										.startActivityForResult(intent,
+												REQUEST_AUTHENTICATE);
+							} else if (bundle
+									.containsKey(AccountManager.KEY_AUTHTOKEN)) {
+								setAuthToken(bundle
+										.getString(AccountManager.KEY_AUTHTOKEN));
+							}
+						} catch (Exception e) {
+							
+							handleException(e);
+						}
+					}
+				}, null);
 		
 		
 		
-		authToken = settings.getString(PREF_AUTH_TOKEN, null);
+		this.authToken = settings.getString(PREF_AUTH_TOKEN, null);
 		setGsessionid(settings.getString(PREF_GSESSIONID, null));
 	}
 
@@ -87,40 +105,47 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 		editor.putString(PREF_AUTH_TOKEN, authToken);
 		editor.commit();
 		this.authToken = authToken;
-		
-		System.out.println("token == "+authToken);
+
 	}
 
 	@Override
 	public void intercept(HttpRequest request) throws IOException {
-		super.intercept(request);
-		request.getHeaders().setAuthorization(
-				GoogleHeaders.getGoogleLoginValue(authToken));
+			super.intercept(request);
+			request.getHeaders()
+			.setAuthorization(GoogleHeaders.getGoogleLoginValue(settings.getString(PREF_AUTH_TOKEN, null)));
+		
 	}
 
 	
-	@Override
-	public boolean handleResponse(HttpRequest request, HttpResponse response,
-			boolean retrySupported) throws IOException {
-		switch (response.getStatusCode()) {
-		case 302:
-			super.handleResponse(request, response, retrySupported);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putString(PREF_GSESSIONID, getGsessionid());
-			editor.commit();
-			return true;
-		case 401:
-			accountManager.invalidateAuthToken(authToken);
-			authToken = null;
-			SharedPreferences.Editor editor2 = settings.edit();
-			editor2.remove(PREF_AUTH_TOKEN);
-			editor2.commit();
-			return false;
-		}
-		return false;
-	}
 
-	void handleGoogleException(Exception e) {
+	
+	void handleException(Exception e) {
+		e.printStackTrace();
+		
+		if (e instanceof HttpResponseException) {
+			
+			
+			HttpResponse response = ((HttpResponseException) e).getResponse();
+			int statusCode = response.getStatusCode();
+			try {
+				response.ignore();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			// TODO(yanivi): should only try this once to avoid infinite loop
+			if (statusCode == 401) {
+				gotAccount();
+				return;
+			}
+			try {
+				Log.e(TAG, response.parseAsString());
+			} catch (IOException parseException) {
+				parseException.printStackTrace();
+			}
+		}
+		Log.e(TAG, e.getMessage(), e);
+	}
+	/*void handleGoogleException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof HttpResponseException) {
 			HttpResponse response = ((HttpResponseException) e).getResponse();
@@ -146,7 +171,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 		}
 		Log.e(TAG, e.getMessage(), e);
 	}
-	
+	*/
 	/*private boolean received401;
 	void handleGoogleException(Exception e) {
 	    if (e instanceof GoogleJsonResponseException) {
@@ -166,36 +191,35 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	  }*/
 
 	
-	private void gotAccount() {
+	public void gotAccount() {
 		Account account = accountManager.getAccountByName(accountName);
 		if (account != null) {
 			// handle invalid token
-			if (this.authToken == null) {
-				accountManager.getAccountManager().getAuthTokenByFeatures(GoogleAccountManager.ACCOUNT_TYPE,
-				        AUTH_TOKEN_TYPE,
-				        null,
-				        mainActivity,
-				        null,
-				        null,
-				        new AccountManagerCallback<Bundle>() {
-
-				          public void run(AccountManagerFuture<Bundle> future) {
-				            Bundle bundle;
-				            try {
-				              bundle = future.getResult();
-				              setAccountName(bundle.getString(AccountManager.KEY_ACCOUNT_NAME));
-				              setAuthToken(bundle.getString(AccountManager.KEY_AUTHTOKEN));
-				          //    onAuthToken();
-				            } catch (OperationCanceledException e) {
-				              // user canceled
-				            } catch (AuthenticatorException e) {
-				              Log.e(TAG, e.getMessage(), e);
-				            } catch (IOException e) {
-				              Log.e(TAG, e.getMessage(), e);
-				            }
-				          }
-				        },
-				        null);
+			if (authToken == null) {
+				accountManager.getAccountManager().getAuthToken(account, AUTH_TOKEN_TYPE,
+						true, new AccountManagerCallback<Bundle>() {
+							public void run(AccountManagerFuture<Bundle> future) {
+								try {
+									Bundle bundle = future.getResult();
+									if (bundle
+											.containsKey(AccountManager.KEY_INTENT)) {
+										Intent intent = bundle
+												.getParcelable(AccountManager.KEY_INTENT);
+										int flags = intent.getFlags();
+										flags &= ~Intent.FLAG_ACTIVITY_NEW_TASK;
+										intent.setFlags(flags);
+										mainActivity.startActivityForResult(
+												intent, REQUEST_AUTHENTICATE);
+									} else if (bundle
+											.containsKey(AccountManager.KEY_AUTHTOKEN)) {
+										setAuthToken(bundle
+												.getString(AccountManager.KEY_AUTHTOKEN));
+									}
+								} catch (Exception e) {
+									//handleException(e);
+								}
+							}
+						}, null);
 			}
 			return;
 		}
@@ -217,9 +241,9 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 						} catch (OperationCanceledException e) {
 							// user canceled
 						} catch (AuthenticatorException e) {
-							handleGoogleException(e);
+							//handleException(e);
 						} catch (IOException e) {
-							handleGoogleException(e);
+							//handleException(e);
 						}
 					}
 				}, null);
@@ -230,7 +254,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 		editor.putString(PREF_ACCOUNT_NAME, accountName);
 		editor.remove(PREF_GSESSIONID);
 		editor.commit();
-		this.accountName = accountName;
-		this.setGsessionid(null);
+		accountName = accountName;
+		//setGsessionid(null);
 	}
 }

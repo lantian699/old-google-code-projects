@@ -29,7 +29,7 @@ public class MyProjectAdapter extends BaseAdapter{
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 6;
+		return 5;
 	}
 
 	public Object getItem(int position) {
