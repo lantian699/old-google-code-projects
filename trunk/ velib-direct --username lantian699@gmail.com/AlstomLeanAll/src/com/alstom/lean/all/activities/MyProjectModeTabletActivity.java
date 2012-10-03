@@ -33,12 +33,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
-        project = new Project();
-        project.setDescription("oui,t magna, noa imperdiet, lorem purus tempor enim, id accumsan elit");
-        project.setStartDate("2012/02/10 12:20");
-        project.setEndDate("2012/02/12 13:20");
-        project.setName("ALBA");
-        
+        project = (Project) getIntent().getSerializableExtra(ProjectListActivity.INTENT_EXTRA_PROJECT_NAME);
         
         if (findViewById(R.id.activity_detail_container_0) != null) {
             mTwoPane = true;

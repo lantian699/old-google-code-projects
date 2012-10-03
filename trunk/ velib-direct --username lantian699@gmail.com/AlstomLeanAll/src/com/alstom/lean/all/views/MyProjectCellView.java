@@ -101,10 +101,10 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 		// TODO Auto-generated method stub
 		
 		switch (v.getId()) {
-		case R.id.btn_add_finding:
+		/*case R.id.btn_add_finding:
 			
 			
-		/*	TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
+			TreatmentSectionFragment fragmentTreat = new TreatmentSectionFragment(taskListManager );
 	        
 	        context.getSupportFragmentManager().beginTransaction()
 	        .replace(R.id.activity_detail_container_1, fragmentTreat)
@@ -115,10 +115,10 @@ public class MyProjectCellView extends LinearLayout implements OnClickListener{
 			
 	        if(fragment != null)
 	        context.getSupportFragmentManager().beginTransaction()
-			.remove(fragment).commit();*/
+			.remove(fragment).commit();
 	        
 	        
-			break;
+			break;*/
 			
 		case R.id.btn_home:
 			
