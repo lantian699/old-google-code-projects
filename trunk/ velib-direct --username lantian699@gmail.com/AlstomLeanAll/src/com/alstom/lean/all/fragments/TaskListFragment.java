@@ -14,9 +14,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,13 +41,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
-public class TaskListFragment extends Fragment implements OnItemClickListener, OnClickListener{
+public class TaskListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener,OnClickListener{
 
 	
-	public static final String TASK_TYPE_MESUREMENT = "MESUREMENT";
+	/*public static final String TASK_TYPE_MESUREMENT = "MESUREMENT";
 	public static final String TASK_TYPE_VI = "VISUAL INSPECTION";
 	public static final String TASK_TYPE_FINDING = "FINDING";
-	
+	*/
 	private ListView taskListView;
 	private TaskListAdapter adapter;
 	private List<Task> listTasks;
@@ -73,7 +75,7 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    try {
 			taskDao = dataHelper.getDao(Task.class);
 			QueryBuilder<Task, ?> queryBuilder = taskDao.queryBuilder();
-			queryBuilder.where().eq(Task.TABLE_TASK_COLUMN, project.getName());
+			queryBuilder.where().eq(Task.TABLE_TASK_COLUMN_PARENT_NAME, project.getName());
 			PreparedQuery<Task> preparedQuery = queryBuilder.prepare();
 			listTasks = taskDao.query(preparedQuery);
 			
@@ -100,6 +102,8 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    
 	    btn_filter = (Button)rootView.findViewById(R.id.btn_filter);
 	    btn_filter.setOnClickListener(this);
+	    
+	    taskListView.setOnItemLongClickListener(this);
 	    
 	    taskListManager.registerRefreshListChangeObserver(new ChangeObserver() {
 			
@@ -171,6 +175,39 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 		getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.activity_detail_container_2, fragment).commit();
 		
 	}
+	
+	
+	@Override
+	public boolean onItemLongClick(AdapterView<?> adapterView, View v, int position, long id) {
+		
+		final Task task_adapter = (Task) adapterView.getAdapter().getItem(position);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setMessage("Are you sure you want to delete this task?")
+		       .setCancelable(false)
+		       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		               
+		        	   try {
+						taskDao.delete(task_adapter);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        	   
+		        	   taskListManager.notifyRefreshListChange("");
+		           }
+		       })
+		       .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		                dialog.cancel();
+		           }
+		       });
+		AlertDialog alert = builder.create();
+		alert.show();
+		
+		return false;
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -178,7 +215,7 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 		switch (v.getId()) {
 		case R.id.btn_add_task:
 			
-			final CharSequence[] items = {TASK_TYPE_MESUREMENT, TASK_TYPE_VI, TASK_TYPE_FINDING};
+			final CharSequence[] items = {"MESUREMENT", "VISUAL INSPECTION", "FINDING"};
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle("TASK TYPE");
@@ -188,21 +225,21 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 			             
 			        switch (item) {
 					case 0:
-						Fragment fragmentMesure = new AddTaskFragment(TASK_TYPE_MESUREMENT,dataHelper, taskListManager);
+						Fragment fragmentMesure = new AddTaskFragment(project,TaskListCellView.TASK_TYPE_MESURE,dataHelper, taskListManager);
 						getActivity().getSupportFragmentManager().beginTransaction()
 						.replace(R.id.activity_detail_container_2, fragmentMesure).commit();
 						
 						break;
 						
 					case 1:
-						Fragment fragmentVi= new AddTaskFragment(TASK_TYPE_VI,dataHelper, taskListManager);
+						Fragment fragmentVi= new AddTaskFragment(project, TaskListCellView.TASK_TYPE_VI,dataHelper, taskListManager);
 						getActivity().getSupportFragmentManager().beginTransaction()
 						.replace(R.id.activity_detail_container_2, fragmentVi).commit();
 						
 						break;
 						
 					case 2:
-						Fragment fragmentF= new AddTaskFragment(TASK_TYPE_FINDING,dataHelper, taskListManager);
+						Fragment fragmentF= new AddTaskFragment(project, TaskListCellView.TASK_TYPE_FINDING,dataHelper, taskListManager);
 						getActivity().getSupportFragmentManager().beginTransaction()
 						.replace(R.id.activity_detail_container_2, fragmentF).commit();
 						
@@ -221,7 +258,7 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 			
 		case R.id.btn_filter:
 				
-			final CharSequence[] items_filter = {TASK_TYPE_MESUREMENT, TASK_TYPE_VI, TASK_TYPE_FINDING, "ALL"};
+			final CharSequence[] items_filter = {"MESUREMENT", "VISUAL INSPECTION", "FINDING", "ALL"};
 			
 			AlertDialog.Builder builder_filter = new AlertDialog.Builder(getActivity());
 			builder_filter.setTitle("TASK TYPE FILTER");
@@ -266,4 +303,8 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 		}
 		
 	}
+
+	
+
+	
 }

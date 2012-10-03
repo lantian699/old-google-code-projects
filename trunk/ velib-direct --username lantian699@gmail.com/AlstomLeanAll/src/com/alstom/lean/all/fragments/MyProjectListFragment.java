@@ -44,6 +44,8 @@ import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
+import com.alstom.lean.all.views.MyProjectCellView;
+import com.alstom.lean.all.views.TaskListCellView;
 
 public class MyProjectListFragment extends Fragment implements OnItemClickListener {
 
@@ -132,12 +134,20 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
     */
     
    @Override
-    public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
     	// TODO Auto-generated method stub
   //  	mCallbacks.onItemSelected(position);
 	   
 	   FragmentManager supportManager = getActivity().getSupportFragmentManager();
 
+	   Object tag = adapterView.getTag();
+	   if(tag != null){
+
+		   ((MyProjectCellView)tag).setBackgroundColor(Color.WHITE);
+	   }
+	   view.setBackgroundResource(R.drawable.list_activated_holo);
+	   adapterView.setTag(view);
+	   
 	   switch (position) {
 	case 1:
 		

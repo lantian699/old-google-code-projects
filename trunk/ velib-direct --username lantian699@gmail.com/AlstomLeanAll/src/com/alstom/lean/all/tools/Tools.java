@@ -48,7 +48,8 @@ public class Tools {
 	private static final String PREF_SPREADSHEET_KEY = "spreadsheetKey";
 	public static final String _UPDATED = "updated";
     public static final String KEY_SIEBEL_ID = "siebelid";
-	
+    public static final String TAG = "Tools";
+    
 	public static void  DrawOneStationOnMap(Activity context,Factory factory , MapView mapView) {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -85,7 +86,7 @@ public class Tools {
 		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
 		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
 		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
-		java.lang.System.out.println("url = "+listUrl);
+//		java.lang.System.out.println("url = "+listUrl);
 		ListFeed listFeed = client.listFeed().list().execute(listUrl);
 		
 		Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
@@ -101,6 +102,8 @@ public class Tools {
 		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
 		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
 		
+		System.out.println(listFeed.getEntries().get(0).customElements);
+		
 		for (ListEntry listEntry:listFeed.getEntries()){
 					
 			Map<String, String> content = listEntry.customElements;
@@ -114,6 +117,7 @@ public class Tools {
 				plant.setProjectName(content.get(Worksheet.TABLE_PLANT_COLUMN_PROJECT_NAME));
 				
 				plantDao.create(plant);
+				Log.i(TAG, "Plant created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_BLOCK)){
 
 				Block block = new Block();
@@ -122,7 +126,8 @@ public class Tools {
 				block.setBlockId(content.get(Worksheet.TABLE_BLOCK_COLUMN_ID));
 				block.setPlantId(content.get(Worksheet.TABLE_PLANT_COLUMN_ID));
 				
-				blockDao.create(block);				
+				blockDao.create(block);	
+				Log.i(TAG, "Block created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_UNIT)){
 				Unit unit = new Unit();
 						
@@ -130,7 +135,8 @@ public class Tools {
 				unit.setUntiId(content.get(Worksheet.TABLE_UNIT_COLUMN_ID));
 				unit.setBlockId(content.get(Worksheet.TABLE_BLOCK_COLUMN_ID));
 						
-				unitDao.create(unit);				
+				unitDao.create(unit);		
+				Log.i(TAG, "Unit created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_SYSTEM)){	
 				Systems system = new Systems();
 				
@@ -140,6 +146,7 @@ public class Tools {
 				system.setUnitId(content.get(Worksheet.TABLE_UNIT_COLUMN_ID));
 				
 				systemDao.create(system);
+				Log.i(TAG, "System created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP1)){	
 				ComponentLevel1 cp1 = new ComponentLevel1();
 				
@@ -148,6 +155,7 @@ public class Tools {
 				cp1.setSystemId(content.get(Worksheet.TABLE_SYSTEM_COLUMN_ID));
 				
 				cp1Dao.create(cp1);
+				Log.i(TAG, "Component level 1 created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP2)){	
 				ComponentLevel2 cp2 = new ComponentLevel2();
 				
@@ -156,6 +164,7 @@ public class Tools {
 				cp2.setCP1Id(content.get(Worksheet.TABLE_CP1_COLUMN_ID));
 				
 				cp2Dao.create(cp2);
+				Log.i(TAG, "component level 2 created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_CP3)){	
 				ComponentLevel3 cp3 = new ComponentLevel3();
 				
@@ -164,6 +173,7 @@ public class Tools {
 				cp3.setCP2Id(content.get(Worksheet.TABLE_CP2_COLUMN_ID));
 				
 				cp3Dao.create(cp3);
+				Log.i(TAG, "Component level 3 created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_PROJECT)){	
 				Project project = new Project();
 				
@@ -171,6 +181,7 @@ public class Tools {
 				project.setName(content.get(Worksheet.TABLE_PROJECT_COLUMN_NAME));
 				
 				projectDao.create(project);
+				Log.i(TAG, "Project created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_PERSON)){	
 				Person person = new Person();
 				
@@ -180,6 +191,7 @@ public class Tools {
 				person.setEmail(content.get(Worksheet.TABLE_PERSON_COLUMN_EMAIL));
 				
 				personDao.create(person);
+				Log.i(TAG, "Person created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	
 				Task task = new Task();
 				
@@ -190,7 +202,7 @@ public class Tools {
 				task.setParentProject(content.get(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME));
 				task.setType(content.get(Worksheet.TABLE_TASK_COLUMN_TYPE));
 				taskDao.create(task);
-			
+				Log.i(TAG, "Task created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
 				VisualInspection inspection = new VisualInspection();
 				
@@ -200,6 +212,7 @@ public class Tools {
 				inspection.setParent(content.get(Worksheet.TABLE_INSPECTION_COLUMN_PARENT));
 				
 				inspectionDao.create(inspection);
+				Log.i(TAG, "VI created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_MESUREMENT)){	
 				Mesurement mesurement = new Mesurement();
 				
@@ -216,7 +229,7 @@ public class Tools {
 				mesurement.setLow(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_LOW));
 				
 				mesurementDao.create(mesurement);
-				
+				Log.i(TAG, "Mesurement created !" );
 				
 				/*ListEntry listEntryModified = client.listEntry().get().execute(new ListUrl(mesurement.getSelfUrl()));
 				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION, "this is a test");

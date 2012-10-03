@@ -45,9 +45,9 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	private EditText edit_part_num;
 	
 	private TextView description;
-	private TextView unit;
-	private TextView key;
-	private TextView value;
+	private TextView edit_unit;
+	private TextView edit_key;
+	private TextView edit_value;
 	
 	private String part_num;
 	
@@ -61,6 +61,7 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 
 	private List<Mesurement> listMesure;
 	private String taskType;
+	
 
 	private Task task;
 
@@ -73,10 +74,10 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	    this.dataHelper = helper;
 	    
 	    description = (TextView)findViewById(R.id.tx_td_description);
-	    key = (TextView)findViewById(R.id.edit_td_key);
+	    edit_key = (EditText)findViewById(R.id.edit_td_key);
 	    edit_part_num = (EditText)findViewById(R.id.edit_td_part_num);
-	    value = (TextView)findViewById(R.id.edit_td_value);
-	    unit = (TextView)findViewById(R.id.edit_td_unit);
+	    edit_value = (EditText)findViewById(R.id.edit_td_value);
+	    edit_unit = (EditText)findViewById(R.id.edit_td_unit);
 	    ll_td_unit = (LinearLayout)findViewById(R.id.ll_td_unit);
 	    
 	    btn_barcode = (ImageView)findViewById(R.id.btn_bar_code);
@@ -108,9 +109,9 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 		this.task = task;
 		
 		description.setText(task.getName());
-		key.setText(task.getStatus());
-		unit.setText(task.getType());
-		value.setText(task.getBegin() + " - " +task.getEnd());
+		edit_key.setText(task.getBegin() + " - " +task.getEnd());
+		edit_unit.setText(task.getType());
+		edit_value.setText(task.getStatus());
 		
 		if(task.getType().equals(TaskListCellView.TASK_TYPE_MESURE)){
 			
@@ -126,7 +127,9 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 			taskType = TaskListCellView.TASK_TYPE_VI;
 			
 		}else if(task.getType().equals(TaskListCellView.TASK_TYPE_FINDING)){
+			btn_mesure.setVisibility(View.GONE);
 			
+			taskType = TaskListCellView.TASK_TYPE_FINDING;
 		}
 	
 	}

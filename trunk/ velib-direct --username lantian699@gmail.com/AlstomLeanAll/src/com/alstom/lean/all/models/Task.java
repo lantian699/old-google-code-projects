@@ -16,8 +16,10 @@ public class Task extends ModelObject{
 	
 	private static final long serialVersionUID = 743718237794767050L;
 	
-	public static final String TABLE_TASK_COLUMN = "parentProject";
+	public static final String TABLE_TASK_COLUMN_PARENT_NAME = "parentProject";
 	
+	@DatabaseField(generatedId = true)
+	private int id;
 	@DatabaseField
 	private String name;
 	@DatabaseField

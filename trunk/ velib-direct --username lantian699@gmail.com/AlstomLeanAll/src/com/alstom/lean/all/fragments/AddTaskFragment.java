@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
+import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.views.TaskListCellView;
 import com.google.common.collect.Lists;
@@ -62,12 +63,14 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 	private DatabaseHelper dataHelper;
 	private TaskListManager taskManager;
 	private Dao<Task, ?> taskDao;
+	private Project project;
 
-	public AddTaskFragment(String taskType,  DatabaseHelper helper, TaskListManager manager){
+	public AddTaskFragment(Project project, String taskType,  DatabaseHelper helper, TaskListManager manager){
 		
 		this.taskType =taskType;
 		this.dataHelper = helper;
 		this.taskManager = manager;
+		this.project = project;
 		
 		
 		try {
@@ -88,7 +91,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 		  listStatus = new ArrayList<String>();
 		  listWP = new ArrayList<String>();
 		  
-		  if(taskType.equals(TaskListFragment.TASK_TYPE_MESUREMENT) || taskType.equals(TaskListFragment.TASK_TYPE_VI)){
+		  if(taskType.equals(TaskListCellView.TASK_TYPE_MESURE) || taskType.equals(TaskListCellView.TASK_TYPE_VI)){
 			  
 			  ll_add_finding_view.setVisibility(view.GONE);
 			  ll_add_task_view.setVisibility(view.VISIBLE);
@@ -117,7 +120,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 			  spinner_status.setAdapter(adapter_status);
 			 
 			  
-		  }else if(taskType.equals(TaskListFragment.TASK_TYPE_FINDING)){
+		  }else if(taskType.equals(TaskListCellView.TASK_TYPE_FINDING)){
 			  
 			  ll_add_finding_view.setVisibility(view.VISIBLE);
 			  ll_add_task_view.setVisibility(view.GONE);
@@ -154,7 +157,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 			  adapter_wp.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 			  spinner_wp.setAdapter(adapter_wp);
 			  
-			  edit_type.setText(TaskListCellView.TASK_TYPE_FINDING);
+			  edit_type.setText(taskType);
 			  edit_category.setText("Level 1");
 		  }
 		 
@@ -182,6 +185,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 				task_finding.setBegin("2012/12/12");
 				task_finding.setEnd("2012/12/13");
 				task_finding.setType("finding");
+				task_finding.setParentProject(project.getName());
 				taskDao.create(task_finding);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -189,6 +193,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 			}
 			taskManager.notifyRefreshListChange("");
 			
+			getFragmentManager().beginTransaction().remove(this).commit();
 			
 			break;
 
@@ -200,6 +205,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 				task_add.setBegin(edit_begin.getText().toString());
 				task_add.setEnd(edit_end.getText().toString());
 				task_add.setType(edit_type.getText().toString());
+				task_add.setParentProject(project.getName());
 				taskDao.create(task_add);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -207,6 +213,7 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 			}
 			
 			taskManager.notifyRefreshListChange("");
+			getFragmentManager().beginTransaction().remove(this).commit();
 			break;
 
 		default:
