@@ -4,12 +4,26 @@
         android:orientation="vertical"
         android:layout_height="fill_parent" >
         
+        <FrameLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <Button 
-            android:id="@+id/btn_add_finding"
+            android:id="@+id/btn_add_task"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+ FINDING"/>
-
+            android:text="ADD TASKS"/>
+        
+        <Button 
+            android:id="@+id/btn_filter"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Filter"/>
+        
+		</FrameLayout>
         <ListView
             android:id="@+id/task_list_view"
             android:layout_width="match_parent"

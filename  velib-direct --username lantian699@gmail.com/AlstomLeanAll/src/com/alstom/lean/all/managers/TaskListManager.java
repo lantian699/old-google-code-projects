@@ -10,6 +10,7 @@ public class TaskListManager {
 	private List<ChangeObserver> observers = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeObserver> observersForBarcode = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeObserver> observersAddMesure = new CopyOnWriteArrayList<ChangeObserver>();
+	private List<ChangeObserver> observersTaskFilter = new CopyOnWriteArrayList<ChangeObserver>();
 	private Handler mHandler;
 	
 	
@@ -63,16 +64,60 @@ public class TaskListManager {
 	
 	
 	public void registerAddMesureChangeObserver(ChangeObserver observer) {
-		synchronized (observersForBarcode) {
-			observersForBarcode.add(observer);
+		synchronized (observersAddMesure) {
+			observersAddMesure.add(observer);
 		}
 	}
 	
 	
 	public void notifyAddMesureChange(final String res) {
 		
+		synchronized (observersAddMesure) {
+			for (final ChangeObserver observer : observersAddMesure) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(res);						
+					}
+				});
+			}
+		}
+	}
+	
+	
+	public void registerTaskFilterChangeObserver(ChangeObserver observer) {
+		synchronized (observersForBarcode) {
+			observersForBarcode.add(observer);
+		}
+	}
+	
+	
+	public void notifyTaskFilterChange(final String res) {
+		
 		synchronized (observersForBarcode) {
 			for (final ChangeObserver observer : observersForBarcode) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(res);						
+					}
+				});
+			}
+		}
+	}
+	
+	
+	public void registerRefreshListChangeObserver(ChangeObserver observer) {
+		synchronized (observersTaskFilter) {
+			observersTaskFilter.add(observer);
+		}
+	}
+	
+	
+	public void notifyRefreshListChange(final String res) {
+		
+		synchronized (observersTaskFilter) {
+			for (final ChangeObserver observer : observersTaskFilter) {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {

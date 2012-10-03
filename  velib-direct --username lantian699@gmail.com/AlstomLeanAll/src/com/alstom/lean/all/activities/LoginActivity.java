@@ -69,7 +69,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		case R.id.okButton:
 			
 			Intent intent = new Intent();
-			intent.setClass(getApplication(), MyProjectModeTabletActivity.class);
+			intent.setClass(getApplication(), ProjectListActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 

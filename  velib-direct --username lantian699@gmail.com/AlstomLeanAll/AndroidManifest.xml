@@ -56,6 +56,7 @@
          <activity android:name=".flashage.CaptureFlashageActivity"></activity>
          <activity android:name=".activities.PartNumTabletActivity"></activity>
          <activity android:name=".activities.ImageDisplayActivity"></activity>
+         <activity android:name=".activities.ProjectListActivity"></activity>
          
     </application>
     <uses-permission android:name = "android.permission.CAMERA" />

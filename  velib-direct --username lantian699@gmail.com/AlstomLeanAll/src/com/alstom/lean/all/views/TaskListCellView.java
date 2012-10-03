@@ -33,7 +33,7 @@ public class TaskListCellView extends LinearLayout{
 	private static final int TASK_PROCESSED = 2;*/
 	public static final String TASK_TYPE_VI = "vi";
 	public static final String TASK_TYPE_MESURE = "mesure";
-	public static final Object TASK_TYPE_FINDING = "finding";
+	public static final String TASK_TYPE_FINDING = "finding";
 	private Activity context;
 	private TextView startDate;
 	private TextView endDate;

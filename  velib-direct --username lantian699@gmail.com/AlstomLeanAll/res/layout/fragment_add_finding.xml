@@ -1,5 +1,158 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+   <LinearLayout 
+        android:id="@+id/add_task_view"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/add_task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NAME"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/task_edit_name"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/task_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TYPE"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/task_edit_type"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+           <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/task_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BEGIN"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/task_edit_begin"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/task_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="END"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/task_edit_end"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>   
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/task_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Spinner 
+          android:id="@+id/task_spinner_status"
+          android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          />   
+        
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/task_target_object"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Target Object"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <EditText 
+            android:id="@+id/task_edit_object"
+            android:layout_marginLeft="30dp"
+            android:minWidth="200dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        
+        </LinearLayout>
+
+
+         <Button
+             android:id="@+id/task_create"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="50dp"
+             android:layout_marginTop="50dp"
+             android:text="Create" />
+
+    </LinearLayout>
+    
+    
+    
+    
+    <LinearLayout 
+        android:id="@+id/add_finding_view"
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="fill_parent" >
@@ -14,7 +167,7 @@
             android:id="@+id/finding_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="TITLE"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
         <EditText 
@@ -185,3 +338,4 @@
              android:text="Create Finding" />
 
     </LinearLayout>
+</LinearLayout>
