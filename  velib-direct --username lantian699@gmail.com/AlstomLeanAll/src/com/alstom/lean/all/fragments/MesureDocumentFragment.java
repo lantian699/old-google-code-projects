@@ -77,7 +77,7 @@ public class MesureDocumentFragment extends Fragment{
 //        setFullScreen();
         frameLayout = createMainContainer();
         frameLayout.addView(documentView);
-        frameLayout.addView(createZoomControls(zoomModel));
+//      frameLayout.addView(createZoomControls(zoomModel));
         
 
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(DOCUMENT_VIEW_STATE_PREFERENCES, 0);

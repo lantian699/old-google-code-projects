@@ -34,7 +34,8 @@
         </activity>
         
         <activity android:name=".activities.MyProjectActivity"></activity>
-        <activity android:name=".activities.MyProjectModeTabletActivity"></activity>
+        <activity android:name=".activities.MyProjectModeTabletActivity"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".activities.TaskFragmentActivity"></activity>
         <activity android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="landscape"></activity>

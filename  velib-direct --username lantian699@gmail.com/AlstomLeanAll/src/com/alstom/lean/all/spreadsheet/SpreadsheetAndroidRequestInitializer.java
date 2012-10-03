@@ -112,7 +112,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	public void intercept(HttpRequest request) throws IOException {
 			super.intercept(request);
 			request.getHeaders()
-			.setAuthorization(GoogleHeaders.getGoogleLoginValue(settings.getString(PREF_AUTH_TOKEN, null)));
+			.setAuthorization(GoogleHeaders.getGoogleLoginValue(this.authToken));
 		
 	}
 
