@@ -38,11 +38,33 @@ public class Task extends ModelObject{
 	private String type;
 	@DatabaseField
 	private String parentProject;
+	@DatabaseField
+	private String selfUrl;
+	@DatabaseField
+	private String updateTime;
 	
 	
 	
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getSelfUrl() {
+		return selfUrl;
+	}
+	public void setSelfUrl(String selfUrl) {
+		this.selfUrl = selfUrl;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getParentProject() {
 		return parentProject;
 	}

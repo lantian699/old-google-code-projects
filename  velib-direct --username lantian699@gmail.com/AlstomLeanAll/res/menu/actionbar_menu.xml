@@ -6,4 +6,10 @@
         android:showAsAction="ifRoom|withText">
         
     </item>
+    
+    <item android:id="@+id/sync_google" 
+        android:title="SYNC" 
+        android:showAsAction="ifRoom|withText">
+        
+    </item>
 </menu>

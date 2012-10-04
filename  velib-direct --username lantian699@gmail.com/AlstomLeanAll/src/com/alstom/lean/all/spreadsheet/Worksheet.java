@@ -56,6 +56,7 @@ public class Worksheet {
 	public static final String TABLE_TASK_COLUMN_STATUS = "status";
 	public static final String TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT = "requireswitnesspoint";
 	public static final String TABLE_TASK_COLUMN_PROJECT_NAME = "projectname";
+	public static final String TABLE_TASK_COLUMN_TYPE = "type";
 	//visual inspection
 	public static final String TABLE_INSPECTION_COLUMN_DESCRIPTION = "description";
 	public static final String TABLE_INSPECTION_COLUMN_KEY = "key";
@@ -75,7 +76,7 @@ public class Worksheet {
 	public static final String TABLE_MESUREMENT_COLUMN_PARENT = "parent";
 	
 	
-	public static final Object TABLE_TASK_COLUMN_TYPE = "type";
+	
 	
 	
 	

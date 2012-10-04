@@ -14,8 +14,10 @@ import com.alstom.lean.all.fragments.AssistanceRequestFragment;
 import com.alstom.lean.all.fragments.DetailSectionFragment;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
 import com.alstom.lean.all.managers.TaskListManager;
+import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
+import com.alstom.lean.all.spreadsheet.SynchronizationTask;
 
 
 public class MyProjectModeTabletActivity extends FragmentActivity  {//implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
@@ -81,6 +83,12 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			intent.putExtras(bundle);
 			
 			startActivity(intent);
+			
+			break;
+			
+		case R.id.sync_google:
+			
+			new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
 			
 			break;
 

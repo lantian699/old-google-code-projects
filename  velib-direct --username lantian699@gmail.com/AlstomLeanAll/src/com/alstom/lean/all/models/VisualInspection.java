@@ -22,9 +22,25 @@ public class VisualInspection extends ModelObject{
 	private String attachment;
 	@DatabaseField
 	private String parent;
+	@DatabaseField
+	private String selfUrl;
+	@DatabaseField
+	private String updateTime;
 	
 	
 	
+	public String getSelfUrl() {
+		return selfUrl;
+	}
+	public void setSelfUrl(String selfUrl) {
+		this.selfUrl = selfUrl;
+	}
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getParent() {
 		return parent;
 	}

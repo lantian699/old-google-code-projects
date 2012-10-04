@@ -49,6 +49,7 @@ public class Tools {
 	public static final String _UPDATED = "updated";
     public static final String KEY_SIEBEL_ID = "siebelid";
     public static final String TAG = "Tools";
+	
     
 	public static void  DrawOneStationOnMap(Activity context,Factory factory , MapView mapView) {
 
@@ -195,6 +196,8 @@ public class Tools {
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	
 				Task task = new Task();
 				
+				task.setSelfUrl(listEntry.getSelfLink());
+				task.setUpdateTime(listEntry.updated);
 				task.setBegin(content.get(Worksheet.TABLE_TASK_COLUMN_BEGIN));
 				task.setEnd(content.get(Worksheet.TABLE_TASK_COLUMN_END));
 				task.setName(content.get(Worksheet.TABLE_TASK_COLUMN_NAME));
@@ -206,6 +209,8 @@ public class Tools {
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
 				VisualInspection inspection = new VisualInspection();
 				
+				inspection.setSelfUrl(listEntry.getSelfLink());
+				inspection.setUpdateTime(listEntry.updated);
 				inspection.setKey(content.get(Worksheet.TABLE_INSPECTION_COLUMN_KEY));
 				inspection.setDescription(content.get(Worksheet.TABLE_INSPECTION_COLUMN_DESCRIPTION));
 				inspection.setValue(content.get(Worksheet.TABLE_INSPECTION_COLUMN_VALUE));
@@ -247,6 +252,84 @@ public class Tools {
 			e.printStackTrace();
 		}
 	
+	}
+	
+	
+	
+	public static void sendAll(DatabaseHelper dataHelper, SpreadsheetAndroidRequestInitializer requestInitializer){
+		
+		try {
+		Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
+		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
+		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
+		
+		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
+		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
+		
+		
+		
+		List<Task> listTask = taskDao.queryForAll();
+			
+			for (Task task : listTask) {
+				
+				ListEntry listEntryModified = null;
+				if(task.getSelfUrl() != null){
+				listEntryModified = client.listEntry().get().execute(new ListUrl(task.getSelfUrl()));
+				
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_NAME, task.getName());
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_BEGIN, task.getBegin());
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_END, task.getEnd());
+//				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME, task.getParentProject());
+//				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.isRequiresWitnessPoint());
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_TYPE, task.getType());
+				}
+				client.listFeed().update().execute(listEntryModified);
+				
+			}
+			
+			List<VisualInspection> listVi = inspectionDao.queryForAll();
+			
+			for (VisualInspection vi : listVi) {
+				ListEntry listEntryModified = null;
+				if(vi.getSelfUrl() != null){
+				listEntryModified = client.listEntry().get().execute(new ListUrl(vi.getSelfUrl()));
+				
+//				listEntryModified.setCustomElement(Worksheet.TABLE_INSPECTION_COLUMN_DESCRIPTION, vi.getDescription());
+//				listEntryModified.setCustomElement(Worksheet.TABLE_INSPECTION_COLUMN_KEY, vi.getKey());
+//				listEntryModified.setCustomElement(Worksheet.TABLE_INSPECTION_COLUMN_PARENT, vi.getDescription());
+//				listEntryModified.setCustomElement(Worksheet.TABLE_INSPECTION_COLUMN_VALUE, vi.getValue());
+				}
+				client.listFeed().update().execute(listEntryModified);
+				
+			}
+			
+			
+			List<Mesurement> listMesure = mesurementDao.queryForAll();
+			
+			for (Mesurement mesure : listMesure) {
+				ListEntry listEntryModified = null;
+				if(mesure.getSelfUrl() != null)
+				listEntryModified = client.listEntry().get().execute(new ListUrl(mesure.getSelfUrl()));
+				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE, mesure.getValue());
+				
+				
+				client.listFeed().update().execute(listEntryModified);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+			
+		
 	}
 	
 
