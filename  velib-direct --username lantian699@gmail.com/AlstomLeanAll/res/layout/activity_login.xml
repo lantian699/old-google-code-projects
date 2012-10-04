@@ -2,62 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_alstom"
+    android:background="@drawable/back_login"
     android:paddingLeft="56dp"
     android:paddingRight="56dp" >
 
-    <View
-        android:id="@+id/loginBackground"
+    <FrameLayout
+        android:id="@+id/frameLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/loginEditText"
-        android:layout_alignLeft="@+id/loginEditText"
-        android:layout_alignRight="@+id/loginEditText"
-        android:layout_alignTop="@+id/loginEditText"
-        android:layout_margin="4dp"
-        android:background="@drawable/login_background" />
+        android:layout_height="wrap_content" >
 
-    <FrameLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <EditText
-        android:id="@+id/loginEditText"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-		android:layout_gravity="center"
-        android:hint="@string/login"
-        android:inputType="textEmailAddress"
-        android:textColorHint="@android:color/primary_text_dark"
-        android:textColor="@android:color/primary_text_dark" />
+        <!-- <ImageView -->
+        <!-- android:id="@+id/fleche" -->
+        <!-- android:layout_marginTop="29dp" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="50dp" -->
+        <!-- android:layout_below="@+id/okButton" -->
+        <!-- android:layout_alignParentLeft="true" -->
+        <!-- android:src="@drawable/login_fleche" /> -->
 
-    <View
-        android:id="@+id/mdpBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:background="@drawable/login_background" />
 
-    <EditText
-        android:id="@+id/mdpEditText"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:textColorHint="@android:color/primary_text_dark"
-        android:textColor="@android:color/primary_text_dark" />
-
-    <!-- <ImageView -->
-    <!-- android:id="@+id/fleche" -->
-    <!-- android:layout_marginTop="29dp" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="50dp" -->
-    <!-- android:layout_below="@+id/okButton" -->
-    <!-- android:layout_alignParentLeft="true" -->
-    <!-- android:src="@drawable/login_fleche" /> -->
-    
-    <!--
+        <!--
          <Button
         android:id="@+id/realignLink"
         style="@android:style/Widget.Holo.Button"
@@ -69,18 +33,49 @@
         android:layout_marginTop="29dp"
         android:background="@android:color/transparent"
         android:text="@string/realign"
-        android:drawableLeft="@drawable/login_fleche" />
-    -->
+        android:drawableLeft="@drawable/login_fleche" />
+        -->
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/loginEditText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/frameLayout1"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="215dp"
+        android:ems="10"
+        android:hint="@string/login"
+        android:inputType="textEmailAddress"
+        android:textColor="@android:color/primary_text_dark"
+        android:textColorHint="@android:color/primary_text_dark" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/mdpEditText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/loginEditText"
+        android:layout_alignBottom="@+id/loginEditText"
+        android:layout_marginLeft="211dp"
+        android:layout_toRightOf="@+id/loginEditText"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/primary_text_dark"
+        android:textColorHint="@android:color/primary_text_dark" />
 
     <Button
         android:id="@+id/okButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-		android:layout_gravity="center"
+        android:layout_alignBottom="@+id/mdpEditText"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="93dp"
         android:background="@drawable/login_ok_button_background"
         android:text="@android:string/ok"
         android:textColor="@android:color/primary_text_dark" />
-    </FrameLayout>
 
 </RelativeLayout>

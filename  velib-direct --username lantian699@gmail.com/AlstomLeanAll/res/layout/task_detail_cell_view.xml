@@ -1,168 +1,180 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
         <TextView
-            android:padding="10dp"
             android:id="@+id/title_td_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/tx_td_description"
             android:layout_width="fill_parent"
-          	android:padding="5dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
+            android:padding="5dp"
             android:text="description content" />
-	<LinearLayout 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_width="fill_parent"
-	    android:orientation="horizontal"
-	    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tx_td_key"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Date" />
 
-        <EditText
-            android:id="@+id/edit_td_key"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:text="key value"
-            android:ems="10">
-        </EditText>
-	</LinearLayout>
-	
-	<LinearLayout 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_marginTop="10dp"
-	    android:layout_width="fill_parent"
-	    android:orientation="horizontal"
-	    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/title_td_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/edit_td_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:ems="10"/>
-	</LinearLayout>
-	
-	<LinearLayout 
-	    android:id="@+id/ll_td_unit"
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_marginTop="10dp"
-	    android:layout_width="fill_parent"
-	    android:orientation="horizontal"
-	    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/title_td_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/edit_td_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:ems="10"/>
-	</LinearLayout>
-	
-        <TextView
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
-	    	android:paddingRight="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/tx_td_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/edit_td_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:ems="10"
+                android:text="key value" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/title_td_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/edit_td_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:ems="10" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_td_unit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/title_td_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/edit_td_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:ems="10" />
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/title_td_attach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attachment"
             android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Attachment"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <LinearLayout 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_width="fill_parent"
-	    android:orientation="horizontal"
-	    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/title_part_num"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Part number"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
 
-        <EditText
-            android:layout_marginTop="20dp"
-            android:id="@+id/edit_td_part_num"
-            android:layout_width="wrap_content"
-            android:minWidth="100dp"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
+            <TextView
+                android:id="@+id/title_part_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Part number"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageView
-            android:id="@+id/btn_bar_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:src="@drawable/code_barre_clic" />
+            <EditText
+                android:id="@+id/edit_td_part_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="number"
+                android:minWidth="100dp" />
 
+            <ImageView
+                android:id="@+id/btn_bar_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:src="@drawable/code_barre_clic" />
         </LinearLayout>
-        
-         <LinearLayout 
-	    android:paddingLeft="10dp"
-	    android:paddingRight="10dp"
-	    android:layout_width="fill_parent"
-	    android:orientation="horizontal"
-	    android:layout_height="wrap_content">
-        
-        <TextView
-            android:id="@+id/title_td_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="Take a photo"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <ImageButton
-            android:id="@+id/btn_take_photo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/take_a_photo" />
-        
-        <Button 
-            android:id="@+id/btn_tag_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tag"/>
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
 
+            <TextView
+                android:id="@+id/title_td_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Take a photo"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageButton
+                android:id="@+id/btn_take_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:src="@drawable/take_a_photo" />
+
+            <Button
+                android:id="@+id/btn_tag_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Tag" />
         </LinearLayout>
+
         <Button
-            android:padding="10dp"
             android:id="@+id/btn_take_mesure"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/login_ok_button_background"
+            android:padding="10dp"
             android:text="TAKE MESUREMENT" />
+
+        <ImageView
+            android:id="@+id/img_selected_photo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50" />
 
     </LinearLayout>
