@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	public static final int REQUEST_CODE_FLASH = 0;
 
 	public static final String TASK_NAME = "task";
+
+	private static final int CAPTURE_CODE = 1;
 
 	private Activity context;
 	
@@ -143,6 +146,7 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 
+		Uri currentImageUri;
 		switch (v.getId()) {
 		case R.id.btn_bar_code:
 			
@@ -154,9 +158,11 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 			
 		case R.id.btn_take_photo:
 			
-			Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			
-			context.startActivity(intent_photo);
+			Intent intent_take_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			currentImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//			intent_take_photo.putExtra(MediaStore.EXTRA_OUTPUT, currentImageUri);
+			intent_take_photo.putExtra(MediaStore.EXTRA_MEDIA_TITLE, "my photo.jpg");
+			context.startActivityForResult(intent_take_photo, CAPTURE_CODE);
 			
 			break;
 			

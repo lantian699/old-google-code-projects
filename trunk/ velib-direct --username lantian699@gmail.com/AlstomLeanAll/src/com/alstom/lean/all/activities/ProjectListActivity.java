@@ -3,6 +3,7 @@ package com.alstom.lean.all.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alstom.lean.all.R;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.Project;
@@ -28,6 +29,8 @@ public class ProjectListActivity extends ListActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		setContentView(R.layout.activity_project_list);
 		
 		try{
 		listProjectName = new ArrayList<String>();

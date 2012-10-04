@@ -9,14 +9,14 @@
             android:id="@+id/list_task_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3" >
+            android:layout_weight="10" >
         </ListView>
         
          <com.alstom.lean.all.buttonbars.CancelSaveSendBar
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dip"
+            android:layout_height="50dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="30dp"
             cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
             cancelSaveSendBar:cancelSaveSendButton2="@string/button_terminate" />
 
