@@ -58,6 +58,7 @@
          <activity android:name=".activities.PartNumTabletActivity"></activity>
          <activity android:name=".activities.ImageDisplayActivity"></activity>
          <activity android:name=".activities.ProjectListActivity"></activity>
+         <activity android:name="com.picture.drawing.ui.navigation.activity.PictureDrawingActivity"></activity>
          
     </application>
     <uses-permission android:name = "android.permission.CAMERA" />

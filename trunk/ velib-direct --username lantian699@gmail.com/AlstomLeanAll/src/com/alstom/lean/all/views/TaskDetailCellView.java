@@ -29,6 +29,8 @@ import com.alstom.lean.all.models.VisualInspection;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.picture.drawing.ui.navigation.activity.PictureDrawingActivity;
+
 
 import android.view.View.OnClickListener;
 
@@ -61,6 +63,7 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 
 	private List<Mesurement> listMesure;
 	private String taskType;
+	private Button btn_tag_photo;
 	
 
 	private Task task;
@@ -83,10 +86,12 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	    btn_barcode = (ImageView)findViewById(R.id.btn_bar_code);
 	    btn_photo = (ImageButton)findViewById(R.id.btn_take_photo);
 	    btn_mesure = (Button)findViewById(R.id.btn_take_mesure);
+	    btn_tag_photo = (Button)findViewById(R.id.btn_tag_photo);
 	    
 	    btn_barcode.setOnClickListener(this);
 	    btn_photo.setOnClickListener(this);
 	    btn_mesure.setOnClickListener(this);
+	    btn_tag_photo.setOnClickListener(this);
 	    
 	    manager.registerBarcodeChangeObserver(new ChangeObserver() {
 			
@@ -163,6 +168,14 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 			intent_mesure.putExtra(TASK_NAME, task);
 			context.startActivity(intent_mesure);
 	
+			break;
+			
+		case R.id.btn_tag_photo:
+			
+			Intent in_tag = new Intent();
+			in_tag.setClass(context, PictureDrawingActivity.class);
+			context.startActivity(in_tag);
+			
 			break;
 
 		default:

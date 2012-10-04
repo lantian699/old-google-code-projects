@@ -55,7 +55,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			
 			
 			if(listTask.size() == 0)
-			new SynchronizationTask(this, dataHelper).execute();
+			new SynchronizationTask(this, dataHelper).execute("getAll");
 				
 			
 		} catch (SQLException e) {

@@ -38,7 +38,7 @@ import android.widget.TextView;
  * @author guillaumedavo
  *
  */
-public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
+public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 	
 	private static final String TAG = "SynchronizationTask";
 	private Activity mMainActivity;
@@ -82,7 +82,7 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 	}
 
 	@Override
-	protected Integer doInBackground(Void... params) {
+	protected Integer doInBackground(String... params) {
 		
 		// create the SpreadSheetDb
 //		SharedPreferences settings = mMainActivity.getSharedPreferences(TAG, Activity.MODE_PRIVATE);
@@ -91,10 +91,14 @@ public class SynchronizationTask extends AsyncTask<Void, Integer, Integer> {
 		try {
 			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 			
+			//System.out.println("param = " + params[0]);
+			if(params[0].equals("getAll")){
 			for (Table table:Table.values()) 
 			
 				Tools.getAll(dataHelper,requestInitializer, table);
-				
+			}else if(params[0].equals("sendAll")){
+				Tools.sendAll(dataHelper, requestInitializer);
+			}
 		}
 		catch (IllegalArgumentException e) {
 			errorMessage = e.getMessage();
