@@ -31,18 +31,41 @@
             android:paddingRight="10dp" >
 
             <TextView
-                android:id="@+id/tx_td_key"
+                android:id="@+id/tx_td_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/edit_td_key"
+                android:id="@+id/edit_td_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:ems="10"
+                android:text="key value" >
+            </EditText>
+        </LinearLayout>
+        
+          <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/tx_td_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/edit_td_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
                 android:text="key value" >
             </EditText>
         </LinearLayout>
