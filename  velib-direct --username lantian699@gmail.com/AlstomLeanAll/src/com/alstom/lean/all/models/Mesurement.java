@@ -11,6 +11,8 @@ public class Mesurement extends ModelObject{
 	private static final long serialVersionUID = -1051026845347916111L;
 	public static final String TABLE_MESURE_COLUMN_PARENT = "parent";
 
+	@DatabaseField(generatedId = true)
+	private int id;
 	@DatabaseField
 	private String description;
 	@DatabaseField
@@ -40,6 +42,12 @@ public class Mesurement extends ModelObject{
 	
 
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getHigh() {
 		return high;
 	}

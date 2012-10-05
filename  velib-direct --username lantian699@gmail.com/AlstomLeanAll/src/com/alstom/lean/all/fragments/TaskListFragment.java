@@ -33,6 +33,7 @@ import com.alstom.lean.all.managers.ChangeObserver;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.model3d.Model3DTurbineActivity;
 import com.alstom.lean.all.models.DatabaseHelper;
+import com.alstom.lean.all.models.ModelObject;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
@@ -125,6 +126,12 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void onChange(String res, ModelObject model) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	    
 	    taskListManager.registerTaskFilterChangeObserver(new ChangeObserver() {
@@ -148,6 +155,12 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 			
 			@Override
 			public void onChange() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onChange(String res, ModelObject model) {
 				// TODO Auto-generated method stub
 				
 			}

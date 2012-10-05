@@ -91,7 +91,8 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 		try {
 			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 			
-			//System.out.println("param = " + params[0]);
+			Thread.sleep(50);
+			
 			if(params[0].equals("getAll")){
 			for (Table table:Table.values()) 
 			
@@ -104,6 +105,9 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 			errorMessage = e.getMessage();
 			Log.e(TAG, errorMessage, e);
 			return NO_ACCOUNT_ERROR;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		

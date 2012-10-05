@@ -12,7 +12,7 @@
             android:layout_weight="10" >
         </ListView>
         
-         <com.alstom.lean.all.buttonbars.CancelSaveSendBar
+         <com.alstom.lean.all.buttonbars.CancelSaveSendBar  xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_gravity="center|bottom"

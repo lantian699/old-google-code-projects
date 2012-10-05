@@ -9,6 +9,7 @@ import com.alstom.lean.all.flashage.CaptureFlashageActivity;
 import com.alstom.lean.all.fragments.PartNumberDetailFragment;
 import com.alstom.lean.all.managers.ChangeObserver;
 import com.alstom.lean.all.managers.TaskListManager;
+import com.alstom.lean.all.models.ModelObject;
 import com.google.zxing.client.android.CaptureActivity;
 
 import android.app.Activity;
@@ -73,6 +74,12 @@ public class TreatmentFlashageCellView extends LinearLayout implements OnClickLi
 			@Override
 			public void onChange() {
 			
+			}
+
+			@Override
+			public void onChange(String res, ModelObject model) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	    

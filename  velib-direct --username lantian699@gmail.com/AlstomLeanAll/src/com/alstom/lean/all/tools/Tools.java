@@ -204,6 +204,7 @@ public class Tools {
 				task.setStatus(content.get(Worksheet.TABLE_TASK_COLUMN_STATUS));
 				task.setParentProject(content.get(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME));
 				task.setType(content.get(Worksheet.TABLE_TASK_COLUMN_TYPE));
+				task.setAttachment(content.get(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT));
 				taskDao.create(task);
 				Log.i(TAG, "Task created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
@@ -263,7 +264,7 @@ public class Tools {
 		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
 		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
 		
-		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
+//		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
 		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
 		
 		
@@ -283,6 +284,9 @@ public class Tools {
 //				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.isRequiresWitnessPoint());
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_TYPE, task.getType());
+				
+				if(task.getAttachment() != null )
+				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT, task.getAttachment());
 				}
 				client.listFeed().update().execute(listEntryModified);
 				
@@ -290,7 +294,7 @@ public class Tools {
 			
 			List<VisualInspection> listVi = inspectionDao.queryForAll();
 			
-			for (VisualInspection vi : listVi) {
+			/*for (VisualInspection vi : listVi) {
 				ListEntry listEntryModified = null;
 				if(vi.getSelfUrl() != null){
 				listEntryModified = client.listEntry().get().execute(new ListUrl(vi.getSelfUrl()));
@@ -302,7 +306,7 @@ public class Tools {
 				}
 				client.listFeed().update().execute(listEntryModified);
 			    
-			}
+			}*/
 			
 			
 			List<Mesurement> listMesure = mesurementDao.queryForAll();

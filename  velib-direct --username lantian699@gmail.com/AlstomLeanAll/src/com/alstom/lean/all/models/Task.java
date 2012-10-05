@@ -42,11 +42,18 @@ public class Task extends ModelObject{
 	private String selfUrl;
 	@DatabaseField
 	private String updateTime;
+	@DatabaseField
+	private String attachment;
 	
 	
 	
 	
-	
+	public String getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(String attachment) {
+		this.attachment = attachment;
+	}
 	public int getId() {
 		return id;
 	}

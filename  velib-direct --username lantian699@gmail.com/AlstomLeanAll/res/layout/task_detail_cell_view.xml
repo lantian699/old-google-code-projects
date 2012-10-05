@@ -34,17 +34,17 @@
                 android:id="@+id/tx_td_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="Start Date"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_td_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:ems="10"
                 android:text="key value" >
-            </EditText>
+            </TextView>
         </LinearLayout>
         
           <LinearLayout
@@ -58,16 +58,16 @@
                 android:id="@+id/tx_td_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date"
+                android:text="End Date"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_td_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:text="key value" >
-            </EditText>
+            </TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -79,14 +79,14 @@
             android:paddingRight="10dp" >
 
             <TextView
-                android:id="@+id/title_td_value"
+                android:id="@+id/title_td_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/edit_td_value"
+                android:id="@+id/edit_td_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -111,10 +111,11 @@
 
             <EditText
                 android:id="@+id/edit_td_unit"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:ems="10" />
+            
         </LinearLayout>
 
         <TextView
@@ -202,5 +203,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 
+        
+         <com.alstom.lean.all.buttonbars.CancelSaveSendBar  
+            xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="30dp"
+            cancelSaveSendBar:cancelSaveSendButton1="@string/bouton_annuler"
+            cancelSaveSendBar:cancelSaveSendButton2="@string/button_terminate" />
     </LinearLayout>
+    
+    
 </ScrollView>

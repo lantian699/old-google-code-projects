@@ -9,18 +9,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.fragments.MesureDetailFragment;
 import com.alstom.lean.all.fragments.MesureDocumentFragment;
+import com.alstom.lean.all.fragments.TaskDetailFragment;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.Task;
-import com.alstom.lean.all.views.TaskDetailCellView;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -43,7 +41,7 @@ public class MesureDetailActivity extends FragmentActivity{
 		
 		setContentView(R.layout.activity_mesure_detail);
 		
-		task = (Task) getIntent().getSerializableExtra(TaskDetailCellView.TASK_NAME);
+		task = (Task) getIntent().getSerializableExtra(TaskDetailFragment.TASK_NAME);
 		dataHelper = DatabaseHelper.getInstance(this);
 	
 		 try {
