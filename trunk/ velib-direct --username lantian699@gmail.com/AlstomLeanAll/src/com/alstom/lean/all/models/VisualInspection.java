@@ -12,6 +12,8 @@ public class VisualInspection extends ModelObject{
 	private static final long serialVersionUID = -1915072194977539505L;
 	public static final String TABLE_INSPECTION_COLUMN_PARENT = "parent";
 
+	@DatabaseField(generatedId = true)
+	private int id;
 	@DatabaseField
 	private String description;
 	@DatabaseField
@@ -29,6 +31,12 @@ public class VisualInspection extends ModelObject{
 	
 	
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getSelfUrl() {
 		return selfUrl;
 	}

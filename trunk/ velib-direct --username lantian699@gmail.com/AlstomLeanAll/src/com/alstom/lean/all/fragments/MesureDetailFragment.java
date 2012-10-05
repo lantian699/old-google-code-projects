@@ -79,8 +79,14 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 
 		switch (v.getId()) {
 		case R.id.cancelsavesendbar_send:
-			
+					
 			taskListManager.notifyAddMesureChange("");
+			
+			getActivity().finish();
+			
+			break;
+			
+		case R.id.cancelsavesendbar_cancel:
 			
 			getActivity().finish();
 			

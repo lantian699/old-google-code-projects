@@ -3,6 +3,9 @@ package com.alstom.lean.all.managers;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.alstom.lean.all.models.ModelObject;
+
 import android.os.Handler;
 
 public class TaskListManager {
@@ -137,14 +140,14 @@ public class TaskListManager {
 	}
 	
 	
-	public void notifyDisplayPhotoChange(final String res) {
+	public void notifyDisplayPhotoChange(final String res, final ModelObject model) {
 		
 		synchronized (observersDisplayphoto) {
 			for (final ChangeObserver observer : observersDisplayphoto) {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						observer.onChange(res);						
+						observer.onChange(res, model);						
 					}
 				});
 			}

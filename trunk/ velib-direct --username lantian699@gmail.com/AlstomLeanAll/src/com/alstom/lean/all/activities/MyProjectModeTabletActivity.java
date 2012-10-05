@@ -14,15 +14,13 @@ import android.view.MenuItem;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.flashage.CaptureFlashageActivity;
-import com.alstom.lean.all.fragments.AssistanceRequestFragment;
-import com.alstom.lean.all.fragments.DetailSectionFragment;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
+import com.alstom.lean.all.fragments.TaskDetailFragment;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.spreadsheet.SynchronizationTask;
-import com.alstom.lean.all.views.TaskDetailCellView;
 
 
 public class MyProjectModeTabletActivity extends FragmentActivity  {//implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
@@ -125,34 +123,27 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 		case CaptureFlashageActivity.RESULT_CODE_CAPTURE_ACTIVITY:
 
 			String res = data.getStringExtra(CaptureFlashageActivity.BAR_CODE_RESULT);
-			System.out.println("RESULT_CODE_CAPTURE_ACTIVITY " +res);
 			taskListManager.notifyBarcodeChange(res);
-
-		case  RESULT_OK:
 			
-			if(requestCode == TaskDetailCellView.CAPTURE_CODE){
-				currentImageUri = TaskDetailCellView.getCurrentImageUri();
+			break;
+
+		/*case  RESULT_OK:
+			
+			if(requestCode == TaskDetailFragment.CAPTURE_CODE){
+				currentImageUri = TaskDetailFragment.getCurrentImageUri();
 				String path = getRealPathFromURI(currentImageUri);
-				System.out.println("path = " + path );
 				taskListManager.notifyDisplayPhotoChange(path);
 			}
 			
-			break;
+			break;*/
 		default:
 			break;
 		}
 		
 	}
 
-    public String getRealPathFromURI(Uri contentUri) {
-		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		cursor.moveToFirst();
-		String path = cursor.getString(column_index);
-		cursor.close();
-		return path;
-	}
+   
+	
     
     /*@Override
     public void onItemSelected(int position) {
