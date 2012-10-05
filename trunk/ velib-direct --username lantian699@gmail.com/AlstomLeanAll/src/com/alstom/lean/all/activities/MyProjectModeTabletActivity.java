@@ -1,9 +1,13 @@
 package com.alstom.lean.all.activities;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,7 @@ import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.spreadsheet.SynchronizationTask;
+import com.alstom.lean.all.views.TaskDetailCellView;
 
 
 public class MyProjectModeTabletActivity extends FragmentActivity  {//implements MyProjectListFragment.Callbacks{//, PartNumberDetailFragment.Callbacks{
@@ -25,6 +30,8 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 	
     private boolean mTwoPane;
 	private Project project;
+	private Uri currentImageUri;
+	private File pictureFile;
 	private static TaskListManager taskListManager = new TaskListManager();;
     public static final String NAME_BUNDLE_LIST_FACTORY = "listFactory";	
     private static ArrayList<Factory> listFactory;
@@ -109,6 +116,9 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 	
+		
+		
+		
 		switch (resultCode) {
 		
 			
@@ -117,17 +127,32 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			String res = data.getStringExtra(CaptureFlashageActivity.BAR_CODE_RESULT);
 			System.out.println("RESULT_CODE_CAPTURE_ACTIVITY " +res);
 			taskListManager.notifyBarcodeChange(res);
+
+		case  RESULT_OK:
 			
-			
+			if(requestCode == TaskDetailCellView.CAPTURE_CODE){
+				currentImageUri = TaskDetailCellView.getCurrentImageUri();
+				String path = getRealPathFromURI(currentImageUri);
+				System.out.println("path = " + path );
+				taskListManager.notifyDisplayPhotoChange(path);
+			}
 			
 			break;
-
 		default:
 			break;
 		}
 		
 	}
 
+    public String getRealPathFromURI(Uri contentUri) {
+		String[] proj = { MediaStore.Images.Media.DATA };
+		Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		String path = cursor.getString(column_index);
+		cursor.close();
+		return path;
+	}
     
     /*@Override
     public void onItemSelected(int position) {

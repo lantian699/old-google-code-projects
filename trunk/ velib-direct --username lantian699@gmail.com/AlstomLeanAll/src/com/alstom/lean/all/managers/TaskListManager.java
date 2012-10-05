@@ -11,6 +11,7 @@ public class TaskListManager {
 	private List<ChangeObserver> observersForBarcode = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeObserver> observersAddMesure = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeObserver> observersTaskFilter = new CopyOnWriteArrayList<ChangeObserver>();
+	private List<ChangeObserver> observersDisplayphoto = new CopyOnWriteArrayList<ChangeObserver>();
 	private Handler mHandler;
 	
 	
@@ -118,6 +119,28 @@ public class TaskListManager {
 		
 		synchronized (observersTaskFilter) {
 			for (final ChangeObserver observer : observersTaskFilter) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(res);						
+					}
+				});
+			}
+		}
+	}
+	
+	
+	public void registerDisplayPhotoObserver(ChangeObserver observer) {
+		synchronized (observersDisplayphoto) {
+			observersDisplayphoto.add(observer);
+		}
+	}
+	
+	
+	public void notifyDisplayPhotoChange(final String res) {
+		
+		synchronized (observersDisplayphoto) {
+			for (final ChangeObserver observer : observersDisplayphoto) {
 				mHandler.post(new Runnable() {
 					@Override
 					public void run() {

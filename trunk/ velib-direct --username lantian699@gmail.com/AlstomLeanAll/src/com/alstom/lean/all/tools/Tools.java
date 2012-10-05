@@ -301,7 +301,7 @@ public class Tools {
 //				listEntryModified.setCustomElement(Worksheet.TABLE_INSPECTION_COLUMN_VALUE, vi.getValue());
 				}
 				client.listFeed().update().execute(listEntryModified);
-				
+			    
 			}
 			
 			
