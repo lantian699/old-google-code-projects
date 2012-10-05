@@ -55,7 +55,8 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	
 	private TextView description;
 	private TextView edit_unit;
-	private TextView edit_key;
+	private TextView edit_start_date;
+	private TextView edit_end_date;
 	private TextView edit_value;
 	
 	private String part_num;
@@ -85,7 +86,8 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	    this.dataHelper = helper;
 	    
 	    description = (TextView)findViewById(R.id.tx_td_description);
-	    edit_key = (EditText)findViewById(R.id.edit_td_key);
+	    edit_start_date = (EditText)findViewById(R.id.edit_td_start_date);
+	    edit_end_date = (EditText)findViewById(R.id.edit_td_end_date);
 	    edit_part_num = (EditText)findViewById(R.id.edit_td_part_num);
 	    edit_value = (EditText)findViewById(R.id.edit_td_value);
 	    edit_unit = (EditText)findViewById(R.id.edit_td_unit);
@@ -145,9 +147,10 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 		this.task = task;
 		
 		description.setText(task.getName());
-		edit_key.setText(task.getBegin() + " - " +task.getEnd());
 		edit_unit.setText(task.getType());
 		edit_value.setText(task.getStatus());
+		edit_start_date.setText(task.getBegin());
+		edit_end_date.setText(task.getEnd());
 		
 		if(task.getType().equals(TaskListCellView.TASK_TYPE_MESURE)){
 			
