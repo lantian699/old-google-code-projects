@@ -61,9 +61,10 @@
          <activity android:name="com.picture.drawing.ui.navigation.activity.PictureDrawingActivity"></activity>
          
     </application>
-    <uses-permission android:name = "android.permission.CAMERA" />
-	<uses-feature android:name = "android.hardware.camera" />
+    <uses-feature android:name = "android.hardware.camera" />
 	<uses-feature android:name = "android.hardware.camera.autofocus" />
+	
+    <uses-permission android:name = "android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCES_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

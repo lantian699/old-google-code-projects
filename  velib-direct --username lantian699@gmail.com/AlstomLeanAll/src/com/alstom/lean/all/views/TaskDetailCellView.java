@@ -1,12 +1,15 @@
 package com.alstom.lean.all.views;
 
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -31,6 +34,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.picture.drawing.ui.navigation.activity.PictureDrawingActivity;
+import com.picture.drawing.ui.utils.BitmapHelper;
 
 
 import android.view.View.OnClickListener;
@@ -42,7 +46,7 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 
 	public static final String TASK_NAME = "task";
 
-	private static final int CAPTURE_CODE = 1;
+	public static final int CAPTURE_CODE = 7;
 
 	private Activity context;
 	
@@ -67,7 +71,8 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	private List<Mesurement> listMesure;
 	private String taskType;
 	private Button btn_tag_photo;
-	
+	private ImageView photo_display;
+	private static Uri currentImageUri;
 
 	private Task task;
 
@@ -91,10 +96,33 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 	    btn_mesure = (Button)findViewById(R.id.btn_take_mesure);
 	    btn_tag_photo = (Button)findViewById(R.id.btn_tag_photo);
 	    
+	    photo_display = (ImageView) findViewById(R.id.img_selected_photo);
 	    btn_barcode.setOnClickListener(this);
 	    btn_photo.setOnClickListener(this);
 	    btn_mesure.setOnClickListener(this);
 	    btn_tag_photo.setOnClickListener(this);
+	    
+	    
+	    
+	    manager.registerDisplayPhotoObserver(new ChangeObserver() {
+			
+			@Override
+			public void onChange(String res) {
+				// TODO Auto-generated method stub
+				
+				File pictureFile = new File(res);
+				
+				Bitmap brackgroundPictureBitmap = BitmapHelper.retreiveBitmapFromPath(600, 200, pictureFile.getPath());
+				photo_display.setImageBitmap(brackgroundPictureBitmap);
+
+			}
+			
+			@Override
+			public void onChange() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	    
 	    manager.registerBarcodeChangeObserver(new ChangeObserver() {
 			
@@ -139,14 +167,14 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 			
 			taskType = TaskListCellView.TASK_TYPE_FINDING;
 		}
-	
+		
 	}
 
 
 	@Override
 	public void onClick(View v) {
 
-		Uri currentImageUri;
+		
 		switch (v.getId()) {
 		case R.id.btn_bar_code:
 			
@@ -159,13 +187,14 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 		case R.id.btn_take_photo:
 			
 			Intent intent_take_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			currentImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-//			intent_take_photo.putExtra(MediaStore.EXTRA_OUTPUT, currentImageUri);
-			intent_take_photo.putExtra(MediaStore.EXTRA_MEDIA_TITLE, "my photo.jpg");
+			currentImageUri = createPictureInMediaStore();
+			intent_take_photo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent_take_photo.putExtra(MediaStore.EXTRA_OUTPUT, currentImageUri);
 			context.startActivityForResult(intent_take_photo, CAPTURE_CODE);
-			
+
 			break;
 			
+	
 		case R.id.btn_take_mesure:
 			
 			Intent intent_mesure = new Intent();
@@ -187,6 +216,20 @@ public class TaskDetailCellView extends LinearLayout implements OnClickListener{
 		default:
 			break;
 		}
+		
+	}
+	
+	
+	public Uri createPictureInMediaStore() {
+		ContentValues values = new ContentValues();
+		values.put(MediaStore.Images.Media.TITLE, "TAG PHOTO");
+		values.put(MediaStore.Images.Media.DESCRIPTION, "ALSTOM");
+		return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+	}
+	
+	public static Uri getCurrentImageUri(){
+		
+		return currentImageUri;
 		
 	}
 }
