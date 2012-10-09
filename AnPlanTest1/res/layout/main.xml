@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<ilarele.planner.AnPlanTest1.MyHorizontalScroll
+		android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scroll_timescale_year"
+		>
+		
+		<TextView android:id="@+id/timescale_year" android:typeface="monospace"
+		android:text="1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:singleLine="true"></TextView>
+	</ilarele.planner.AnPlanTest1.MyHorizontalScroll>
+
+
+	<ilarele.planner.AnPlanTest1.MyHorizontalScroll
+		android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scroll_timescale_month"
+		android:layout_below="@id/scroll_timescale_year"
+		>
+		
+		<TextView android:id="@+id/timescale_month" android:typeface="monospace"
+		android:text="1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:singleLine="true"></TextView>
+	</ilarele.planner.AnPlanTest1.MyHorizontalScroll>
+
+	<ilarele.planner.AnPlanTest1.MyHorizontalScroll
+		android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scroll_timescale_week"
+		android:layout_below="@id/scroll_timescale_month">
+		
+		<TextView android:id="@+id/timescale_week" android:typeface="monospace"
+		android:text="1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:singleLine="true"></TextView>
+	</ilarele.planner.AnPlanTest1.MyHorizontalScroll>
+
+
+
+	<ilarele.planner.AnPlanTest1.MyHorizontalScroll
+		android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/scroll_timescale_day"
+		android:layout_below="@id/scroll_timescale_week">
+		
+		<TextView android:id="@+id/timescale_day" android:typeface="monospace"
+		android:text="1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 |"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:singleLine="true"></TextView>
+	</ilarele.planner.AnPlanTest1.MyHorizontalScroll>
+
+	<ilarele.planner.AnPlanTest1.MyHorizontalScroll android:id="@+id/list_scroll"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_below="@id/scroll_timescale_day">
+
+		<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:scrollbars="vertical">
+		</ListView>
+
+	</ilarele.planner.AnPlanTest1.MyHorizontalScroll>
+
+
+
+</RelativeLayout>

@@ -173,6 +173,8 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 		});
 	    
 	    
+	    
+	    
 	}
 	
 	@Override
