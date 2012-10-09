@@ -4,7 +4,7 @@
         android:orientation="vertical"
         android:layout_height="fill_parent" >
         
-        <FrameLayout 
+        <LinearLayout 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -15,15 +15,46 @@
             android:layout_height="wrap_content"
             android:text="ADD TASKS"/>
         
-        <Button 
-            android:id="@+id/btn_filter"
+          <Button 
+            android:id="@+id/btn_gantt"
             android:layout_gravity="right|center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:text="Filter"/>
+            android:text="Gantt"/>
         
-		</FrameLayout>
+        <Button 
+            android:id="@+id/btn_it"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="IT"/>
+        
+        <Button 
+            android:id="@+id/btn_mt"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="MT"/>
+        
+        <Button 
+            android:id="@+id/btn_fi"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="FI"/>
+        
+        <Button 
+            android:id="@+id/btn_all"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="ALL"/>
+		</LinearLayout>
         <ListView
             android:id="@+id/task_list_view"
             android:layout_width="match_parent"
