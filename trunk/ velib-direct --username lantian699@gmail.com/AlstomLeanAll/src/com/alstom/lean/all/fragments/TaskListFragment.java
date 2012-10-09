@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.activities.GanttDisplayActivity;
 import com.alstom.lean.all.activities.ImageDisplayActivity;
 import com.alstom.lean.all.adapters.TaskListAdapter;
 import com.alstom.lean.all.managers.ChangeObserver;
@@ -57,7 +58,11 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	private TaskListManager taskListManager;
 	private Button btn_add_task;
 	private Task task_select;
-	private Button btn_filter;
+	private Button btn_gantt;
+	private Button btn_IT;
+	private Button btn_MT;
+	private Button btn_FI;
+	private Button btn_All;
 	private Dao<Task, ?> taskDao;
 
 
@@ -101,8 +106,18 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    btn_add_task = (Button)rootView.findViewById(R.id.btn_add_task);
 	    btn_add_task.setOnClickListener(this);
 	    
-	    btn_filter = (Button)rootView.findViewById(R.id.btn_filter);
-	    btn_filter.setOnClickListener(this);
+	    btn_gantt = (Button)rootView.findViewById(R.id.btn_gantt);
+	    btn_IT = (Button)rootView.findViewById(R.id.btn_it);
+	    btn_MT = (Button)rootView.findViewById(R.id.btn_mt);
+	    btn_FI = (Button)rootView.findViewById(R.id.btn_fi);
+	    btn_All = (Button)rootView.findViewById(R.id.btn_all);
+	    
+	    btn_gantt.setOnClickListener(this);
+	    btn_IT.setOnClickListener(this);
+	    btn_MT.setOnClickListener(this);
+	    btn_FI.setOnClickListener(this);
+	    btn_All.setOnClickListener(this);
+	    
 	    
 	    taskListView.setOnItemLongClickListener(this);
 	    
@@ -269,47 +284,30 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 			
 			break;
 			
-		case R.id.btn_filter:
-				
-			final CharSequence[] items_filter = {"MESUREMENT", "VISUAL INSPECTION", "FINDING", "ALL"};
+		case R.id.btn_gantt:
 			
-			AlertDialog.Builder builder_filter = new AlertDialog.Builder(getActivity());
-			builder_filter.setTitle("TASK TYPE FILTER");
-			builder_filter.setItems(items_filter, new DialogInterface.OnClickListener() {
-			    public void onClick(DialogInterface dialog, int item) {
-			        Toast.makeText(getActivity(), items_filter[item], Toast.LENGTH_SHORT).show();
-			             
-			        switch (item) {
-					case 0:
-						taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_MESURE);
-						
-						break;
-						
-					case 1:
-						taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_VI);
-						
-						break;
-						
-						
-					case 2:
-						
-						taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_FINDING);
-						break;
-
-					case 3:
-						
-						taskListManager.notifyTaskFilterChange("ALL");
-						break;
-					default:
-						break;
-					}
-			        
-			    }
-			});
-			AlertDialog alert_filter = builder_filter.create();
-			alert_filter.show();
-				
-				break;
+			Intent intent_gantt = new Intent();
+			intent_gantt.setClass(getActivity(), GanttDisplayActivity.class);
+			intent_gantt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent_gantt);
+			break;
+			
+			
+		case R.id.btn_it:
+			taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_VI);
+			break;
+		case R.id.btn_mt:
+			taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_MESURE);
+			break;
+			
+		case R.id.btn_fi:
+			taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_FINDING);
+			break;
+			
+		case R.id.btn_all:
+			taskListManager.notifyTaskFilterChange("ALL");
+			break;
+			
 
 		default:
 			break;

@@ -50,7 +50,7 @@
                 <data android:mimeType="application/pdf"/>
             </intent-filter>
         </activity>
-        
+        	<activity android:name=".activities.GanttDisplayActivity"></activity>
          <activity android:name=".model3d.Model3DTurbineActivity"></activity> 
          <activity android:name=".activities.PartNumberDetailActivity"></activity>
          <activity android:name=".activities.LocationUsineActivity"></activity>
@@ -59,6 +59,7 @@
          <activity android:name=".activities.ImageDisplayActivity"></activity>
          <activity android:name=".activities.ProjectListActivity"></activity>
          <activity android:name="com.picture.drawing.ui.navigation.activity.PictureDrawingActivity"></activity>
+          
          
     </application>
     <uses-feature android:name = "android.hardware.camera" />
