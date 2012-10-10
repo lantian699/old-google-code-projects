@@ -58,6 +58,12 @@ public class Worksheet {
 	public static final String TABLE_TASK_COLUMN_PROJECT_NAME = "projectname";
 	public static final String TABLE_TASK_COLUMN_TYPE = "type";
 	public static final String TABLE_TASK_COLUMN_ATTACHMENT = "attachment";
+	public static final String TABLE_TASK_COLUMN_DESCRIPTION = "description";
+	public static final String TABLE_TASK_COLUMN_RELATED_OBJECT = "relatedobject";
+	public static final String TABLE_TASK_COLUMN_RELATED_TASK= "relatedtask";
+	public static final String TABLE_TASK_COLUMN_RESPONSIBLE = "responsible";
+	public static final String TABLE_TASK_COLUMN_SIGNATURE = "signature";
+	public static final String TABLE_TASK_COLUMN_CUSTOMER_NAME = "customername";
 	//visual inspection
 	public static final String TABLE_INSPECTION_COLUMN_DESCRIPTION = "description";
 	public static final String TABLE_INSPECTION_COLUMN_KEY = "key";
@@ -75,7 +81,8 @@ public class Worksheet {
 	public static final String TABLE_MESUREMENT_COLUMN_HIGH = "high";
 	public static final String TABLE_MESUREMENT_COLUMN_LOW = "low";
 	public static final String TABLE_MESUREMENT_COLUMN_PARENT = "parent";
-	
+	public static final String TABLE_MESUREMENT_COLUMN_TIME = "timestamp";
+	public static final String TABLE_MESUREMENT_COLUMN_TYPE = "type";
 	
 	
 	

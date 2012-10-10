@@ -2,7 +2,9 @@ package com.alstom.lean.all.fragments;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -13,8 +15,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -41,6 +45,7 @@ import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.ModelObject;
 import com.alstom.lean.all.models.Task;
+import com.alstom.lean.all.signature.SignatureActivity;
 import com.alstom.lean.all.views.TaskListCellView;
 import com.j256.ormlite.dao.Dao;
 import com.picture.drawing.ui.navigation.activity.PictureDrawingActivity;
@@ -55,35 +60,29 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 	public static final String TASK_NAME = "task";
 
 	public static final int CAPTURE_CODE = 2;
+	private static final int CODE_RETOUR = 5;
 	
-	
-	private static int pos_terminate=0;
 	private Button btn_terminate;
 	private Button btn_cancel;
 	private FragmentActivity context;
 	private TaskListManager taskListManager;
 	private Task task;
-	private ListView listViewTask;
 	private DatabaseHelper dataHelper;
-	private SectionedAdapter sectionedAdapter;
+
 	
 	private EditText edit_part_num;
 	
-	private TextView description;
+	private EditText edit_description;
 	private TextView edit_unit;
 	private TextView edit_start_date;
 	private TextView edit_end_date;
 	private TextView edit_status;
 	
-	private String part_num;
-	
 	
 	private ImageView btn_barcode;
 	private ImageButton btn_photo;
 	private Button btn_mesure;
-	private LinearLayout ll_td_unit;
-	private List<Mesurement> listMesure;
-	private String taskType;
+
 	private Button btn_tag_photo;
 	private ImageView photo_display;
 	private int year;
@@ -91,6 +90,15 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 	private int dayOfMonth;
 	private static Uri currentImageUri;
 	private Dao<Task, ?> taskDao;
+	private LinearLayout ll_it_photo_view;
+	private LinearLayout ll_mt_edit_view;
+	private EditText edit_cus_name;
+
+	private TextView title;
+	private Button btn_requestSig;
+	private ImageView sigView;
+	private String taskType;
+	private LinearLayout ll_td_unit;
 
 	public TaskDetailFragment(Context context, TaskListManager manager, Task task, DatabaseHelper helper){
 		
@@ -182,23 +190,33 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 	        Bundle savedInstanceState) {
 	    View rootView = inflater.inflate(R.layout.task_detail_cell_view, container, false);
 	
-	    description = (TextView)rootView.findViewById(R.id.tx_td_description);
+	    edit_description = (EditText)rootView.findViewById(R.id.tx_td_description);
 	    edit_start_date = (TextView)rootView.findViewById(R.id.edit_td_start_date);
 	    edit_end_date = (TextView)rootView.findViewById(R.id.edit_td_end_date);
 	    edit_part_num = (EditText)rootView.findViewById(R.id.edit_td_part_num);
 	    edit_status = (EditText)rootView.findViewById(R.id.edit_td_status);
-	    edit_unit = (EditText)rootView.findViewById(R.id.edit_td_unit);
+	    edit_unit = (TextView)rootView.findViewById(R.id.edit_td_unit);
 	    ll_td_unit = (LinearLayout)rootView.findViewById(R.id.ll_td_unit);
+	    title  = (TextView)rootView.findViewById(R.id.title_td_title);
 	    
 	    btn_barcode = (ImageView)rootView.findViewById(R.id.btn_bar_code);
 	    btn_photo = (ImageButton)rootView.findViewById(R.id.btn_take_photo);
 	    btn_mesure = (Button)rootView.findViewById(R.id.btn_take_mesure);
 	    btn_tag_photo = (Button)rootView.findViewById(R.id.btn_tag_photo);
+	    edit_cus_name = (EditText)rootView.findViewById(R.id.customerName);
+	    btn_requestSig = (Button)rootView.findViewById(R.id.btn_req_sig);
+	    sigView =(ImageView)rootView.findViewById(R.id.signature_view);
+	    
+	    
+	    btn_requestSig.setOnClickListener(this);
+	    
+	    ll_it_photo_view = (LinearLayout)rootView.findViewById(R.id.ll_it_photo_view);
+	    ll_mt_edit_view = (LinearLayout)rootView.findViewById(R.id.ll_mt_edit_view);
 	    
 	    photo_display = (ImageView) rootView.findViewById(R.id.img_selected_photo);
 	    
 	    
-	    
+	    title.setText(task.getName().toUpperCase());
 	    btn_terminate = (Button)rootView.findViewById(R.id.cancelsavesendbar_send);
 		btn_cancel = (Button)rootView.findViewById(R.id.cancelsavesendbar_cancel);
 
@@ -212,7 +230,7 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 		photo_display.setImageBitmap(brackgroundPictureBitmap);
 		}
 		
-		description.setText(task.getName());
+		edit_description.setText(task.getName());
 		edit_unit.setText(task.getType());
 		edit_status.setText(task.getStatus());
 		edit_start_date.setText(task.getBegin());
@@ -231,14 +249,15 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 	    
 		if(task.getType().equals(TaskListCellView.TASK_TYPE_MESURE)){
 			
-			
-			btn_mesure.setVisibility(View.VISIBLE);	
+			ll_it_photo_view.setVisibility(View.GONE);
+			ll_mt_edit_view.setVisibility(View.VISIBLE);	
 			taskType = TaskListCellView.TASK_TYPE_MESURE;
 			
 		}else if(task.getType().equals(TaskListCellView.TASK_TYPE_VI)){
 			
 			
-			btn_mesure.setVisibility(View.GONE);
+			ll_mt_edit_view.setVisibility(View.GONE);
+			ll_it_photo_view.setVisibility(View.VISIBLE);	
 			
 			taskType = TaskListCellView.TASK_TYPE_VI;
 			
@@ -261,6 +280,7 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 			task.setBegin(edit_start_date.getText().toString());
 			task.setEnd(edit_end_date.getText().toString());
 			task.setStatus(edit_status.getText().toString());
+			task.setDescription(edit_description.getText().toString());
 			
 			try{
 				Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
@@ -354,6 +374,12 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 			}, year, monthOfYear, dayOfMonth).show();
 			
 			break;
+		case R.id.btn_req_sig:
+			
+			
+			Intent intent_sig = new Intent(getActivity(),SignatureActivity.class);
+			startActivityForResult(intent_sig, CODE_RETOUR);
+			break;
 	
 		default:
 			break;
@@ -386,10 +412,15 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 			
 			if(requestCode == TaskDetailFragment.CAPTURE_CODE){
 				
-				System.out.println("haahahahahahahhaha");
 				currentImageUri = TaskDetailFragment.getCurrentImageUri();
 				String path = getRealPathFromURI(currentImageUri);
 				taskListManager.notifyDisplayPhotoChange(path,task);
+			}
+			
+			if(requestCode == CODE_RETOUR){
+				
+				Bitmap image = data.getParcelableExtra(SignatureActivity.KEY_BYTE_SIGNATURE);
+				sigView.setImageBitmap(image);
 			}
 			
 			break;

@@ -96,6 +96,18 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
 			
 			break;
+			
+		case R.id.google_plus:
+			
+			/*Intent sky = new Intent("android.intent.action.VIEW", 
+			 * Uri.parse("https://talkgadget.google.com/hangouts/extras/talk.google.com/myhangout"));
+			startActivity(sky);*/
+
+			 Intent sky = new Intent("android.intent.action.VIEW");
+             sky.setData(Uri.parse("skype:" + "nippotam"));
+             startActivity(sky);
+			
+			break;
 
 		default:
 			break;

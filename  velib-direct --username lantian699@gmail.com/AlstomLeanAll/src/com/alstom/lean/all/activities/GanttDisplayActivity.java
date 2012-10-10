@@ -22,12 +22,13 @@ public class GanttDisplayActivity extends Activity{
 
 	      webView=(WebView) this.findViewById(R.id.webView);        
 
-	      WebSettings setting=webView.getSettings(); 
+	      WebSettings setting=webView.getSettings();
+	      
  
 	      setting.setJavaScriptEnabled(true); 
 
-	    //webView.loadUrl("file:///android_asset/jscript.html"); 
-	      webView.loadUrl("file:///android_asset/gantt_loadxml.html"); 
+	    webView.loadUrl("file:///android_asset/jscript.html"); 
+//	    webView.loadUrl("file:///android_asset/gantt_loadxml.html"); 
 	}
 
 }

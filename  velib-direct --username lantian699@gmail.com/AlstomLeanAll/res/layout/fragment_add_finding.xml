@@ -212,10 +212,10 @@
             android:text="TYPE"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
-        <EditText 
+        <TextView
             android:id="@+id/finding_edit_type"
             android:layout_marginLeft="30dp"
-            android:minWidth="200dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"/>
         
@@ -313,29 +313,70 @@
             android:orientation="horizontal">
         <TextView
             android:padding="10dp"
-            android:id="@+id/finding_attachment"
+            android:id="@+id/finding_related_object"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ATTACHMENT"
+            android:text="Related Object"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         
       <Button 
-          android:id="@+id/finding_btn_attachment"
+          android:id="@+id/finding_btn_related_object"
           android:layout_marginLeft="30dp"
             android:minWidth="200dp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="photo"/>
-        
-        </LinearLayout>
+          android:text="select"/>
+      
+            
 
-         <Button
+    </LinearLayout>
+    
+         
+       <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">     
+       <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_related_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Related Task"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Spinner 
+          android:id="@+id/finding_spinner_task"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      </LinearLayout>
+      
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+      
+      <TextView
+            android:padding="10dp"
+            android:id="@+id/finding_responsible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Responsible"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+      <Spinner 
+          android:id="@+id/finding_spinner_responsible"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      </LinearLayout>
+      <Button
              android:id="@+id/finding_create"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginLeft="50dp"
              android:layout_marginTop="50dp"
-             android:text="Create Finding" />
+              android:text="Create Finding" />
+      
+        </LinearLayout>
 
-    </LinearLayout>
+         
 </LinearLayout>

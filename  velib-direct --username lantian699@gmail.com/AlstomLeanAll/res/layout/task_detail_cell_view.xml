@@ -6,6 +6,16 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
+        
+        <TextView
+            android:id="@+id/title_td_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Title"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        
 
         <TextView
             android:id="@+id/title_td_description"
@@ -15,7 +25,7 @@
             android:text="Description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
+        <EditText
             android:id="@+id/tx_td_description"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
@@ -109,7 +119,7 @@
                 android:text="Type"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
+            <TextView
                 android:id="@+id/edit_td_unit"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -159,6 +169,12 @@
                 android:src="@drawable/code_barre_clic" />
         </LinearLayout>
 
+        <LinearLayout 
+            android:id="@+id/ll_it_photo_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -188,7 +204,19 @@
                 android:layout_gravity="bottom"
                 android:text="Tag" />
         </LinearLayout>
+        
+         <ImageView
+            android:id="@+id/img_selected_photo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+         
+         </LinearLayout>
 
+        <LinearLayout 
+            android:id="@+id/ll_mt_edit_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <Button
             android:id="@+id/btn_take_mesure"
             android:layout_width="fill_parent"
@@ -196,13 +224,44 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/login_ok_button_background"
             android:padding="10dp"
-            android:text="TAKE MESUREMENT" />
+            android:text="EDIT MESUREMENT" />   
 
-        <ImageView
-            android:id="@+id/img_selected_photo"
+       </LinearLayout>
+		
+        
+        
+        <Button
+            android:id="@+id/btn_req_sig"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_ok_button_background"
+            android:padding="10dp"
+            android:text="Request Signature" />
+              
+        <LinearLayout
+   			 android:orientation="vertical"
+    		style="@style/myMargeTab"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content" >
 
+    <EditText
+        android:id="@+id/customerName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Customer Name" />
+
+
+    <ImageView
+        android:id="@+id/signature_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="90dp"
+        android:background="@layout/borders"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+	</LinearLayout>
         
          <com.alstom.lean.all.buttonbars.CancelSaveSendBar  
             xmlns:cancelSaveSendBar="http://schemas.android.com/apk/res/com.alstom.lean.all"
