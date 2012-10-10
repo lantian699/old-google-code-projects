@@ -205,6 +205,12 @@ public class Tools {
 				task.setParentProject(content.get(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME));
 				task.setType(content.get(Worksheet.TABLE_TASK_COLUMN_TYPE));
 				task.setAttachment(content.get(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT));
+				task.setDescription(content.get(Worksheet.TABLE_TASK_COLUMN_DESCRIPTION));
+				task.setRelatedObject(content.get(Worksheet.TABLE_TASK_COLUMN_RELATED_OBJECT));
+				task.setRelatedTask(content.get(Worksheet.TABLE_TASK_COLUMN_RELATED_TASK));
+				task.setResponsible(content.get(Worksheet.TABLE_TASK_COLUMN_RESPONSIBLE));
+				task.setSignature(content.get(Worksheet.TABLE_TASK_COLUMN_SIGNATURE));
+				task.setCustomerName(content.get(Worksheet.TABLE_TASK_COLUMN_CUSTOMER_NAME));
 				taskDao.create(task);
 				Log.i(TAG, "Task created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){	
@@ -233,6 +239,8 @@ public class Tools {
 				mesurement.setParent(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_PARENT));
 				mesurement.setHigh(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_HIGH));
 				mesurement.setLow(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_LOW));
+				mesurement.setTimeStamp(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_TIME));
+				mesurement.setType(content.get(Worksheet.TABLE_MESUREMENT_COLUMN_TYPE));
 				
 				mesurementDao.create(mesurement);
 				Log.i(TAG, "Mesurement created !" );
@@ -284,6 +292,12 @@ public class Tools {
 //				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.isRequiresWitnessPoint());
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_TYPE, task.getType());
+				if(task.getType().equals("finding")){
+					listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
+					listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.getRequiresWitnessPoint());
+					listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_RELATED_TASK, task.getRelatedTask());
+					listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_RESPONSIBLE, task.getResponsible());
+				}
 				
 				if(task.getAttachment() != null )
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT, task.getAttachment());
@@ -316,7 +330,7 @@ public class Tools {
 				if(mesure.getSelfUrl() != null)
 				listEntryModified = client.listEntry().get().execute(new ListUrl(mesure.getSelfUrl()));
 				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE, mesure.getValue());
-				
+				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_TIME, mesure.getTimeStamp());
 				
 				client.listFeed().update().execute(listEntryModified);
 				

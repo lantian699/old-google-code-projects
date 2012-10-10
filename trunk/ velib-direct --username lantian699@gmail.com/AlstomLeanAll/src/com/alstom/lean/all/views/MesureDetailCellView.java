@@ -1,7 +1,9 @@
 package com.alstom.lean.all.views;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,42 +14,63 @@ import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.ModelObject;
 import com.j256.ormlite.dao.Dao;
+import com.picture.drawing.ui.navigation.activity.PictureDrawingActivity;
 
 import android.R.integer;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MesureDetailCellView extends LinearLayout{
 	
+	public static final String MESURE_TYPE_NUMBER = "MN";
+	public static final String MESURE_TYPE_ATTACHMENT = "MA";
 	private TextView description;
 	private TextView unit;
 	private TextView rule;
 	private EditText edit_value;
+	private TextView timeStamps;
 	private String value;
 	private Mesurement mesure;
 	private DatabaseHelper dataHelper;
 	private Dao<Mesurement, ?> mesureDao;
+	private ImageView btn_mesure_photo;
 
-	public MesureDetailCellView(Context context, TaskListManager manager, DatabaseHelper helper) {
+	public MesureDetailCellView(final Context context, TaskListManager manager, DatabaseHelper helper) {
 		super(context);
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    inflater.inflate(R.layout.mesure_detail_cell_view, this);
-
+	    this.dataHelper = helper;
 	  
 		
 		
 	    description = (TextView)findViewById(R.id.tx_md_description);
+	    timeStamps = (TextView)findViewById(R.id.tx_md_time);
 	    unit = (TextView)findViewById(R.id.tx_md_unit);
 	    rule = (TextView)findViewById(R.id.tx_md_rule);
 	    edit_value = (EditText)findViewById(R.id.edit_md_value);
-	    this.dataHelper = helper;
+	    btn_mesure_photo = (ImageView)findViewById(R.id.btn_mesure_photo);
+	    btn_mesure_photo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent in = new Intent();
+				in.setClass(context, PictureDrawingActivity.class);
+				in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				context.startActivity(in);
+			}
+		});
 
 	    manager.registerAddMesureChangeObserver(new ChangeObserver() {
 			
@@ -56,9 +79,11 @@ public class MesureDetailCellView extends LinearLayout{
 
 
 				value = edit_value.getText().toString();
-				System.out.println("value = " +value);
+				
 				if(value != null)
 					mesure.setValue(value);
+				mesure.setTimeStamp(timeStamps.getText().toString());
+				
 				try {
 					mesureDao = dataHelper.getDao(Mesurement.class);
 					mesureDao.update(mesure);
@@ -67,21 +92,14 @@ public class MesureDetailCellView extends LinearLayout{
 					e.printStackTrace();
 				}
 
-			}
-			
+			}		
 			@Override
 			public void onChange() {
-				// TODO Auto-generated method stub
-				
-				
-				
-				
 			}
 
 			@Override
 			public void onChange(String res, ModelObject model) {
-				// TODO Auto-generated method stub
-				
+	
 			}
 		});
 	    
@@ -95,6 +113,17 @@ public class MesureDetailCellView extends LinearLayout{
 		unit.setText(mesure.getUnit());
 		rule.setText("( " + mesure.getLow() + " < "+mesure.getHigh()+ " )");
 		edit_value.setText(mesure.getValue());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");     
+		Date curDate = new Date(System.currentTimeMillis());
+		String str = formatter.format(curDate); 
+		timeStamps.setText(str);
+		
+		if(mesure.getType().equals(MESURE_TYPE_NUMBER)){
+			btn_mesure_photo.setVisibility(View.INVISIBLE);
+		}else if(mesure.getType().equals(MESURE_TYPE_ATTACHMENT)){
+			btn_mesure_photo.setVisibility(View.VISIBLE);
+		}
+		
 		
 		final double low = Double.parseDouble(mesure.getLow());
 		final double high = Double.parseDouble(mesure.getHigh());

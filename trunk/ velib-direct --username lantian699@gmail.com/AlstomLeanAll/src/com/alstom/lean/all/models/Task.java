@@ -33,7 +33,7 @@ public class Task extends ModelObject{
 	@DatabaseField
 	private String status;
 	@DatabaseField
-	private boolean requiresWitnessPoint;
+	private String requiresWitnessPoint;
 	@DatabaseField
 	private String type;
 	@DatabaseField
@@ -44,10 +44,58 @@ public class Task extends ModelObject{
 	private String updateTime;
 	@DatabaseField
 	private String attachment;
+	@DatabaseField
+	private String description;
+	@DatabaseField
+	private String relatedObject;
+	@DatabaseField
+	private String relatedTask;
+	@DatabaseField
+	private String responsible;
+	@DatabaseField
+	private String signature;
+	@DatabaseField
+	private String customerName;
 	
 	
 	
 	
+	public String getRelatedObject() {
+		return relatedObject;
+	}
+	public void setRelatedObject(String relatedObject) {
+		this.relatedObject = relatedObject;
+	}
+	public String getRelatedTask() {
+		return relatedTask;
+	}
+	public void setRelatedTask(String relatedTask) {
+		this.relatedTask = relatedTask;
+	}
+	public String getResponsible() {
+		return responsible;
+	}
+	public void setResponsible(String responsible) {
+		this.responsible = responsible;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getAttachment() {
 		return attachment;
 	}
@@ -120,10 +168,10 @@ public class Task extends ModelObject{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public boolean isRequiresWitnessPoint() {
+	public String getRequiresWitnessPoint() {
 		return requiresWitnessPoint;
 	}
-	public void setRequiresWitnessPoint(boolean requiresWitnessPoint) {
+	public void setRequiresWitnessPoint(String requiresWitnessPoint) {
 		this.requiresWitnessPoint = requiresWitnessPoint;
 	}
 	
