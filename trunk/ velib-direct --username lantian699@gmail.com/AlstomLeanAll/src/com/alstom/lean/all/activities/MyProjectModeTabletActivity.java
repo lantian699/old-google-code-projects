@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alstom.lean.all.R;
+import com.alstom.lean.all.dropbox.UploadFileToDropbox;
 import com.alstom.lean.all.flashage.CaptureFlashageActivity;
 import com.alstom.lean.all.fragments.MyProjectListFragment;
 import com.alstom.lean.all.fragments.TaskDetailFragment;
@@ -70,8 +71,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
     	
     	return taskListManager;
     }
-    
-    
+     
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -93,8 +93,8 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			
 		case R.id.sync_google:
 			
-			new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
-			
+			//new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
+			new UploadFileToDropbox(this, LoginActivity.getDropboxApi()).execute();
 			break;
 			
 		case R.id.google_plus:

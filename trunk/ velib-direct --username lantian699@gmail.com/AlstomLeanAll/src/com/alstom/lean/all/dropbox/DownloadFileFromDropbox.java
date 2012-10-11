@@ -1,10 +1,21 @@
 package com.alstom.lean.all.dropbox;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.widget.Toast;
+
+import com.alstom.lean.all.activities.ProjectListActivity;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.DropboxAPI.ThumbFormat;
@@ -16,70 +27,33 @@ import com.dropbox.client2.exception.DropboxParseException;
 import com.dropbox.client2.exception.DropboxPartialFileException;
 import com.dropbox.client2.exception.DropboxServerException;
 import com.dropbox.client2.exception.DropboxUnlinkedException;
-import com.dropbox.client2.session.AccessTokenPair;
-import com.dropbox.client2.session.AppKeyPair;
-import com.dropbox.client2.session.Session.AccessType;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.DialogInterface.OnClickListener;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
 
 	private Context context;
-//	private DropboxAPI<?> mApi;
+	private DropboxAPI<?> mApi;
 	private String mPath;
 	private final ProgressDialog mDialog;
 	private boolean mCanceled;
     private Long mFileLen;
     private String mErrorMsg;
     private FileOutputStream mFos;
-    private Drawable mDrawable;
-    private final static String IMAGE_FILE_NAME = "dbroulette.png";
-    
-    
-    
-    final static private String APP_KEY = "7ensyen019ypui4";
-    final static private String APP_SECRET = "joc5umz4cekhlvj";
-
-    // If you'd like to change the access type to the full Dropbox instead of
-    // an app folder, change this value.
-    final static private AccessType ACCESS_TYPE = AccessType.DROPBOX;
-
-    
-    ///////////////////////////////////////////////////////////////////////////
-    //                      End app-specific settings.                       //
-    ///////////////////////////////////////////////////////////////////////////
-
-    // You don't need to change these, leave them alone.
-    final static private String ACCOUNT_PREFS_NAME = "prefs";
-    final static private String ACCESS_KEY_NAME = "ACCESS_KEY";
-    final static private String ACCESS_SECRET_NAME = "ACCESS_SECRET";
 
 
-    DropboxAPI<AndroidAuthSession> mApi;
-
-	public DownloadFileFromDropbox(Context context,String dropboxPath){
+	public DownloadFileFromDropbox(Context context,DropboxAPI<AndroidAuthSession> api, String dropboxPath){
 		this.context = context;
-//		this.mApi = api;
+		this.mApi = api;
 		this.mPath = dropboxPath;
-		
-		
-		
-		// We create a new AuthSession so that we can use the Dropbox API.
-        AndroidAuthSession session = buildSession();
-        mApi = new DropboxAPI<AndroidAuthSession>(session);
-		
+	
+	
+        
+        
+       
+        
 		
 		
 		 mDialog = new ProgressDialog(context);
-	        mDialog.setMessage("Downloading Image");
+	        mDialog.setMessage("Downloading necessary files");
 	        mDialog.setButton("Cancel", new OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	                mCanceled = true;
@@ -97,34 +71,31 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
 	        });
 
 	        mDialog.show();
+	        
+	        
 	}
 	
 	@Override
 	protected Boolean doInBackground(Void... arg0) {
-		// TODO Auto-generated method stub
 		
 		try {
             if (mCanceled) {
                 return false;
             }
 
-            // Get the metadata for a directory
-            Entry dirent = mApi.metadata(mPath, 1000, null, true, null);
 
+            Entry dirent = mApi.metadata(mPath, 1000, null, true, null);
+           
             if (!dirent.isDir || dirent.contents == null) {
-                // It's not a directory, or there's nothing in it
                 mErrorMsg = "File or empty directory";
                 return false;
             }
-
-            // Make a list of everything in it that we can get a thumbnail for
             ArrayList<Entry> thumbs = new ArrayList<Entry>();
             for (Entry ent: dirent.contents) {
-                if (ent.thumbExists) {
-                    // Add it to the list of thumbs we can choose from
+
                     thumbs.add(ent);
-                }
             }
+            
 
             if (mCanceled) {
                 return false;
@@ -136,31 +107,66 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
                 return false;
             }
 
-            // Now pick a random one
-            int index = (int)(Math.random() * thumbs.size());
+            for(int index = 0; index< thumbs.size(); index++){
             Entry ent = thumbs.get(index);
             String path = ent.path;
+            String fileName = ent.fileName();
             mFileLen = ent.bytes;
+            
 
+            String rootPath = Environment.getExternalStorageDirectory() + "/Alstom";
+            File file  = new File(rootPath);
+        	if(!file.exists())
+        		file.mkdirs();
 
-            String cachePath = context.getCacheDir().getAbsolutePath() + "/" + IMAGE_FILE_NAME;
-            try {
-                mFos = new FileOutputStream(cachePath);
-            } catch (FileNotFoundException e) {
-                mErrorMsg = "Couldn't create a local file to store the image";
-                return false;
-            }
-
-            // This downloads a smaller, thumbnail version of the file.  The
-            // API to download the actual file is roughly the same.
-            mApi.getThumbnail(path, mFos, ThumbSize.BESTFIT_960x640,
+            if(ent.thumbExists){
+            	 try {
+                 	
+                     mFos = new FileOutputStream(rootPath+"/"+fileName);
+                 
+                    mApi.getThumbnail(path, mFos, ThumbSize.BESTFIT_960x640,
                     ThumbFormat.JPEG, null);
+            
+            	 } catch (FileNotFoundException e) {
+                     mErrorMsg = "Couldn't create a local file to store the image";
+                     return false;
+                 }
+            }else if(ent.isDir){
+            	String directPath = rootPath+"/"+fileName;
+            	File direct  = new File(directPath);
+            	if(!direct.exists())
+            		direct.mkdirs();
+            	rootPath = directPath;
+            	
+            	
+            	Entry subDirent = mApi.metadata(mPath+"/"+fileName, 1000, null, true, null);
+            	for(Entry subEnt : subDirent.contents){
+            		
+            		try {
+            			
+            			File subFile = new File(rootPath, subEnt.fileName());
+            			
+            			if(subFile.exists()){
+            				System.out.println("modified  " + subEnt.modified);
+            			}else{
+						mFos = new FileOutputStream(subFile);
+						
+						mApi.getFile(subEnt.path, null, mFos, null);
+            			}
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
+            }
+            
+            
             if (mCanceled) {
                 return false;
             }
-
-            mDrawable = Drawable.createFromPath(cachePath);
+            
             // We must have a legitimate picture
+            }
             return true;
 
         } catch (DropboxUnlinkedException e) {
@@ -197,16 +203,19 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
             }
         } catch (DropboxIOException e) {
             // Happens all the time, probably want to retry automatically.
+        	e.printStackTrace();
             mErrorMsg = "Network error.  Try again.";
         } catch (DropboxParseException e) {
             // Probably due to Dropbox server restarting, should retry
+        	e.printStackTrace();
             mErrorMsg = "Dropbox error.  Try again.";
         } catch (DropboxException e) {
             // Unknown error
+        	e.printStackTrace();
             mErrorMsg = "Unknown error.  Try again.";
         }
 		
-		return null;
+		return true;
 	}
 	
 	@Override
@@ -218,56 +227,22 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
     @Override
     protected void onPostExecute(Boolean result) {
         mDialog.dismiss();
-        if (result) {
-            // Set the image now that we have it
-        //    mView.setImageDrawable(mDrawable);
-        } else {
-            // Couldn't download it, so show an error
-            showToast(mErrorMsg);
-        }
+        if (!result) {
+        	showToast(mErrorMsg);
+        }else {
+        	Intent intent = new Intent();
+			intent.setClass(context, ProjectListActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			context.startActivity(intent);
+		}
+       
     }
 
     private void showToast(String msg) {
         Toast error = Toast.makeText(context, msg, Toast.LENGTH_LONG);
         error.show();
     }
-    
-    
-    private AndroidAuthSession buildSession() {
-        AppKeyPair appKeyPair = new AppKeyPair(APP_KEY, APP_SECRET);
-        AndroidAuthSession session;
-
-        String[] stored = getKeys();
-        if (stored != null) {
-            AccessTokenPair accessToken = new AccessTokenPair(stored[0], stored[1]);
-            session = new AndroidAuthSession(appKeyPair, ACCESS_TYPE, accessToken);
-        } else {
-            session = new AndroidAuthSession(appKeyPair, ACCESS_TYPE);
-        }
-
-        return session;
-    }
-    
-    
-    /**
-     * Shows keeping the access keys returned from Trusted Authenticator in a local
-     * store, rather than storing user name & password, and re-authenticating each
-     * time (which is not to be done, ever).
-     *
-     * @return Array of [access_key, access_secret], or null if none stored
-     */
-    private String[] getKeys() {
-        SharedPreferences prefs = context.getSharedPreferences(ACCOUNT_PREFS_NAME, 0);
-        String key = prefs.getString(ACCESS_KEY_NAME, null);
-        String secret = prefs.getString(ACCESS_SECRET_NAME, null);
-        if (key != null && secret != null) {
-        	String[] ret = new String[2];
-        	ret[0] = key;
-        	ret[1] = secret;
-        	return ret;
-        } else {
-        	return null;
-        }
-    }
+      
+  
 
 }
