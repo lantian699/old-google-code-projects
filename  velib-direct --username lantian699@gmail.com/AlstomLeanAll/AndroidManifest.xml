@@ -4,8 +4,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -61,6 +61,18 @@
          <activity android:name=".signature.SignatureActivity"></activity>
          <activity android:name="com.picture.drawing.ui.navigation.activity.PictureDrawingActivity"></activity>
           
+             <activity
+      android:name="com.dropbox.client2.android.AuthActivity"
+      android:launchMode="singleTask"
+      android:configChanges="orientation|keyboard">
+      <intent-filter>
+        <!-- Change this to be db- followed by your app key -->
+        <data android:scheme="db-7ensyen019ypui4" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
          
     </application>
     <uses-feature android:name = "android.hardware.camera" />
