@@ -190,7 +190,7 @@ public class Tools {
 				person.setProfile(content.get(Worksheet.TABLE_PERSON_COLUMN_PROFILE));
 				person.setTelNumber(content.get(Worksheet.TABLE_PERSON_COLUMN_TEL));
 				person.setEmail(content.get(Worksheet.TABLE_PERSON_COLUMN_EMAIL));
-				
+				person.setParent(content.get(Worksheet.TABLE_PERSON_COLUMN_PARENT));
 				personDao.create(person);
 				Log.i(TAG, "Person created !" );
 			}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){	

@@ -98,9 +98,7 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			break;
 			
 		case R.id.google_plus:
-			
-			/*Intent sky = new Intent("android.intent.action.VIEW", 
-			 * Uri.parse("https://talkgadget.google.com/hangouts/extras/talk.google.com/myhangout"));
+			/*Intent sky = new Intent("android.intent.action.VIEW", Uri.parse("https://talkgadget.google.com/hangouts/"));
 			startActivity(sky);*/
 
 			 Intent sky = new Intent("android.intent.action.VIEW");

@@ -11,6 +11,8 @@ public class Person extends ModelObject{
 	 */
 	private static final long serialVersionUID = 1512557016880721771L;
 
+	public static final String TABLE_PERSON_COLUMN_PARENT = "parent";
+
 	@DatabaseField
 	private String name;
 	@DatabaseField
@@ -19,9 +21,17 @@ public class Person extends ModelObject{
 	private String telNumber;
 	@DatabaseField
 	private String email;
+	@DatabaseField
+	private String parent;
 	
 	
 	
+	public String getParent() {
+		return parent;
+	}
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 	public String getName() {
 		return name;
 	}

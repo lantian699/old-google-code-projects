@@ -14,7 +14,7 @@
     </item>
     
     <item android:id="@+id/google_plus" 
-        android:title="Skype" 
+        android:title="Video" 
         android:icon="@drawable/google_plus"
         android:showAsAction="ifRoom|withText">
         

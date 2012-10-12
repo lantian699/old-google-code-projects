@@ -19,11 +19,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.alstom.lean.all.R;
@@ -64,7 +67,9 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	private Button btn_FI;
 	private Button btn_All;
 	private Dao<Task, ?> taskDao;
-
+	private Spinner spinner_filter_task;
+	private ArrayAdapter<String> spinner_adapter;
+	private ArrayList<String> listFilter;
 
 	
 	public TaskListFragment(Project project, DatabaseHelper helper, TaskListManager manager){
@@ -107,10 +112,14 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    btn_add_task.setOnClickListener(this);
 	    
 	    btn_gantt = (Button)rootView.findViewById(R.id.btn_gantt);
+	    spinner_filter_task = (Spinner)rootView.findViewById(R.id.spinner_filter_task);
+	    
+	    
 	    btn_IT = (Button)rootView.findViewById(R.id.btn_it);
 	    btn_MT = (Button)rootView.findViewById(R.id.btn_mt);
 	    btn_FI = (Button)rootView.findViewById(R.id.btn_fi);
 	    btn_All = (Button)rootView.findViewById(R.id.btn_all);
+	    
 	    
 	    btn_gantt.setOnClickListener(this);
 	    btn_IT.setOnClickListener(this);
@@ -118,6 +127,54 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    btn_FI.setOnClickListener(this);
 	    btn_All.setOnClickListener(this);
 	    
+	    listFilter = new ArrayList<String>();
+	    listFilter.add("ALL");
+	    listFilter.add("IT");
+	    listFilter.add("MT");
+	    listFilter.add("FI");
+	    spinner_adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, listFilter);
+	    spinner_adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		spinner_filter_task.setAdapter(spinner_adapter);
+		
+		spinner_filter_task.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				// TODO Auto-generated method stub
+				
+				switch (position) {
+				case 0:
+					taskListManager.notifyTaskFilterChange("ALL");
+					
+					break;
+				case 1:
+					taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_VI);
+					
+					break;
+					
+				case 2:
+					taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_MESURE);
+					
+					break;
+					
+				case 3:
+					taskListManager.notifyTaskFilterChange(TaskListCellView.TASK_TYPE_FINDING);
+					break;
+
+				default:
+					break;
+				}
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 	    
 	    taskListView.setOnItemLongClickListener(this);
 	    

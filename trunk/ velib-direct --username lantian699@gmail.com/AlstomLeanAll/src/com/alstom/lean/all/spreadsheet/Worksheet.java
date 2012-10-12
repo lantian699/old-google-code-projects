@@ -47,6 +47,7 @@ public class Worksheet {
 	public static final String TABLE_PERSON_COLUMN_PROFILE = "profile";
 	public static final String TABLE_PERSON_COLUMN_TEL = "tel";
 	public static final String TABLE_PERSON_COLUMN_EMAIL = "email";
+	public static final String TABLE_PERSON_COLUMN_PARENT = "parent";
 	//task
 	public static final String TABLE_TASK_COLUMN_NAME = "name";
 	public static final String TABLE_TASK_COLUMN_WORK_INSTRUCTION = "workinstruction";
