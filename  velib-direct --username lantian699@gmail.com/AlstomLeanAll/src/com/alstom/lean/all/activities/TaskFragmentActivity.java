@@ -116,7 +116,7 @@ public class TaskFragmentActivity extends FragmentActivity implements ActionBar.
             
             taskListManager = new TaskListManager();         
             listFragment.clear();
-            listFragment.add(new DetailSectionFragment());
+            listFragment.add(new DetailSectionFragment(null,null));
             listFragment.add(new AssistanceRequestFragment());
             listFragment.add(new TreatmentSectionFragment(taskListManager));
         }

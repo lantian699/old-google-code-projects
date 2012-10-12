@@ -82,72 +82,49 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
             if (mCanceled) {
                 return false;
             }
-
-
+            String rootPath = Environment.getExternalStorageDirectory() + "/Alstom";
+            File file  = new File(rootPath);
+//            DeleteRecursive(file);           
+        	if(!file.exists())
+        		file.mkdirs();
+        	
             Entry dirent = mApi.metadata(mPath, 1000, null, true, null);
            
             if (!dirent.isDir || dirent.contents == null) {
                 mErrorMsg = "File or empty directory";
                 return false;
             }
-            ArrayList<Entry> thumbs = new ArrayList<Entry>();
-            for (Entry ent: dirent.contents) {
 
-                    thumbs.add(ent);
-            }
-            
-
-            if (mCanceled) {
-                return false;
-            }
-
-            if (thumbs.size() == 0) {
-                // No thumbs in that directory
-                mErrorMsg = "No pictures in that directory";
-                return false;
-            }
-
-            for(int index = 0; index< thumbs.size(); index++){
-            Entry ent = thumbs.get(index);
-            String path = ent.path;
-            String fileName = ent.fileName();
-            mFileLen = ent.bytes;
-            
-
-            String rootPath = Environment.getExternalStorageDirectory() + "/Alstom";
-            File file  = new File(rootPath);
-        	if(!file.exists())
-        		file.mkdirs();
-
-            if(ent.thumbExists){
-            	 try {
-                 	
-                     mFos = new FileOutputStream(rootPath+"/"+fileName);
-                 
-                    mApi.getThumbnail(path, mFos, ThumbSize.BESTFIT_960x640,
-                    ThumbFormat.JPEG, null);
-            
-            	 } catch (FileNotFoundException e) {
-                     mErrorMsg = "Couldn't create a local file to store the image";
-                     return false;
-                 }
-            }else if(ent.isDir){
-            	String directPath = rootPath+"/"+fileName;
+            for(Entry rootEnt : dirent.contents){
+             if(rootEnt.isDir){
+            	String directPath = rootPath+"/"+rootEnt.fileName();
             	File direct  = new File(directPath);
             	if(!direct.exists())
             		direct.mkdirs();
-            	rootPath = directPath;
+
             	
             	
-            	Entry subDirent = mApi.metadata(mPath+"/"+fileName, 1000, null, true, null);
-            	for(Entry subEnt : subDirent.contents){
+            	Entry subDirent = mApi.metadata(mPath+"/"+rootEnt.fileName(), 1000, null, true, null);
+            	
+            	for(Entry subDir : subDirent.contents){
             		
+            		String subDirectPath = directPath+"/"+subDir.fileName();
+                	File subDirect  = new File(subDirectPath);
+                	if(!subDirect.exists())
+                		subDirect.mkdirs();
+  
+            		
+                	Entry subEntry = mApi.metadata(mPath+"/"+rootEnt.fileName()+"/"+subDir.fileName(), 1000, null, true, null);
+                	if(subEntry.contents == null)
+                		return false;
+                	
+            		for(Entry subEnt : subEntry.contents){
             		try {
             			
-            			File subFile = new File(rootPath, subEnt.fileName());
+            			File subFile = new File(subDirectPath, subEnt.fileName());
             			
             			if(subFile.exists()){
-            				System.out.println("modified  " + subEnt.modified);
+            				
             			}else{
 						mFos = new FileOutputStream(subFile);
 						
@@ -157,15 +134,14 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+            		}
             	}
             }
             
             
             if (mCanceled) {
                 return false;
-            }
-            
-            // We must have a legitimate picture
+            }         
             }
             return true;
 
@@ -244,5 +220,12 @@ public class DownloadFileFromDropbox extends AsyncTask<Void, Long, Boolean>{
     }
       
   
+    private void DeleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                DeleteRecursive(child);
+
+        fileOrDirectory.delete();
+    }
 
 }

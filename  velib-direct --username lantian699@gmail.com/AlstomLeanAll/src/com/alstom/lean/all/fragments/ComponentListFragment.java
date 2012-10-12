@@ -37,13 +37,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ComponentListFragment extends Fragment implements OnItemClickListener, OnClickListener{
+public class ComponentListFragment extends Fragment implements OnItemClickListener, OnClickListener, OnItemLongClickListener{
 	
 	private List<String> listModelName;
 	private ModelObject model;
@@ -81,6 +82,7 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, listModelName);
 		listViewComponent.setAdapter(adapter);
 		listViewComponent.setOnItemClickListener(this);
+		listViewComponent.setOnItemLongClickListener(this);
 		
 		return view;
 	}
@@ -191,19 +193,130 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 		ComponentListFragment fragment = new ComponentListFragment(listModel.get(position), dataHelper);
 		
 		if(listModel.get(position) instanceof Plant){
+			
+			
+			Fragment fb = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_2);
+			Fragment fu = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_3);
+			Fragment fs = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_4);
+			Fragment fc = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_5);
+			if(fb != null)
+			getFragmentManager().beginTransaction().remove(fb).commit();
+			if(fu != null)
+			getFragmentManager().beginTransaction().remove(fu).commit();
+			if(fs != null)
+			getFragmentManager().beginTransaction().remove(fs).commit();
+			if(fc != null)
+			getFragmentManager().beginTransaction().remove(fc).commit();
+			
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_2, fragment).commit();
+			
 		}else if(listModel.get(position) instanceof Block){
+			
+
+			Fragment fu = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_3);
+			Fragment fs = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_4);
+			Fragment fc = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_5);
+			if(fu != null)
+			getFragmentManager().beginTransaction().remove(fu).commit();
+			if(fs != null)
+			getFragmentManager().beginTransaction().remove(fs).commit();
+			if(fc != null)
+			getFragmentManager().beginTransaction().remove(fc).commit();
+			
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_3, fragment).commit();
 		}else if(listModel.get(position) instanceof Unit){
+			
+			Fragment fs = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_4);
+			Fragment fc = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_5);
+
+			if(fs != null)
+			getFragmentManager().beginTransaction().remove(fs).commit();
+			if(fc != null)
+			getFragmentManager().beginTransaction().remove(fc).commit();
+			
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_4, fragment).commit();
 		}else if(listModel.get(position) instanceof Systems){
+
+			Fragment fc = getFragmentManager().findFragmentById(R.id.activity_detail_sub_container_5);
+			if(fc != null)
+			getFragmentManager().beginTransaction().remove(fc).commit();
+			
 			getActivity().getSupportFragmentManager().beginTransaction()
 			.replace(R.id.activity_detail_sub_container_5, fragment).commit();
 		}
 	}
+	
+	
+	
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		// TODO Auto-generated method stub
+		
+		final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setTitle("DOCUMENTS");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
+		        
+		        switch (item) {
+				case 0:
+					
+					boolean save = MyProjectListFragment.copyFile(MyProjectListFragment.PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+MyProjectListFragment.PDF_GT26_PLAN_2D, getResources());
+					Uri uri = Uri.parse("file:///mnt/sdcard/"+MyProjectListFragment.PDF_GT26_PLAN_2D);
+//					Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
+					if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
+
+						 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+						 intent.setClass(getActivity(), PdfViewerActivity.class);
+						 startActivity(intent);
+				 
+					}
+					
+					break;
+					
+				case 1:
+					
+					Intent intent = new Intent();
+					intent.setClass(getActivity(), ImageDisplayActivity.class);
+					intent.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
+					startActivity(intent);
+					break;
+
+				case 2:
+					
+					Intent intent_model = new Intent();
+					intent_model.setClass(getActivity(), ImageDisplayActivity.class);
+					intent_model.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_model);
+					startActivity(intent_model);
+					
+					break;
+					
+				case 3:
+					
+					Intent in = new Intent();
+					in.setClass(getActivity(), Model3DTurbineActivity.class);
+					startActivity(in);
+					
+					break;
+					
+				default:
+					break;
+				}
+		        
+		    }
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		
+		return false;
+	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -276,5 +389,7 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 		}
 		
 	}
+
+	
 
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -49,7 +50,7 @@ public class UploadFileToDropbox extends AsyncTask<Void, Long, Boolean> {
 
 		
 		 mDialog = new ProgressDialog(context);
-	        mDialog.setMessage("Downloading necessary files");
+	        mDialog.setMessage("Uploading modified files");
 	        mDialog.setButton("Cancel", new OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	                mCanceled = true;
@@ -75,40 +76,47 @@ public class UploadFileToDropbox extends AsyncTask<Void, Long, Boolean> {
 	protected Boolean doInBackground(Void... arg0) {
 		
 		try { 
+			String dropboxPath = "/Alstom/";
 			
 			String rootPath = Environment.getExternalStorageDirectory() + "/Alstom";
             File rootDirectory  = new File(rootPath);
-        	if(rootDirectory.exists()){
-        		
-        		
-        		for(int i=0; i< rootDirectory.listFiles().length;i++){
-        			File sedDirectory = rootDirectory.listFiles()[i]; 
-        			for(int j = 0;j<sedDirectory.listFiles().length; j++){
-        				File file = sedDirectory.listFiles()[j];
-        				
-        				SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd");
-        				String today = sdf.format(new Date());
-        				
-        				sdf = new SimpleDateFormat("yyyy MM dd");
-        				String fileDate = sdf.format(new Date(file.lastModified()));
-        				
-        				inputStream = new FileInputStream(file);
-        				
-        				if(fileDate.equals(today)){
-        					
-        					mApi.putFile("Alstom/"+file.getParentFile().getName()+"/"+file.getName(), inputStream, file.length(), null, null);
-        					
-        				}
-        				
-                		System.out.println(fileDate.equals(today));
-        				
-        			}
-        			
-        		}
-        		
-        		
-        	}
-
+            
+            if(rootDirectory.exists()){
+            	
+            	for (File  subDir : rootDirectory.listFiles()) {
+            		
+            		if(subDir.isDirectory()){
+            			List<Entry> listEntry = mApi.search(dropboxPath, subDir.getName(), 0, false);
+            			if(listEntry.size() == 0){
+            				mApi.createFolder(dropboxPath+subDir.getName());
+            			}
+//            			System.out.println(subDir.getName() + "  " + listEntry.size());
+            			for (File childDir : subDir.listFiles()) {
+            				if(childDir.isDirectory()){
+							listEntry = mApi.search(dropboxPath+subDir.getName(), childDir.getName(), 0, false);
+							
+							if(listEntry.size() == 0){
+								mApi.createFolder(dropboxPath+subDir.getName()+"/"+childDir.getName());
+							}
+//							System.out.println(childDir.getName() + "  " + listEntry.size());
+							for (File child : childDir.listFiles()) {
+								if(!child.isDirectory()){
+									listEntry = mApi.search(dropboxPath+subDir.getName()+"/"+childDir.getName(), child.getName(), 0, false);
+									if(listEntry.size() == 0){
+										inputStream = new FileInputStream(child);
+										mApi.putFile(dropboxPath+subDir.getName()+"/"+childDir.getName()+"/"+child.getName(), inputStream, child.length(), null, null);
+									}
+//									System.out.println(child.getName() + "  " + listEntry.size());
+								}
+							}
+								
+            				}
+						}
+            		}
+            				
+				}
+            	
+            }        
 			
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -139,5 +147,29 @@ public class UploadFileToDropbox extends AsyncTask<Void, Long, Boolean> {
         error.show();
     }
 	
+    
+    private void DeleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles()){
+            	
+                DeleteRecursive(child);
+            }
+
+        fileOrDirectory.delete();
+    }
+    
+    private boolean isToday(long lastModified){
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd");
+		String today = sdf.format(new Date());
+		
+		sdf = new SimpleDateFormat("yyyy MM dd");
+		String fileDate = sdf.format(new Date(lastModified));
+		
+		if(fileDate.equals(today))
+			return true;
+		else
+			return false;
+    }
 	
 }

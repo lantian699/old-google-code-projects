@@ -91,7 +91,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 		try {
 			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 			
-			Thread.sleep(50);
+			Thread.sleep(100);
 			
 			if(params[0].equals("getAll")){
 			for (Table table:Table.values()) 

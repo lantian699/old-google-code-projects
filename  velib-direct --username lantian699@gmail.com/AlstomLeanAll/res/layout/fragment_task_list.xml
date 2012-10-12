@@ -23,6 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Gantt"/>
+          
+          
+          <Spinner 
+              android:layout_gravity="right|center"
+              android:id="@+id/spinner_filter_task"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
         
         <Button 
             android:id="@+id/btn_it"
@@ -30,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:text="IT"/>
         
         <Button 
@@ -38,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:text="MT"/>
         
         <Button 
@@ -46,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:text="FI"/>
         
         <Button 
@@ -54,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:text="ALL"/>
 		</LinearLayout>
         <ListView

@@ -155,7 +155,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		((FrameLayout) getActivity().findViewById(R.id.activity_detail_container_2)).setVisibility(View.VISIBLE);
 		((LinearLayout) getActivity().findViewById(R.id.activity_detail_container_hide)).setVisibility(View.GONE);
 		
-		DetailSectionFragment fragment = new DetailSectionFragment();
+		DetailSectionFragment fragment = new DetailSectionFragment(project, dataHelper);
         
         supportManager.beginTransaction()
                 .replace(R.id.activity_detail_container_1, fragment)

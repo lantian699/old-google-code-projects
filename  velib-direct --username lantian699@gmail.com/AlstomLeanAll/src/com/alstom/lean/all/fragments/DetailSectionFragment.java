@@ -2,16 +2,24 @@ package com.alstom.lean.all.fragments;
 
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.MyProjectActivity;
 import com.alstom.lean.all.adapters.DetailSectionAdapter;
+import com.alstom.lean.all.adapters.PersonAdapter;
 import com.alstom.lean.all.adapters.SectionedAdapter;
+import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Enterprise;
 import com.alstom.lean.all.models.Factory;
+import com.alstom.lean.all.models.Person;
+import com.alstom.lean.all.models.Plant;
 import com.alstom.lean.all.models.Project;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,8 +39,12 @@ public class DetailSectionFragment extends Fragment{
 	private ListView listDetail;
 	private Factory factory;
 	private SectionedAdapter sectionedAdapter;
+	private DatabaseHelper dataHelper;
+	private Dao<Person, ?> personDao;
     
-    public DetailSectionFragment() {
+    public DetailSectionFragment(Project project, DatabaseHelper dataHelper) {
+    	this.project = project;
+    	this.dataHelper = dataHelper;
     }
     
     @Override
@@ -46,6 +58,25 @@ public class DetailSectionFragment extends Fragment{
     	detailSectionAdapter = new DetailSectionAdapter(getActivity(), enterprise,factory);
     	
     	sectionedAdapter.addSection(getString(R.string.title_detail), detailSectionAdapter);
+    	
+    	try {
+			personDao = dataHelper.getDao(Person.class);
+			QueryBuilder<Person, ?> queryBuilder = personDao.queryBuilder();
+			queryBuilder.where().eq(Person.TABLE_PERSON_COLUMN_PARENT, project.getName());
+			PreparedQuery<Person> preparedQuery = queryBuilder.prepare();
+			List<Person> listPerson = personDao.query(preparedQuery);
+			
+			for (Person person : listPerson) {
+				
+				PersonAdapter personAdapter = new PersonAdapter(getActivity(), person);
+				sectionedAdapter.addSection(person.getProfile(), personAdapter);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	
     	
     	
