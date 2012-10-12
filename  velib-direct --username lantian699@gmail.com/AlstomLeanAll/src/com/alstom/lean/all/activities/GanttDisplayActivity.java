@@ -16,20 +16,21 @@ public class GanttDisplayActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.activity_gantt_display); 
 
 	      webView=(WebView) this.findViewById(R.id.webView);   
 	      webView.setWebChromeClient(new myWebChromeClient());
 
 	      WebSettings setting=webView.getSettings();
-	      setting.setAllowFileAccessFromFileURLs(true);
- 
 	      setting.setJavaScriptEnabled(true); 
+	      setting.setAllowFileAccessFromFileURLs(true);
+	      setting.setAllowUniversalAccessFromFileURLs(true);
+	      
+	      System.out.println("setting = " + setting.getAllowFileAccessFromFileURLs());
 
-//	    webView.loadUrl("file:///android_asset/jscript.html"); 
-	    webView.loadUrl("file:///android_asset/gantt_loadxml.html"); 
+	    webView.loadUrl("file:///android_asset/jscript.html"); 
+//	    webView.loadUrl("file:///android_asset/gantt_loadxml.html"); 
 	}
 
 }
