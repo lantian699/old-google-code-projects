@@ -4,8 +4,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="16" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -34,11 +34,17 @@
         </activity>
         
         <activity android:name=".activities.MyProjectActivity"></activity>
-        <activity android:name=".activities.MyProjectModeTabletActivity"></activity>
+        <activity android:name=".activities.MyProjectModeTabletActivity"
+            android:screenOrientation="landscape"></activity>
         <activity android:name=".activities.TaskFragmentActivity"></activity>
         <activity android:name="com.google.zxing.client.android.CaptureActivity"
             android:screenOrientation="landscape"></activity>
         <activity android:name=".activities.StepActivity"></activity>
+        
+        <activity android:name=".activities.MesureDetailActivity"
+            android:windowSoftInputMode="adjustPan">
+          
+        </activity>
         
          <activity android:name=".pdfviewer.PdfViewerActivity" android:configChanges="orientation|keyboardHidden">
             <intent-filter>
@@ -48,20 +54,43 @@
                 <data android:mimeType="application/pdf"/>
             </intent-filter>
         </activity>
-        
+        	<activity android:name=".activities.GanttDisplayActivity"></activity>
          <activity android:name=".model3d.Model3DTurbineActivity"></activity> 
          <activity android:name=".activities.PartNumberDetailActivity"></activity>
          <activity android:name=".activities.LocationUsineActivity"></activity>
+         <activity android:name=".flashage.CaptureFlashageActivity"></activity>
+         <activity android:name=".activities.PartNumTabletActivity"></activity>
+         <activity android:name=".activities.ImageDisplayActivity"></activity>
+         <activity android:name=".activities.ProjectListActivity"></activity>
+         <activity android:name=".signature.SignatureActivity"></activity>
+         <activity android:name="com.picture.drawing.ui.navigation.activity.PictureDrawingActivity"></activity>
+          
+             <activity
+      android:name="com.dropbox.client2.android.AuthActivity"
+      android:launchMode="singleTask"
+      android:configChanges="orientation|keyboard">
+      <intent-filter>
+        <!-- Change this to be db- followed by your app key -->
+        <data android:scheme="db-7ensyen019ypui4" />
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
          
     </application>
-    <uses-permission android:name = "android.permission.CAMERA" />
-	<uses-feature android:name = "android.hardware.camera" />
+    <uses-feature android:name = "android.hardware.camera" />
 	<uses-feature android:name = "android.hardware.camera.autofocus" />
+	
+    <uses-permission android:name = "android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCES_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
     <uses-permission android:name="android.permission.LOCATION" />
+    <uses-permission android:name = "android.permission.WRITE_EXTERNAL_STORAGE"/>  
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
 </manifest>

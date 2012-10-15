@@ -32,6 +32,7 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 	private TaskListManager manager;
 	private DatabaseHelper helper;
 	private Button btn_terminate;
+	private Button btn_cancel;
 	private TaskListManager taskListManager;
 
 
@@ -58,16 +59,18 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		  View view = inflater.inflate(R.layout.fragment_mesure_detail, container, false);
 		  
-		  title = (TextView)view.findViewById(R.id.title_md_mesure);  
-		  title.setText(task.getName());
-		  
-		  listViewMesure = (ListView) view.findViewById(R.id.list_mesure);
-		  adapter = new MesureDetailAdapter(getActivity(), listMesure, manager, helper);
-		  listViewMesure.setAdapter(adapter);
-		  
-		  btn_terminate = (Button)view.findViewById(R.id.cancelsavesendbar_send);
-			
+		title = (TextView) view.findViewById(R.id.title_md_mesure);
+		title.setText(task.getName());
+
+		listViewMesure = (ListView) view.findViewById(R.id.list_mesure);
+		adapter = new MesureDetailAdapter(getActivity(), listMesure, manager,
+				helper);
+		listViewMesure.setAdapter(adapter);
+
+		btn_terminate = (Button) view.findViewById(R.id.cancelsavesendbar_send);
+		btn_cancel = (Button)view.findViewById(R.id.cancelsavesendbar_cancel);
 		btn_terminate.setOnClickListener(this);
+		btn_cancel.setOnClickListener(this);
 		taskListManager = MyProjectModeTabletActivity.getTaskListManager();
 		  
 		 return view;
