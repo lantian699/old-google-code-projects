@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.LocationUsineActivity;
-import com.alstom.lean.all.activities.MyProjectActivity;
+import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.models.Enterprise;
 import com.alstom.lean.all.models.Factory;
 
@@ -64,7 +64,7 @@ public class DetailSectionCellView extends LinearLayout{
 					Intent intent = new Intent();
 					intent.setClass(context, LocationUsineActivity.class);
 					Bundle bundle = new Bundle();
-					bundle.putSerializable(MyProjectActivity.NAME_BUNDLE_LIST_FACTORY, listFactory);
+					bundle.putSerializable(MyProjectModeTabletActivity.NAME_BUNDLE_LIST_FACTORY, listFactory);
 					intent.putExtras(bundle);
 					context.startActivity(intent);
 				}

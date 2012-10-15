@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.LocationUsineActivity;
-import com.alstom.lean.all.activities.MyProjectActivity;
 import com.alstom.lean.all.models.Enterprise;
 import com.alstom.lean.all.models.Factory;
 import com.alstom.lean.all.models.Person;

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.fragments.AssistanceRequestFragment;
-import com.alstom.lean.all.fragments.TreatmentSectionFragment;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Project;
 public class MyProjectCellView extends LinearLayout implements OnClickListener{
