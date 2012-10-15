@@ -102,8 +102,7 @@ public class Tools {
 		Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 		Dao<VisualInspection, ?> inspectionDao = dataHelper.getDao(VisualInspection.class);
 		Dao<Mesurement, ?> mesurementDao = dataHelper.getDao(Mesurement.class);
-		
-		System.out.println(listFeed.getEntries().get(0).customElements);
+
 		
 		for (ListEntry listEntry:listFeed.getEntries()){
 					
@@ -265,7 +264,7 @@ public class Tools {
 	
 	
 	
-	public static void sendAll(DatabaseHelper dataHelper, SpreadsheetAndroidRequestInitializer requestInitializer){
+	public static void sendAll(DatabaseHelper dataHelper, SpreadsheetAndroidRequestInitializer requestInitializer, Table table){
 		
 		try {
 		Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
@@ -274,16 +273,18 @@ public class Tools {
 		
 //		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
 		SpreadsheetClient client = new SpreadsheetClient(requestInitializer.createRequestFactory());
+		String spreadsheetKey = requestInitializer.settings.getString(PREF_SPREADSHEET_KEY, null);
+		ListUrl listUrl = ListUrl.forListFeedByKey(spreadsheetKey, table.toString());
 		
-		
-		
-		List<Task> listTask = taskDao.queryForAll();
+		if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){
+			List<Task> listTask = taskDao.queryForAll();
 			
 			for (Task task : listTask) {
 				
 				ListEntry listEntryModified = null;
 				if(task.getSelfUrl() != null){
 				listEntryModified = client.listEntry().get().execute(new ListUrl(task.getSelfUrl()));
+				
 				
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_NAME, task.getName());
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_BEGIN, task.getBegin());
@@ -301,10 +302,39 @@ public class Tools {
 				
 				if(task.getAttachment() != null )
 				listEntryModified.setCustomElement(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT, task.getAttachment());
-				}
+				
 				client.listFeed().update().execute(listEntryModified);
+				}else{
+		
+					ListEntry entry = new ListEntry();
+					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_NAME, task.getName());
+					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_BEGIN, task.getBegin());
+					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_END, task.getEnd());
+//					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_PROJECT_NAME, task.getParentProject());
+//					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.isRequiresWitnessPoint());
+					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
+					entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_TYPE, task.getType());
+					if(task.getType().equals("finding")){
+						entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_STATUS, task.getStatus());
+						entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_REQUIRE_WITNESS_POINT, task.getRequiresWitnessPoint());
+						entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_RELATED_TASK, task.getRelatedTask());
+						entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_RESPONSIBLE, task.getResponsible());
+					}
+					
+					if(task.getAttachment() != null )
+						entry.addCustomElement(Worksheet.TABLE_TASK_COLUMN_ATTACHMENT, task.getAttachment());
+
+					ListEntry entryInsert = client.listFeed().insert().execute(listUrl, entry);
+					task.setSelfUrl(entryInsert.getSelfLink());
+					taskDao.update(task);
+				}
+				
+				
+				
+				
 				
 			}
+		}else if(table.toString().equals(Worksheet.TABLE_NAME_VISUALINSPECTION)){
 			
 			List<VisualInspection> listVi = inspectionDao.queryForAll();
 			
@@ -322,19 +352,29 @@ public class Tools {
 			    
 			}*/
 			
-			
+		}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){
 			List<Mesurement> listMesure = mesurementDao.queryForAll();
 			
 			for (Mesurement mesure : listMesure) {
 				ListEntry listEntryModified = null;
-				if(mesure.getSelfUrl() != null)
+				if(mesure.getSelfUrl() != null){
 				listEntryModified = client.listEntry().get().execute(new ListUrl(mesure.getSelfUrl()));
 				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE, mesure.getValue());
 				listEntryModified.setCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_TIME, mesure.getTimeStamp());
 				
 				client.listFeed().update().execute(listEntryModified);
+				}else {
+					
+					ListEntry entry = new ListEntry();
+					entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_DESCRIPTION, mesure.getDescription());
+					entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_VALUE, mesure.getValue());
+					entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_TIME, mesure.getTimeStamp());
+					
 				
+				}
 			}
+			
+		}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

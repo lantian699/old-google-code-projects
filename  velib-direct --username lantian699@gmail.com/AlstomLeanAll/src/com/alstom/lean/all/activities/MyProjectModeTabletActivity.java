@@ -93,8 +93,8 @@ public class MyProjectModeTabletActivity extends FragmentActivity  {//implements
 			
 		case R.id.sync_google:
 			
-			//new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
-			new UploadFileToDropbox(this, LoginActivity.getDropboxApi()).execute();
+			new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("sendAll");
+		//	new UploadFileToDropbox(this, LoginActivity.getDropboxApi()).execute();
 			break;
 			
 		case R.id.google_plus:

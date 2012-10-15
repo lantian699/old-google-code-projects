@@ -83,10 +83,10 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 	private ArrayAdapter<String> adapter_task;
 	private ArrayAdapter<String> adapter_person;
 	
-	private String statusSelected;
-	private String requireSelected;
-	private String taskSelected;
-	private String responsibleSelected;
+	private static String statusSelected;
+	private static String requireSelected;
+	private static String taskSelected;
+	private static String responsibleSelected;
 	private int nbFinding = 1;
 	
 	public AddTaskFragment(Project project, String taskType,  DatabaseHelper helper, TaskListManager manager){
@@ -303,6 +303,10 @@ public class AddTaskFragment extends Fragment implements OnClickListener{
 				task_finding.setEnd("2012/12/13");
 				task_finding.setType("finding");
 				task_finding.setParentProject(project.getName());
+				task_finding.setStatus(statusSelected);
+				task_finding.setRequiresWitnessPoint(requireSelected);
+				task_finding.setRelatedTask(taskSelected);
+				task_finding.setResponsible(responsibleSelected);
 				
 				taskDao.create(task_finding);
 			} catch (SQLException e) {

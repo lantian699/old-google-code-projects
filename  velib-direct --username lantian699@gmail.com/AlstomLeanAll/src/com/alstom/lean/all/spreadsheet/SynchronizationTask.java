@@ -91,23 +91,19 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 		try {
 			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 			
-			Thread.sleep(100);
-			
 			if(params[0].equals("getAll")){
 			for (Table table:Table.values()) 
 			
 				Tools.getAll(dataHelper,requestInitializer, table);
 			}else if(params[0].equals("sendAll")){
-				Tools.sendAll(dataHelper, requestInitializer);
+				for (Table table:Table.values()) 
+				Tools.sendAll(dataHelper, requestInitializer,table);
 			}
 		}
 		catch (IllegalArgumentException e) {
 			errorMessage = e.getMessage();
 			Log.e(TAG, errorMessage, e);
 			return NO_ACCOUNT_ERROR;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		

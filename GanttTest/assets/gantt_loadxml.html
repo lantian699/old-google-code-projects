@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<body onload="createChartControl('GanttDiv')">
+       
+    <link type="text/css" rel="stylesheet" href="file:///android_asset/codebase/dhtmlxgantt.css">
+    <script type="text/javascript" language="JavaScript" src="file:///android_asset/codebase/dhtmlxcommon.js"></script>
+    <script type="text/javascript" language="JavaScript" src="file:///android_asset/codebase/dhtmlxgantt.js"></script>
+
+    <script type="text/javascript" language="JavaScript">
+
+    function createChartControl(htmlDiv1)
+    {
+        // Create Gantt control
+        var ganttChartControl = new GanttChart();
+        // Setup paths and behavior
+        ganttChartControl.setImagePath("file:///android_asset/codebase/imgs/");
+        // Build control on the page
+        ganttChartControl.create(htmlDiv1);
+        // Load data structure		
+        ganttChartControl.loadData("file:///android_asset/data/data2.xml",true,true);
+    }
+</script>
+
+
+
+<div style="width:1280px; height:800px; position:relative" id="GanttDiv"></div>
+			
+	</body>
+</html>
