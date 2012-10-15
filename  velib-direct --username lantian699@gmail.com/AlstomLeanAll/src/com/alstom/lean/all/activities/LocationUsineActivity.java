@@ -37,7 +37,7 @@ public class LocationUsineActivity extends MapActivity implements LocationListen
 		
 		
 		Bundle bundle = getIntent().getExtras();
-		listFactory = (ArrayList<Factory>) bundle.getSerializable(MyProjectActivity.NAME_BUNDLE_LIST_FACTORY);
+		listFactory = (ArrayList<Factory>) bundle.getSerializable(MyProjectModeTabletActivity.NAME_BUNDLE_LIST_FACTORY);
 		
 		for(Factory factory : listFactory)
 		Tools.DrawOneStationOnMap(this, factory, mapView);

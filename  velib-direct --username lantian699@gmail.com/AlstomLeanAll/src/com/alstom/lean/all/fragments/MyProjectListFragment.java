@@ -31,13 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.alstom.lean.all.R;
-import com.alstom.lean.all.ActivityListFragment.Callbacks;
 import com.alstom.lean.all.activities.ImageDisplayActivity;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.MyProjectAdapter;
-import com.alstom.lean.all.dummy.DummyContent;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.model3d.Model3DTurbineActivity;
 import com.alstom.lean.all.models.DatabaseHelper;

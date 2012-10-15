@@ -1,6 +1,8 @@
 package com.alstom.lean.all.activities;
 
-import com.alstom.lean.all.fragments.PartNumberDetailFragment;
+
+
+import com.alstom.lean.all.fragments.MyProjectListFragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -18,7 +20,7 @@ public class ImageDisplayActivity extends Activity{
 		
 		
 		
-		int resID = getIntent().getIntExtra(PartNumberDetailFragment.RESOURCE_ID, -1);
+		int resID = getIntent().getIntExtra(MyProjectListFragment.RESOURCE_ID, -1);
 		imageView = new ImageView(this);
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		if(resID != -1){

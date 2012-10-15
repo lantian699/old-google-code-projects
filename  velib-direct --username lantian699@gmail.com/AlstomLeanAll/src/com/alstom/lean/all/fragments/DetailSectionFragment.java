@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alstom.lean.all.R;
-import com.alstom.lean.all.activities.MyProjectActivity;
+import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.DetailSectionAdapter;
 import com.alstom.lean.all.adapters.PersonAdapter;
 import com.alstom.lean.all.adapters.SectionedAdapter;
@@ -94,7 +94,7 @@ public class DetailSectionFragment extends Fragment{
 	 private void simulationEnterprise(){
 		 
 		 
-		 ArrayList<Factory> listFactory = MyProjectActivity.simulationFactory();
+		 ArrayList<Factory> listFactory = MyProjectModeTabletActivity.simulationFactory();
 		 factory = listFactory.get(0);
 		 
 		 enterprise = new Enterprise();

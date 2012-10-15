@@ -4,9 +4,7 @@ package com.alstom.lean.all.views;
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
-import com.alstom.lean.all.activities.StepActivity;
-import com.alstom.lean.all.activities.TaskFragmentActivity;
-import com.alstom.lean.all.fragments.StepFragment;
+
 import com.alstom.lean.all.managers.ChangeObserver;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.Task;
