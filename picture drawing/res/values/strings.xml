@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">picture drawing</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_picture_drawing">Picture Drawing</string>
+    <string name="background_Image_Description">image use to draw on</string>
+    <string name="validation">valider</string>
+    <string name="takePicture">Photo</string>
+    <string name="choosePicture">Sélection</string>
+    <string name="menu_save">sauvegarder</string>
+    <string name="tag">Tag</string>
+
+</resources>

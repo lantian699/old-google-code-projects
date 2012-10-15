@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/pictureSelecitonLayout"
+        android:orientation="horizontal" >
+
+        <View
+            android:id="@+id/View01"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#CEC7C6" />
+
+        <ListView
+            android:id="@+id/colorGallery"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="#ACD1E9"
+            android:spacing="20dip" >
+        </ListView>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#94927B" />
+
+        <RelativeLayout
+            android:id="@+id/imageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5FAFA" >
+
+            <android.gesture.GestureOverlayView
+                android:id="@+id/drawingGesture"
+                style="@style/draw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" >
+
+                <ImageView
+                    android:id="@+id/backgroundImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/background_Image_Description" />
+            </android.gesture.GestureOverlayView>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/buttonSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/pictureSelecitonLayout"
+        android:background="#94927B" />
+
+    <LinearLayout
+        android:id="@+id/pictureSelecitonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#D9D4AE"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/tagButton"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.33"
+            android:onClick="tagButtonClicked"
+            android:text="@string/tag" />
+
+        <Button
+            android:id="@+id/choosePicture"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.33"
+            android:onClick="choosePictureClicked"
+            android:text="@string/choosePicture" />
+
+        <Button
+            android:id="@+id/takePicture"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.33"
+            android:onClick="takePictureClicked"
+            android:text="@string/takePicture" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+
+    <style name="draw">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fadeEnabled">false</item>
+        <item name="android:fadeOffset">5000000000</item>
+        <item name="android:uncertainGestureColor">@android:color/black</item>
+        <item name="android:gestureColor">@android:color/black</item>
+        <item name="android:gestureStrokeType">multiple</item>
+        <item name="android:gestureStrokeWidth">10</item>
+    </style>
+
+</resources>
