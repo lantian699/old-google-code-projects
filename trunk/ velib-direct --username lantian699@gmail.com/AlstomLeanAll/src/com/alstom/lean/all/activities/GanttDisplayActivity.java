@@ -18,15 +18,12 @@ public class GanttDisplayActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.activity_gantt_display); 
-
+		
 	      webView=(WebView) this.findViewById(R.id.webView);   
 	      webView.setWebChromeClient(new myWebChromeClient());
 	      
 	      WebSettings setting=webView.getSettings();
 	      setting.setJavaScriptEnabled(true); 
-	      setting.setAllowFileAccessFromFileURLs(true);
-	      setting.setAllowContentAccess(true);
-	      setting.setAllowFileAccess(true);
 	      setting.setAllowUniversalAccessFromFileURLs(true);
 	      System.out.println("setting = " + setting.getAllowFileAccessFromFileURLs());
 

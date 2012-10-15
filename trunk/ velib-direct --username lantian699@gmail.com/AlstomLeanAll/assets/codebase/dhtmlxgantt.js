@@ -142,7 +142,7 @@ function GanttProjectInfo(id, name, startDate)
  {this.Error.throwError("DATA_SEND_ERROR", 4, null);return};this.xmlLoader = new dtmlXMLLoaderObject(null, this, false);try
  {if (!isFile)try {this.xmlLoader.loadXMLString(content)}catch(e) {this.Error.throwError("DATA_LOAD_ERROR", 37, [content])}else
  if (!isLocal){this.xmlLoader.loadXML(this.loadPath + "?path=" + content + "&rnd=" + (new Date() - 0), false)}else
- {this.xmlLoader.loadXML(content + "?rnd=" + (new Date() - 0), false)};this.doLoadDetails(isLocal)}catch(e)
+ {this.xmlLoader.loadXML(content, false)};this.doLoadDetails(isLocal)}catch(e)
  {this.Error.throwError("DATA_LOAD_ERROR", 5, [content])}};GanttChart.prototype.doLoadDetails = function(isLocal)
 {switch (this.xmlLoader.xmlDoc.status) {case 0:
  if (!isLocal){this.Error.throwError("DATA_LOAD_ERROR", 1, null);return};break;case 404:

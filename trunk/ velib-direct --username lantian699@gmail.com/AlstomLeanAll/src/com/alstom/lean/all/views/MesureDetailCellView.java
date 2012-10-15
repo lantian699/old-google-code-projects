@@ -109,21 +109,6 @@ public class MesureDetailCellView extends LinearLayout{
 	public void setData(final Mesurement mesure, final int position){
 		
 		this.mesure = mesure;
-		description.setText(mesure.getDescription());
-		unit.setText(mesure.getUnit());
-		rule.setText("( " + mesure.getLow() + " < "+mesure.getHigh()+ " )");
-		edit_value.setText(mesure.getValue());
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");     
-		Date curDate = new Date(System.currentTimeMillis());
-		String str = formatter.format(curDate); 
-		timeStamps.setText(str);
-		
-		if(mesure.getType().equals(MESURE_TYPE_NUMBER)){
-			btn_mesure_photo.setVisibility(View.INVISIBLE);
-		}else if(mesure.getType().equals(MESURE_TYPE_ATTACHMENT)){
-			btn_mesure_photo.setVisibility(View.VISIBLE);
-		}
-		
 		
 		final double low = Double.parseDouble(mesure.getLow());
 		final double high = Double.parseDouble(mesure.getHigh());
@@ -133,13 +118,11 @@ public class MesureDetailCellView extends LinearLayout{
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
 					if(!s.toString().equals("")){
 						double v = Double.parseDouble(s.toString());
-						if(!(v > low && v < high)){
-							
+						if(v < low || v> high){
 							edit_value.setTextColor(Color.RED);
-						}else{
+						}else if(v>low && v< high){
 							edit_value.setTextColor(Color.BLACK);
 						}
 							
@@ -160,6 +143,27 @@ public class MesureDetailCellView extends LinearLayout{
 					
 				}
 			});
+		
+		
+		
+		
+		description.setText(mesure.getDescription());
+		unit.setText(mesure.getUnit());
+		rule.setText("( " + mesure.getLow() + " < "+mesure.getHigh()+ " )");
+		edit_value.setText(mesure.getValue());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");     
+		Date curDate = new Date(System.currentTimeMillis());
+		String str = formatter.format(curDate); 
+		timeStamps.setText(str);
+		
+		if(mesure.getType().equals(MESURE_TYPE_NUMBER)){
+			btn_mesure_photo.setVisibility(View.INVISIBLE);
+		}else if(mesure.getType().equals(MESURE_TYPE_ATTACHMENT)){
+			btn_mesure_photo.setVisibility(View.VISIBLE);
+		}
+		
+		
+		
 	}
 
 }
