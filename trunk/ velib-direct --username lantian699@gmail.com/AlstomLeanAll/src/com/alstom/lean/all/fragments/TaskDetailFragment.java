@@ -1,6 +1,11 @@
 package com.alstom.lean.all.fragments;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,11 +18,13 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -393,28 +400,29 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 		values.put(MediaStore.Images.Media.TITLE, "TAG PHOTO");
 		values.put(MediaStore.Images.Media.DESCRIPTION, "ALSTOM");
 		return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//		return context.getContentResolver().insert(uri, values);
 	}
 	
-	public static Uri getCurrentImageUri(){
-		
-		return currentImageUri;
-		
-	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		
 		switch (resultCode) {
 		case  Activity.RESULT_OK:
 			
-			if(requestCode == TaskDetailFragment.CAPTURE_CODE){
-				
-				currentImageUri = TaskDetailFragment.getCurrentImageUri();
+			if(requestCode == CAPTURE_CODE){
 				String path = getRealPathFromURI(currentImageUri);
-				taskListManager.notifyDisplayPhotoChange(path,task);
+				String desDir = Environment.getExternalStorageDirectory()+"/Alstom/Project "+task.getParentProject()+"/"+ "Task "+ task.getName();
+				File desFile = new File(desDir);
+				if(!desFile.exists()){
+					desFile.mkdirs();		
+				}
+				String photoPath = desDir+"/"+new Date(System.currentTimeMillis())+".jpg";
+				copyFile(path, photoPath);
+				taskListManager.notifyDisplayPhotoChange(photoPath,task);
+				
 			}
 			
 			if(requestCode == CODE_RETOUR){
@@ -423,6 +431,18 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 				sigView.setImageBitmap(image);
 			}
 			
+			break;
+			
+		case Activity.RESULT_CANCELED:
+			
+			if(requestCode == CAPTURE_CODE){
+				
+				String path = getRealPathFromURI(currentImageUri);
+				File originFile = new File(path);
+			    if(originFile.length() == 0){
+			    	originFile.delete();
+			     }
+			}
 			break;
 
 		default:
@@ -439,5 +459,31 @@ public class TaskDetailFragment extends Fragment implements OnClickListener{
 			cursor.close();
 			return path;
 	 }
+	 
+	 
+	 public  boolean copyFile(String from, String to) {
+
+		    try {
+		        int bytesum = 0;
+		        int byteread = 0;
+		       File oldfile = new File(to);
+		       File originFile = new File(from);
+		        if(!oldfile.exists()){
+		            InputStream inStream = new FileInputStream(originFile);
+		            OutputStream fs = new BufferedOutputStream(new FileOutputStream(to));
+		            byte[] buffer = new byte[8192];
+		            while ((byteread = inStream.read(buffer)) != -1) {
+		                bytesum += byteread;
+		                fs.write(buffer, 0, byteread);
+		            }
+		            inStream.close();
+		            fs.close();
+		        }
+		        return true;
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		        return false;
+		    }
+		}
 
 }

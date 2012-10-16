@@ -196,64 +196,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 		
 	case 4:
 		
-		final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("DOCUMENTS");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
-		        
-		        switch (item) {
-				case 0:
-					
-					boolean save = copyFile(PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+PDF_GT26_PLAN_2D, getResources());
-					Uri uri = Uri.parse("file:///mnt/sdcard/"+PDF_GT26_PLAN_2D);
-//					Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
-					if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-
-						 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-						 intent.setClass(getActivity(), PdfViewerActivity.class);
-						 startActivity(intent);
-				 
-					}
-					
-					break;
-					
-				case 1:
-					
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), ImageDisplayActivity.class);
-					intent.putExtra(RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
-					startActivity(intent);
-					break;
-
-				case 2:
-					
-					Intent intent_model = new Intent();
-					intent_model.setClass(getActivity(), ImageDisplayActivity.class);
-					intent_model.putExtra(RESOURCE_ID, R.drawable.gt26_model);
-					startActivity(intent_model);
-					
-					break;
-					
-				case 3:
-					
-					Intent in = new Intent();
-					in.setClass(getActivity(), Model3DTurbineActivity.class);
-					startActivity(in);
-					
-					break;
-					
-				default:
-					break;
-				}
-		        
-		    }
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
-		
+	
 		break;
 		
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.alstom.lean.all.activities.LoginActivity;
+import com.alstom.lean.all.dropbox.UploadFileToDropbox;
 import com.alstom.lean.all.models.Block;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Plant;
@@ -221,5 +223,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 	protected void onPostExecute(Integer result) {
 		
 		dialog.dismiss();	
+		
+		new UploadFileToDropbox(mMainActivity, LoginActivity.getDropboxApi()).execute();
 	}
 }

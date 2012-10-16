@@ -1,5 +1,6 @@
 package com.alstom.lean.all.fragments;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +45,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ComponentListFragment extends Fragment implements OnItemClickListener, OnClickListener, OnItemLongClickListener{
+public class ComponentListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener{
 	
+	public static final String IMAGE_RESSOURCE_URI = "image_ressource_uri";
 	private List<String> listModelName;
 	private ModelObject model;
 	private ArrayAdapter<String> adapter;
@@ -54,11 +56,19 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 	private ListView listViewComponent;
 	private TextView title_component;
 	private Button btn_component_info;
+	private Project myProject;
 	
-	ComponentListFragment (ModelObject model, DatabaseHelper dataHelper){
+	public ComponentListFragment (ModelObject model, DatabaseHelper dataHelper){
 		
 		this.model = model;
 		this.dataHelper = dataHelper;
+	}
+	
+	public ComponentListFragment (ModelObject model, DatabaseHelper dataHelper, Project myProject){
+		
+		this.model = model;
+		this.dataHelper = dataHelper;
+		this.myProject = myProject;
 	}
 	
 	@Override
@@ -74,8 +84,6 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 		View view = inflater.inflate(R.layout.fragment_component_list, container, false);
 		
 		title_component = (TextView)view.findViewById(R.id.title_component_list);
-		btn_component_info = (Button) view.findViewById(R.id.btn_component_info);
-		btn_component_info.setOnClickListener(this);
 		setListData();
 		
 		listViewComponent = (ListView) view.findViewById(R.id.list_component);
@@ -95,8 +103,10 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 		listModel.clear();
 		
 		if(model instanceof Project){
+			
 			try {	
 				Project project = (Project) model;
+				this.myProject = project;
 				Dao<Plant, ?> plantDao = dataHelper.getDao(Plant.class);
 				QueryBuilder<Plant, ?> queryBuilder = plantDao.queryBuilder();
 				queryBuilder.where().eq(Plant.TABLE_PLANT_COLUMN_PROJECT_NAME, project.getName());
@@ -190,7 +200,7 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
 		// TODO Auto-generated method stub
-		ComponentListFragment fragment = new ComponentListFragment(listModel.get(position), dataHelper);
+		ComponentListFragment fragment = new ComponentListFragment(listModel.get(position), dataHelper, myProject);
 		
 		if(listModel.get(position) instanceof Plant){
 			
@@ -256,58 +266,42 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 			long arg3) {
 		// TODO Auto-generated method stub
 		
-		final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
+		ArrayList<String> listFileName = new ArrayList<String>();
+		final String fileDir = Environment.getExternalStorageDirectory()+"/alstom/Project "+myProject.getName()+"/"+title_component.getText().toString();
+		File file = new File(fileDir);
+		for (File childFile : file.listFiles()) {
+			listFileName.add(childFile.getName());
+		}
+		adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1,listFileName);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("DOCUMENTS");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
+
+		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
-		        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
 		        
-		        switch (item) {
-				case 0:
-					
-					boolean save = MyProjectListFragment.copyFile(MyProjectListFragment.PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+MyProjectListFragment.PDF_GT26_PLAN_2D, getResources());
-					Uri uri = Uri.parse("file:///mnt/sdcard/"+MyProjectListFragment.PDF_GT26_PLAN_2D);
-//					Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
-					if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-
-						 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-						 intent.setClass(getActivity(), PdfViewerActivity.class);
-						 startActivity(intent);
-				 
-					}
-					
-					break;
-					
-				case 1:
-					
-					Intent intent = new Intent();
+		        
+		        String fileName = adapter.getItem(item);
+		        Uri uri = Uri.parse(fileDir+"/"+fileName);
+		        System.out.println(uri.getPath());
+		        if(fileName.endsWith("png")){	
+		        	Intent intent = new Intent();
 					intent.setClass(getActivity(), ImageDisplayActivity.class);
-					intent.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
+					intent.putExtra(IMAGE_RESSOURCE_URI, uri);
 					startActivity(intent);
-					break;
-
-				case 2:
-					
-					Intent intent_model = new Intent();
-					intent_model.setClass(getActivity(), ImageDisplayActivity.class);
-					intent_model.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_model);
-					startActivity(intent_model);
-					
-					break;
-					
-				case 3:
-					
-					Intent in = new Intent();
-					in.setClass(getActivity(), Model3DTurbineActivity.class);
-					startActivity(in);
-					
-					break;
-					
-				default:
-					break;
-				}
+		        }else if(fileName.endsWith("pdf")){
+		        	
+		        	 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					 intent.setClass(getActivity(), PdfViewerActivity.class);
+					 startActivity(intent);
+		        }
+		        
+		        else{
+		        	
+		        	Toast.makeText(getActivity(), "File type non recognized !", Toast.LENGTH_SHORT).show();
+		        }
+		        
+		        
 		        
 		    }
 		});
@@ -318,78 +312,8 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 	}
 	
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_component_info:
-		
-			
-			final CharSequence[] items = {"2D Plan", "GT26 Sectional View", "GT26 model view", "3D Model"};
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle("DOCUMENTS");
-			builder.setItems(items, new DialogInterface.OnClickListener() {
-			    public void onClick(DialogInterface dialog, int item) {
-			        Toast.makeText(getActivity(), items[item], Toast.LENGTH_SHORT).show();
-			        
-			        switch (item) {
-					case 0:
-						
-						boolean save = MyProjectListFragment.copyFile(MyProjectListFragment.PDF_GT26_PLAN_2D, Environment.getExternalStorageDirectory().getPath()+"/"+MyProjectListFragment.PDF_GT26_PLAN_2D, getResources());
-						Uri uri = Uri.parse("file:///mnt/sdcard/"+MyProjectListFragment.PDF_GT26_PLAN_2D);
-//						Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.gt26_plan_2d);
-						if(save && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())){
-
-							 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-							 intent.setClass(getActivity(), PdfViewerActivity.class);
-							 startActivity(intent);
-					 
-						}
-						
-						break;
-						
-					case 1:
-						
-						Intent intent = new Intent();
-						intent.setClass(getActivity(), ImageDisplayActivity.class);
-						intent.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_vue_en_coupe);
-						startActivity(intent);
-						break;
-
-					case 2:
-						
-						Intent intent_model = new Intent();
-						intent_model.setClass(getActivity(), ImageDisplayActivity.class);
-						intent_model.putExtra(MyProjectListFragment.RESOURCE_ID, R.drawable.gt26_model);
-						startActivity(intent_model);
-						
-						break;
-						
-					case 3:
-						
-						Intent in = new Intent();
-						in.setClass(getActivity(), Model3DTurbineActivity.class);
-						startActivity(in);
-						
-						break;
-						
-					default:
-						break;
-					}
-			        
-			    }
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
-			
-			break;
-
-		default:
-			break;
-		}
-		
-	}
-
+	
+	
 	
 
 }
