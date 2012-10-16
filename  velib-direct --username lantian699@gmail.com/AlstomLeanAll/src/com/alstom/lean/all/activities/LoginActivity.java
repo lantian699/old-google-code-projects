@@ -75,6 +75,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			if(listTask.size() == 0)
 			new SynchronizationTask(this, dataHelper).execute("getAll");
 			
+			
 			// We create a new AuthSession so that we can use the Dropbox API.
 	        AndroidAuthSession session = buildSession();
 	        mApi = new DropboxAPI<AndroidAuthSession>(session);
