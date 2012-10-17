@@ -20,6 +20,7 @@ import com.alstom.lean.all.models.Systems;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.models.Unit;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
+import com.alstom.lean.all.views.MyProjectCellView;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -27,6 +28,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -198,8 +200,16 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-		// TODO Auto-generated method stub
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+		Object tag = adapterView.getTag();
+		if(tag != null){
+
+			((View)tag).setBackgroundColor(Color.TRANSPARENT);
+		}
+		view.setBackgroundResource(R.drawable.list_activated_holo);
+		adapterView.setTag(view);
+		
 		ComponentListFragment fragment = new ComponentListFragment(listModel.get(position), dataHelper, myProject);
 		
 		if(listModel.get(position) instanceof Plant){
@@ -262,13 +272,22 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 	
 	
 	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long id) {
 		
+		Object tag = adapterView.getTag();
+		if(tag != null){
+
+			((View)tag).setBackgroundColor(Color.TRANSPARENT);
+		}
+		view.setBackgroundResource(R.drawable.list_activated_holo);
+		adapterView.setTag(view);
+
 		ArrayList<String> listFileName = new ArrayList<String>();
 		final String fileDir = Environment.getExternalStorageDirectory()+"/alstom/Project "+myProject.getName()+"/"+title_component.getText().toString();
 		File file = new File(fileDir);
+		if(!file.exists()){
+			file.mkdirs();
+		}
 		for (File childFile : file.listFiles()) {
 			listFileName.add(childFile.getName());
 		}
@@ -279,12 +298,11 @@ public class ComponentListFragment extends Fragment implements OnItemClickListen
 
 		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int item) {
-		        
-		        
+		    	
 		        String fileName = adapter.getItem(item);
-		        Uri uri = Uri.parse(fileDir+"/"+fileName);
+		        Uri uri = Uri.parse("file://"+fileDir+"/"+fileName);
 		        System.out.println(uri.getPath());
-		        if(fileName.endsWith("png")){	
+		        if(fileName.endsWith("png" )|| fileName.endsWith("jpg")){	
 		        	Intent intent = new Intent();
 					intent.setClass(getActivity(), ImageDisplayActivity.class);
 					intent.putExtra(IMAGE_RESSOURCE_URI, uri);

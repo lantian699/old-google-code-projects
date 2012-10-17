@@ -140,7 +140,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
 	   Object tag = adapterView.getTag();
 	   if(tag != null){
 
-		   ((MyProjectCellView)tag).setBackgroundColor(Color.WHITE);
+		   ((MyProjectCellView)tag).setBackgroundColor(Color.TRANSPARENT);
 	   }
 	   view.setBackgroundResource(R.drawable.list_activated_holo);
 	   adapterView.setTag(view);
