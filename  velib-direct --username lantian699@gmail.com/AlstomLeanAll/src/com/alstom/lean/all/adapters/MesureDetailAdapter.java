@@ -11,6 +11,7 @@ import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
 import com.alstom.lean.all.models.Project;
+import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.views.MesureDetailCellView;
 import com.alstom.lean.all.views.MyProjectCellView;
 
@@ -20,14 +21,15 @@ public class MesureDetailAdapter extends BaseAdapter{
 	private List<Mesurement> listMesure;
 	private TaskListManager manager;
 	private DatabaseHelper helper;
+	private Task task;
 	
-	public MesureDetailAdapter(Context context, List<Mesurement> listMesure, TaskListManager manager, DatabaseHelper hepler){
+	public MesureDetailAdapter(Context context, List<Mesurement> listMesure, TaskListManager manager, DatabaseHelper hepler, Task task){
 		
 		this.context = context;
 		this.listMesure = listMesure;
 		this.manager = manager;
 		this.helper = hepler;
-		
+		this.task = task;
 	}
 
 
@@ -53,7 +55,7 @@ public class MesureDetailAdapter extends BaseAdapter{
 		if (view == null) {
 			view = new MesureDetailCellView(context, manager, helper);
 		}
-		view.setData(listMesure.get(position), position);
+		view.setData(listMesure.get(position), position, task);
 
 		return view;
 	}

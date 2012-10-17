@@ -58,5 +58,11 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:src="@drawable/take_a_photo"/>
+          <Button
+             android:id="@+id/btn_mesure_info"
+             android:layout_marginLeft="20dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="i"/>
          
     </LinearLayout>

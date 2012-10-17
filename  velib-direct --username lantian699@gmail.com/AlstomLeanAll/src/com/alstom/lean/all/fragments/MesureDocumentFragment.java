@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,21 +45,25 @@ public class MesureDocumentFragment extends Fragment{
     private ViewerPreferences viewerPreferences;
     private Toast pageNumberToast;
     private CurrentPageModel currentPageModel;
-	private Uri pdfUri;
+	private Uri docUri;
 	private FrameLayout frameLayout;
+	private ImageView imageView;
+	private String docType;
 
     /**
      * Called when the activity is first created.
      */
     
-    public MesureDocumentFragment(Uri uri){
-    	this.pdfUri = uri;
+    public MesureDocumentFragment(Uri uri, String type){
+    	this.docUri = uri;
+    	this.docType = type;
     }
     
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
         initDecodeService();
         final ZoomModel zoomModel = new ZoomModel();
         final DecodingProgressModel progressModel = new DecodingProgressModel();
@@ -71,7 +76,7 @@ public class MesureDocumentFragment extends Fragment{
 //        decodeService.setContentResolver(getContentResolver());
         decodeService.setContainerView(documentView);
         documentView.setDecodeService(decodeService);
-        decodeService.open(pdfUri);
+        decodeService.open(docUri);
 
         viewerPreferences = new ViewerPreferences(getActivity());
 //        setFullScreen();
@@ -81,10 +86,10 @@ public class MesureDocumentFragment extends Fragment{
         
 
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(DOCUMENT_VIEW_STATE_PREFERENCES, 0);
-        documentView.goToPage(sharedPreferences.getInt(pdfUri.toString(), 0));
+        documentView.goToPage(sharedPreferences.getInt(docUri.toString(), 0));
         documentView.showDocument();
 
-        viewerPreferences.addRecent(pdfUri);
+        viewerPreferences.addRecent(docUri);
     }
 
     
@@ -93,8 +98,16 @@ public class MesureDocumentFragment extends Fragment{
 		 /*ImageView view = new ImageView(getActivity());
 		 view.setImageResource(R.drawable.img_mesure_exemple);*/
 		 
-    	
+
+        
+        if(docType.equals("image")){
+			imageView = new ImageView(getActivity());
+			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			imageView.setImageURI(docUri);
+			return imageView;
+        }else
 		return frameLayout;
+ 
 	}
     
     
@@ -129,7 +142,7 @@ public class MesureDocumentFragment extends Fragment{
 
     private void setWindowTitle()
     {
-        final String name = pdfUri.getLastPathSegment();
+        final String name = docUri.getLastPathSegment();
         getActivity().getWindow().setTitle(name);
     }
     
@@ -196,7 +209,7 @@ public class MesureDocumentFragment extends Fragment{
     {
         final SharedPreferences sharedPreferences = getActivity().getSharedPreferences(DOCUMENT_VIEW_STATE_PREFERENCES, 0);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(pdfUri.toString(), documentView.getCurrentPage());
+        editor.putInt(docUri.toString(), documentView.getCurrentPage());
         editor.commit();
     }
 

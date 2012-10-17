@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
@@ -61,9 +62,9 @@ public class MesureDetailActivity extends FragmentActivity{
 		Fragment fragment = new MesureDetailFragment(listMesure, task, taskListManager, dataHelper);
 		getSupportFragmentManager().beginTransaction().replace(R.id.activity_mesure_detail_container_2, fragment).commit();
 		
-		Uri uri = Uri.parse("file:///mnt/sdcard/"+PDF_GT26_PLAN_2D);
+		/*Uri uri = Uri.parse("file://"+Environment.getExternalStorageDirectory());
 		Fragment fragment_document = new MesureDocumentFragment(uri);
-		getSupportFragmentManager().beginTransaction().replace(R.id.activity_mesure_detail_container_1, fragment_document).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.activity_mesure_detail_container_1, fragment_document).commit();*/
 	}
 	
 	@Override
