@@ -1,12 +1,17 @@
 package com.alstom.lean.all.fragments;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,6 +46,8 @@ import com.alstom.lean.all.models.ModelObject;
 import com.alstom.lean.all.models.Project;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
+import com.alstom.lean.all.pdfviewer.ReportPdfGenerator;
+import com.alstom.lean.all.signature.SignatureActivity;
 import com.alstom.lean.all.views.TaskListCellView;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -49,6 +56,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 public class TaskListFragment extends Fragment implements OnItemClickListener, OnItemLongClickListener,OnClickListener{
 
 	
+	private static final int CODE_RETOUR = 4;
 	/*public static final String TASK_TYPE_MESUREMENT = "MESUREMENT";
 	public static final String TASK_TYPE_VI = "VISUAL INSPECTION";
 	public static final String TASK_TYPE_FINDING = "FINDING";
@@ -70,7 +78,7 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	private Spinner spinner_filter_task;
 	private ArrayAdapter<String> spinner_adapter;
 	private ArrayList<String> listFilter;
-
+	private Button btn_report;
 	
 	public TaskListFragment(Project project, DatabaseHelper helper, TaskListManager manager){
 		this.project = project;
@@ -111,6 +119,8 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 	    btn_add_task = (Button)rootView.findViewById(R.id.btn_add_task);
 	    btn_add_task.setOnClickListener(this);
 	    
+	    btn_report = (Button)rootView.findViewById(R.id.btn_report);
+	    btn_report.setOnClickListener(this);
 	    btn_gantt = (Button)rootView.findViewById(R.id.btn_gantt);
 	    spinner_filter_task = (Spinner)rootView.findViewById(R.id.spinner_filter_task);
 	    
@@ -364,6 +374,13 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 		case R.id.btn_all:
 			taskListManager.notifyTaskFilterChange("ALL");
 			break;
+		case R.id.btn_report:
+			
+			
+			Intent intent_sig = new Intent(getActivity(),SignatureActivity.class);
+			startActivityForResult(intent_sig, CODE_RETOUR);
+//			new ReportPdfGenerator(getActivity(),dataHelper).execute();
+			break;
 			
 
 		default:
@@ -372,7 +389,47 @@ public class TaskListFragment extends Fragment implements OnItemClickListener, O
 		
 	}
 
-	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch (requestCode) {
+		case CODE_RETOUR:
+			
+			if (resultCode == Activity.RESULT_OK) {
+				try {
+					Bitmap imageSign = data
+							.getParcelableExtra(SignatureActivity.KEY_BYTE_SIGNATURE);
+
+					String filename = Environment.getExternalStorageDirectory()
+							.getPath()
+							+ "/Alstom/Project "
+							+ project.getName()
+							+ "/Signature/";
+					File fileSign = new File(filename);
+					if (!fileSign.exists())
+						fileSign.mkdirs();
+					String imageName = new Date() + ".png";
+					FileOutputStream out = new FileOutputStream(new File(
+							fileSign, imageName));
+					imageSign.compress(Bitmap.CompressFormat.PNG, 90, out);
+
+					new ReportPdfGenerator(getActivity(), dataHelper, true,
+							filename + imageName, project.getName()).execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else if(resultCode == Activity.RESULT_CANCELED){
+				
+				new ReportPdfGenerator(getActivity(), dataHelper, false,null, null).execute();
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	
 }

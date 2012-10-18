@@ -73,5 +73,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
         </ListView>
+        <Button 
+            android:id="@+id/btn_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Report"/>
 
     </LinearLayout>

@@ -352,7 +352,7 @@ public class Tools {
 			    
 			}*/
 			
-		}else if(table.toString().equals(Worksheet.TABLE_NAME_TASK)){
+		}else if(table.toString().equals(Worksheet.TABLE_NAME_MESUREMENT)){
 			List<Mesurement> listMesure = mesurementDao.queryForAll();
 			
 			for (Mesurement mesure : listMesure) {
