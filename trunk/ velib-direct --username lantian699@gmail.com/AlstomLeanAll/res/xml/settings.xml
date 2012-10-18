@@ -10,13 +10,14 @@
             android:persistent="true"
             android:defaultValue="ntic2.smc@gmail.com">
         </EditTextPreference>
-               
+          
+        
         <EditTextPreference
         	android:title="Spreadsheet Key"
             android:inputType="text"
             android:key="spreadsheetKey"
             android:persistent="true"
-            android:defaultValue="0AioCd2SR9kXedE1VeGQ2Y1BlaEhlQUhKOG52aDJHOHc">
+            android:defaultValue="0AioCd2SR9kXedFV0ejRnSmZhaWJ4YlZDMHdXUkozWXc">
         </EditTextPreference>
 		
 </PreferenceScreen>

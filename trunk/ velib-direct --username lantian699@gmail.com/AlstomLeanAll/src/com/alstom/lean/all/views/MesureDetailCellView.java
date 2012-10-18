@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.fragments.MesureDocumentFragment;
@@ -58,6 +60,9 @@ public class MesureDetailCellView extends LinearLayout{
 	private ImageView btn_mesure_photo;
 	private FragmentActivity context;
 	private Button btn_mesure_info;
+	private List<Map<String, Object>> mData = new ArrayList<Map<String,Object>>();
+	private double low;
+	private double high;
 
 	public MesureDetailCellView(final Context context, TaskListManager manager, DatabaseHelper helper) {
 		super(context);
@@ -67,12 +72,70 @@ public class MesureDetailCellView extends LinearLayout{
 	    this.dataHelper = helper;
 	    this.context = (FragmentActivity) context;
 		
+	    try {
+			mesureDao = dataHelper.getDao(Mesurement.class);
+		
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 	    description = (TextView)findViewById(R.id.tx_md_description);
 	    timeStamps = (TextView)findViewById(R.id.tx_md_time);
 	    unit = (TextView)findViewById(R.id.tx_md_unit);
 	    rule = (TextView)findViewById(R.id.tx_md_rule);
 	    edit_value = (EditText)findViewById(R.id.edit_md_value);
+	    
+	    
+
+		
+		 edit_value.addTextChangedListener(new TextWatcher() {
+				
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+					if(!s.toString().equals("")){
+						double v = Double.parseDouble(s.toString());
+						if(v < low || v> high){
+							edit_value.setTextColor(Color.RED);
+						}else if(v>low && v< high){
+							edit_value.setTextColor(Color.BLACK);
+						}
+						
+						
+					}
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					
+				if ((mesure.getValue() != s.toString()) && mesure != null) {
+					try {
+						mesure.setValue(s.toString());
+						
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");     
+						Date curDate = new Date(System.currentTimeMillis());
+						String str = formatter.format(curDate); 
+						timeStamps.setText(str);
+						mesure.setTimeStamp(str);
+						mesureDao.update(mesure);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			});
+	    
 	    btn_mesure_photo = (ImageView)findViewById(R.id.btn_mesure_photo);
 	    btn_mesure_info = (Button)findViewById(R.id.btn_mesure_info);
 	    btn_mesure_photo.setOnClickListener(new OnClickListener() {
@@ -87,36 +150,7 @@ public class MesureDetailCellView extends LinearLayout{
 			}
 		});
 
-	    manager.registerAddMesureChangeObserver(new ChangeObserver() {
-			
-			@Override
-			public void onChange(String res) {
-
-
-				value = edit_value.getText().toString();
-				
-				if(value != null)
-					mesure.setValue(value);
-				mesure.setTimeStamp(timeStamps.getText().toString());
-				
-				try {
-					mesureDao = dataHelper.getDao(Mesurement.class);
-					mesureDao.update(mesure);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}		
-			@Override
-			public void onChange() {
-			}
-
-			@Override
-			public void onChange(String res, ModelObject model) {
-	
-			}
-		});
+	 
 	    
 	}
 	
@@ -125,39 +159,8 @@ public class MesureDetailCellView extends LinearLayout{
 		
 		this.mesure = mesure;
 		
-		final double low = Double.parseDouble(mesure.getLow());
-		final double high = Double.parseDouble(mesure.getHigh());
-		
-		 edit_value.addTextChangedListener(new TextWatcher() {
-				
-				@Override
-				public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-					if(!s.toString().equals("")){
-						double v = Double.parseDouble(s.toString());
-						if(v < low || v> high){
-							edit_value.setTextColor(Color.RED);
-						}else if(v>low && v< high){
-							edit_value.setTextColor(Color.BLACK);
-						}
-							
-					}
-					
-				}
-				
-				@Override
-				public void beforeTextChanged(CharSequence s, int start, int count,
-						int after) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void afterTextChanged(Editable arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+	    low = Double.parseDouble(mesure.getLow());
+		high = Double.parseDouble(mesure.getHigh());
 		
 		
 		
