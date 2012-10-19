@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.alstom.lean.all.R;
 import com.alstom.lean.all.activities.ImageDisplayActivity;
+import com.alstom.lean.all.activities.LoginActivity;
 import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.MyProjectAdapter;
 import com.alstom.lean.all.managers.TaskListManager;
@@ -72,7 +73,7 @@ public class MyProjectListFragment extends Fragment implements OnItemClickListen
     public MyProjectListFragment(Project project, TaskListManager manager) { 	
     	
     	this.project = project;
-    	this.dataHelper = DatabaseHelper.getInstance(getActivity());
+    	this.dataHelper = LoginActivity.getDataHelper();
     	this.taskListManager = manager;
     }
 
