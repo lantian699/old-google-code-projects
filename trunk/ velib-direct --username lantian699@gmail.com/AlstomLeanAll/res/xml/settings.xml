@@ -19,5 +19,31 @@
             android:persistent="true"
             android:defaultValue="0AioCd2SR9kXedFV0ejRnSmZhaWJ4YlZDMHdXUkozWXc">
         </EditTextPreference>
+        
+        <EditTextPreference
+        	android:title="Spreadsheet Key"
+            android:inputType="text"
+            android:key="spreadsheetKey_toto"
+            android:persistent="true"
+            android:defaultValue="0AioCd2SR9kXedFRtaWhQUV9FSHZXLXF4b1AzVmM1RVE">
+        </EditTextPreference>
+        
+        
+        <EditTextPreference
+        	android:title="Spreadsheet Key"
+            android:inputType="text"
+            android:key="spreadsheetKey_qiqi"
+            android:persistent="true"
+            android:defaultValue="0AioCd2SR9kXedHZNSl9PcUVXV3psdm5JSEJJeEEzWnc">
+        </EditTextPreference>
+        
+        
+        <EditTextPreference
+        	android:title="Spreadsheet Key"
+            android:inputType="text"
+            android:key="spreadsheetKey_mimi"
+            android:persistent="true"
+            android:defaultValue="0AioCd2SR9kXedDd5WG4xb3pFc19iR3lhM2dsbEJSeGc">
+        </EditTextPreference>
 		
 </PreferenceScreen>

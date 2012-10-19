@@ -43,7 +43,7 @@ public class MesureDetailActivity extends FragmentActivity{
 		setContentView(R.layout.activity_mesure_detail);
 		
 		task = (Task) getIntent().getSerializableExtra(TaskDetailFragment.TASK_NAME);
-		dataHelper = DatabaseHelper.getInstance(this);
+		dataHelper = LoginActivity.getDataHelper();
 	
 		 try {
 			Dao<Mesurement, ?> mesureDao = dataHelper.getDao(Mesurement.class);

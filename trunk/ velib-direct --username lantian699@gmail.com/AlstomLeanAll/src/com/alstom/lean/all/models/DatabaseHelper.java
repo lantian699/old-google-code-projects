@@ -16,23 +16,23 @@ import com.j256.ormlite.table.TableUtils;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-	private static final String DATABASE_NAME = "alstomService.db";
+	private static final String DATABASE_NAME = "alstomService";
 	private static final int DATABASE_VERSION = 1;
 
 	private static DatabaseHelper mInstance = null;
 
-	public DatabaseHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	public DatabaseHelper(Context context, String user) {
+		super(context, DATABASE_NAME+"_"+user+".db", null, DATABASE_VERSION);
 
 	}
 
-	public static DatabaseHelper getInstance(final Context context) {
+	/*public static DatabaseHelper getInstance(final Context context, String user) {
 		if (mInstance == null) {
-			mInstance = new DatabaseHelper(context);
+			mInstance = new DatabaseHelper(context,user);
 
 		}
 		return mInstance;
-	}
+	}*/
 
 	public void clearDataBase() {
 		try {

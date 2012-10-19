@@ -34,7 +34,7 @@ public class ProjectListActivity extends ListActivity{
 		
 		try{
 		listProjectName = new ArrayList<String>();
-		Dao<Project, ?> projectDao = DatabaseHelper.getInstance(this).getDao(Project.class);
+		Dao<Project, ?> projectDao = LoginActivity.getDataHelper().getDao(Project.class);
 		listProject = projectDao.queryForAll();
 		
 		for (Project project : listProject) {
