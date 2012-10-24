@@ -490,6 +490,17 @@ public class Tools {
 						entry.addCustomElement(
 								Worksheet.TABLE_MESUREMENT_COLUMN_TIME,
 								mesure.getTimeStamp());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_UNIT, mesure.getUnit());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_RULE, mesure.getRule());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_LOW, mesure.getLow());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_HIGH, mesure.getHigh());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_TYPE, mesure.getType());
+						entry.addCustomElement(Worksheet.TABLE_MESUREMENT_COLUMN_PARENT, mesure.getParent());
+						
+						ListEntry entryInsert = client.listFeed().insert()
+						.execute(listUrl, entry);
+						mesure.setSelfUrl(entryInsert.getSelfLink());
+						mesurementDao.update(mesure);
 
 					}
 				}
