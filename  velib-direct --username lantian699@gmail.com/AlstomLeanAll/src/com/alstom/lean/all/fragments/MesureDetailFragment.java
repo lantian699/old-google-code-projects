@@ -1,6 +1,7 @@
 package com.alstom.lean.all.fragments;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +11,17 @@ import com.alstom.lean.all.activities.MyProjectModeTabletActivity;
 import com.alstom.lean.all.adapters.AssistanceRequestAdapter;
 import com.alstom.lean.all.adapters.MesureDetailAdapter;
 import com.alstom.lean.all.adapters.SectionedAdapter;
+import com.alstom.lean.all.managers.ChangeObserver;
 import com.alstom.lean.all.managers.TaskListManager;
 import com.alstom.lean.all.models.DatabaseHelper;
 import com.alstom.lean.all.models.Mesurement;
+import com.alstom.lean.all.models.ModelObject;
 import com.alstom.lean.all.models.Task;
 import com.alstom.lean.all.pdfviewer.PdfViewerActivity;
+import com.alstom.lean.all.views.CustomDialog;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -45,20 +52,21 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 	private Task task;
 	private TextView title;
 	private TaskListManager manager;
-	private DatabaseHelper helper;
+	private DatabaseHelper dataHelper;
 	private Button btn_terminate;
 	private Button btn_cancel;
 	private TaskListManager taskListManager;
 	private ArrayAdapter<String> adapterString;
 	private List<String> listFileName;
-
+	private Button btn_add_sub_mesure;
+	private Dao<Mesurement, ?> mesureDao;
 
 	public MesureDetailFragment(List<Mesurement> listMesure, Task task, TaskListManager manager, DatabaseHelper hepler){
 		
 		this.listMesure = listMesure;
 		this.task = task;
 		this.manager = manager;
-		this.helper = hepler;
+		this.dataHelper = hepler;
 	}
 
 	@Override
@@ -77,7 +85,7 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 		title.setText(task.getName());
 
 		listViewMesure = (ListView) view.findViewById(R.id.list_mesure);
-		adapter = new MesureDetailAdapter(getActivity(), listMesure, manager, helper, task);
+		adapter = new MesureDetailAdapter(getActivity(), listMesure, manager, dataHelper, task);
 		listViewMesure.setAdapter(adapter);
 
 		btn_terminate = (Button) view.findViewById(R.id.cancelsavesendbar_send);
@@ -85,6 +93,47 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 		btn_terminate.setOnClickListener(this);
 		btn_cancel.setOnClickListener(this);
 		taskListManager = MyProjectModeTabletActivity.getTaskListManager();
+		
+		taskListManager.registerAddMesureChangeObserver(new ChangeObserver() {
+			
+			
+
+			@Override
+			public void onChange(String res, ModelObject model) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onChange(String res) {
+				// TODO Auto-generated method stub
+				try {
+					Dao<Mesurement, ?> mesureDao = dataHelper.getDao(Mesurement.class);
+					QueryBuilder<Mesurement, ?> queryBuilder = mesureDao.queryBuilder();
+					queryBuilder.where().eq(Mesurement.TABLE_MESURE_COLUMN_PARENT, task.getName());
+					PreparedQuery<Mesurement> preparedQuery = queryBuilder.prepare();
+					listMesure = mesureDao.query(preparedQuery);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				adapter = new MesureDetailAdapter(getActivity(), listMesure, manager, dataHelper, task);
+				listViewMesure.setAdapter(adapter);
+			}
+			
+			@Override
+			public void onChange() {
+				// TODO Auto-generated method stub
+
+				
+			}
+		});
+		
+		btn_add_sub_mesure = (Button) view.findViewById(R.id.add_sub_mesure);
+		btn_add_sub_mesure.setOnClickListener(this);
+		
+		
 		  
 		 return view;
 	 }
@@ -96,7 +145,6 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.cancelsavesendbar_send:
 					
-//			taskListManager.notifyAddMesureChange("");
 			
 			getActivity().finish();
 			
@@ -106,6 +154,11 @@ public class MesureDetailFragment extends Fragment implements OnClickListener{
 			
 			getActivity().finish();
 			
+			break;
+			
+		case R.id.add_sub_mesure:
+			CustomDialog dialog = new CustomDialog(getActivity(), dataHelper, task,taskListManager);
+			dialog.show();
 			break;
 
 		default:

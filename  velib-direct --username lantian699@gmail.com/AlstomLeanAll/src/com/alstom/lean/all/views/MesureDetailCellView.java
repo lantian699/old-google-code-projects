@@ -60,9 +60,10 @@ public class MesureDetailCellView extends LinearLayout{
 	private ImageView btn_mesure_photo;
 	private FragmentActivity context;
 	private Button btn_mesure_info;
-	private List<Map<String, Object>> mData = new ArrayList<Map<String,Object>>();
+	private Button btn_delete;
 	private double low;
 	private double high;
+	private TaskListManager taskManager;
 
 	public MesureDetailCellView(final Context context, TaskListManager manager, DatabaseHelper helper) {
 		super(context);
@@ -70,6 +71,7 @@ public class MesureDetailCellView extends LinearLayout{
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    inflater.inflate(R.layout.mesure_detail_cell_view, this);
 	    this.dataHelper = helper;
+	    this.taskManager = manager;
 	    this.context = (FragmentActivity) context;
 		
 	    try {
@@ -86,8 +88,43 @@ public class MesureDetailCellView extends LinearLayout{
 	    rule = (TextView)findViewById(R.id.tx_md_rule);
 	    edit_value = (EditText)findViewById(R.id.edit_md_value);
 	    
-	    
+	    btn_delete = (Button)findViewById(R.id.delete_sub_mesure);
 
+	    btn_delete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				// Add the buttons
+				builder.setTitle("Are you sure to delete this sub task ?");
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+
+				        	   try {
+									mesureDao.delete(mesure);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								taskManager.notifyAddMesureChange("");
+				           }
+				       });
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				           public void onClick(DialogInterface dialog, int id) {
+				               // User cancelled the dialog
+				        	   dialog.dismiss();
+				           }
+				       });
+				builder.show();
+				
+				
+				
+				
+			}
+		});
 		
 		 edit_value.addTextChangedListener(new TextWatcher() {
 				
@@ -167,7 +204,7 @@ public class MesureDetailCellView extends LinearLayout{
 		
 		description.setText(mesure.getDescription());
 		unit.setText(mesure.getUnit());
-		rule.setText("( " + mesure.getLow() + " < "+mesure.getHigh()+ " )");
+		rule.setText("( " + mesure.getLow() + " < Value < "+mesure.getHigh()+ " )");
 		edit_value.setText(mesure.getValue());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   hh:mm:ss");     
 		Date curDate = new Date(System.currentTimeMillis());

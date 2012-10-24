@@ -47,6 +47,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	final static private String ACCESS_SECRET_NAME = "ACCESS_SECRET";
 
 	private static DropboxAPI<AndroidAuthSession> mApi;
+	private static User user;
 
 	
 	@Override
@@ -106,7 +107,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					dataHelper = new DatabaseHelper(this, "toto");
 					Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 					listTask = taskDao.queryForAll();
-					System.out.println("list task  toto= " + listTask.size() +"  datahelper = " + dataHelper);
+					user = user.TOTO;
 					if (listTask.size() == 0)
 						new SynchronizationTask(this, dataHelper, User.TOTO)
 								.execute("getAll");
@@ -119,7 +120,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					dataHelper = new DatabaseHelper(this, "qiqi");
 					Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 					listTask = taskDao.queryForAll();
-					System.out.println("list task  qiqi= " + listTask.size() +"  datahelper = " + dataHelper);
+					user = user.QIQI;
 					if (listTask.size() == 0)
 						new SynchronizationTask(this, dataHelper, User.QIQI)
 								.execute("getAll");
@@ -133,7 +134,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					dataHelper = new DatabaseHelper(this, "mimi");
 					Dao<Task, ?> taskDao = dataHelper.getDao(Task.class);
 					listTask = taskDao.queryForAll();
-					System.out.println("list task  mimi= " + listTask.size() +"  datahelper = " + dataHelper);
+					user = user.MIMI;
 					if (listTask.size() == 0)
 						new SynchronizationTask(this, dataHelper, User.MIMI)
 								.execute("getAll");
@@ -219,6 +220,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public static DatabaseHelper getDataHelper() {
 
 		return dataHelper;
+	}
+	
+	public static User getUser(){
+		return user;
 	}
 
 }
