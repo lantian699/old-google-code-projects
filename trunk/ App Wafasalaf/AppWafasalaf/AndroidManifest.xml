@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="14"
         android:targetSdkVersion="15" />
 
     <application
@@ -17,7 +17,7 @@
         </activity>
         <activity
             android:name=".EcranAccueilActivity"
-            android:label="@string/title_activity_ecran_accueil" >
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +26,13 @@
         </activity>
         <activity
             android:name=".DetailClientActivity"
-            android:label="@string/title_activity_detail_client" >
+             >
         </activity>
+        <activity
+            android:name=".DetailClientRecouvrementActivity"
+          >
+        </activity>
+        <activity android:name=".signature.SignatureActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />

@@ -1,0 +1,156 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Arrivée planifiée"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView 
+            android:id="@+id/date_arrivee_planifie"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10/12/2012 13:30"/>
+		</LinearLayout>
+		
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:background="@drawable/border_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date Arrivée réelle"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText 
+            android:id="@+id/edit_date_arrivee_reelle_date"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="10/12/2012"/>
+        <EditText 
+            android:id="@+id/edit_date_arrivee_reelle_heure"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="13:30"/>
+		</LinearLayout>
+		
+        
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:background="@drawable/border_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"/>
+        <TextView 
+            android:id="@+id/tx_statut"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Choisir le statut de visite"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+        
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:background="@drawable/border_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout 
+            android:id="@+id/ll_remboursement"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+        <TextView 
+            android:id="@+id/tx_remboursement"
+            android:padding="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Remboursement"/>
+        
+        <LinearLayout 
+            android:layout_width="fill_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+	        <TextView 
+	            
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Le Montant : "
+	            android:textAppearance="?android:attr/textAppearanceMedium"/>
+	        
+	        <EditText 
+	            android:id="@+id/edit_montant_rembourse"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:minWidth="200dp"
+	            android:inputType="numberDecimal"/>
+
+        	</LinearLayout>
+        	
+         <ImageView
+	            android:id="@+id/signature_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	       		android:minWidth="300dp"
+	            android:background="@layout/borders"
+	            android:minHeight="90dp"
+	            android:padding="10dp" />
+		</LinearLayout>
+        <EditText
+            android:id="@+id/commentaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:visibility="gone"
+            android:hint="Commentaire"
+            android:inputType="textMultiLine" >
+
+            <requestFocus />
+        </EditText>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="30dp" >
+
+            <Button
+                android:id="@+id/btn_annuler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Annuler" />
+
+            <Button
+                android:id="@+id/btn_valider"
+                android:layout_marginLeft="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valider" />
+        </LinearLayout>
+        
+        
+        
+    </LinearLayout>

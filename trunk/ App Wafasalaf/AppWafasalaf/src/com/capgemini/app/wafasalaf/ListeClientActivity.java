@@ -81,10 +81,10 @@ public class ListeClientActivity extends Activity implements OnItemClickListener
 
 	public void onItemClick(AdapterView<?> listView, View view, int position, long id) {
 		
-		System.out.println("view = " + listView.getItemAtPosition(position));
+
 		Recouvrement recouvert  = (Recouvrement) listView.getItemAtPosition(position);
 		Intent intent = new Intent();
-		intent.setClass(this, DetailClientActivity.class);
+		intent.setClass(this, DetailClientRecouvrementActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(BUNDLE_RECOUVERT, recouvert);
 		startActivity(intent);
