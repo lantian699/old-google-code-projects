@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<declare-styleable name="OkCancelBar">
+
+	<attr name="labelButton1" format="string"/>
+	<attr name="labelButton2" format="string"/>
+
+</declare-styleable>
+
+<declare-styleable name="CancelSaveSendBar">
+
+	<attr name="cancelSaveSendButton1" format="string"/>
+	<attr name="cancelSaveSendButton2" format="string"/>
+
+</declare-styleable>
+
+</resources>

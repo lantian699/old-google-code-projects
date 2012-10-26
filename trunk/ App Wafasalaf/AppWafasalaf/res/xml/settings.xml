@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="Settings">
+ 
+        <EditTextPreference
+        	android:title="Google Docs Account"
+            android:inputType="text"
+            android:key="accountName"
+            android:persistent="true"
+            android:defaultValue="ntic2.smc@gmail.com">
+        </EditTextPreference>
+          
+        
+        <EditTextPreference
+        	android:title="Spreadsheet Key"
+            android:inputType="text"
+            android:key="spreadsheetKey"
+            android:persistent="true"
+            android:defaultValue="0AioCd2SR9kXedHNZZno1Mm0xOUIySEc3NWgtUG5yb2c">
+        </EditTextPreference>
+
+		
+</PreferenceScreen>
