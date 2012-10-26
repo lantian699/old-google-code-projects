@@ -60,6 +60,7 @@ public class RecouvrementFragment extends Fragment{
 	private int hour;
 	private int minute;
 	private ImageView signView;
+	private int whichChoise = 0;
 	
 	public RecouvrementFragment(Recouvrement recouvert){
 
@@ -103,6 +104,18 @@ public class RecouvrementFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				
+				switch (whichChoise) {
+				case 0:
+					
+					break;
+					
+				case 1:
+					
+					break;
+
+				default:
+					break;
+				}
 				
 			}
 		});
@@ -158,7 +171,7 @@ public class RecouvrementFragment extends Fragment{
 		
 		
 		tx_statut.setOnClickListener(new OnClickListener() {
-			private int whichChoise;
+			
 			@Override
 			public void onClick(View v) {
 
@@ -168,7 +181,7 @@ public class RecouvrementFragment extends Fragment{
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setTitle("Choisir le statut de visite")
-						.setSingleChoiceItems(items, 0,
+						.setSingleChoiceItems(items, whichChoise,
 								new DialogInterface.OnClickListener() {
 									
 
@@ -186,6 +199,10 @@ public class RecouvrementFragment extends Fragment{
 										tx_statut.setText(items[whichChoise]);
 										
 										switch (whichChoise) {
+										case 0:
+											edit_commentaire.setVisibility(View.GONE);
+											ll_remboursement.setVisibility(View.GONE);
+											break;
 										case 1:
 											edit_commentaire.setVisibility(View.VISIBLE);
 											ll_remboursement.setVisibility(View.GONE);
