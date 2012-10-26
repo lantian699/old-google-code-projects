@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:okCancelBar="http://schemas.android.com/apk/res/com.spie.integration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+  >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:text="Signature"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="190dp"
+        android:layout_weight="1.26" >
+
+        <com.capgemini.app.wafasalaf.signature.SignatureView
+            android:id="@+id/signature_view"
+            android:layout_width="500dp"
+            android:layout_height="177dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/borders" />
+
+    </RelativeLayout>
+
+    <FrameLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+	   <Button 
+	       android:id="@+id/btn_sig_cancel"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_marginRight="50dp"
+	       android:layout_gravity="center|bottom"
+	       android:text="Cancel"/>
+    <Button 
+	       android:id="@+id/btn_sig_ok"
+	       android:layout_width="wrap_content"
+	       android:layout_gravity="center|bottom"
+	       android:layout_marginLeft="50dp"
+	       android:layout_height="wrap_content"
+	       android:text="OK"/>
+	</FrameLayout>
+</LinearLayout>

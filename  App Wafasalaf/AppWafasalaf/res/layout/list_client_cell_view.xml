@@ -13,6 +13,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="Nom du client : "
+	            android:visibility="gone"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	        <TextView
@@ -31,6 +32,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:text="Date de visite : "
+	            android:visibility="gone"
 	            android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	        <TextView
