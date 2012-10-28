@@ -42,37 +42,53 @@ public class ListeClientActivity extends Activity implements OnItemClickListener
         sectionAdapter = new SectionedAdapter(this);
         dataHelper = DatabaseHelper.getInstance(this);
         
-        try {
-			listClientDao = dataHelper.getDao(Recouvrement.class);
-			listClient = listClientDao.queryForAll();
-			listClientEnCours = new ArrayList<Recouvrement>();
-			listClientTermine = new ArrayList<Recouvrement>();
-			
-			for (Recouvrement recouvert : listClient) {
-				
-				if(recouvert.getStatut().equals("en cours")){
-					listClientEnCours.add(recouvert);
-				}else if(recouvert.getStatut().equals("termine")) {
-					listClientTermine.add(recouvert);
-				}
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-		enCoursAdapter = new ListClientAdapter(this, listClientEnCours);
-		termineAdapter = new ListClientAdapter(this, listClientTermine);
-		sectionAdapter.addSection("VISITE EN COURS", enCoursAdapter);
-		sectionAdapter.addSection("VISITE TERMINEE", termineAdapter);
-		
-		listView.setAdapter(sectionAdapter);
-		listView.setOnItemClickListener(this);
-        
+       
+        searchForList();
     }
 
+    @Override
+    protected void onResume() {
+    	// TODO Auto-generated method stub
+    	super.onResume();
+    	
+    	searchForList();
+    	
+    }
+    
+    
+    private void searchForList(){
+    	
+    	 try {
+ 			listClientDao = dataHelper.getDao(Recouvrement.class);
+ 			listClient = listClientDao.queryForAll();
+ 			listClientEnCours = new ArrayList<Recouvrement>();
+ 			listClientTermine = new ArrayList<Recouvrement>();
+ 			
+ 			for (Recouvrement recouvert : listClient) {
+ 				
+ 				if(recouvert.getStatut().equals("en cours")){
+ 					listClientEnCours.add(recouvert);
+ 				}else if(recouvert.getStatut().equals("termine")) {
+ 					listClientTermine.add(recouvert);
+ 				}
+ 			}
+ 			
+ 			
+ 		} catch (SQLException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+         
+ 		enCoursAdapter = new ListClientAdapter(this, listClientEnCours);
+ 		termineAdapter = new ListClientAdapter(this, listClientTermine);
+ 		sectionAdapter.addSection("VISITE EN COURS", enCoursAdapter);
+ 		sectionAdapter.addSection("VISITE TERMINEE", termineAdapter);
+ 		
+ 		listView.setAdapter(sectionAdapter);
+ 		listView.setOnItemClickListener(this);
+    	
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);

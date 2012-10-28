@@ -7,7 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
 public class Recouvrement extends ModelObjet{
-
+	
+	public static final String STATUT_EN_COURS = "en cours";
+	public static final String STATUT_TERMINE = "termine";
 	private static final long serialVersionUID = 2462157631823076092L;
 	
 	@DatabaseField(generatedId=true)

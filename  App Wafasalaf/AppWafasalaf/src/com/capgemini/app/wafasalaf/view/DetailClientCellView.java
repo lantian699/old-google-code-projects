@@ -1,10 +1,14 @@
 package com.capgemini.app.wafasalaf.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.capgemini.app.wafasalaf.LocationActivity;
 import com.capgemini.app.wafasalaf.R;
 import com.capgemini.app.wafasalaf.models.Client;
 import com.capgemini.app.wafasalaf.models.Recouvrement;
@@ -39,7 +43,7 @@ public class DetailClientCellView extends LinearLayout{
 	}
 	
 	
-	public void setData(Client client, String type, int position){
+	public void setData(final Client client, String type, int position){
 		
 		if(type.equals(LIST_COLUMN_INDENTIFICATION_DU_CLIENT)){
 			
@@ -55,14 +59,48 @@ public class DetailClientCellView extends LinearLayout{
 			case 2:
 				cellName.setText("Adresse : ");
 				cellNameValue.setText(client.getAdresse());
+				this.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						
+						Intent intent = new Intent();
+						intent.setClass(context, LocationActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						context.startActivity(intent);
+					}
+				});
 				break;
 			case 3:
 				cellName.setText("GSM : ");
 				cellNameValue.setText(client.getGsm());
+				this.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						
+						Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ client.getGsm()));
+						context.startActivity(intent);
+					}
+				});
+				
 				break;
 			case 4:
 				cellName.setText("Tel. Domicile : ");
 				cellNameValue.setText(client.getTel());
+				
+				this.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						
+						Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ client.getTel()));
+						context.startActivity(intent);
+					}
+				});
 				break;
 			case 5:
 				cellName.setText("Employeur : ");

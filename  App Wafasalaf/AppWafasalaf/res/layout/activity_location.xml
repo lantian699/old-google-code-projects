@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <com.google.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="fill"
+        android:apiKey="0OMvHSqzY4Wf74MS5DfHkqoYNNi4tymCAWZD1dg"
+        android:clickable="true"
+        android:enabled="true" />
+    <!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->
+    <!-- 02Nmd5diySCq6cxbWY5yr1SO1aceiS34H_bwKDg Thinkpad x220 -->
+    <!-- 0OMvHSqzY4Wf74MS5DfHkqoYNNi4tymCAWZD1dg Poste fixe -->
+    <!-- 02Nmd5diySCrzojFQoLhzrZSIVB-YosXM7KtwCA Thinkpad T410 -->
+    <!-- 0OMvHSqzY4Wf-V4wHEl-yu5yz7j0HAFoTPTmrGA Thinkpad W520 -->
+
+</LinearLayout>
