@@ -3,6 +3,7 @@ package com.capgemini.app.wafasalaf.view;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.capgemini.app.wafasalaf.LocationActivity;
 import com.capgemini.app.wafasalaf.R;
 import com.capgemini.app.wafasalaf.models.Client;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
@@ -12,7 +13,11 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,8 +32,14 @@ public class ListClientCellView extends LinearLayout{
 
 	private Dao<Client, ?> clientDao;
 
+	private Client client;
 
-	public ListClientCellView(Context context) {
+	private Button btn_phone_call;
+
+	private Button btn_location;
+
+
+	public ListClientCellView(final Context context) {
 		super(context);
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,6 +50,31 @@ public class ListClientCellView extends LinearLayout{
 	    nomClient = (TextView)findViewById(R.id.nom_client);
 	    dateVisite = (TextView)findViewById(R.id.date_pro);
 	    dataHelper = DatabaseHelper.getInstance(context);
+	    btn_phone_call = (Button)findViewById(R.id.btn_phone_call);
+	    btn_location = (Button)findViewById(R.id.btn_location);
+	    
+	    btn_location.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+
+				Intent intent = new Intent();
+				intent.setClass(context, LocationActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				context.startActivity(intent);
+			}
+		});
+	    
+	    
+	    btn_phone_call.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+
+				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ client.getGsm()));
+				context.startActivity(intent);
+			}
+		});
 	    
 	}
 	
@@ -53,7 +89,7 @@ public class ListClientCellView extends LinearLayout{
 			List<Client> listClient = clientDao.query(preparedQuery);
 			
 			if(listClient.size() > 0){
-				Client client = listClient.get(0);
+				client = listClient.get(0);
 				
 				nomClient.setText(client.getNom());
 				dateVisite.setText(recouvert.getDateVisitePro());

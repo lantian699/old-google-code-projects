@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.capgemini.app.wafasalaf.models.Client;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
+import com.capgemini.app.wafasalaf.models.Impaye;
 import com.capgemini.app.wafasalaf.models.Recouvrement;
 import com.capgemini.app.wafasalaf.spreadsheet.SpreadsheetAndroidRequestInitializer;
 import com.capgemini.app.wafasalaf.spreadsheet.Worksheet;
@@ -72,7 +73,7 @@ public class Tools {
 
 			Dao<Recouvrement, ?> recouvertDao = dataHelper.getDao(Recouvrement.class);
 			Dao<Client, ?> clientDao = dataHelper.getDao(Client.class);
-
+			Dao<Impaye, ?> impayeDao = dataHelper.getDao(Impaye.class);
 			for (ListEntry listEntry : listFeed.getEntries()) {
 
 				Map<String, String> content = listEntry.customElements;
@@ -115,12 +116,25 @@ public class Tools {
 					client.setNbIncident(content.get(Worksheet.TABLE_CLIENT_COLUMN_NOMBRE_INCIDENT));
 					client.setNbImpayes(content.get(Worksheet.TABLE_CLIENT_COLUMN_NOMBRE_IMPAYES));
 					client.setMontantChaqueImpayes(content.get(Worksheet.TABLE_CLIENT_COLUMN_MONTANT_CHAQUES_IMPAYES));
-					
+					client.setMontantImapye(content.get(Worksheet.TABLE_CLIENT_COLUMN_MONTANT_IMPAYE));
 					clientDao.create(client);
 					
 					
-					Log.i(TAG, "Recouvrement created !");
-				} 
+					Log.i(TAG, "Client created !");
+				}else if (table.toString().equals(Worksheet.TABLE_NAME_IMPAYE)) {
+
+					Impaye impaye = new Impaye();
+					
+					impaye.setDateEch(content.get(Worksheet.TABLE_IMPAYE_COLUMN_DATE_ECHEANCE));
+					impaye.setDateRejet(content.get(Worksheet.TABLE_IMPAYE_COLUMN_DATE_REJET));
+					impaye.setClient(content.get(Worksheet.TABLE_IMPAYE_COLUMN_CLIENT_ID));
+					impaye.setMontant(content.get(Worksheet.TABLE_IMPAYE_COLUMN_MONTANT));
+					impaye.setMotif(content.get(Worksheet.TABLE_IMPAYE_COLUMN_MOTIF));
+					
+					impayeDao.create(impaye);
+					
+					Log.i(TAG, "Impaye created !");
+				}
 			}
 		}catch (Exception e) {
 			e.printStackTrace();

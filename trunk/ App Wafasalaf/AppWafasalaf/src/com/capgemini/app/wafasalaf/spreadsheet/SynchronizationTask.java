@@ -50,6 +50,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 	private SpreadsheetClient client;
 	private DatabaseHelper dataHelper;
 	private boolean isSend;
+	private SpreadsheetAndroidRequestInitializer requestInitializer;
 
 	public SynchronizationTask(Activity mainActivity,
 			DatabaseHelper dataHelper) {
@@ -68,18 +69,22 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 
 		dialog = ProgressDialog.show(mMainActivity, "","Please wait for data download ...");
 
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mMainActivity);
+
+		requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected Integer doInBackground(String... params) {
 
-		// create the SpreadSheetDb
-		// SharedPreferences settings = mMainActivity.getSharedPreferences(TAG,
-		// Activity.MODE_PRIVATE);
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mMainActivity);
-		SpreadsheetAndroidRequestInitializer requestInitializer;
+		
 		try {
-			requestInitializer = new SpreadsheetAndroidRequestInitializer(settings, mMainActivity);
 
 			if (params[0].equals("getAll")) {
 				for (Table table : Table.values())

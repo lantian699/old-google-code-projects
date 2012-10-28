@@ -47,8 +47,14 @@ public class Worksheet {
 	public static final String TABLE_CLIENT_COLUMN_NOMBRE_INCIDENT = "nombreincident";
 	public static final String TABLE_CLIENT_COLUMN_NOMBRE_IMPAYES = "nombreimpayes";
 	public static final String TABLE_CLIENT_COLUMN_MONTANT_CHAQUES_IMPAYES = "montantchaquesimpayes";
-
+	public static final Object TABLE_CLIENT_COLUMN_MONTANT_IMPAYE = "montantimpaye";
+	//IMPAYES
 	
+	public static final String TABLE_IMPAYE_COLUMN_DATE_ECHEANCE = "dateecheance";
+	public static final String TABLE_IMPAYE_COLUMN_DATE_REJET = "daterejet";
+	public static final String TABLE_IMPAYE_COLUMN_MONTANT = "montant";
+	public static final String TABLE_IMPAYE_COLUMN_MOTIF = "motif";
+	public static final String TABLE_IMPAYE_COLUMN_CLIENT_ID = "clientid";
 	
 	
 

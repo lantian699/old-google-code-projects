@@ -30,6 +30,7 @@ public class Client extends ModelObjet{
 	private String adressePro;
 
 
+
 	@DatabaseField
 	private String nomConjoint;
 	@DatabaseField
@@ -63,6 +64,18 @@ public class Client extends ModelObjet{
 	private String nbImpayes;
 	@DatabaseField
 	private String montantChaqueImpayes;
+	@DatabaseField
+	private String montantImapye;
+	
+	
+	
+	
+	public String getMontantImapye() {
+		return montantImapye;
+	}
+	public void setMontantImapye(String montantImapye) {
+		this.montantImapye = montantImapye;
+	}
 	public int getId() {
 		return id;
 	}

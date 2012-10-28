@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.google.api.client.extensions.android2.AndroidHttp;
@@ -56,6 +57,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	static final String PREF_AUTH_TOKEN = "authToken";
 	static final String PREF_GSESSIONID = "gsessionid";
 
+	@SuppressWarnings("deprecation")
 	public SpreadsheetAndroidRequestInitializer(SharedPreferences settings,
 			Activity mainActivity) {
 		super(transport);
@@ -74,22 +76,17 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 							
 							Bundle bundle = future.getResult();
 							if (bundle.containsKey(AccountManager.KEY_INTENT)) {
-								Intent intent = bundle
-										.getParcelable(AccountManager.KEY_INTENT);
+								Intent intent = bundle.getParcelable(AccountManager.KEY_INTENT);
 								int flags = intent.getFlags();
 								flags &= ~Intent.FLAG_ACTIVITY_NEW_TASK;
 								intent.setFlags(flags);
-								SpreadsheetAndroidRequestInitializer.this.mainActivity
-										.startActivityForResult(intent,
-												REQUEST_AUTHENTICATE);
-							} else if (bundle
-									.containsKey(AccountManager.KEY_AUTHTOKEN)) {
-								setAuthToken(bundle
-										.getString(AccountManager.KEY_AUTHTOKEN));
+								SpreadsheetAndroidRequestInitializer.this.mainActivity.startActivityForResult(intent,REQUEST_AUTHENTICATE);
+							} else if (bundle.containsKey(AccountManager.KEY_AUTHTOKEN)) {
+								setAuthToken(bundle.getString(AccountManager.KEY_AUTHTOKEN));
 							}
 						} catch (Exception e) {
 							
-							handleException(e);
+						//	handleException(e);
 						}
 					}
 				}, null);
@@ -112,12 +109,15 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	public void intercept(HttpRequest request) throws IOException {
 			super.intercept(request);
 			if(this.authToken == null){
-				this.authToken = "DQAAAMUAAACSWEpvEWHvBZugyWtUKtsdieq0gwH" +
+			/*	this.authToken = "DQAAAMUAAACSWEpvEWHvBZugyWtUKtsdieq0gwH" +
 						"fDeCFpPJ741EBuQ0GsIKCYIlI-RoOteHSR9il-TlMCNLL9VIzRq" +
 						"7FVDDyLGZdkL4xWmjPclFg_OCjL6STXG5ehkG3XOYo_uwq-8ePITl" +
 						"y-0LG1thBYmDLCnyZ0YvUmZSfzkg1DW52IDXzKvoNz6pqy6OzoGR0R-r" +
 						"KHp06ST1TfnjAxR7GfRW-Zd1Q_0cKcRo297puUUtsF3_1GWBqIkszTu0K_G_" +
-						"JYfHCFYgM0iMyl5CJy3GhM0NVTmO1";
+						"JYfHCFYgM0iMyl5CJy3GhM0NVTmO1";*/
+				
+			//	Toast.makeText(mainActivity, "l'appli n'a pas réussi d'obtenir le Token pour connecter à Google Spreadsheet", Toast.LENGTH_SHORT).show();
+				return;
 			}
 			request.getHeaders()
 			.setAuthorization(GoogleHeaders.getGoogleLoginValue(this.authToken));
@@ -125,7 +125,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	}
 
 	
-
+/*
 	
 	void handleException(Exception e) {
 		e.printStackTrace();
@@ -152,7 +152,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 			}
 		}
 		Log.e(TAG, e.getMessage(), e);
-	}
+	}*/
 	/*void handleGoogleException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof HttpResponseException) {
@@ -199,7 +199,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	  }*/
 
 	
-	public void gotAccount() {
+	/*public void gotAccount() {
 		Account account = accountManager.getAccountByName(accountName);
 		if (account != null) {
 			// handle invalid token
@@ -255,7 +255,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 						}
 					}
 				}, null);
-	}
+	}*/
 
 	private void setAccountName(String accountName) {
 		SharedPreferences.Editor editor = settings.edit();

@@ -1,13 +1,20 @@
 package com.capgemini.app.wafasalaf.fragments;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import com.capgemini.app.wafasalaf.R;
+import com.capgemini.app.wafasalaf.managers.ListManager;
 import com.capgemini.app.wafasalaf.models.Client;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
+import com.capgemini.app.wafasalaf.models.Impaye;
 import com.capgemini.app.wafasalaf.models.Recouvrement;
+import com.capgemini.app.wafasalaf.pdf.ReportPdfGenerator;
 import com.capgemini.app.wafasalaf.signature.SignatureActivity;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -22,8 +29,12 @@ import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,9 +72,22 @@ public class RecouvrementFragment extends Fragment{
 	private int minute;
 	private ImageView signView;
 	private int whichChoise = 0;
+	private FileOutputStream out;
+	private String sigName;
+	private Dao<Impaye, ?> impayeDao;
+	private boolean estValider = false;
+	private double value;
+	private double montant;
+	private Recouvrement recouvert;
+	private ListManager manager;
 	
-	public RecouvrementFragment(Recouvrement recouvert){
+	
+	
+	
+	public RecouvrementFragment(Recouvrement recouvert, ListManager manager){
 
+		this.recouvert = recouvert;
+		this.manager = manager;
 		try {
 			dataHelper = DatabaseHelper.getInstance(getActivity());
 			clientDao = dataHelper.getDao(Client.class);
@@ -98,24 +122,96 @@ public class RecouvrementFragment extends Fragment{
 		btn_annuler = (Button)view.findViewById(R.id.btn_annuler);
 		btn_valider = (Button)view.findViewById(R.id.btn_valider);
 		
+		
+		/*try {
+			impayeDao = dataHelper.getDao(Impaye.class);
+
+			QueryBuilder<Impaye, ?> queryBuilder = impayeDao.queryBuilder();
+			queryBuilder.where().eq(Client.COLUMN_NAME_CLIENT_ID,client.getnAffaire());
+			PreparedQuery<Impaye> preparedQuery = queryBuilder.prepare();
+			List<Impaye> listImpaye = impayeDao.query(preparedQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		edit_montant_rembourse.addTextChangedListener(new TextWatcher() {
+			
+
+
+			@Override
+			public void onTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				if(!s.toString().equals("")){
+				value = Double.parseDouble(s.toString());
+				montant = Double.parseDouble(client.getMontantImapye());
+				
+				if(value < montant || value == montant){
+					edit_montant_rembourse.setTextColor(Color.BLACK);
+					estValider = true;
+				}else{
+					edit_montant_rembourse.setTextColor(Color.RED);
+					estValider = false;
+				}
+				}
+			}
+		});
+		
 		btn_valider.setEnabled(false);
 		btn_valider.setOnClickListener(new OnClickListener() {
 			
+			private Dao<Recouvrement, ?> recouvertDao;
+
 			@Override
 			public void onClick(View v) {
+				
+				
+				recouvert.setStatut(Recouvrement.STATUT_TERMINE);
+				try {
+					recouvertDao = dataHelper.getDao(Recouvrement.class);
+					recouvertDao.update(recouvert);
+					
+//					manager.notifyListChange();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				
 				switch (whichChoise) {
 				case 0:
 					
+					getActivity().finish();
 					break;
 					
 				case 1:
-					
+					getActivity().finish();
 					break;
+				case 2:
+					
+					if(estValider){
+					new ReportPdfGenerator(getActivity(), dataHelper, client,edit_montant_rembourse.getText().toString(),sigName, montant-value).execute();
+					
+					client.setMontantImapye(String.valueOf(montant-value));
+					
+					}
+					break;	
 
 				default:
 					break;
 				}
+				
+				
 				
 			}
 		});
@@ -200,17 +296,20 @@ public class RecouvrementFragment extends Fragment{
 										
 										switch (whichChoise) {
 										case 0:
-											edit_commentaire.setVisibility(View.GONE);
+											edit_commentaire.setVisibility(View.VISIBLE);
 											ll_remboursement.setVisibility(View.GONE);
+											edit_commentaire.requestFocus();
 											break;
 										case 1:
 											edit_commentaire.setVisibility(View.VISIBLE);
 											ll_remboursement.setVisibility(View.GONE);
+											edit_commentaire.requestFocus();
 											break;
 										case 2:
 											edit_commentaire.setVisibility(View.GONE);
 											ll_remboursement.setVisibility(View.VISIBLE);
 											tx_montant_rem.setText("M. "+client.getNom()+" a remboursé :");
+											edit_montant_rembourse.requestFocusFromTouch();
 											break;
 
 										default:
@@ -256,13 +355,28 @@ public class RecouvrementFragment extends Fragment{
 		
 		switch (resultCode) {
 		case  Activity.RESULT_OK:
-			
-			
-			
+	
 			if(requestCode == CODE_RETOUR){
 				
 				Bitmap image = data.getParcelableExtra(SignatureActivity.KEY_BYTE_SIGNATURE);
 				signView.setImageBitmap(image);
+				
+				try {
+					String filename = Environment.getExternalStorageDirectory()
+							.getPath() + "/AppWafasalaf/Signature/";
+					File fileSign = new File(filename);
+					if (!fileSign.exists())
+						fileSign.mkdirs();
+					String imageName = "signature_" + client.getNom() + ".png";
+					
+
+					out = new FileOutputStream(new File(fileSign, imageName));
+					sigName = filename+imageName;
+					image.compress(Bitmap.CompressFormat.PNG, 90, out);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			break;

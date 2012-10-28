@@ -37,7 +37,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void clearDataBase() {
 		try {
 			TableUtils.clearTable(connectionSource, Client.class);
-			TableUtils.clearTable(connectionSource, DetailImpayes.class);
+			TableUtils.clearTable(connectionSource, Impaye.class);
 			TableUtils.clearTable(connectionSource, Recouvrement.class);
 
 		} catch (SQLException e) {
@@ -52,7 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 
 			TableUtils.createTable(connectionSource, Client.class);
-			TableUtils.createTable(connectionSource, DetailImpayes.class);
+			TableUtils.createTable(connectionSource, Impaye.class);
 			TableUtils.createTable(connectionSource, Recouvrement.class);
 
 		} catch (SQLException e) {
@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			
 			TableUtils.dropTable(connectionSource, Client.class,true);
-			TableUtils.dropTable(connectionSource, DetailImpayes.class, true);
+			TableUtils.dropTable(connectionSource, Impaye.class, true);
 			TableUtils.dropTable(connectionSource, Recouvrement.class, true);
 
 			onCreate(sqLiteDatabase, connectionSource);

@@ -2,6 +2,7 @@ package com.capgemini.app.wafasalaf;
 
 import com.capgemini.app.wafasalaf.fragments.DetailClientFragment;
 import com.capgemini.app.wafasalaf.fragments.RecouvrementFragment;
+import com.capgemini.app.wafasalaf.managers.ListManager;
 import com.capgemini.app.wafasalaf.models.Recouvrement;
 
 import android.app.ActionBar;
@@ -27,12 +28,14 @@ public class DetailClientRecouvrementActivity extends FragmentActivity implement
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 	private Recouvrement recouvert;
+	private ListManager manager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_client_recouvrement);
        
+        manager = new ListManager();
         recouvert = (Recouvrement)getIntent().getSerializableExtra(ListeClientActivity.BUNDLE_RECOUVERT);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -98,7 +101,7 @@ public class DetailClientRecouvrementActivity extends FragmentActivity implement
 
 				return frag_client;
 			} else if (i == 1) {
-				Fragment frag_recouvert = new RecouvrementFragment(recouvert);
+				Fragment frag_recouvert = new RecouvrementFragment(recouvert, manager);
 
 				return frag_recouvert;
 			}

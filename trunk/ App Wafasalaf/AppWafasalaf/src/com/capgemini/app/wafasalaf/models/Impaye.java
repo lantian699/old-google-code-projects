@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class DetailImpayes extends ModelObjet{
+public class Impaye extends ModelObjet{
 
 
 	private static final long serialVersionUID = -7641979932813984165L;
@@ -12,7 +12,7 @@ public class DetailImpayes extends ModelObjet{
 	@DatabaseField(generatedId=true)
 	private int id;
 	@DatabaseField
-	private double montant;
+	private String montant;
 	@DatabaseField
 	private String motif;
 	@DatabaseField
@@ -24,10 +24,10 @@ public class DetailImpayes extends ModelObjet{
 	
 	
 	
-	public double getMontant() {
+	public String getMontant() {
 		return montant;
 	}
-	public void setMontant(double montant) {
+	public void setMontant(String montant) {
 		this.montant = montant;
 	}
 	public String getMotif() {
