@@ -40,8 +40,7 @@ import com.google.api.services.spreadsheet.SpreadsheetRequestInitializer;
 public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInitializer {
 	private static final String TAG = "SpreadsheetAndroidRequestInitializer";
 
-	
-	
+		
 	private static final String AUTH_TOKEN_TYPE = "wise"; // spreadsheet service
 	private static final int REQUEST_AUTHENTICATE = 0;
 //	private static final String AUTH_TOKEN_TYPE = "oauth2:https://spreadsheets.google.com/feeds";  		
@@ -86,7 +85,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 							}
 						} catch (Exception e) {
 							
-						//	handleException(e);
+							handleException(e);
 						}
 					}
 				}, null);
@@ -108,24 +107,24 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	@Override
 	public void intercept(HttpRequest request) throws IOException {
 			super.intercept(request);
-			if(this.authToken == null){
-			/*	this.authToken = "DQAAAMUAAACSWEpvEWHvBZugyWtUKtsdieq0gwH" +
+			/*if(this.authToken == null){
+				this.authToken = "DQAAAMUAAACSWEpvEWHvBZugyWtUKtsdieq0gwH" +
 						"fDeCFpPJ741EBuQ0GsIKCYIlI-RoOteHSR9il-TlMCNLL9VIzRq" +
 						"7FVDDyLGZdkL4xWmjPclFg_OCjL6STXG5ehkG3XOYo_uwq-8ePITl" +
 						"y-0LG1thBYmDLCnyZ0YvUmZSfzkg1DW52IDXzKvoNz6pqy6OzoGR0R-r" +
 						"KHp06ST1TfnjAxR7GfRW-Zd1Q_0cKcRo297puUUtsF3_1GWBqIkszTu0K_G_" +
-						"JYfHCFYgM0iMyl5CJy3GhM0NVTmO1";*/
+						"JYfHCFYgM0iMyl5CJy3GhM0NVTmO1";
 				
 			//	Toast.makeText(mainActivity, "l'appli n'a pas réussi d'obtenir le Token pour connecter à Google Spreadsheet", Toast.LENGTH_SHORT).show();
 				return;
-			}
+			}*/
 			request.getHeaders()
 			.setAuthorization(GoogleHeaders.getGoogleLoginValue(this.authToken));
 		
 	}
 
 	
-/*
+
 	
 	void handleException(Exception e) {
 		e.printStackTrace();
@@ -152,7 +151,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 			}
 		}
 		Log.e(TAG, e.getMessage(), e);
-	}*/
+	}
 	/*void handleGoogleException(Exception e) {
 		e.printStackTrace();
 		if (e instanceof HttpResponseException) {
@@ -199,7 +198,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	  }*/
 
 	
-	/*public void gotAccount() {
+	public void gotAccount() {
 		Account account = accountManager.getAccountByName(accountName);
 		if (account != null) {
 			// handle invalid token
@@ -255,7 +254,7 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 						}
 					}
 				}, null);
-	}*/
+	}
 
 	private void setAccountName(String accountName) {
 		SharedPreferences.Editor editor = settings.edit();

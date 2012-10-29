@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
@@ -135,10 +136,18 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 	
 	private void addTitlePage(Document document){
 		Image logo;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");     
+		Date curDate = new Date(System.currentTimeMillis());
+		String date = formatter.format(curDate); 
+		
 		try {
 			
 			Paragraph info_societe = new Paragraph();
 			info_societe.setAlignment(Image.ALIGN_LEFT);
+			logo = Image.getInstance(new URL("http://dl.dropbox.com/u/110360849/images/wafasalaf_logo.png"));
+			logo.setAlignment(Image.ALIGN_RIGHT);
+
+			info_societe.add(logo);
 			info_societe.add(new Paragraph("Crédit Wafasalaf Maroc",small));
 			info_societe.add(new Paragraph("72, rue Ram Allah Casablanca-Maroc", small));
 			info_societe.add(new Paragraph("Tel : 0522 54 51 00", small));
@@ -146,15 +155,13 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 			addEmptyLine(info_societe, 3);
 			document.add(info_societe);
 			
-			logo = Image.getInstance(new URL("http://dl.dropbox.com/u/110360849/images/wafasalaf_logo.png"));
-			/*logo.setAlignment(Image.ALIGN_RIGHT);
-			document.add(logo);*/
+			
 			
 			
 			
 			Paragraph infoGeo = new Paragraph();
-			Date date = new Date();
-			Paragraph p1 = new Paragraph("Casablanca le "+ date.toGMTString(),small);
+			
+			Paragraph p1 = new Paragraph("Casablanca, le "+ date,small);
 			p1.setAlignment(Paragraph.ALIGN_RIGHT);
 			Paragraph p2 = new Paragraph("A "+ client.getNom(),small);
 			p2.setAlignment(Paragraph.ALIGN_RIGHT);
@@ -176,11 +183,11 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 			content.add(new Paragraph("Madame, Monsieur, "));
 			addEmptyLine(content, 2);
 			content.add(new Paragraph("Ayant contracté un contrat de prêt N."+client.getnAffaire()+" le " +
-					client.getPremierEch()+", a remboursé le "+date.toLocaleString()+" à la société Wafasalaf " +
+					client.getPremierEch()+", a remboursé le "+date+" à la société Wafasalaf " +
 							"représentée par M." +client.getResponsable()+" le montant de "+ montant +" Dh."));
 			
 			addEmptyLine(content, 2);
-			content.add(new Paragraph("La somme restant à rembouser par "+client.getNom()+" est de "+solde + " Dh."));
+			content.add(new Paragraph("La somme restant à rembouser par "+client.getNom()+" est de "+(float)solde + " Dh."));
 			
 			addEmptyLine(content, 2);
 			content.add(new Paragraph("Veuillez recevoir nos salutations distinguées."));
