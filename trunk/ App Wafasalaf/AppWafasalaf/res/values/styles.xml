@@ -1,31 +1,22 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
      <style name="CustomActivityTheme" parent="@android:style/Theme.Holo.Light">
-        <item name="android:actionBarTabTextStyle">@style/CustomTabTextStyle</item>
-        <item name="android:actionBarTabStyle">@style/colorTab</item>
         <item name="android:actionBarStyle">@style/myActionBar</item>
-        <item name="android:windowBackground">@color/windowBackgroundColor</item>
+<!--         <item name="android:windowBackground">@color/windowBackgroundColor</item> -->
     </style>
-    
-     <!-- style for the action bar tab background -->
-    <style name="colorTab" parent="@android:style/Widget.ActionBar.TabView">
-    
-  
-    </style> 
+
     
          <!-- style for color of the actionbar -->
     <style name="myActionBar" parent="@android:style/Widget.Holo.ActionBar">
-        <item name="android:subtitleTextStyle">@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle</item>
+        <item name="android:titleTextStyle">@style/CustomTabTextStyle</item>
         <item name="android:background">#FFFFFF</item>
-        <!-- <item name="android:icon">@android:drawable/sym_def_app_icon </item> -->
     </style>
     
     
         <!-- style for the action bar tab text -->
     <style name="CustomTabTextStyle" parent="@android:style/TextAppearance.Holo.Medium">
         <item name="android:textColor">#234323</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:ellipsize">marquee</item>
