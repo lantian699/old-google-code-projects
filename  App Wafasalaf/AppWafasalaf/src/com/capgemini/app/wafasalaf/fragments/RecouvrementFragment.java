@@ -26,12 +26,16 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,6 +47,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +56,8 @@ import android.widget.TimePicker;
 public class RecouvrementFragment extends Fragment{
 
 	public static final int CODE_RETOUR = 1;
+	public static final int CAPTURE_CODE = 2;
+	
 	private EditText edit_date;
 	private EditText edit_heure;
 	private TextView tx_statut;
@@ -80,7 +87,9 @@ public class RecouvrementFragment extends Fragment{
 	private double montant;
 	private Recouvrement recouvert;
 	private ListManager manager;
-	
+	private ImageButton btn_take_photo;
+	private ImageView img_photo;
+	private Uri currentImageUri;
 	
 	
 	
@@ -118,10 +127,29 @@ public class RecouvrementFragment extends Fragment{
 		tx_statut = (TextView)view.findViewById(R.id.tx_statut);
 		tx_montant_rem = (TextView)view.findViewById(R.id.tx_remboursement);
 		signView = (ImageView)view.findViewById(R.id.signature_view);
+		btn_take_photo = (ImageButton)view.findViewById(R.id.btn_take_photo);
+		img_photo = (ImageView)view.findViewById(R.id.img_photo);
+		
 		
 		btn_annuler = (Button)view.findViewById(R.id.btn_annuler);
 		btn_valider = (Button)view.findViewById(R.id.btn_valider);
 		
+		
+		btn_take_photo.setOnClickListener(new OnClickListener() {
+			
+			
+
+			@Override
+			public void onClick(View v) {
+
+				Intent intent_take_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				currentImageUri = createPictureInMediaStore();
+				intent_take_photo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				intent_take_photo.putExtra(MediaStore.EXTRA_OUTPUT, currentImageUri);
+				startActivityForResult(intent_take_photo, CAPTURE_CODE);
+				
+			}
+		});
 		
 		/*try {
 			impayeDao = dataHelper.getDao(Impaye.class);
@@ -273,7 +301,7 @@ public class RecouvrementFragment extends Fragment{
 
 				final String[] items = new String[] { "Client absent",
 						"Client ne pouvant pas rembourser",
-						"Client ayant remboursé" };
+						"Client souhaitant rembourser" };
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						getActivity());
 				builder.setTitle("Choisir le statut de visite")
@@ -285,13 +313,7 @@ public class RecouvrementFragment extends Fragment{
 									public void onClick(DialogInterface dialog,
 											int which) {
 										whichChoise = which;
-									}
-								})
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
+										
 										tx_statut.setText(items[whichChoise]);
 										
 										switch (whichChoise) {
@@ -317,14 +339,7 @@ public class RecouvrementFragment extends Fragment{
 										}
 										
 										btn_valider.setEnabled(true);
-									}
-								})
-						.setNegativeButton("Annuler",
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog,
-											int id) {
-
+										dialog.dismiss();
 									}
 								});
 				builder.show();
@@ -346,6 +361,16 @@ public class RecouvrementFragment extends Fragment{
 		});
 		
 		return view;
+	}
+	
+	
+	
+	public Uri createPictureInMediaStore() {
+		ContentValues values = new ContentValues();
+		values.put(MediaStore.Images.Media.TITLE, "TAG PHOTO");
+		values.put(MediaStore.Images.Media.DESCRIPTION, "Wafasalaf");
+		return getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//		return context.getContentResolver().insert(uri, values);
 	}
 	
 	@Override
@@ -377,12 +402,25 @@ public class RecouvrementFragment extends Fragment{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}else if(requestCode == CAPTURE_CODE){
+				String path = getRealPathFromURI(currentImageUri);
+				img_photo.setImageURI(Uri.parse(path));
+				img_photo.setVisibility(View.VISIBLE);
+				
 			}
 			
 			break;
 			
 		case Activity.RESULT_CANCELED:
 			
+			if(requestCode == CAPTURE_CODE){
+				
+				String path = getRealPathFromURI(currentImageUri);
+				File originFile = new File(path);
+			    if(originFile.length() == 0){
+			    	originFile.delete();
+			     }
+			}
 			
 			break;
 
@@ -391,5 +429,16 @@ public class RecouvrementFragment extends Fragment{
 		}
 	}
 	
+	
+	
+	 public String getRealPathFromURI(Uri contentUri) {
+			String[] proj = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+			String path = cursor.getString(column_index);
+			cursor.close();
+			return path;
+	 }
 	
 }

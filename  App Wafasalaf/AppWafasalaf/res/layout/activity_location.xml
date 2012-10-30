@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="fill"
-        android:apiKey="0OMvHSqzY4Wf74MS5DfHkqoYNNi4tymCAWZD1dg"
+        android:apiKey="0OMvHSqzY4Wf-V4wHEl-yu5yz7j0HAFoTPTmrGA"
         android:clickable="true"
         android:enabled="true" />
     <!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->

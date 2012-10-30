@@ -13,4 +13,5 @@
     <color name="white">#FFFFFF</color>
     <color name="synchroBarre">#0099CC</color>
     <color name="BandeauRouge">#FF8800</color>
+    <color name="TextListSeperator">#008EC9</color>
 </resources>

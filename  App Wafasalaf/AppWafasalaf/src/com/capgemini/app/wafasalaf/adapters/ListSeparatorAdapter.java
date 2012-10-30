@@ -4,41 +4,34 @@ import java.util.List;
 
 import com.capgemini.app.wafasalaf.models.Recouvrement;
 import com.capgemini.app.wafasalaf.view.ListClientCellView;
-
-
+import com.capgemini.app.wafasalaf.view.ListSeparatorCellView;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class ListClientAdapter extends BaseAdapter{
-	
-	
-	private List<Recouvrement> listClient;
-	private Context context;
-	private boolean isDispaly;
+public class ListSeparatorAdapter extends BaseAdapter{
 
-	public ListClientAdapter(Context context, List<Recouvrement> listClient, boolean isDisplay){
-		
+	private Context context;
+	private String section;
+	private int count;
+
+	public ListSeparatorAdapter(Context context) {
+
 		this.context = context;
-		this.listClient = listClient;
-		this.isDispaly = isDisplay;
-		
-		
+
 	}
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		if (isDispaly)
-			return listClient.size();
-		else
-			return 0;
+			return 1;
+
 	}
 
 	public Object getItem(int arg0) {
 		
-		return listClient.get(arg0);
+		return null;
 	}
 
 	public long getItemId(int arg0) {
@@ -48,17 +41,23 @@ public class ListClientAdapter extends BaseAdapter{
 
 	public View getView(int position, View convertView, ViewGroup arg2) {
 
-		ListClientCellView view = (ListClientCellView) convertView;
+		ListSeparatorCellView view = (ListSeparatorCellView) convertView;
 		if (view == null) {
-			view = new ListClientCellView(context);
+			view = new ListSeparatorCellView(context);
 		}
 		
-		
-		view.setData(listClient.get(position));
+		view.setData(section, count);
+	
 		return view;
 	
 		
 	}
 
+
+	public void add(String section, int count) {
+		// TODO Auto-generated method stub
+		this.section = section;
+		this.count =count;
+	}
 
 }

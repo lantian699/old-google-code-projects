@@ -82,8 +82,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 
 	@Override
 	protected Integer doInBackground(String... params) {
-
-		
+	
 		try {
 
 			if (params[0].equals("getAll")) {
@@ -112,7 +111,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 	protected void onPostExecute(Integer result) {
 
 		dialog.dismiss();
-
 		mMainActivity.startActivity(new Intent(mMainActivity, ListeClientActivity.class));
+		mMainActivity.finish();
 	}
 }
