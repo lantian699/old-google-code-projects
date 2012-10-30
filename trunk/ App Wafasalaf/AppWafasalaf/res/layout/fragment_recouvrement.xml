@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="13:30"/>
+        	<requestFocus />
 		</LinearLayout>
 		
         
@@ -128,6 +129,20 @@
 	            android:background="@layout/borders"
 	            android:minHeight="90dp"
 	            android:padding="10dp" />
+         
+         <ImageButton 
+             android:id="@+id/btn_take_photo"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:src="@drawable/take_a_photo"/>
+         <ImageView 
+             android:id="@+id/img_photo"
+             android:layout_width="200dp"
+             android:layout_height="400dp"
+             android:maxHeight="200dp"
+             android:maxWidth="400dp"
+             android:visibility="gone"/>
+         
 		</LinearLayout>
         <EditText
             android:id="@+id/commentaire"

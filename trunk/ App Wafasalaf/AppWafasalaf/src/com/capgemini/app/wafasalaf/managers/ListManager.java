@@ -8,6 +8,7 @@ import android.os.Handler;
 public class ListManager {
 	
 	private List<ChangeObserver> observers = new CopyOnWriteArrayList<ChangeObserver>();
+	private List<ChangeDisplayObserver> observersDisplay = new CopyOnWriteArrayList<ChangeDisplayObserver>();
 
 	private Handler mHandler;
 	
@@ -36,7 +37,32 @@ public class ListManager {
 				});
 			}
 		}
+		}
+	
+	
+
+	public void registerListDisplayChangeObserver(ChangeDisplayObserver observer) {
+		synchronized (observersDisplay) {
+			observersDisplay.add(observer);
+		}
 	}
+	
+	
+	public void notifyListDisplayChange(final boolean isDisplay, final int num) {
+		
+		synchronized (observersDisplay) {
+			for (final ChangeDisplayObserver observer : observersDisplay) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(isDisplay, num);						
+					}
+				});
+			}
+		}
+	
+	
+}
 	
 	
 

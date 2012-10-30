@@ -54,7 +54,7 @@ public class DetailClientFragment extends Fragment{
 		  tx_responsable = (TextView)view.findViewById(R.id.tx_responsable);
 	      listView = (ListView) view.findViewById(R.id.listview_detail_client);
 
-	        SectionedAdapter = new SectionedAdapter(getActivity());
+	        SectionedAdapter = new SectionedAdapter(getActivity(), null);
 //	        recouvert = (Recouvrement) context.getIntent().getSerializableExtra(ListeClientActivity.BUNDLE_RECOUVERT);
 	        
 	        dataHelper = DatabaseHelper.getInstance(getActivity());

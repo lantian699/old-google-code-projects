@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,9 +35,9 @@ public class ListClientCellView extends LinearLayout{
 
 	private Client client;
 
-	private Button btn_phone_call;
+	private ImageView btn_phone_call;
 
-	private Button btn_location;
+	private ImageView btn_location;
 
 
 	public ListClientCellView(final Context context) {
@@ -50,8 +51,8 @@ public class ListClientCellView extends LinearLayout{
 	    nomClient = (TextView)findViewById(R.id.nom_client);
 	    dateVisite = (TextView)findViewById(R.id.date_pro);
 	    dataHelper = DatabaseHelper.getInstance(context);
-	    btn_phone_call = (Button)findViewById(R.id.btn_phone_call);
-	    btn_location = (Button)findViewById(R.id.btn_location);
+	    btn_phone_call = (ImageView)findViewById(R.id.btn_phone_call);
+	    btn_location = (ImageView)findViewById(R.id.btn_location);
 	    
 	    btn_location.setOnClickListener(new OnClickListener() {
 			
