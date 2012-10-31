@@ -63,13 +63,12 @@
             android:background="@drawable/border_blue"
             android:layout_width="fill_parent"
             android:layout_height="1dp"/>
-        <TextView 
-            android:id="@+id/tx_statut"
+        
+        <Spinner 
+            android:id="@+id/spinner_choisir_statut"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Choisir le statut de visite"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            />
         
         <LinearLayout 
             android:orientation="horizontal"

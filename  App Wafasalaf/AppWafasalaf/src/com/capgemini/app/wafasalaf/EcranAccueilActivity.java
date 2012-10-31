@@ -39,6 +39,7 @@ public class EcranAccueilActivity extends Activity {
         new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("getAll");
 		else {
 			startActivity(new Intent(this, ListeClientActivity.class));
+			finish();
 		}
     }
 
