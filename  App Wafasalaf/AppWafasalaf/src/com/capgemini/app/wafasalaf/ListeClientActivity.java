@@ -7,10 +7,14 @@ import java.util.List;
 import com.capgemini.app.wafasalaf.adapters.ListClientAdapter;
 import com.capgemini.app.wafasalaf.adapters.SectionedAdapter;
 import com.capgemini.app.wafasalaf.managers.ChangeDisplayObserver;
+import com.capgemini.app.wafasalaf.managers.ChangeMapObserver;
 import com.capgemini.app.wafasalaf.managers.ChangeObserver;
 import com.capgemini.app.wafasalaf.managers.ListManager;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
+import com.capgemini.app.wafasalaf.models.ModelObjet;
 import com.capgemini.app.wafasalaf.models.Recouvrement;
+import com.capgemini.app.wafasalaf.tools.Tools;
+import com.capgemini.app.wafasalaf.tools.UpdateMapPoint;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
@@ -64,8 +68,25 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
         sectionAdapter = new SectionedAdapter(this, listManager);
         dataHelper = DatabaseHelper.getInstance(this);
        
+    
        
+        
+        listManager.registerMapChangeObserver(new ChangeMapObserver() {
+			
+			@Override
+			public void onChange(ModelObjet objet) {
+				
+//				Tools.DrawOneStationOnMap(ListeClientActivity.this, mapView, (Recouvrement)objet, dataHelper);
+				new UpdateMapPoint(ListeClientActivity.this, mapView, dataHelper, objet).execute();
+				System.out.println("draw a station");
+			}
+		});
+        
         searchForList(false, -1);
+        
+        for (Recouvrement recouvrement : listClientEnCours) {
+			listManager.notifyMapChange(recouvrement);
+		}
         
         listManager.registerListDisplayChangeObserver(new ChangeDisplayObserver() {
 			
@@ -111,12 +132,12 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
  		}
         
 		if (pos == 0)
-			enCoursAdapter = new ListClientAdapter(this, listClientEnCours,isDisplay);
+			enCoursAdapter = new ListClientAdapter(this, listClientEnCours,isDisplay, listManager);
 		else if (pos == 1)
-			termineAdapter = new ListClientAdapter(this, listClientTermine,isDisplay);
+			termineAdapter = new ListClientAdapter(this, listClientTermine,isDisplay, listManager);
 		else if (pos == -1) {
-			enCoursAdapter = new ListClientAdapter(this, listClientEnCours,isDisplay);
-			termineAdapter = new ListClientAdapter(this, listClientTermine,isDisplay);
+			enCoursAdapter = new ListClientAdapter(this, listClientEnCours,isDisplay, listManager);
+			termineAdapter = new ListClientAdapter(this, listClientTermine,isDisplay, listManager);
 		}
  		sectionAdapter.addSection("VISITE EN COURS", enCoursAdapter);
  		sectionAdapter.addSection("VISITE TERMINEE", termineAdapter);

@@ -59,7 +59,10 @@ public class SectionedAdapter extends BaseAdapter {
 	     */
 	    public void addSection(String section, Adapter adapter) {  
 	    	header = new ListSeparatorAdapter(context);
-	    	this.header.add(section,adapter.getCount());
+	    	if(adapter instanceof ListClientAdapter)
+	    	this.header.add(section,((ListClientAdapter)adapter).getRealCount());
+	    	else
+	    		this.header.add(section,adapter.getCount());
 	    	headers.add(header);
 	    	  	    	
 	        this.sections.put(section, adapter);  
