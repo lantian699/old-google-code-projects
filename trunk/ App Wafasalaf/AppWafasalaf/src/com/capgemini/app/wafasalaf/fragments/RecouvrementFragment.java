@@ -44,23 +44,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class RecouvrementFragment extends Fragment{
 
 	public static final int CODE_RETOUR = 1;
-	public static final int CAPTURE_CODE = 2;
+	public static final int CAPTURE_CODE = 2;	
+	public static final String STATUT_CHOISIR_STATUT = "Choisir un statut pour cette visite";
+	public static final String STATUT_CLIENT_ABSENT = "Client absent";
+	public static final String STATUT_CLIENT_NE_PAS_REMBOURSER = "Client ne pouvant pas rembourser";
+	public static final String STATUT_CLIENT_REMBOURSER = "Client souhaitant rembourser";
 	
 	private EditText edit_date;
 	private EditText edit_heure;
-	private TextView tx_statut;
 	private EditText edit_commentaire;
 	private LinearLayout ll_remboursement;
 	private TextView tx_montant_rem;
@@ -90,6 +97,9 @@ public class RecouvrementFragment extends Fragment{
 	private ImageButton btn_take_photo;
 	private ImageView img_photo;
 	private Uri currentImageUri;
+	private Spinner spinner_statut;
+	private ArrayAdapter<String> adapter_status;
+	private ArrayList<String> listStatus;
 	
 	
 	
@@ -124,16 +134,75 @@ public class RecouvrementFragment extends Fragment{
 		edit_commentaire = (EditText)view.findViewById(R.id.commentaire);
 		edit_montant_rembourse = (EditText)view.findViewById(R.id.edit_montant_rembourse);
 		ll_remboursement = (LinearLayout)view.findViewById(R.id.ll_remboursement);
-		tx_statut = (TextView)view.findViewById(R.id.tx_statut);
 		tx_montant_rem = (TextView)view.findViewById(R.id.tx_remboursement);
 		signView = (ImageView)view.findViewById(R.id.signature_view);
 		btn_take_photo = (ImageButton)view.findViewById(R.id.btn_take_photo);
 		img_photo = (ImageView)view.findViewById(R.id.img_photo);
-		
+		spinner_statut = (Spinner)view.findViewById(R.id.spinner_choisir_statut);
 		
 		btn_annuler = (Button)view.findViewById(R.id.btn_annuler);
 		btn_valider = (Button)view.findViewById(R.id.btn_valider);
 		
+		listStatus = new ArrayList<String>();
+		listStatus.add(STATUT_CHOISIR_STATUT);
+		listStatus.add(STATUT_CLIENT_ABSENT);
+		listStatus.add(STATUT_CLIENT_NE_PAS_REMBOURSER);
+		listStatus.add(STATUT_CLIENT_REMBOURSER);
+		
+		adapter_status = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, listStatus);
+		adapter_status.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+		spinner_statut.setAdapter(adapter_status);
+		
+		
+		spinner_statut.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int which, long arg3) {
+				// TODO Auto-generated method stub
+				
+				whichChoise = which;
+				
+				switch (whichChoise) {
+				case 0:
+					edit_commentaire.setVisibility(View.GONE);
+					ll_remboursement.setVisibility(View.GONE);
+					edit_commentaire.requestFocus();
+					btn_valider.setEnabled(false);
+					break;
+				case 1:
+					edit_commentaire.setVisibility(View.VISIBLE);
+					ll_remboursement.setVisibility(View.GONE);
+					edit_commentaire.requestFocus();
+					btn_valider.setEnabled(true);
+					break;
+				case 2:
+					edit_commentaire.setVisibility(View.VISIBLE);
+					ll_remboursement.setVisibility(View.GONE);
+					edit_commentaire.requestFocus();
+					btn_valider.setEnabled(true);
+					break;
+				case 3:
+					edit_commentaire.setVisibility(View.GONE);
+					ll_remboursement.setVisibility(View.VISIBLE);
+					tx_montant_rem.setText("M. "+client.getNom()+" a remboursé :");
+					edit_montant_rembourse.requestFocusFromTouch();
+					btn_valider.setEnabled(true);
+					break;
+
+				default:
+					break;
+				}
+				
+				
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		btn_take_photo.setOnClickListener(new OnClickListener() {
 			
@@ -294,58 +363,6 @@ public class RecouvrementFragment extends Fragment{
 		});
 		
 		
-		tx_statut.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				final String[] items = new String[] { "Client absent",
-						"Client ne pouvant pas rembourser",
-						"Client souhaitant rembourser" };
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setTitle("Choisir le statut de visite")
-						.setSingleChoiceItems(items, whichChoise,
-								new DialogInterface.OnClickListener() {
-									
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										whichChoise = which;
-										
-										tx_statut.setText(items[whichChoise]);
-										
-										switch (whichChoise) {
-										case 0:
-											edit_commentaire.setVisibility(View.VISIBLE);
-											ll_remboursement.setVisibility(View.GONE);
-											edit_commentaire.requestFocus();
-											break;
-										case 1:
-											edit_commentaire.setVisibility(View.VISIBLE);
-											ll_remboursement.setVisibility(View.GONE);
-											edit_commentaire.requestFocus();
-											break;
-										case 2:
-											edit_commentaire.setVisibility(View.GONE);
-											ll_remboursement.setVisibility(View.VISIBLE);
-											tx_montant_rem.setText("M. "+client.getNom()+" a remboursé :");
-											edit_montant_rembourse.requestFocusFromTouch();
-											break;
-
-										default:
-											break;
-										}
-										
-										btn_valider.setEnabled(true);
-										dialog.dismiss();
-									}
-								});
-				builder.show();
-
-			}
-		});
 		
 		
 		signView.setOnClickListener(new OnClickListener() {
