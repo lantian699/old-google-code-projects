@@ -39,6 +39,8 @@ public class ListClientCellView extends LinearLayout{
 
 	private ImageView btn_location;
 
+	private TextView tx_loc_num;
+
 
 	public ListClientCellView(final Context context) {
 		super(context);
@@ -53,6 +55,7 @@ public class ListClientCellView extends LinearLayout{
 	    dataHelper = DatabaseHelper.getInstance(context);
 	    btn_phone_call = (ImageView)findViewById(R.id.btn_phone_call);
 	    btn_location = (ImageView)findViewById(R.id.btn_location);
+	    tx_loc_num = (TextView)findViewById(R.id.tx_loc_num);
 	    
 	    btn_location.setOnClickListener(new OnClickListener() {
 			
@@ -80,8 +83,9 @@ public class ListClientCellView extends LinearLayout{
 	}
 	
 	
-	public void setData(Recouvrement recouvert){
+	public void setData(Recouvrement recouvert, int position){
 		
+		tx_loc_num.setText(String.valueOf(position+1));
 		try {
 			clientDao = dataHelper.getDao(Client.class);
 			QueryBuilder<Client, ?> queryBuilder = clientDao.queryBuilder();

@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 
 
+import com.capgemini.app.wafasalaf.R;
 import com.capgemini.app.wafasalaf.models.Client;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
 import com.capgemini.app.wafasalaf.models.Impaye;
@@ -17,11 +21,18 @@ import com.capgemini.app.wafasalaf.models.Recouvrement;
 import com.capgemini.app.wafasalaf.spreadsheet.SpreadsheetAndroidRequestInitializer;
 import com.capgemini.app.wafasalaf.spreadsheet.Worksheet;
 import com.capgemini.app.wafasalaf.spreadsheet.Worksheet.Table;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 import com.google.api.services.spreadsheet.client.SpreadsheetClient;
 import com.google.api.services.spreadsheet.model.ListEntry;
 import com.google.api.services.spreadsheet.model.ListFeed;
 import com.google.api.services.spreadsheet.url.ListUrl;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 public class Tools {
 
@@ -32,34 +43,76 @@ public class Tools {
 	public static final String _UPDATED = "updated";
 	public static final String KEY_SIEBEL_ID = "siebelid";
 	public static final String TAG = "Tools";
+	private static Dao<Client, ?> clientDao;
 
-	/*public static void DrawOneStationOnMap(Activity context, Factory factory,
-			MapView mapView) {
+	public static void DrawOneStationOnMap(Context context, MapView mapView,
+			Recouvrement recouvert, DatabaseHelper dataHelper) {
 
-		List<Overlay> mapOverlays = mapView.getOverlays();
+		try {
+			clientDao = dataHelper.getDao(Client.class);
+			QueryBuilder<Client, ?> queryBuilder = clientDao.queryBuilder();
+			queryBuilder.where().eq(Client.COLUMN_NAME_CLIENT_ID,
+					recouvert.getClientId());
+			PreparedQuery<Client> preparedQuery = queryBuilder.prepare();
+			List<Client> listClient = clientDao.query(preparedQuery);
+			
+			if (listClient.size() > 0) {
+				Client client = listClient.get(0);
+//				System.out.println("addres = " + client.getAdresse());
+				GeoPoint point = getLatFromAddress(context, client.getAdresse());
+				List<Overlay> mapOverlays = mapView.getOverlays();
 
-		Drawable drawable = context.getResources().getDrawable(
-				R.drawable.pointer);
-		VelibItemizedOverlay velibItemizedOverlay = new VelibItemizedOverlay(
-				drawable, context, mapView);
+				Drawable drawable = context.getResources().getDrawable(R.drawable.pin);
+				MapItemizedOverlay velibItemizedOverlay = new MapItemizedOverlay(drawable, context, mapView);
 
-		GeoPoint StationPos = new GeoPoint((int) (factory.getLatitude() * 1E6),
-				(int) (factory.getLongitude() * 1E6));
 
-		OverlayItem overlayitem = new OverlayItem(StationPos,
-				factory.getName(), factory.getAddress());
+				OverlayItem overlayitem = new OverlayItem(point,client.getNom(), client.getAdresse());
 
-		velibItemizedOverlay.addOverlay(overlayitem);
+				velibItemizedOverlay.addOverlay(overlayitem);
 
-		mapOverlays.add(velibItemizedOverlay);
+				mapOverlays.add(velibItemizedOverlay);
 
-		mapView.postInvalidate();
+				mapView.postInvalidate();
 
-		MapController mapController = mapView.getController();
-		mapController.animateTo(StationPos);
-		mapController.setZoom(10);
+				MapController mapController = mapView.getController();
+				mapController.animateTo(point);
+				mapController.setZoom(10);
+			}
 
-	}*/
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public static  GeoPoint getLatFromAddress(Context context, String strAddress){
+		
+		Geocoder coder = new Geocoder(context);
+		List<Address> address;
+
+		try {
+		    address = coder.getFromLocationName(strAddress,5);
+		    if (address == null) {
+		        return null;
+		    }
+		    Address location = address.get(0);
+		    location.getLatitude();
+		    location.getLongitude();
+
+		    GeoPoint point = new GeoPoint((int) (location.getLatitude() * 1E6),
+		                      (int) (location.getLongitude() * 1E6));
+
+		     return point;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
 
 	public static void getAll(DatabaseHelper dataHelper,
 			SpreadsheetAndroidRequestInitializer requestInitializer,

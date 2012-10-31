@@ -3,13 +3,16 @@ package com.capgemini.app.wafasalaf.managers;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import com.capgemini.app.wafasalaf.models.ModelObjet;
+
 import android.os.Handler;
 
 public class ListManager {
 	
 	private List<ChangeObserver> observers = new CopyOnWriteArrayList<ChangeObserver>();
 	private List<ChangeDisplayObserver> observersDisplay = new CopyOnWriteArrayList<ChangeDisplayObserver>();
-
+	private List<ChangeMapObserver> observersMap = new CopyOnWriteArrayList<ChangeMapObserver>();
 	private Handler mHandler;
 	
 	
@@ -33,6 +36,27 @@ public class ListManager {
 					@Override
 					public void run() {
 						observer.onChange();						
+					}
+				});
+			}
+		}
+		}
+	
+	public void registerMapChangeObserver(ChangeMapObserver observer) {
+		synchronized (observersMap) {
+			observersMap.add(observer);
+		}
+	}
+	
+	
+	public void notifyMapChange(final ModelObjet objet) {
+		
+		synchronized (observersMap) {
+			for (final ChangeMapObserver observer : observersMap) {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						observer.onChange(objet);						
 					}
 				});
 			}
