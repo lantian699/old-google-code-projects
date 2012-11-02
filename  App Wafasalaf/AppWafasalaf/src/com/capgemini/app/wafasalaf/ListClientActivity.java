@@ -29,7 +29,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class ListeClientActivity extends MapActivity implements OnItemClickListener{
+public class ListClientActivity extends MapActivity implements OnItemClickListener{
 	
 	public static final String BUNDLE_RECOUVERT = "bundle_recouvert";
 
@@ -43,11 +43,11 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
 	private List<Recouvrement> listClientTermine;
 	private DatabaseHelper dataHelper;
 	private Dao<Recouvrement, ?> listClientDao;
-	private SectionedAdapter sectionAdapter;
+//	private SectionedAdapter sectionAdapter;
 	private ListClientAdapter enCoursAdapter;
 	private ListClientAdapter termineAdapter;
 
-	private ListManager listManager;
+	private static ListManager listManager;
 
 	private MapView mapView;
 
@@ -55,7 +55,7 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_client);
-        listManager = new ListManager();
+        listManager = ListManager.getInstance();
         
         GeoPoint StationPos = new GeoPoint((int) ( LATITUDE* 1E6),(int) ( LONGITUDE* 1E6));
         
@@ -65,34 +65,34 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
 		mapView.getController().setZoom(10);
         
         listView = (ListView)findViewById(R.id.listview_client);
-        sectionAdapter = new SectionedAdapter(this, listManager);
+ 
         dataHelper = DatabaseHelper.getInstance(this);
        
-    
+     
        
         
-        listManager.registerMapChangeObserver(new ChangeMapObserver() {
+        listManager.registerMapChangeObserver(new ChangeObserver() {
 			
 			@Override
-			public void onChange(ModelObjet objet) {
+			public void onChange() {
 				
-//				Tools.DrawOneStationOnMap(ListeClientActivity.this, mapView, (Recouvrement)objet, dataHelper);
-				new UpdateMapPoint(ListeClientActivity.this, mapView, dataHelper, objet).execute();
-				System.out.println("draw a station");
+				mapView.getOverlays().clear();
+				for (Recouvrement recouvrement : listClientEnCours) {
+					new UpdateMapPoint(ListClientActivity.this, mapView, dataHelper, recouvrement).execute();
+			}
+				
 			}
 		});
         
         searchForList(false, -1);
-        
-        for (Recouvrement recouvrement : listClientEnCours) {
-			listManager.notifyMapChange(recouvrement);
-		}
+        listManager.notifyMapChange();
         
         listManager.registerListDisplayChangeObserver(new ChangeDisplayObserver() {
 			
 			@Override
 			public void onChange(boolean isDisplay, int pos) {
 				searchForList(isDisplay, pos);	
+				
 			}
 		});
         
@@ -118,9 +118,9 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
  			
  			for (Recouvrement recouvert : listClient) {
  				
- 				if(recouvert.getStatut().equals("en cours")){
+ 				if(recouvert.getStatut().equals(Recouvrement.STATUT_EN_COURS)){
  					listClientEnCours.add(recouvert);
- 				}else if(recouvert.getStatut().equals("termine")) {
+ 				}else if(recouvert.getStatut().equals(Recouvrement.STATUT_TERMINE)) {
  					listClientTermine.add(recouvert);
  				}
  			}
@@ -139,6 +139,7 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
 			enCoursAdapter = new ListClientAdapter(this, listClientEnCours,isDisplay, listManager);
 			termineAdapter = new ListClientAdapter(this, listClientTermine,isDisplay, listManager);
 		}
+		SectionedAdapter sectionAdapter = new SectionedAdapter(this,listManager);
  		sectionAdapter.addSection("VISITE EN COURS", enCoursAdapter);
  		sectionAdapter.addSection("VISITE TERMINEE", termineAdapter);
  		
@@ -161,6 +162,7 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
 		intent.setClass(this, DetailClientRecouvrementActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(BUNDLE_RECOUVERT, recouvert);
+
 		startActivity(intent);
 		
 	}
@@ -170,4 +172,5 @@ public class ListeClientActivity extends MapActivity implements OnItemClickListe
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 }

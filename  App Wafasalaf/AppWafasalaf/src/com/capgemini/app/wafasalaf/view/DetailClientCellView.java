@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.capgemini.app.wafasalaf.CustomDialog;
 import com.capgemini.app.wafasalaf.LocationActivity;
 import com.capgemini.app.wafasalaf.R;
 import com.capgemini.app.wafasalaf.models.Client;
@@ -53,8 +54,18 @@ public class DetailClientCellView extends LinearLayout{
 				cellNameValue.setText(client.getProduit() + "   " +client.getnAffaire());
 				break;
 			case 1:
-				cellName.setText("Nom Complet : ");
-				cellNameValue.setText(client.getNom());
+				cellName.setText("Montant Impayé : ");
+				cellNameValue.setText("Details");
+				cellNameValue.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						CustomDialog dialog = new CustomDialog(context,client);
+						dialog.show();
+					}
+				});
+				
 				break;
 			case 2:
 				cellName.setText("Adresse : ");

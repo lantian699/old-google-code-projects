@@ -40,14 +40,13 @@ public class SectionedAdapter extends BaseAdapter {
 		private Context context;
 		
 		public SectionedAdapter(Context context) {  
-//			headers = new ArrayAdapter<String>(context, R.layout.listseparator);
-			header = new ListSeparatorAdapter(context);
+
+			headers = new ArrayList<ListSeparatorAdapter>();
 	    }  
 		
 	    public SectionedAdapter(Context context, ListManager manager) { 
 	    	this.context = context;
-//	        headers = new ArrayAdapter<String>(context, R.layout.listseparator);  
-//	        headers = new ListSeparatorAdapter(context);
+	    	
 	    	headers = new ArrayList<ListSeparatorAdapter>();
 	        this.manager = manager;
 	    }  
@@ -58,13 +57,12 @@ public class SectionedAdapter extends BaseAdapter {
 	     * @param adapter the child adapter for this section
 	     */
 	    public void addSection(String section, Adapter adapter) {  
-	    	header = new ListSeparatorAdapter(context);
-	    	if(adapter instanceof ListClientAdapter)
-	    	this.header.add(section,((ListClientAdapter)adapter).getRealCount());
-	    	else
-	    		this.header.add(section,adapter.getCount());
+	    	if(adapter instanceof ListClientAdapter){
+	    		header = new ListSeparatorAdapter(context, section, ((ListClientAdapter)adapter).getRealCount());
+	    		
+	    	}else
+	    		header = new ListSeparatorAdapter(context, section, adapter.getCount());
 	    	headers.add(header);
-	    	  	    	
 	        this.sections.put(section, adapter);  
 	        
 	    }  

@@ -15,11 +15,13 @@ public class ListSeparatorAdapter extends BaseAdapter{
 
 	private Context context;
 	private String section;
-	private int count;
+	private  int count;
 
-	public ListSeparatorAdapter(Context context) {
-
+	public ListSeparatorAdapter(Context context, String section, int count) {
+		
 		this.context = context;
+		this.section = section;
+		this.count = count;
 
 	}
 
@@ -38,7 +40,7 @@ public class ListSeparatorAdapter extends BaseAdapter{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	public View getView(int position, View convertView, ViewGroup arg2) {
 
 		ListSeparatorCellView view = (ListSeparatorCellView) convertView;
@@ -47,17 +49,12 @@ public class ListSeparatorAdapter extends BaseAdapter{
 		}
 		
 		view.setData(section, count);
-	
 		return view;
 	
 		
 	}
 
 
-	public void add(String section, int count) {
-		// TODO Auto-generated method stub
-		this.section = section;
-		this.count =count;
-	}
+	
 
 }

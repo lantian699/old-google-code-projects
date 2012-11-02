@@ -38,7 +38,7 @@ public class EcranAccueilActivity extends Activity {
 		if(listRecouvert.size() == 0)
         new SynchronizationTask(this, DatabaseHelper.getInstance(this)).execute("getAll");
 		else {
-			startActivity(new Intent(this, ListeClientActivity.class));
+			startActivity(new Intent(this, ListClientActivity.class));
 			finish();
 		}
     }

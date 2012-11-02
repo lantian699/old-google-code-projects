@@ -35,8 +35,8 @@ public class DetailClientRecouvrementActivity extends FragmentActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_client_recouvrement);
        
-        manager = new ListManager();
-        recouvert = (Recouvrement)getIntent().getSerializableExtra(ListeClientActivity.BUNDLE_RECOUVERT);
+        manager = ListManager.getInstance();
+        recouvert = (Recouvrement)getIntent().getSerializableExtra(ListClientActivity.BUNDLE_RECOUVERT);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         final ActionBar actionBar = getActionBar();

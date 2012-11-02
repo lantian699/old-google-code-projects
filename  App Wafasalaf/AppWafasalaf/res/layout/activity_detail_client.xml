@@ -3,11 +3,34 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    
+    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dp"
+	        android:orientation="horizontal">
+	    <TextView
+	        android:id="@+id/tx_nom_client"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Responsable du dossier :"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        tools:context=".DetailClientActivity" />
+	    
+	    <TextView 
+	        android:id="@+id/tx_montant_impaye"
+	        android:layout_marginLeft="20dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+
+
+		</LinearLayout>
 
 	    <LinearLayout 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:padding="15dp"
+	        android:padding="5dp"
 	        android:orientation="horizontal">
 	    <TextView
 	        android:layout_width="wrap_content"

@@ -1,0 +1,42 @@
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:padding="5dp"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/tx_date_ech"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Date ech" />
+        
+        <TextView
+            android:id="@+id/tx_detail_montant"
+            android:padding="5dp"
+            android:layout_marginLeft="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="montant" />
+        
+        <TextView
+            android:id="@+id/tx_date_rejet"
+            android:padding="5dp"
+            android:layout_marginLeft="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="date rejet" />
+        
+        <TextView
+            android:id="@+id/tx_detail_motif"
+            android:padding="5dp"
+            android:layout_marginLeft="300dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="motif" />
+
+    </FrameLayout>
