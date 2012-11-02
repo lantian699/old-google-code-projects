@@ -3,7 +3,7 @@ package com.capgemini.app.wafasalaf.fragments;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.capgemini.app.wafasalaf.ListeClientActivity;
+import com.capgemini.app.wafasalaf.ListClientActivity;
 import com.capgemini.app.wafasalaf.R;
 import com.capgemini.app.wafasalaf.adapters.DetailClientAdapter;
 import com.capgemini.app.wafasalaf.adapters.SectionedAdapter;
@@ -40,6 +40,8 @@ public class DetailClientFragment extends Fragment{
 	private DetailClientAdapter adapterDonnee;
 	private ListView listView;
 	private SectionedAdapter SectionedAdapter;
+	private TextView tx_nom_client;
+	private TextView tx_montant_impaye;
 	
 	
 	public DetailClientFragment(Recouvrement recouvert){
@@ -51,9 +53,11 @@ public class DetailClientFragment extends Fragment{
 	 
 		 View view = inflater.inflate(R.layout.activity_detail_client, container, false);
 		 
+		 tx_nom_client = (TextView)view.findViewById(R.id.tx_nom_client);
+		 tx_montant_impaye = (TextView)view.findViewById(R.id.tx_montant_impaye);
 		  tx_responsable = (TextView)view.findViewById(R.id.tx_responsable);
 	      listView = (ListView) view.findViewById(R.id.listview_detail_client);
-
+	      
 	        SectionedAdapter = new SectionedAdapter(getActivity(), null);
 //	        recouvert = (Recouvrement) context.getIntent().getSerializableExtra(ListeClientActivity.BUNDLE_RECOUVERT);
 	        
@@ -68,6 +72,8 @@ public class DetailClientFragment extends Fragment{
 				if(listClient.size() > 0){
 					Client client = listClient.get(0);
 					
+					tx_nom_client.setText(client.getNom());
+					tx_montant_impaye.setText(client.getMontantImapye());
 					tx_responsable.setText(client.getResponsable());
 					adapterClient = new  DetailClientAdapter(getActivity(), DetailClientCellView.LIST_COLUMN_INDENTIFICATION_DU_CLIENT, 7, client);
 					adapterConjoint = new  DetailClientAdapter(getActivity(), DetailClientCellView.LIST_COLUMN_INDENTIFICATION_DU_CONJOINT, 2, client);

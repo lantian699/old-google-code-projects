@@ -8,6 +8,8 @@ public class Impaye extends ModelObjet{
 
 
 	private static final long serialVersionUID = -7641979932813984165L;
+	
+	public static final String IMPAYE_COLUMN_NAME_CLIENT_ID ="client";
 
 	@DatabaseField(generatedId=true)
 	private int id;

@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.capgemini.app.wafasalaf.ListeClientActivity;
+import com.capgemini.app.wafasalaf.ListClientActivity;
 import com.capgemini.app.wafasalaf.models.DatabaseHelper;
 import com.capgemini.app.wafasalaf.spreadsheet.Worksheet.Table;
 import com.capgemini.app.wafasalaf.tools.Tools;
@@ -111,7 +111,7 @@ public class SynchronizationTask extends AsyncTask<String, Integer, Integer> {
 	protected void onPostExecute(Integer result) {
 
 		dialog.dismiss();
-		mMainActivity.startActivity(new Intent(mMainActivity, ListeClientActivity.class));
+		mMainActivity.startActivity(new Intent(mMainActivity, ListClientActivity.class));
 		mMainActivity.finish();
 	}
 }

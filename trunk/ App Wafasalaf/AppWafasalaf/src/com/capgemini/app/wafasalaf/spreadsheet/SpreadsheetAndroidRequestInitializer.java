@@ -108,12 +108,13 @@ public class SpreadsheetAndroidRequestInitializer extends SpreadsheetRequestInit
 	public void intercept(HttpRequest request) throws IOException {
 			super.intercept(request);
 			if(this.authToken == null){
-				this.authToken = "DQAAAMUAAACSWEpvEWHvBZugyWtUKtsdieq0gwH" +
-						"fDeCFpPJ741EBuQ0GsIKCYIlI-RoOteHSR9il-TlMCNLL9VIzRq" +
-						"7FVDDyLGZdkL4xWmjPclFg_OCjL6STXG5ehkG3XOYo_uwq-8ePITl" +
-						"y-0LG1thBYmDLCnyZ0YvUmZSfzkg1DW52IDXzKvoNz6pqy6OzoGR0R-r" +
-						"KHp06ST1TfnjAxR7GfRW-Zd1Q_0cKcRo297puUUtsF3_1GWBqIkszTu0K_G_" +
-						"JYfHCFYgM0iMyl5CJy3GhM0NVTmO1";
+
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			//	Toast.makeText(mainActivity, "l'appli n'a pas réussi d'obtenir le Token pour connecter à Google Spreadsheet", Toast.LENGTH_SHORT).show();
 			

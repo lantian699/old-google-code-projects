@@ -14,7 +14,7 @@
         
         <uses-library android:name="com.google.android.maps" />
         <activity
-            android:name=".ListeClientActivity">
+            android:name=".ListClientActivity">
         </activity>
         <activity
             android:name=".EcranAccueilActivity"

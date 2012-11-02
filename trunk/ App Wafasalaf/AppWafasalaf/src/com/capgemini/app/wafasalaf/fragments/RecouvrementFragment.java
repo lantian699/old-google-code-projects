@@ -123,7 +123,7 @@ public class RecouvrementFragment extends Fragment{
 		}
 	}
 	
-	@Override
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
@@ -273,13 +273,14 @@ public class RecouvrementFragment extends Fragment{
 			@Override
 			public void onClick(View v) {
 				
-				
+//				recouvert.setStatut(Recouvrement.STATUT_EN_COURS);
 				recouvert.setStatut(Recouvrement.STATUT_TERMINE);
 				try {
 					recouvertDao = dataHelper.getDao(Recouvrement.class);
 					recouvertDao.update(recouvert);
 					
-//					manager.notifyListChange();
+					manager.notifyListDisplayChange(true, -1);
+					manager.notifyMapChange();
 					
 				} catch (SQLException e) {
 					e.printStackTrace();
