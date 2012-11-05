@@ -73,7 +73,7 @@ public class DetailClientFragment extends Fragment{
 					Client client = listClient.get(0);
 					
 					tx_nom_client.setText(client.getNom());
-					tx_montant_impaye.setText(client.getMontantImapye());
+					tx_montant_impaye.setText(client.getMontantImapye()+ "  Dh");
 					tx_responsable.setText(client.getResponsable());
 					adapterClient = new  DetailClientAdapter(getActivity(), DetailClientCellView.LIST_COLUMN_INDENTIFICATION_DU_CLIENT, 7, client);
 					adapterConjoint = new  DetailClientAdapter(getActivity(), DetailClientCellView.LIST_COLUMN_INDENTIFICATION_DU_CONJOINT, 2, client);

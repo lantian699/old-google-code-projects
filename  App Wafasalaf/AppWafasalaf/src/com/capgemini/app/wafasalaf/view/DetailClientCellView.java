@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class DetailClientCellView extends LinearLayout{
 	private Context context;
 	private TextView cellName;
 	private TextView cellNameValue;
+	private Button btn_detail;
 
 
 	public DetailClientCellView(Context context) {
@@ -39,7 +41,7 @@ public class DetailClientCellView extends LinearLayout{
 	    
 	    cellName = (TextView)findViewById(R.id.tx_cell_name);
 	    cellNameValue = (TextView)findViewById(R.id.tx_cell_name_value);
-	    
+	    btn_detail = (Button)findViewById(R.id.btn_detail_impaye);
 	    
 	}
 	
@@ -48,6 +50,8 @@ public class DetailClientCellView extends LinearLayout{
 		
 		if(type.equals(LIST_COLUMN_INDENTIFICATION_DU_CLIENT)){
 			
+			btn_detail.setVisibility(View.GONE);
+			this.setClickable(false);
 			switch (position) {
 			case 0:
 				cellName.setText("Produit/N. Affaire : ");
@@ -55,8 +59,9 @@ public class DetailClientCellView extends LinearLayout{
 				break;
 			case 1:
 				cellName.setText("Montant Impayé : ");
-				cellNameValue.setText("Details");
-				cellNameValue.setOnClickListener(new OnClickListener() {
+				cellNameValue.setText(client.getMontantImapye()+" Dh");
+				btn_detail.setVisibility(View.VISIBLE);
+				btn_detail.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
@@ -86,6 +91,7 @@ public class DetailClientCellView extends LinearLayout{
 			case 3:
 				cellName.setText("GSM : ");
 				cellNameValue.setText(client.getGsm());
+				
 				this.setOnClickListener(new OnClickListener() {
 					
 					@Override

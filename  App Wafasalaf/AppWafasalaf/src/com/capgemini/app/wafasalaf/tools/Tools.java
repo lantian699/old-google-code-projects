@@ -58,8 +58,9 @@ public class Tools {
 			
 			if (listClient.size() > 0) {
 				Client client = listClient.get(0);
-//				System.out.println("addres = " + client.getAdresse());
+				
 				GeoPoint point = getLatFromAddress(context, client.getAdresse());
+				System.out.println("point = " + point.getLatitudeE6()+ " addr= "+client.getAdresse());
 				List<Overlay> mapOverlays = mapView.getOverlays();
 
 				Drawable drawable = context.getResources().getDrawable(R.drawable.pin);

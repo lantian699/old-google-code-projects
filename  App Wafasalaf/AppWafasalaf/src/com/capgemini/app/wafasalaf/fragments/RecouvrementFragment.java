@@ -271,8 +271,7 @@ public class RecouvrementFragment extends Fragment{
 			private Dao<Recouvrement, ?> recouvertDao;
 
 			@Override
-			public void onClick(View v) {
-				
+			public void onClick(View v) {			
 //				recouvert.setStatut(Recouvrement.STATUT_EN_COURS);
 				recouvert.setStatut(Recouvrement.STATUT_TERMINE);
 				try {
@@ -309,8 +308,7 @@ public class RecouvrementFragment extends Fragment{
 					break;
 				}
 				
-				
-				
+				getActivity().finish();	
 			}
 		});
 		
