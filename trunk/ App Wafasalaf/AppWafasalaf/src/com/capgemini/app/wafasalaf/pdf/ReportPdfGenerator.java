@@ -46,6 +46,7 @@ import com.j256.ormlite.dao.Dao;
 
 public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 
+	public static final int CODE_PDF_GENERATOR = 5;
 	private String reportDir ;
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
 			Font.BOLD);
@@ -59,7 +60,7 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 			Font.NORMAL);
 	
 	private DatabaseHelper dataHelper;
-	private Context context;
+	private Fragment context;
 	private ProgressDialog dialog;
 	private File fileReport;
 	private File fileReportPdf;
@@ -69,7 +70,7 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 	private double solde;
 	
 	
-	public ReportPdfGenerator(Context context, DatabaseHelper dataHelper, Client client, String montant, String sigName, double solde){
+	public ReportPdfGenerator(Fragment context, DatabaseHelper dataHelper, Client client, String montant, String sigName, double solde){
 		this.dataHelper = dataHelper;
 		this.context =context;
 		this.client = client;
@@ -91,7 +92,7 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 		// TODO Auto-generated method stub
 		super.onPreExecute();
 
-		dialog = ProgressDialog.show(context, "", "En cours de générer une lettre de recouvrement...");
+		dialog = ProgressDialog.show(context.getActivity(), "", "En cours de générer une lettre de recouvrement...");
 	}
 	
 	@Override
@@ -131,6 +132,7 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 		dialog.dismiss();
 
 		sendMail();
+		
 		
 	}
 	
@@ -331,7 +333,6 @@ public class ReportPdfGenerator extends AsyncTask<Void, Void, Void>{
 		} else {
 			intent.setType("application/octet-stream");
 		}
-		context.startActivity(intent);
-		
+		context.startActivityForResult(intent, CODE_PDF_GENERATOR);
 	}
 }
