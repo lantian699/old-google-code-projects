@@ -56,6 +56,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class RecouvrementFragment extends Fragment{
 
@@ -100,6 +101,7 @@ public class RecouvrementFragment extends Fragment{
 	private Spinner spinner_statut;
 	private ArrayAdapter<String> adapter_status;
 	private ArrayList<String> listStatus;
+	private boolean estSign = false;
 	
 	
 	
@@ -272,6 +274,41 @@ public class RecouvrementFragment extends Fragment{
 
 			@Override
 			public void onClick(View v) {			
+
+				
+				switch (whichChoise) {
+				case 1:
+					
+					getActivity().finish();
+					break;
+					
+				case 2:
+					getActivity().finish();
+					break;
+				case 3:
+					
+					if(estValider && estSign){
+					new ReportPdfGenerator(RecouvrementFragment.this, dataHelper, client,edit_montant_rembourse.getText().toString(),sigName, montant-value).execute();
+					
+					client.setMontantImapye(String.valueOf(montant-value));
+					
+					try {
+						clientDao.update(client);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					}else{
+						Toast.makeText(getActivity(), "Veuillez saisir le montant payé ou singer.", Toast.LENGTH_SHORT).show();
+					}
+				
+					
+					break;	
+
+				default:
+					break;
+				}
+				
 //				recouvert.setStatut(Recouvrement.STATUT_EN_COURS);
 				recouvert.setStatut(Recouvrement.STATUT_TERMINE);
 				try {
@@ -285,30 +322,7 @@ public class RecouvrementFragment extends Fragment{
 					e.printStackTrace();
 				}
 				
-				switch (whichChoise) {
-				case 0:
-					
-					getActivity().finish();
-					break;
-					
-				case 1:
-					getActivity().finish();
-					break;
-				case 2:
-					
-					if(estValider){
-					new ReportPdfGenerator(getActivity(), dataHelper, client,edit_montant_rembourse.getText().toString(),sigName, montant-value).execute();
-					
-					client.setMontantImapye(String.valueOf(montant-value));
-					
-					}
-					break;	
-
-				default:
-					break;
-				}
 				
-				getActivity().finish();	
 			}
 		});
 		
@@ -414,6 +428,7 @@ public class RecouvrementFragment extends Fragment{
 					out = new FileOutputStream(new File(fileSign, imageName));
 					sigName = filename+imageName;
 					image.compress(Bitmap.CompressFormat.PNG, 90, out);
+					estSign  = true;
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -436,6 +451,10 @@ public class RecouvrementFragment extends Fragment{
 			    if(originFile.length() == 0){
 			    	originFile.delete();
 			     }
+			}else if(requestCode == ReportPdfGenerator.CODE_PDF_GENERATOR){
+				
+				
+				getActivity().finish();
 			}
 			
 			break;
@@ -456,5 +475,7 @@ public class RecouvrementFragment extends Fragment{
 			cursor.close();
 			return path;
 	 }
+	 
+	
 	
 }
