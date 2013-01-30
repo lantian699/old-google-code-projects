@@ -6,15 +6,7 @@
     android:layout_width="fill_parent"   
     android:layout_height="wrap_content">  
     
-    
-<ImageView   
-    android:paddingTop="12dip"  
-    android:layout_alignParentLeft="true"  
-    android:layout_width="wrap_content"   
-    android:layout_height="wrap_content"   
-    android:id="@+id/ItemImage"  
-    
-    />   
+
     
 <TextView   
     android:text="TextView01"  

@@ -17,8 +17,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -63,7 +62,7 @@ public class AffichageActivity extends Activity {
     ArrayList<HashMap<String, Object>> listItem;
     ListView mainlist;
     Boolean estAffiche = false;
-    AdView adView;
+
     int idChapter=0;
     int nameChapter=0;
     int flag=0;
@@ -87,8 +86,6 @@ public class AffichageActivity extends Activity {
         listItem = new ArrayList<HashMap<String, Object>>();
         mainlist = (ListView)findViewById(R.id.list1);
     	
-        adView = (AdView)this.findViewById(R.id.ad); // show the advertisement
-        adView.loadAd(new AdRequest());
         
         t.setToNow(); // 取得系统时间。
       	  year = t.year;

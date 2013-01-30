@@ -21,9 +21,6 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
-
 
 import android.R.color;
 import android.app.Activity;
@@ -82,7 +79,6 @@ public class YearsActivity extends Activity {
     ArrayList<HashMap<String, Object>> listItem;
     ListView mainlist;
     Boolean estAffiche = false;
-    AdView adView;
     int idChapter=0;
     int nameChapter=0;
     int flag=0;
@@ -102,11 +98,7 @@ public class YearsActivity extends Activity {
         
         listItem = new ArrayList<HashMap<String, Object>>();
         mainlist = (ListView)findViewById(R.id.list1);
-    	
-        
-        adView = (AdView)this.findViewById(R.id.ad); // show the advertisement
-        adView.loadAd(new AdRequest());
-        
+    
         
         t.setToNow(); // 取得系统时间。
       	  year = t.year;
