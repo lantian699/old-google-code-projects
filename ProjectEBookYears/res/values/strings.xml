@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="di0">前言</string>
+    <string name="di1">chapter 1</string>
+    <string name="di2">chapter 2</string>
+    <string name="di3">chapter 3</string>
+    <string name="di4">chapter 4</string>
+    <string name="di5">chapter 5</string>
+    <string name="di6">chapter 6</string>
+    <string name="di7">chapter 7</string>
+    <string name="di8">chapter 8</string>
+    <string name="di9">chapter 9</string>
+    <string name="dia">chapter 10</string>
+    <string name="dib">chapter 11</string>
+    <string name="dic">chapter 12</string>
+    <string name="did">chapter 13</string>
+    <string name="die">chapter 14</string>
+    <string name="dif">chapter 15</string>
+    <string name="dig">chapter 16</string>
+    <string name="dih">chapter 17</string>
+    <string name="dii">chapter 18</string>
+    <string name="dij">chapter 19</string>
+    <string name="dik">chapter 20</string>
+    <string name="dil">chapter 21</string>
+    <string name="dim">chapter 22</string>
+    <string name="din">chapter 23</string>
+    <string name="dio">chapter 24</string>
+    <string name="dip">chapter 25</string>
+    <string name="diq">chapter 26</string>
+    <string name="help_dialog">本软件由CIEL EQUIPE开发，如果您在使用过程中有任何意见或建议，请与我们联系，谢谢。</string>
+</resources>
