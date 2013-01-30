@@ -4,64 +4,40 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
- 
-    <uses-sdk android:minSdkVersion="7" />
-    <meta-data android:name="gfan_cpid" android:value="chine" />
-	<meta-data android:name="gfan_statistics_appkey" android:value="JFGTQ3FLS7V2IPOQO045I2S5A6" />
-	<meta-data android:name="gfan_type" android:value="tongjisdk" />
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="8" />
 
     <application
         android:icon="@drawable/icon"
         android:label="那些年 我们一起追的女孩" >
-        
-         <activity android:name="com.google.ads.AdActivity"
- 			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        
-          <activity android:name="com.gfan.sdk.statistics.CommentActivity" />
-        
-        <activity
-            android:label="那些年 我们一起追的女孩"
-            android:name=".YearsActivity" >
-          
+        <activity android:name="com.gfan.sdk.statistics.CommentActivity" />
+        <activity android:name=".YearsActivity" >
         </activity>
-        
-             <activity
-            android:label="那些年 我们一起追的女孩"
-           android:name=".CatalogActivity">
-            
+        <activity android:name=".CatalogActivity" >
         </activity>
-            
-              <activity
-            android:label="那些年 我们一起追的女孩"
-           android:name=".AffichageActivity">
-           
+        <activity android:name=".AffichageActivity" >
         </activity>
-        
-                  <activity
-            android:label="那些年 我们一起追的女孩"
-           android:name="ciel.equipe.years.FirstPictureActivity">
-           
-                       <intent-filter >
+        <activity android:name="ciel.equipe.years.FirstPictureActivity" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-           
         </activity>
-            
     </application>
-    
-         <uses-permission android:name="android.permission.INTERNET">
-				</uses-permission>
-				<uses-permission android:name="android.permission.READ_PHONE_STATE">
-				</uses-permission>
-				<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-				</uses-permission>
-				<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION">
-				</uses-permission>
-				<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
-				</uses-permission>
-				<uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
-				</uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
 
 </manifest>
