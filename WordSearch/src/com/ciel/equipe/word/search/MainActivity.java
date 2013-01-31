@@ -33,8 +33,13 @@ public class MainActivity extends Activity {
 		tv = (TextView)findViewById(R.id.textView);
 		dataHelper = DatabaseHelper.getInstance(this);
 		
-		readRessources();
+		Runnable runnable = new Runnable() {
+			public void run() {
+				readRessources();
+			}
+		};
 		
+		runnable.run();
 	}
 
 	@Override
@@ -64,10 +69,10 @@ public class MainActivity extends Activity {
 		tv.setText(res);
 	
 		
-		for(int i=0; i<res.length(); i=i+2){
+		for(int i=0; i<res.length(); i++){
 			
-			String subString = res.substring(i,i+2);
-			if (subString != " ") {
+			String subString = res.substring(i,i+1);
+			if (subString.charAt(0) != '\n' && subString.charAt(0) != '\r') {
 				try {
 					chineseDao = dataHelper.getDao(Chinese.class);
 					Chinese chinese = new Chinese();
