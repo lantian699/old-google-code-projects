@@ -2,6 +2,7 @@ package com.ciel.equipe.word.search;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -15,6 +16,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -22,16 +25,24 @@ public class MainActivity extends Activity {
 	private TextView tv;
 	private DatabaseHelper dataHelper;
 	private Dao<Chinese, ?> chineseDao;
+	private List<Chinese> listChinese;
 
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		TextView [][] gridview = new TextView[5][5];
+		
 		setContentView(R.layout.activity_main);
 		
 		tv = (TextView)findViewById(R.id.textView);
 		dataHelper = DatabaseHelper.getInstance(this);
+		
+		try {
+			chineseDao = dataHelper.getDao(Chinese.class);
+		
 		
 		Runnable runnable = new Runnable() {
 			public void run() {
@@ -39,7 +50,19 @@ public class MainActivity extends Activity {
 			}
 		};
 		
+		listChinese = chineseDao.queryForAll();
+		if(listChinese.size() == 0)
 		runnable.run();
+		else{
+			
+			
+			
+		}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
