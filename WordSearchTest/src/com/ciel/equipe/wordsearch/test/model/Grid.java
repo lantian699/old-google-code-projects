@@ -15,6 +15,19 @@ public class Grid implements Parcelable{
 
 	
 	private static final String TAG = "Grid";
+	private static final int NN = 0;
+	private static final int SS = 1;
+	private static final int EE = 2;
+	private static final int WW = 3;
+	private static final int NE = 4;
+	private static final int NW = 5;
+	private static final int SW = 6;
+	private static final int SE = 7;
+	
+
+	
+	
+	
 	private static Character[][] gridMatrix;
 	private int size;
 	private Character[] gridInternals;
@@ -66,7 +79,28 @@ public class Grid implements Parcelable{
 	
 	
 	public void insertWord(String word){
+		int direction = random.nextInt(7);
+		Point center = new Point(random.nextInt(size), random.nextInt(size));
 		
+		switch (direction) {
+		case NN:
+				if(center.y >word.length()){
+					for(int i=0; i< word.length(); i++){
+						
+						if(gridMatrix[center.x][center.y] ==  null || gridMatrix[center.x][center.y].equals(word.charAt(i)) ){
+							gridMatrix[center.x][center.y] = word.charAt(i);
+						}else
+							insertWord(word);
+					}
+					
+				}else
+					insertWord(word);
+			
+			break;
+
+		default:
+			break;
+		}
 		
 		
 	}
