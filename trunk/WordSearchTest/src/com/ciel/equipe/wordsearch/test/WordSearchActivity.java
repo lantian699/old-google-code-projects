@@ -21,6 +21,8 @@ public class WordSearchActivity extends Activity {
 
 	private DictionaryFactory dictionaryFactory;
 
+	private Character[][] gridMatrix;
+
 	final public static int DIALOG_ID_NO_WORDS = 0;
 	final public static int DIALOG_ID_NO_WORDS_CUSTOM = 1;
 	final public static int DIALOG_ID_GAME_OVER = 2;
@@ -47,7 +49,7 @@ public class WordSearchActivity extends Activity {
 		ViewGroup gridTable = (ViewGroup) this.findViewById(R.id.gridTable);
 
 			dictionaryFactory = new DictionaryFactory(this);
-			Grid.generateGrid(dictionaryFactory.getDictionary(getString(R.string.RANDOM)), 12, 4, gridSize);
+			gridMatrix = Grid.generateGrid(dictionaryFactory.getDictionary(getString(R.string.RANDOM)), 12, 0, gridSize);
 			gridTable.removeAllViews();
 			Point point = new Point();
 			
@@ -60,7 +62,7 @@ public class WordSearchActivity extends Activity {
 				for (point.x = 0; point.x < gridSize; point.x++) {
 					this.getLayoutInflater().inflate(R.layout.grid_text_view, row, true);
 					TextView view = (TextView)row.getChildAt(point.x);
-					view.setId(Tools.convertPointToId(point, gridSize));
+					view.setText(gridMatrix[point.x][point.y].toString());
 					rowText[point.x] = view;
 				}
 				gridView[point.y] = rowText;
