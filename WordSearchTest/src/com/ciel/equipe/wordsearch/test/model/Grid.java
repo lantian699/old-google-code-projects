@@ -36,6 +36,7 @@ public class Grid implements Parcelable{
 	private static boolean isAdd = true;
 	private static ArrayList<ExistPoint> listPoints = new ArrayList<ExistPoint>();
 	private static int numAdd ;
+	private static ArrayList<String> selectedList;
 
 	@Override
 	public int describeContents() {
@@ -60,7 +61,7 @@ public class Grid implements Parcelable{
 			int minLength, int size) {
 
 		Grid grid = new Grid(size);
-		ArrayList<String> selectedList = new ArrayList<String>();
+		selectedList = new ArrayList<String>();
 		
 		for(int i=0; i<maxWords; i++){
 			String word = dic.getNextWord(minLength, size/2);
@@ -68,7 +69,7 @@ public class Grid implements Parcelable{
 		}
 		
 		Log.i(TAG, "Grid generated !"+ selectedList.size() + " words selected");
-		System.out.println("selectedList = " + selectedList);
+//		System.out.println("selectedList = " + selectedList);
 		
 		gridMatrix = new Character [size][size];
 		for(String word : selectedList){
@@ -83,6 +84,10 @@ public class Grid implements Parcelable{
 		fillEmpty();
 	
 		return gridMatrix;
+	}
+	
+	public static ArrayList<String> getListWord(){
+		return selectedList;
 	}
 	
 	
@@ -112,7 +117,7 @@ public class Grid implements Parcelable{
 								listPoints.add(exPoint);
 								
 								gridMatrix[center.x][center.y] = word.charAt(i);
-								System.out.println("NN " +gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//								System.out.println("NN " +gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 								center.y--;
 								
 								isAdd = true;
@@ -150,7 +155,7 @@ public class Grid implements Parcelable{
 							exPoint.setCh(gridMatrix[center.x][center.y]);
 							listPoints.add(exPoint);
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("SS "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("SS "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.y++;
 							isAdd = true;
 						}else{
@@ -189,7 +194,7 @@ public class Grid implements Parcelable{
 							exPoint.setCh(gridMatrix[center.x][center.y]);
 							listPoints.add(exPoint);
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("WW  "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("WW  "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x--;
 							isAdd = true;
 						} else {
@@ -225,7 +230,7 @@ public class Grid implements Parcelable{
 							exPoint.setCh(gridMatrix[center.x][center.y]);
 							listPoints.add(exPoint);
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("EE "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("EE "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x++;
 							isAdd = true;
 						}else{
@@ -262,7 +267,7 @@ public class Grid implements Parcelable{
 							listPoints.add(exPoint);
 							
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("NE " +gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("NE " +gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x++;
 							center.y--;
 							
@@ -303,7 +308,7 @@ public class Grid implements Parcelable{
 							listPoints.add(exPoint);
 							
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("NW  "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("NW  "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x--;
 							center.y--;
 							isAdd = true;
@@ -342,7 +347,7 @@ public class Grid implements Parcelable{
 							
 							
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("SE  "+ gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("SE  "+ gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x++;
 							center.y++;
 							isAdd = true;
@@ -382,7 +387,7 @@ public class Grid implements Parcelable{
 							
 							
 							gridMatrix[center.x][center.y] = word.charAt(i);
-							System.out.println("SW "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
+//							System.out.println("SW "+gridMatrix[center.x][center.y] + " x= " +center.x+ " y="+center.y);
 							center.x--;
 							center.y++;
 							isAdd = true;
@@ -419,8 +424,8 @@ public class Grid implements Parcelable{
 				
 				if(gridMatrix[point.x][point.y] == null){
 					
-//					gridMatrix[point.x][point.y] = (char)(random.nextInt(26)+((int)'A'));
-					gridMatrix[point.x][point.y] = '1';
+					gridMatrix[point.x][point.y] = (char)(random.nextInt(26)+((int)'A'));
+//					gridMatrix[point.x][point.y] = '1';
 				}
 				
 			}

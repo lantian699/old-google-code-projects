@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Word Search</string>
-	<string name="menu_settings">menu settings</string>
+	<string name="menu_new_game">new game</string>
 	<string name="foods">Foods</string>
 	<string name="seasonal">Seasonal</string>
 	<string name="christmas">Christmas</string>
