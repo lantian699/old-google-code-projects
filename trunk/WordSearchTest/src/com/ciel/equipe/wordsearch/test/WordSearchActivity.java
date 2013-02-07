@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import com.ciel.equipe.wordsearch.test.dictionnary.DictionaryFactory;
 import com.ciel.equipe.wordsearch.test.model.Grid;
 import com.ciel.equipe.wordsearch.test.util.Tools;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import android.app.Activity;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -31,6 +33,8 @@ public class WordSearchActivity extends Activity {
 
 	private Character[][] gridMatrix;
 
+	private AdView adView;
+
 	final public static int DIALOG_ID_NO_WORDS = 0;
 	final public static int DIALOG_ID_NO_WORDS_CUSTOM = 1;
 	final public static int DIALOG_ID_GAME_OVER = 2;
@@ -49,8 +53,11 @@ public class WordSearchActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.activity_main);
-//		setupViewGrid(10);
-
+		
+		adView = (AdView) findViewById(R.id.adView);
+		adView.loadAd(new AdRequest());
+		setupViewGrid(10);
+		
 		
 	}
 	
@@ -124,6 +131,14 @@ public class WordSearchActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	@Override
+	  public void onDestroy() {
+	    if (adView != null) {
+	      adView.destroy();
+	    }
+	    super.onDestroy();
+	  }
 
 	
 
