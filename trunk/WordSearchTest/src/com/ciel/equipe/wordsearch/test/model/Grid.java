@@ -17,14 +17,14 @@ public class Grid implements Parcelable{
 
 	
 	private static final String TAG = "Grid";
-	private static final int NN = 0;
-	private static final int SS = 1;
-	private static final int EE = 2;
-	private static final int WW = 3;
-	private static final int NE = 4;
-	private static final int NW = 5;
-	private static final int SW = 6;
-	private static final int SE = 7;
+	public static final int NN = 0;
+	public static final int SS = 1;
+	public static final int EE = 2;
+	public static final int WW = 3;
+	public static final int NE = 4;
+	public static final int NW = 5;
+	public static final int SW = 6;
+	public static final int SE = 7;
 	
 
 	
