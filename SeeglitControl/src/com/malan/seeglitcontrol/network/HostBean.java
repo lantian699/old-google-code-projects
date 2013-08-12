@@ -28,6 +28,7 @@ public class HostBean implements Parcelable {
     public static final String EXTRA_SERVICES = PKG + ".extra_services";
     public static final int TYPE_GATEWAY = 0;
     public static final int TYPE_COMPUTER = 1;
+    public static final int TYPE_CAMERA = 2;
 
     public int deviceType = TYPE_COMPUTER;
     public int isAlive = 1;

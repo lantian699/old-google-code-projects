@@ -55,9 +55,12 @@
     <string name="discover_action_title">Choose an action</string>
     <string name="discover_action_scan">Scan ports</string>
     <string name="discover_action_rename">Change name</string>
+    <string name="discover_no_camera">This equipement is not a camera, you cannot control it</string>
     <string name="discover_action_saved">Name saved!</string>
     <string name="discover_action_deleted">Name deleted!</string>
     <string name="discover_myphone_name">MyPhone</string>
+    <string name="connect_success">Connection established succesfully</string>
+    <string name="connect_failed">Connection failed</string>
         
     <string name="scan_single_title">Scan IP</string>
     <string name="scan_single_summary">Enter an IP address or FQDN to scan, i.e. scanme.nmap.org</string>

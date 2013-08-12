@@ -30,63 +30,63 @@ public class Save {
         }
     }
 
-//    public synchronized String getCustomName(HostBean host) {
-//        String name = null;
-//        Cursor c = null;
-//        try {
-//            db = getDb();
-//            c = db.rawQuery(SELECT, new String[] { host.hardwareAddress.replace(":", "").toUpperCase() });
-//            if (c.moveToFirst()) {
-//                name = c.getString(0);
-//            } else if(host.hostname != null) {
-//                name = host.hostname;
-//            }
-//        } catch (SQLiteException e) {
-//            Log.e(TAG, e.getMessage());
-//        } catch (IllegalStateException e) {
-//            Log.e(TAG, e.getMessage());
-//        } finally {
-//            if (c != null) {
-//                c.close();
-//            }
-//        }
-//        return name;
-//    }
+    public synchronized String getCustomName(HostBean host) {
+        String name = null;
+        Cursor c = null;
+        try {
+            db = getDb();
+            c = db.rawQuery(SELECT, new String[] { host.hardwareAddress.replace(":", "").toUpperCase() });
+            if (c.moveToFirst()) {
+                name = c.getString(0);
+            } else if(host.hostname != null) {
+                name = host.hostname;
+            }
+        } catch (SQLiteException e) {
+            Log.e(TAG, e.getMessage());
+        } catch (IllegalStateException e) {
+            Log.e(TAG, e.getMessage());
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return name;
+    }
 
-//    public void setCustomName(final String name, final String mac) {
-//        db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);
-//        try {
-//            if (db.isOpen()) {
-//                db.execSQL(INSERT, new String[] { name, mac.replace(":", "").toUpperCase() });
-//            }
-//        } catch (SQLiteException e) {
-//            Log.e(TAG, e.getMessage());
-//        } finally {
-//            closeDb();
-//        }
-//    }
-//
-//    public boolean removeCustomName(String mac) {
-//        db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);
-//        try {
-//            if (db.isOpen()) {
-//                db.execSQL(DELETE, new String[] { mac.replace(":", "").toUpperCase() });
-//                return true;
-//            }
-//            return false;
-//        } catch (SQLiteException e) {
-//            Log.e(TAG, e.getMessage());
-//            return false;
-//        } finally {
-//            closeDb();
-//        }
-//    }
-//
-//    private static synchronized SQLiteDatabase getDb(){
-//        if(db == null || !db.isOpen()) {
-//            // FIXME: read only ?
-//            db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READONLY);
-//        }
-//        return db;
-//    }
+    public void setCustomName(final String name, final String mac) {
+        db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);
+        try {
+            if (db.isOpen()) {
+                db.execSQL(INSERT, new String[] { name, mac.replace(":", "").toUpperCase() });
+            }
+        } catch (SQLiteException e) {
+            Log.e(TAG, e.getMessage());
+        } finally {
+            closeDb();
+        }
+    }
+
+    public boolean removeCustomName(String mac) {
+        db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);
+        try {
+            if (db.isOpen()) {
+                db.execSQL(DELETE, new String[] { mac.replace(":", "").toUpperCase() });
+                return true;
+            }
+            return false;
+        } catch (SQLiteException e) {
+            Log.e(TAG, e.getMessage());
+            return false;
+        } finally {
+            closeDb();
+        }
+    }
+
+    private static synchronized SQLiteDatabase getDb(){
+        if(db == null || !db.isOpen()) {
+            // FIXME: read only ?
+            db = Db.openDb(Db.DB_SAVES, SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READONLY);
+        }
+        return db;
+    }
 }
