@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="IP：" 
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/peerip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="84.102.73.193"
+		android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="port：" 
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/peerport"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numeric="integer"
+        android:text="10500"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/connect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/disconnect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="disconnect"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=" " />
+
+    <Button
+        android:id="@+id/up"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Pret" />
+
+    <Button
+        android:id="@+id/down"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Run" />
+
+    <Button
+        android:id="@+id/left"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="left" />
+
+    <Button
+        android:id="@+id/right"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="right" />
+
+    <ToggleButton
+        android:id="@+id/lightOnOff"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textOff="开灯"
+        android:textOn="关灯"
+        android:visibility="gone" />
+    
+    <FrameLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        >
+
+    <TextView
+        android:id="@+id/console"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#254832"
+        android:padding="5dp"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/clear"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_gravity="bottom|right" />
+
+    </FrameLayout>
+
+</LinearLayout>

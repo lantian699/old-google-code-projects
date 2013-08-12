@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
     public static final int MENU_OPTIONS = 1;
     public static final int MENU_HELP = 2;
     private static final int MENU_EXPORT = 3;
+	public static final String HOST_IP = "host_ip";
     private static LayoutInflater mInflater;
     private int currentNetwork = 0;
     private long network_ip = 0;
@@ -120,37 +122,37 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         super.onResume();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, ActivityDiscovery.MENU_SCAN_SINGLE, 0, R.string.scan_single_title).setIcon(
-                android.R.drawable.ic_menu_mylocation);
-        menu.add(0, ActivityDiscovery.MENU_EXPORT, 0, R.string.preferences_export).setIcon(
-                android.R.drawable.ic_menu_save);
-        menu.add(0, ActivityDiscovery.MENU_OPTIONS, 0, R.string.btn_options).setIcon(
-                android.R.drawable.ic_menu_preferences);
-        menu.add(0, ActivityDiscovery.MENU_HELP, 0, R.string.preferences_help).setIcon(
-                android.R.drawable.ic_menu_help);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        menu.add(0, ActivityDiscovery.MENU_SCAN_SINGLE, 0, R.string.scan_single_title).setIcon(
+//                android.R.drawable.ic_menu_mylocation);
+//        menu.add(0, ActivityDiscovery.MENU_EXPORT, 0, R.string.preferences_export).setIcon(
+//                android.R.drawable.ic_menu_save);
+//        menu.add(0, ActivityDiscovery.MENU_OPTIONS, 0, R.string.btn_options).setIcon(
+//                android.R.drawable.ic_menu_preferences);
+//        menu.add(0, ActivityDiscovery.MENU_HELP, 0, R.string.preferences_help).setIcon(
+//                android.R.drawable.ic_menu_help);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case ActivityDiscovery.MENU_SCAN_SINGLE:
-//                scanSingle(this, null);
-                return true;
-            case ActivityDiscovery.MENU_OPTIONS:
-                startActivity(new Intent(ctxt, Prefs.class));
-                return true;
-            case ActivityDiscovery.MENU_HELP:
-                startActivity(new Intent(ctxt, Help.class));
-                return true;
-            case ActivityDiscovery.MENU_EXPORT:
-//                export();
-                return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case ActivityDiscovery.MENU_SCAN_SINGLE:
+////                scanSingle(this, null);
+//                return true;
+//            case ActivityDiscovery.MENU_OPTIONS:
+//                startActivity(new Intent(ctxt, Prefs.class));
+//                return true;
+//            case ActivityDiscovery.MENU_HELP:
+//                startActivity(new Intent(ctxt, Help.class));
+//                return true;
+//            case ActivityDiscovery.MENU_EXPORT:
+////                export();
+//                return true;
+//        }
+//        return false;
+//    }
 
     protected void setInfo() {
         // Info
@@ -242,8 +244,18 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         }
     }
 
-//    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//        final HostBean host = hosts.get(position);
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        final HostBean host = hosts.get(position);
+        
+        if(host.deviceType == HostBean.TYPE_CAMERA){
+			Intent intent = new Intent();
+			intent.setClass(this, ControlActivity.class);
+			intent.putExtra(HOST_IP, host);
+			startActivity(intent);
+        }else{
+        	Toast.makeText(ActivityDiscovery.this, getString(R.string. discover_no_camera), Toast.LENGTH_SHORT).show();
+        }
+        
 //        AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityDiscovery.this);
 //        dialog.setTitle(R.string.discover_action_title);
 //        dialog.setItems(new CharSequence[] { getString(R.string.discover_action_scan),
@@ -297,13 +309,14 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 //        });
 //        dialog.setNegativeButton(R.string.btn_discover_cancel, null);
 //        dialog.show();
-//    }
+    }
 
     static class ViewHolder {
         TextView host;
         TextView mac;
         TextView vendor;
         ImageView logo;
+        ImageView arrow;
     }
 
     // Custom ArrayAdapter
@@ -318,6 +331,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.list_host, null);
                 holder = new ViewHolder();
+                holder.arrow = (ImageView) convertView.findViewById(R.id.arrow);
                 holder.host = (TextView) convertView.findViewById(R.id.list);
                 holder.mac = (TextView) convertView.findViewById(R.id.mac);
                 holder.vendor = (TextView) convertView.findViewById(R.id.vendor);
@@ -327,9 +341,14 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 holder = (ViewHolder) convertView.getTag();
             }
             final HostBean host = hosts.get(position);
+            holder.arrow.setVisibility(View.GONE);
             if (host.deviceType == HostBean.TYPE_GATEWAY) {
                 holder.logo.setImageResource(R.drawable.router);
-            } else if (host.isAlive == 1 || !host.hardwareAddress.equals(NetInfo.NOMAC)) {
+            } 
+            else if (host.deviceType == HostBean.TYPE_CAMERA) {
+                holder.logo.setImageResource(R.drawable.camera);
+                holder.arrow.setVisibility(View.VISIBLE);
+            }else if (host.isAlive == 1 || !host.hardwareAddress.equals(NetInfo.NOMAC)) {
                 holder.logo.setImageResource(R.drawable.computer);
             } else {
                 holder.logo.setImageResource(R.drawable.computer_down);
@@ -369,7 +388,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         }
         
         
-        mDiscoveryTask = new DnsDiscovery(ActivityDiscovery.this);
+        mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
 //        switch (method) {
 //            case 1:
 //            	mDiscoveryTask = new DnsDiscovery(ActivityDiscovery.this);
@@ -382,8 +401,9 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 ////                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
 //        }
         
+ 
         mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
-        mDiscoveryTask.execute();
+        mDiscoveryTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         btn_discover.setText(R.string.btn_discover_cancel);
         setButton(btn_discover, R.drawable.cancel, false);
         btn_discover.setOnClickListener(new View.OnClickListener() {
@@ -547,9 +567,5 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         b.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
     }
 
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
