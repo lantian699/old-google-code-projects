@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.malan.seeglitcontrol.network.HostBean;
 import com.malan.seeglitcontrol.network.NetInfo;
+import com.malan.seeglitcontrol.spreadsheet.activity.SpreadsheetMapperActivity;
 import com.malan.seeglitcontrol.utils.Help;
 import com.malan.seeglitcontrol.utils.Prefs;
 
@@ -388,22 +389,29 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         }
         
         
-        mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
-//        switch (method) {
-//            case 1:
-//            	mDiscoveryTask = new DnsDiscovery(ActivityDiscovery.this);
-//                break;
-//            case 2:
-//                // Root
-//                break;
-//            case 0:
-//            default:
-////                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
-//        }
+       
+        switch (method) {
+            case 1:
+            	Intent intent = new Intent();
+            	intent.setClass(this, SpreadsheetMapperActivity.class);
+            	startActivity(intent);
+                break;
+            case 2:
+                // Root
+                break;
+            case 0:
+            default:
+                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
+                mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
+                mDiscoveryTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                
+                makeToast(R.string.discover_start);
+                setProgressBarVisibility(true);
+                setProgressBarIndeterminateVisibility(true);
+                initList();
+        }
         
  
-        mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
-        mDiscoveryTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         btn_discover.setText(R.string.btn_discover_cancel);
         setButton(btn_discover, R.drawable.cancel, false);
         btn_discover.setOnClickListener(new View.OnClickListener() {
@@ -411,10 +419,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                 cancelTasks();
             }
         });
-        makeToast(R.string.discover_start);
-        setProgressBarVisibility(true);
-        setProgressBarIndeterminateVisibility(true);
-        initList();
+      
     }
 
     public void stopDiscovering() {
