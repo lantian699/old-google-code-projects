@@ -4,7 +4,7 @@
  Licensed under GNU's GPL 2, see README
 -->
 <resources>
-    <string name="app_name">Network Discovery</string>
+    <string name="app_name">Seeglit Control</string>
     <string name="app_loading">加载中</string>
     <string name="btn_yes">是</string>
     <string name="btn_no">否</string>
