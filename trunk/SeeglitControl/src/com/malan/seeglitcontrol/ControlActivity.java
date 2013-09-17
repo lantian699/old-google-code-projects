@@ -220,7 +220,7 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 //        	if (TextUtils.isEmpty(editPeerPort.getText()))
 //    				return;
     		String  ip  = host.ipAddress;
-    		Integer	port= TCP_CONTROL_PORT;	
+    		Integer	port= Integer.valueOf("5000");	
     		if (port == 0)	return;
     		
     		InetAddress addr = InetAddress.getByName(ip);

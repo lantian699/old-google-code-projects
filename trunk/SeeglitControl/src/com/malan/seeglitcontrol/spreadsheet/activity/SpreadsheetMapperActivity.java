@@ -1,5 +1,6 @@
 package com.malan.seeglitcontrol.spreadsheet.activity;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,14 +16,19 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.api.client.http.HttpStatusCodes;
+import com.iubiquity.spreadsheets.model.DatabaseHelper;
 import com.iubiquity.spreadsheets.model.Feed;
 import com.iubiquity.spreadsheets.model.ListEntry;
 import com.iubiquity.spreadsheets.model.ListFeed;
+import com.iubiquity.spreadsheets.model.Nat;
 import com.iubiquity.spreadsheets.model.SpreadsheetEntry;
 import com.iubiquity.spreadsheets.model.SpreadsheetFeed;
 import com.iubiquity.spreadsheets.model.WorksheetEntry;
 import com.iubiquity.spreadsheets.model.WorksheetFeed;
+import com.j256.ormlite.dao.Dao;
+import com.malan.seeglitcontrol.ActivityDiscovery;
 import com.malan.seeglitcontrol.R;
+import com.malan.seeglitcontrol.network.HostBean;
 import com.malan.seeglitcontrol.spreadsheet.client.AndroidSpreadsheetClient;
 import com.malan.seeglitcontrol.spreadsheet.client.AsyncSpreadsheetCaller;
 
@@ -35,10 +41,23 @@ public class SpreadsheetMapperActivity extends Activity implements
 	private static final int REQUEST_CODE_WORKSHEET_FEED = 1;
 	private static final int REQUEST_CODE_LIST_FEED = 2;
 	private static final String PREFS_KEY_AUTH_TOKEN = "Token";
+	
+	
+	private static final String TABLE_NAT_COLUMN_CAMERA_ID = "cameraid";
+	private static final String TABLE_NAT_COLUMN_PROTOCOLE = "protocole";
+	private static final String TABLE_NAT_COLUMN_TYPE = "type";
+	private static final String TABLE_NAT_COLUMN_EXTERNAL_PORT = "externalport";
+	private static final String TABLE_NAT_COLUMN_DEST_IP = "destip";
+	private static final String TABLE_NAT_COLUMN_DEST_PORT = "destport";
+	private static final String TABLE_NAT_COLUMN_VENDOR = "nicvendor";
+	private static final String TABLE_NAT_COLUMN_DEVICE_TYPE = "devicetype";
+	
 	private AndroidSpreadsheetClient client;
 	// private AbstractDatabaseHelper dbHelper;
 	private String deviceId;
-
+	private DatabaseHelper dataHelper;
+	private ActivityDiscovery mDiscover;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,12 +65,16 @@ public class SpreadsheetMapperActivity extends Activity implements
 		setContentView(R.layout.main);
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		deviceId = telephonyManager.getDeviceId();
+		
+		dataHelper = new DatabaseHelper(this);
+		mDiscover = ActivityDiscovery.get();
 
 		// Using SharedPreferences to store authToken
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		final String authToken = prefs.getString(PREFS_KEY_AUTH_TOKEN, "");
-
+		String authToken = prefs.getString(PREFS_KEY_AUTH_TOKEN, "");
+		
+		authToken="";
 		if (authToken.equals("")) {
 			// If no authtoken exists, go get one
 			final Intent intent = new Intent(this, OAuthActivity.class);
@@ -90,6 +113,7 @@ public class SpreadsheetMapperActivity extends Activity implements
 		SpreadsheetEntry entry = null;
 
 		boolean found = false;
+		deviceId = "356843055597705";
 		for (SpreadsheetEntry e : entries) {
 			if (e.title.equals(deviceId)) {
 				entry = e;
@@ -126,11 +150,43 @@ public class SpreadsheetMapperActivity extends Activity implements
 		for (ListEntry listEntry : listFeed.getEntries()) {
 			// do something with the list entries
 			Map<String, String> content = listEntry.getColumns();
-			System.out.println("list = " + content.get("qds"));
+
+			
+			try {
+				Dao<Nat, ?> natDao = dataHelper.getNatDao();
+				
+				Nat natHost = new Nat();
+				natHost.setCameraId(content.get(TABLE_NAT_COLUMN_CAMERA_ID));
+				natHost.setProtocole(content.get(TABLE_NAT_COLUMN_PROTOCOLE));
+				natHost.setType(content.get(TABLE_NAT_COLUMN_TYPE));
+				natHost.setExternalPort(content.get(TABLE_NAT_COLUMN_EXTERNAL_PORT));
+				natHost.setDestIP(content.get(TABLE_NAT_COLUMN_DEST_IP));
+				natHost.setDestPort(content.get(TABLE_NAT_COLUMN_DEST_PORT));
+				natHost.setNicVendor(content.get(TABLE_NAT_COLUMN_VENDOR));
+				natHost.setDeviceType(content.get(TABLE_NAT_COLUMN_DEVICE_TYPE));
+				
+				natDao.create(natHost);
+				Log.i(TAG, "NAT created !");
+				
+				HostBean host = new HostBean();
+				host.ipAddress = natHost.getDestIP();
+				host.hostname = natHost.getCameraId();
+				host.nicVendor = natHost.getNicVendor();
+				host.port= natHost.getExternalPort();
+				host.deviceType = Integer.parseInt(natHost.getDeviceType());
+				
+				mDiscover.addHost(host);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 
 		}
 
-		 finish();
+		setResult(RESULT_OK);
+		finish();
 	}
 
 	public void onSpreadsheetResult(int requestCode, Feed feed) {

@@ -25,7 +25,7 @@ public abstract class ActivityNet extends Activity {
     private ConnectivityManager connMgr;
 
     protected final static String EXTRA_WIFI = "wifiDisabled";
-    protected Context ctxt;
+    protected Context context;
     protected SharedPreferences prefs = null;
     protected NetInfo net = null;
     protected String info_ip_str = "";
@@ -35,10 +35,10 @@ public abstract class ActivityNet extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ctxt = getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(ctxt);
+        context = getApplicationContext();
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
         connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        net = new NetInfo(ctxt);
+        net = new NetInfo(context);
     }
 
     @Override

@@ -28,7 +28,7 @@ import android.util.Log;
 
 public class HardwareAddress {
 	
-	public static final String PATH = "/data/data/com.malan.seeglitcontrol/files/";
+	public  static final String PATH = "/data/data/com.malan.seeglitcontrol/files/";	
     public static final String DB_SERVICES = "services.db";
     public static final String DB_PROBES = "probes.db";
     public static final String DB_NIC = "nic.db";
