@@ -43,6 +43,7 @@ public class HostBean implements Parcelable {
     public HashMap<Integer, String> banners = null;
     public ArrayList<Integer> portsOpen = null;
     public ArrayList<Integer> portsClosed = null;
+    public String port;
 
     public HostBean() {
         // New object
@@ -71,6 +72,8 @@ public class HostBean implements Parcelable {
         dest.writeMap(banners);
         dest.writeList(portsOpen);
         dest.writeList(portsClosed);
+        dest.writeString(port);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -88,6 +91,7 @@ public class HostBean implements Parcelable {
         banners = in.readHashMap(null);
         portsOpen = in.readArrayList(Integer.class.getClassLoader());
         portsClosed = in.readArrayList(Integer.class.getClassLoader());
+        port = in.readString();
     }
 
     @SuppressWarnings("unchecked")

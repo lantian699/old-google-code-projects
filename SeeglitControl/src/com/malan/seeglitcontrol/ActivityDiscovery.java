@@ -7,11 +7,17 @@ package com.malan.seeglitcontrol;
 
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.malan.seeglitcontrol.network.HardwareAddress;
 import com.malan.seeglitcontrol.network.HostBean;
 import com.malan.seeglitcontrol.network.NetInfo;
 import com.malan.seeglitcontrol.spreadsheet.activity.SpreadsheetMapperActivity;
@@ -24,6 +30,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences.Editor;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,32 +53,49 @@ import android.widget.AdapterView.OnItemClickListener;
 final public class ActivityDiscovery extends ActivityNet implements OnItemClickListener {
 
     private final String TAG = "ActivityDiscovery";
+    
     public final static long VIBRATE = (long) 250;
     public final static int SCAN_PORT_RESULT = 1;
     public static final int MENU_SCAN_SINGLE = 0;
+    private static final int REQUEST_CODE_NAT = 5;
+    
     public static final int MENU_OPTIONS = 1;
     public static final int MENU_HELP = 2;
     private static final int MENU_EXPORT = 3;
+    
 	public static final String HOST_IP = "host_ip";
+	
     private static LayoutInflater mInflater;
     private int currentNetwork = 0;
     private long network_ip = 0;
     private long network_start = 0;
     private long network_end = 0;
+    
+    
     private List<HostBean> hosts = null;
     private HostsAdapter adapter;
     private Button btn_discover;
     private AbstractDiscovery mDiscoveryTask = null;
 
+	private ListView listView;
+
+	private static ActivityDiscovery mDiscover;
+
     // private SlidingDrawer mDrawer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.discovery);
-        mInflater = LayoutInflater.from(ctxt);
+        
+        copyAssets();
+        mInflater = LayoutInflater.from(context);
+        
+        
+        mDiscover = ActivityDiscovery.this;
 
         // Discover
         btn_discover = (Button) findViewById(R.id.btn_discover);
@@ -81,79 +105,60 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             }
         });
 
-        // Options
-//        Button btn_options = (Button) findViewById(R.id.btn_options);
-//        btn_options.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                startActivity(new Intent(ctxt, Prefs.class));
-//            }
-//        });
 
         // Hosts list
-        adapter = new HostsAdapter(ctxt);
-        ListView list = (ListView) findViewById(R.id.output);
-        list.setAdapter(adapter);
-        list.setItemsCanFocus(false);
-        list.setOnItemClickListener(this);
-        list.setEmptyView(findViewById(R.id.list_empty));
-
-        // Drawer
-        /*
-         * final View info = findViewById(R.id.info_container); mDrawer =
-         * (SlidingDrawer) findViewById(R.id.drawer);
-         * mDrawer.setOnDrawerScrollListener(new
-         * SlidingDrawer.OnDrawerScrollListener() { public void
-         * onScrollStarted() {
-         * info.setBackgroundResource(R.drawable.drawer_bg2); }
-         * 
-         * public void onScrollEnded() { } });
-         * mDrawer.setOnDrawerCloseListener(new
-         * SlidingDrawer.OnDrawerCloseListener() { public void onDrawerClosed()
-         * { info.setBackgroundResource(R.drawable.drawer_bg); } }); EditText
-         * cidr_value = (EditText) findViewById(R.id.cidr_value); ((Button)
-         * findViewById(R.id.btn_cidr_plus)).setOnClickListener(new
-         * View.OnClickListener() { public void onClick(View v) { } });
-         * ((Button) findViewById(R.id.btn_cidr_minus)).setOnClickListener(new
-         * View.OnClickListener() { public void onClick(View v) { } });
-         */
+        adapter = new HostsAdapter(context);
+        listView = (ListView) findViewById(R.id.output);
+        listView.setAdapter(adapter);
+        listView.setItemsCanFocus(false);
+        listView.setOnItemClickListener(this);
+        listView.setEmptyView(findViewById(R.id.list_empty));
+        
+        
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    
+    private void copyAssets() {
+        AssetManager assetManager = getAssets();
+        String[] files = null;
+        try {
+            files = assetManager.list("");
+        } catch (IOException e) {
+            Log.e("tag", "Failed to get asset file list.", e);
+        }
+        for(String filename : files) {
+        	if(filename.endsWith("db")){
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+              in = assetManager.open(filename);
+              
+              File dir = new File(HardwareAddress.PATH);
+              if(!dir.exists())
+            	  dir.mkdirs();
+              
+              File outFile = new File(HardwareAddress.PATH, filename);
+              out = new FileOutputStream(outFile);
+              copyFile(in, out);
+              in.close();
+              in = null;
+              out.flush();
+              out.close();
+              out = null;
+            } catch(IOException e) {
+                Log.e("tag", "Failed to copy asset file: " + filename, e);
+            }       
+        	}
+        }
+    }
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+          out.write(buffer, 0, read);
+        }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        menu.add(0, ActivityDiscovery.MENU_SCAN_SINGLE, 0, R.string.scan_single_title).setIcon(
-//                android.R.drawable.ic_menu_mylocation);
-//        menu.add(0, ActivityDiscovery.MENU_EXPORT, 0, R.string.preferences_export).setIcon(
-//                android.R.drawable.ic_menu_save);
-//        menu.add(0, ActivityDiscovery.MENU_OPTIONS, 0, R.string.btn_options).setIcon(
-//                android.R.drawable.ic_menu_preferences);
-//        menu.add(0, ActivityDiscovery.MENU_HELP, 0, R.string.preferences_help).setIcon(
-//                android.R.drawable.ic_menu_help);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case ActivityDiscovery.MENU_SCAN_SINGLE:
-////                scanSingle(this, null);
-//                return true;
-//            case ActivityDiscovery.MENU_OPTIONS:
-//                startActivity(new Intent(ctxt, Prefs.class));
-//                return true;
-//            case ActivityDiscovery.MENU_HELP:
-//                startActivity(new Intent(ctxt, Help.class));
-//                return true;
-//            case ActivityDiscovery.MENU_EXPORT:
-////                export();
-//                return true;
-//        }
-//        return false;
-//    }
 
     protected void setInfo() {
         // Info
@@ -228,6 +233,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
     }
 
     // Listen for Activity results
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case SCAN_PORT_RESULT:
@@ -240,6 +246,14 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
                         }
                     }
                 }
+                break;
+                
+            case REQUEST_CODE_NAT:
+            	if(resultCode == RESULT_OK){
+            		
+            	}
+            	
+            	break;
             default:
                 break;
         }
@@ -256,60 +270,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         }else{
         	Toast.makeText(ActivityDiscovery.this, getString(R.string. discover_no_camera), Toast.LENGTH_SHORT).show();
         }
-        
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityDiscovery.this);
-//        dialog.setTitle(R.string.discover_action_title);
-//        dialog.setItems(new CharSequence[] { getString(R.string.discover_action_scan),
-//                getString(R.string.discover_action_rename) }, new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                switch (which) {
-//                    case 0:
-//                        // Start portscan
-////                        Intent intent = new Intent(ctxt, ActivityPortscan.class);
-////                        intent.putExtra(EXTRA_WIFI, NetInfo.isConnected(ctxt));
-////                        intent.putExtra(HostBean.EXTRA, host);
-////                        startActivityForResult(intent, SCAN_PORT_RESULT);
-//                        break;
-//                    case 1:
-//                        // Change name
-//                        // FIXME: TODO
-//
-//                        final View v = mInflater.inflate(R.layout.dialog_edittext, null);
-//                        final EditText txt = (EditText) v.findViewById(R.id.edittext);
-//                        final Save s = new Save();
-//                        txt.setText(s.getCustomName(host));
-//
-//                        final AlertDialog.Builder rename = new AlertDialog.Builder(
-//                                ActivityDiscovery.this);
-//                        rename.setView(v);
-//                        rename.setTitle(R.string.discover_action_rename);
-//                        rename.setPositiveButton(R.string.btn_ok, new OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                final String name = txt.getText().toString();
-//                                host.hostname = name;
-//                                s.setCustomName(name, host.hardwareAddress);
-//                                adapter.notifyDataSetChanged();
-//                                Toast.makeText(ActivityDiscovery.this,
-//                                        R.string.discover_action_saved, Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        rename.setNegativeButton(R.string.btn_remove, new OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                host.hostname = null;
-//                                s.removeCustomName(host.hardwareAddress);
-//                                adapter.notifyDataSetChanged();
-//                                Toast.makeText(ActivityDiscovery.this,
-//                                        R.string.discover_action_deleted, Toast.LENGTH_SHORT)
-//                                        .show();
-//                            }
-//                        });
-//                        rename.show();
-//                        break;
-//                }
-//            }
-//        });
-//        dialog.setNegativeButton(R.string.btn_discover_cancel, null);
-//        dialog.show();
+
     }
 
     static class ViewHolder {
@@ -322,8 +283,8 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 
     // Custom ArrayAdapter
     private class HostsAdapter extends ArrayAdapter<Void> {
-        public HostsAdapter(Context ctxt) {
-            super(ctxt, R.layout.list_host, R.id.list);
+        public HostsAdapter(Context context) {
+            super(context, R.layout.list_host, R.id.list);
         }
 
         @Override
@@ -388,17 +349,18 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             Log.e(TAG, e.getMessage());
         }
         
-        
+        method = 1;
        
         switch (method) {
             case 1:
+            	initList();
             	Intent intent = new Intent();
             	intent.setClass(this, SpreadsheetMapperActivity.class);
-            	startActivity(intent);
+            	startActivityForResult(intent, REQUEST_CODE_NAT);
                 break;
             case 2:
                 // Root
-                break;
+                break;    
             case 0:
             default:
                 mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
@@ -420,6 +382,11 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             }
         });
       
+    }
+    
+    public static ActivityDiscovery get(){
+    	
+    	return mDiscover;
     }
 
     public void stopDiscovering() {
@@ -571,6 +538,9 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         b.setEnabled(true);
         b.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
     }
+    
+    
+    
 
 	
 }

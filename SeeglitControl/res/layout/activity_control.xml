@@ -56,25 +56,25 @@
         android:id="@+id/up"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Pret" />
+        android:text="准备" />
 
     <Button
         android:id="@+id/down"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Run" />
+        android:text="运行" />
 
     <Button
         android:id="@+id/left"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="left" />
+        android:text="向左微调" />
 
     <Button
         android:id="@+id/right"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="right" />
+        android:text="向右微调" />
 
     <ToggleButton
         android:id="@+id/lightOnOff"

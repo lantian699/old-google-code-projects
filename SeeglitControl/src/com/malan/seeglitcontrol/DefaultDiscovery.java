@@ -262,8 +262,10 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 }
 
                 // NIC vendor
+                if(host.nicVendor == null || host.nicVendor == "Unknown"){
                 host.nicVendor = HardwareAddress.getNicVendor(host.hardwareAddress);
-
+                System.out.println("nic = " + host.nicVendor);
+                }
                 // Is gateway ?
                 if (discover.net.gatewayIp.equals(host.ipAddress)) {
                     host.deviceType = HostBean.TYPE_GATEWAY;
