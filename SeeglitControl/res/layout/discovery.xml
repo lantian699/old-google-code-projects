@@ -11,6 +11,43 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bk" >
+    
+     <RelativeLayout
+        android:id="@+id/login_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingBottom="5dip"
+        android:background="@drawable/drawer_bg"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/society_name"
+            android:layout_marginRight="28dp"
+            android:background="#21dbd4"
+            android:text="登出"
+            android:textColor="#0D1142"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/society_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="society name "
+            android:textSize="20dp"
+            android:textColor="#21dbd4"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+    
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -20,6 +57,8 @@
             android:id="@+id/btn_discover"
             android:drawableLeft="@drawable/discover"
             android:text="@string/btn_discover"
+            android:textColor="#0D1142"
+            android:background="#21dbd4"
             style="@style/ButtonTop" />
     </LinearLayout>
     <FrameLayout
@@ -40,6 +79,7 @@
             android:layout_gravity="center_horizontal"
             android:textSize="10dip"
             android:typeface="monospace"
+            android:textColor="#0D1142"
             android:text="@string/discover_empty" /> <!--
         <SlidingDrawer
             android:id="@+id/drawer"
@@ -102,6 +142,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="10dip"
+            android:textColor="#21dbd4"
             android:typeface="monospace" />
         <TextView
             android:id="@+id/info_in"
@@ -109,12 +150,14 @@
             android:layout_height="wrap_content"
             android:textSize="10dip"
             android:typeface="monospace"
+            android:textColor="#21dbd4"
             android:text="@string/wifi_unknown" />
         <TextView
             android:id="@+id/info_mo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="10dip"
+            android:textColor="#21dbd4"
             android:typeface="monospace" />
     </LinearLayout>
 </LinearLayout>
