@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="start"
             android:maxLines="2"
+           	android:textColor="#0D1142"
             style="@style/ListTextTitle"
             android:text="List" />
             
@@ -42,6 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             style="@style/ListTextSummary"
+            android:textColor="#0D1142"
             android:text="" />
             
         <TextView
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:lines="1"
             android:ellipsize="end"
+            android:textColor="#0D1142"
             style="@style/ListTextSummary"
             android:text="" />
             
