@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.SupplicantState;
@@ -44,7 +45,7 @@ public abstract class ActivityNet extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        setButtons(true);
+        //setButtons(true);
         // Listening for network events
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -117,7 +118,11 @@ public abstract class ActivityNet extends Activity {
                 if (ni.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
                     int type = ni.getType();
                     //Log.i(TAG, "NetworkType="+type);
+                  
                     if (type == ConnectivityManager.TYPE_WIFI) { // WIFI
+                    	Editor edit = prefs.edit();
+                    	edit.putString(Prefs.KEY_METHOD_DISCOVER, "0");
+                    	edit.commit();
                         net.getWifiInfo();
                         if (net.ssid != null) {
                             net.getIp();
@@ -128,6 +133,10 @@ public abstract class ActivityNet extends Activity {
                             setButtons(false);
                         }
                     } else if (type == ConnectivityManager.TYPE_MOBILE) { // 3G
+                    	Editor edit = prefs.edit();
+                    	edit.putString(Prefs.KEY_METHOD_DISCOVER, "1");
+                    	edit.commit();
+                    	setButtons(false);
                         if (prefs.getBoolean(Prefs.KEY_MOBILE, Prefs.DEFAULT_MOBILE)
                                 || prefs.getString(Prefs.KEY_INTF, Prefs.DEFAULT_INTF) != null) {
                             net.getMobileInfo();
@@ -141,6 +150,9 @@ public abstract class ActivityNet extends Activity {
                             }
                         }
                     } else if (type == 3) { // ETH
+                    	Editor edit = prefs.edit();
+                    	edit.putString(Prefs.KEY_METHOD_DISCOVER, "2");
+                    	edit.commit();
                         Log.i(TAG, "Ethernet connectivity detected!");
                         info_mo_str = getString(R.string.net_mode)
                                 + getString(R.string.net_mode_eth);

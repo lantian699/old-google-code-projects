@@ -1,0 +1,15 @@
+# view AndroidManifest.xml #generated:25
+-keep class com.malan.seeglitcontrol.ActivityDiscovery { <init>(...); }
+
+# view AndroidManifest.xml #generated:20
+-keep class com.malan.seeglitcontrol.ControlActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:15
+-keep class com.malan.seeglitcontrol.MainActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:35
+-keep class com.malan.seeglitcontrol.spreadsheet.activity.OAuthActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:36
+-keep class com.malan.seeglitcontrol.spreadsheet.activity.SpreadsheetMapperActivity { <init>(...); }
+

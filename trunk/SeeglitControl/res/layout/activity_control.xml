@@ -62,7 +62,13 @@
         android:id="@+id/down"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="运行" />
+        android:text="喷水运行" />
+    
+     <Button
+        android:id="@+id/penshui"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="喷水" />
 
     <Button
         android:id="@+id/left"

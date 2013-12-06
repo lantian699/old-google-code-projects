@@ -57,6 +57,8 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 	private WifiManager wifimanage;
 	private HostBean host;
 //	private receiveCmd rcvCmd;
+
+	private Button btnPenshui;
 	
 	
 	private static ExecutorService SINGLE_TASK_EXECUTOR;  
@@ -117,6 +119,7 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
     	btnDown       	= (Button) findViewById(R.id.down);
     	btnLeft       	= (Button) findViewById(R.id.left);
     	btnRight      	= (Button) findViewById(R.id.right);
+    	btnPenshui		= (Button) findViewById(R.id.penshui);
     	editPeerIp		= (EditText)findViewById(R.id.peerip);
     	editPeerPort	= (EditText)findViewById(R.id.peerport);
     	textPrompt    	= (TextView)findViewById(R.id.prompt);
@@ -189,6 +192,7 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 					if (v.equals(btnDown))   	cmd = "2";
 					if (v.equals(btnLeft))   	cmd = "3";
 					if (v.equals(btnRight))   	cmd = "5";
+					if (v.equals(btnPenshui))   	cmd = "9";
 			   		break;
 			   	}
 			   	case MotionEvent.ACTION_UP:

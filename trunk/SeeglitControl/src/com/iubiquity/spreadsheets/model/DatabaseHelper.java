@@ -24,6 +24,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 //	// the DAO object we use to access the SimpleData table
 	private Dao<Nat, Integer> natDao = null;
+	private Dao<User, Integer> userDao = null;
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,6 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			Log.i(DatabaseHelper.class.getName(), "onCreate");
 			TableUtils.createTable(connectionSource, Nat.class);
+			TableUtils.createTable(connectionSource, User.class);
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
 			throw new RuntimeException(e);
@@ -54,6 +56,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		try {
 			Log.i(DatabaseHelper.class.getName(), "onUpgrade");
 			TableUtils.dropTable(connectionSource, Nat.class, true);
+			TableUtils.dropTable(connectionSource, User.class, true);
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
@@ -74,6 +77,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	}
 
 
+	
+	public Dao<Nat, Integer> getUserDao() throws SQLException {
+		if (userDao == null) {
+			userDao = getDao(User.class);
+		}
+		return natDao;
+	}
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */
