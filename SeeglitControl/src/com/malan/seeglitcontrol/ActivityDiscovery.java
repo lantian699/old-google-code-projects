@@ -14,9 +14,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.malan.seeglitcontrol.library.UserFunctions;
 import com.malan.seeglitcontrol.network.HardwareAddress;
 import com.malan.seeglitcontrol.network.HostBean;
 import com.malan.seeglitcontrol.network.NetInfo;
@@ -79,6 +81,8 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 
 	private ListView listView;
 
+	private UserFunctions userFunctions;
+
 	private static ActivityDiscovery mDiscover;
 
     // private SlidingDrawer mDrawer;
@@ -92,6 +96,25 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         requestWindowFeature(Window.FEATURE_PROGRESS);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.discovery);
+        
+        
+        
+        userFunctions = new UserFunctions();
+        try {
+			if(!userFunctions.isUserLoggedIn(this)){
+
+				// user is not logged in show login screen
+				Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+				login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(login);
+				// Closing dashboard screen
+				finish();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         
         copyAssets();
         mInflater = LayoutInflater.from(context);

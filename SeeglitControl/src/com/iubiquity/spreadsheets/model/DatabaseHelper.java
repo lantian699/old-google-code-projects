@@ -1,6 +1,7 @@
 package com.iubiquity.spreadsheets.model;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final String DATABASE_NAME = "seeglit.db";
 	// any time you make changes to your database objects, you may have to increase the database version
 	private static final int DATABASE_VERSION = 1;
+	
+	private static DatabaseHelper mInstance = null;
 
 //	// the DAO object we use to access the SimpleData table
 	private Dao<Nat, Integer> natDao = null;
@@ -28,6 +31,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
+	
+	
+	public static DatabaseHelper getInstance(final Context context) {
+		if (mInstance == null) {
+			mInstance = new DatabaseHelper(context);
+
+		}
+		return mInstance;
 	}
 
 	/**
@@ -84,6 +96,25 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 		return natDao;
 	}
+	
+	
+	public void addUser(String username, String email, String uid, String createat ) throws SQLException{
+		
+		User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setUid(uid);
+		user.setCreateat(createat);
+		this.getDao(User.class).create(user);
+	}
+	
+	public int getRowCount() throws SQLException{
+		
+		List<User> listUser = this.getDao(User.class).queryForAll();
+		
+		return listUser.size();
+	}
+	
 	/**
 	 * Close the database connections and clear any cached DAOs.
 	 */

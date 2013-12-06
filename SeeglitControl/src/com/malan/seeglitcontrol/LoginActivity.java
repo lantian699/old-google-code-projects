@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 
 
+
+import com.iubiquity.spreadsheets.model.DatabaseHelper;
 import com.malan.seeglitcontrol.library.AsyncLoginAndRegistration;
 import com.malan.seeglitcontrol.library.UserFunctions;
 
@@ -49,7 +51,7 @@ public class LoginActivity extends Activity{
 		setContentView(R.layout.login_activity);
 		
 		
-
+		DatabaseHelper.getInstance(this);
 		// Importing all assets like buttons, text fields
 		inputEmail = (EditText) findViewById(R.id.loginEmail);
 		inputPassword = (EditText) findViewById(R.id.loginPassword);

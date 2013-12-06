@@ -66,7 +66,7 @@ public class SpreadsheetMapperActivity extends Activity implements
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		deviceId = telephonyManager.getDeviceId();
 		
-		dataHelper = new DatabaseHelper(this);
+		dataHelper = DatabaseHelper.getInstance(mDiscover);
 		mDiscover = ActivityDiscovery.get();
 
 		// Using SharedPreferences to store authToken

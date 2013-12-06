@@ -1,10 +1,17 @@
 package com.malan.seeglitcontrol.library;
 
+import java.sql.SQLException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 
+
+
+
+import com.iubiquity.spreadsheets.model.DatabaseHelper;
+import com.iubiquity.spreadsheets.model.User;
 import com.malan.seeglitcontrol.ActivityDiscovery;
 
 import android.app.Activity;
@@ -34,6 +41,7 @@ public class AsyncLoginAndRegistration extends AsyncTask<String, String, JSONObj
 		private UserFunctions userFunction;
 		private ProgressDialog dialog;
 		private String tag;
+		private DatabaseHelper db;
 		
 	
 	public AsyncLoginAndRegistration(TextView errorMsgTextView, Context context, String tag ){
@@ -101,12 +109,13 @@ public class AsyncLoginAndRegistration extends AsyncTask<String, String, JSONObj
 					// user successfully registred
 					// Store user details in SQLite Database
 //					DatabaseHandler db = new DatabaseHandler(context);
-					
+					db = DatabaseHelper.getInstance(context);
 					JSONObject json_user = json.getJSONObject("user");
 					
 					// Clear all previous data in database
 					userFunction.logoutUser(context);
-//					db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));						
+					db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));
+					
 					// Launch Dashboard Screen
 					Intent dashboard = new Intent(context, ActivityDiscovery.class);
 					// Close all views before launching Dashboard
@@ -120,6 +129,9 @@ public class AsyncLoginAndRegistration extends AsyncTask<String, String, JSONObj
 				}
 			}
 		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -137,10 +149,10 @@ public class AsyncLoginAndRegistration extends AsyncTask<String, String, JSONObj
 								// Store user details in SQLite Database
 //								DatabaseHandler db = new DatabaseHandler(context);
 								JSONObject json_user = json.getJSONObject("user");
-								
+								db = DatabaseHelper.getInstance(context);
 								// Clear all previous data in database
 								userFunction.logoutUser(context);
-//								db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));						
+								db.addUser(json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json.getString(KEY_UID), json_user.getString(KEY_CREATED_AT));						
 								
 								// Launch Dashboard Screen
 								Intent dashboard = new Intent(context, ActivityDiscovery.class);
@@ -157,6 +169,9 @@ public class AsyncLoginAndRegistration extends AsyncTask<String, String, JSONObj
 							}
 						}
 					} catch (JSONException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				

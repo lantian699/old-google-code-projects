@@ -19,10 +19,26 @@ public class User  implements Serializable{
 	private String email;
 	@DatabaseField
 	private String password;
+	@DatabaseField
+	private String uid;
+	@DatabaseField
+	private String createat;
 
 
 	public String getUsername() {
 		return username;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getCreateat() {
+		return createat;
+	}
+	public void setCreateat(String createat) {
+		this.createat = createat;
 	}
 	public void setUsername(String username) {
 		this.username = username;
