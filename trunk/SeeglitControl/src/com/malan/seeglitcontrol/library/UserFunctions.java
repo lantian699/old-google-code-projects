@@ -5,12 +5,15 @@
  * */
 package com.malan.seeglitcontrol.library;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import com.iubiquity.spreadsheets.model.DatabaseHelper;
 
 import android.content.Context;
 
@@ -68,14 +71,15 @@ public class UserFunctions {
 	
 	/**
 	 * Function get Login status
+	 * @throws SQLException 
 	 * */
-	public boolean isUserLoggedIn(Context context){
-//		DatabaseHandler db = new DatabaseHandler(context);
-//		int count = db.getRowCount();
-//		if(count > 0){
-//			// user logged in
-//			return true;
-//		}
+	public boolean isUserLoggedIn(Context context) throws SQLException{
+		DatabaseHelper db = DatabaseHelper.getInstance(context);
+		int count = db.getRowCount();
+		if(count > 0){
+			// user logged in
+			return true;
+		}
 		return false;
 	}
 	
