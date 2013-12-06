@@ -87,6 +87,8 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
     
         super.onCreate(savedInstanceState);
+        
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         requestWindowFeature(Window.FEATURE_PROGRESS);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.discovery);
@@ -348,8 +350,8 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         } catch (NumberFormatException e) {
             Log.e(TAG, e.getMessage());
         }
-        
-        method = 1;
+      
+//        method = 1;
        
         switch (method) {
             case 1:

@@ -133,7 +133,7 @@ public class AndroidSpreadsheetClient extends SpreadsheetClient {
 		protected void onPreExecute() {
 			if (dialog == null) {
 				dialog = new ProgressDialog((Context) caller);
-				dialog.setMessage("Loading spreadsheet data...");
+				dialog.setMessage("正在下载远端服务器中配置信息");
 			}
 
 			dialog.show();
