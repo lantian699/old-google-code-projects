@@ -18,11 +18,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.iubiquity.spreadsheets.model.DatabaseHelper;
+import com.iubiquity.spreadsheets.model.User;
+import com.j256.ormlite.dao.Dao;
 import com.malan.seeglitcontrol.library.UserFunctions;
 import com.malan.seeglitcontrol.network.HardwareAddress;
 import com.malan.seeglitcontrol.network.HostBean;
 import com.malan.seeglitcontrol.network.NetInfo;
-import com.malan.seeglitcontrol.spreadsheet.activity.SpreadsheetMapperActivity;
 import com.malan.seeglitcontrol.utils.Help;
 import com.malan.seeglitcontrol.utils.Prefs;
 
@@ -43,6 +45,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +53,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 final public class ActivityDiscovery extends ActivityNet implements OnItemClickListener {
 
@@ -84,6 +86,9 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 	private UserFunctions userFunctions;
 
 	private static ActivityDiscovery mDiscover;
+	public static String societyName ;
+	private TextView scName;
+	private Button logout;
 
     // private SlidingDrawer mDrawer;
 
@@ -97,6 +102,37 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.discovery);
         
+        scName = (TextView)findViewById(R.id.society_name);
+        logout = (Button)findViewById(R.id.btnLogout);
+        scName.setText(societyName);
+        
+        logout.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				 Dao<User, ?> userDao;
+					try {
+						userDao = DatabaseHelper.getInstance(mDiscover).getDao(User.class);
+						
+				       List<User> list = userDao.queryForAll();
+				       if(list.size()>0){
+				       userDao.delete(list.get(0));
+				       
+				       Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+						login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(login);
+						
+						finish();
+				       }
+				       
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
+
         
         
         userFunctions = new UserFunctions();
@@ -380,7 +416,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
             case 1:
             	initList();
             	Intent intent = new Intent();
-            	intent.setClass(this, SpreadsheetMapperActivity.class);
+            	intent.setClass(this, ActivityDiscovery.class);
             	startActivityForResult(intent, REQUEST_CODE_NAT);
                 break;
             case 2:
