@@ -15,6 +15,7 @@ public class Nat implements Serializable{
 	private static final long serialVersionUID = -6150519839047301486L;
 	
 	
+	
 	@DatabaseField(generatedId=true)
 	private int id;
 	@DatabaseField
@@ -33,9 +34,17 @@ public class Nat implements Serializable{
 	private String nicVendor;
 	@DatabaseField
 	private String deviceType;
+	@DatabaseField
+	private String sid;
 	
 	
 	
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
 	public String getDeviceType() {
 		return deviceType;
 	}

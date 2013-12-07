@@ -63,7 +63,24 @@
             android:textColor="#0D1142"
             android:password="true" />
         
+         <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+             android:layout_marginTop="15dip"
+            android:textColor="#0D1142"
+            android:text="注册公司" />
+        
+        <Spinner 
+            android:id="@+id/societyList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           
+            
+            />
+        
         <!--  Error message -->
+       
+
         <TextView android:id="@+id/register_error"
             		android:layout_width="fill_parent"
             		android:layout_height="wrap_content"

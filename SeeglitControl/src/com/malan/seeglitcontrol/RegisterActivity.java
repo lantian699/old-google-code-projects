@@ -5,6 +5,9 @@
  * */
 package com.malan.seeglitcontrol;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,8 +20,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
@@ -28,6 +35,7 @@ public class RegisterActivity extends Activity {
 	EditText inputEmail;
 	EditText inputPassword;
 	TextView registerErrorMsg;
+	private Spinner spinnerSociety;
 	
 	// JSON Response node names
 	private static String KEY_SUCCESS = "success";
@@ -37,6 +45,8 @@ public class RegisterActivity extends Activity {
 	private static String KEY_NAME = "name";
 	private static String KEY_EMAIL = "email";
 	private static String KEY_CREATED_AT = "created_at";
+	private String scSelected;
+	public static ArrayList<HashMap<String, String>> listSid;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,8 @@ public class RegisterActivity extends Activity {
 		
 		
 		setContentView(R.layout.register);
+		
+		
 
 		// Importing all assets like buttons, text fields
 		inputFullName = (EditText) findViewById(R.id.registerName);
@@ -54,6 +66,37 @@ public class RegisterActivity extends Activity {
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 		registerErrorMsg = (TextView) findViewById(R.id.register_error);
+		spinnerSociety = (Spinner)findViewById(R.id.societyList);
+		
+		
+		
+		new AsyncLoginAndRegistration(null, this, "society", spinnerSociety).execute();
+		
+		spinnerSociety.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, 
+		            int pos, long id) {
+				// TODO Auto-generated method stub
+				
+				scSelected = (String)parent.getAdapter().getItem(pos);
+				ActivityDiscovery.societyName = scSelected;
+				scSelected = listSid.get(pos).get(scSelected);
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		
+			
+		});
+		
 		
 		// Register Button Click event
 				btnRegister.setOnClickListener(new View.OnClickListener() {			
@@ -61,9 +104,9 @@ public class RegisterActivity extends Activity {
 						String name = inputFullName.getText().toString();
 						String email = inputEmail.getText().toString();
 						String password = inputPassword.getText().toString();
-						
-						String[] param = {name, email, password};
-						new AsyncLoginAndRegistration( registerErrorMsg, RegisterActivity.this, "register").execute(param);
+						System.out.println(scSelected);
+						String[] param = {name, email, password,scSelected};
+						new AsyncLoginAndRegistration( registerErrorMsg, RegisterActivity.this, "register", null).execute(param);
 						
 						
 						

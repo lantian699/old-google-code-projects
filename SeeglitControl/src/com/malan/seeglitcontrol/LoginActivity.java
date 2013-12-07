@@ -71,7 +71,7 @@ public class LoginActivity extends Activity{
 				
 						String[] params = {email, password};
 				
-						new AsyncLoginAndRegistration(loginErrorMsg, LoginActivity.this, "login").execute(params);
+						new AsyncLoginAndRegistration(loginErrorMsg, LoginActivity.this, "login", null).execute(params);
 						
 						
 					}

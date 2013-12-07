@@ -97,7 +97,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return natDao;
 	}
 	
+	public void addNat(String cameraId, String Protocole, String type, String externalPort, String destIp, String destPort,
+			String nicVendor, String deviceType , String sid) throws SQLException{
+	Nat natHost = new Nat();
+	natHost.setCameraId(cameraId);
+	natHost.setProtocole(Protocole);
+	natHost.setType(type);
+	natHost.setExternalPort(externalPort);
+	natHost.setDestIP(destIp);
+	natHost.setDestPort(destPort);
+	natHost.setNicVendor(nicVendor);
+	natHost.setDeviceType(deviceType);
+	natHost.setSid(sid);
 	
+	this.getDao(Nat.class).create(natHost);
+	
+	}
 	public void addUser(String username, String email, String uid, String createat ) throws SQLException{
 		
 		User user = new User();

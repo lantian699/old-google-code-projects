@@ -11,8 +11,8 @@ public class User  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1276838256569284934L;
 	
-	
-	
+	@DatabaseField(generatedId = true)
+	private int id;
 	@DatabaseField
 	private String username;
 	@DatabaseField
@@ -24,7 +24,14 @@ public class User  implements Serializable{
 	@DatabaseField
 	private String createat;
 
+	
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}
