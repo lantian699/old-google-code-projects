@@ -224,7 +224,7 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 //        	if (TextUtils.isEmpty(editPeerPort.getText()))
 //    				return;
     		String  ip  = host.ipAddress;
-    		Integer	port= Integer.valueOf("5000");	
+    		Integer	port= Integer.valueOf(host.port);	
     		if (port == 0)	return;
     		
     		InetAddress addr = InetAddress.getByName(ip);

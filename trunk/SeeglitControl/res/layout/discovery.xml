@@ -47,7 +47,7 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
-    
+        
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -60,6 +60,30 @@
             android:textColor="#0D1142"
             android:background="#21dbd4"
             style="@style/ButtonTop" />
+        
+         <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+        <TextView 
+            android:id="@+id/netMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          	android:layout_gravity="center"
+            android:text="外网"
+            android:textColor="#0D1142"/>
+
+         <Switch
+            android:id="@+id/switchSearchMode"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0D1142"
+            android:checked="true"/>
+         
+         </LinearLayout>
+
     </LinearLayout>
     <FrameLayout
         android:layout_width="fill_parent" 

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iubiquity.spreadsheets.model.DatabaseHelper;
+import com.iubiquity.spreadsheets.model.Nat;
 import com.iubiquity.spreadsheets.model.User;
 import com.j256.ormlite.dao.Dao;
 import com.malan.seeglitcontrol.library.UserFunctions;
@@ -48,9 +49,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +94,13 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 	private TextView scName;
 	private Button logout;
 
+	private TextView textNetMode;
+
+	private Switch switchMode;
+	private int netMode = 0;
+
+	private Dao<Nat, Integer> natDao;
+
     // private SlidingDrawer mDrawer;
 
     @Override
@@ -104,6 +115,27 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         
         scName = (TextView)findViewById(R.id.society_name);
         logout = (Button)findViewById(R.id.btnLogout);
+        textNetMode = (TextView)findViewById(R.id.netMode);
+        switchMode = (Switch)findViewById(R.id.switchSearchMode);
+        
+        
+        switchMode.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				
+				if(isChecked){
+					textNetMode.setText("外网");
+					netMode=0;
+				}else{
+					textNetMode.setText("内网");
+					netMode=1;
+				}
+				
+			}
+		});
+        
         scName.setText(societyName);
         
         logout.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +202,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
         // Hosts list
         adapter = new HostsAdapter(context);
         listView = (ListView) findViewById(R.id.output);
+      
         listView.setAdapter(adapter);
         listView.setItemsCanFocus(false);
         listView.setOnItemClickListener(this);
@@ -412,17 +445,39 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
       
 //        method = 1;
        
-        switch (method) {
-            case 1:
+        switch (netMode) {
+            case 0:
             	initList();
-            	Intent intent = new Intent();
-            	intent.setClass(this, ActivityDiscovery.class);
-            	startActivityForResult(intent, REQUEST_CODE_NAT);
+            	
+			try {
+				natDao = DatabaseHelper.getInstance(mDiscover).getNatDao();
+				List<Nat> listNat = natDao.queryForAll();
+				
+				if(listNat.size() >0){
+				
+					for(Nat nat : listNat){
+					HostBean host = new HostBean();
+					host.deviceType=Integer.parseInt(nat.getDeviceType());
+					host.ipAddress=nat.getDestIP();
+					host.port = nat.getExternalPort();
+					host.nicVendor=nat.getNicVendor();
+					host.hostname=nat.getCameraId();
+					addHost(host);
+					}
+					
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            	
+            	
                 break;
             case 2:
                 // Root
                 break;    
-            case 0:
+            case 1:
             default:
                 mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
                 mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
