@@ -1,0 +1,94 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bk" >
+    
+    <ImageView 
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:src="@drawable/seeglit"/>	
+    
+      <LinearLayout
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:layout_marginTop="10dp"
+          android:orientation="vertical"
+          android:padding="20dip" >
+
+          <!-- View Title Label -->
+        
+
+          <TextView
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Email"
+              android:textColor="#0D1142"
+              android:textStyle="bold" />
+          <!-- Email TextField -->
+
+          <EditText
+              android:id="@+id/loginEmail"
+              android:layout_width="fill_parent"
+              android:layout_height="40dp"
+              android:background="#FFFFFF"
+              android:textColor="#0D1142" 
+              android:inputType="textEmailAddress" >
+          <requestFocus />
+		</EditText>
+          <!-- Password Label -->
+
+          <TextView
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="15dip"
+              android:text="Password"
+              android:textColor="#0D1142"
+              android:textStyle="bold" />
+          <!-- Password TextField -->
+
+          <EditText
+              android:id="@+id/loginPassword"
+              android:layout_width="fill_parent"
+              android:layout_height="40dp"
+              android:background="#FFFFFF"
+              android:password="true"
+              android:textColor="#0D1142"
+              android:inputType="textPassword" />
+
+          <!-- Error message -->
+
+          <TextView
+              android:id="@+id/login_error"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:padding="10dip"
+              android:textColor="#e30000"
+              android:textStyle="bold" />
+
+          <!-- Login Button -->
+
+          <Button
+              android:id="@+id/btnLogin"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dip"
+              android:background="#21dbd4"
+              android:text="OK"
+              android:textColor="#0D1142"
+              android:textStyle="bold" />
+
+          <!-- Link to Registration Screen -->
+
+          <Button
+              android:id="@+id/btnLinkToRegisterScreen"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="20dip"
+              android:background="@null"
+              android:text="无账号请先注册"
+              android:textColor="#21dbd4"
+              android:textStyle="bold" />
+      </LinearLayout>
+
+</LinearLayout>
