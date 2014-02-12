@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -323,14 +324,13 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
     		in = new BufferedReader(new InputStreamReader(mySocketInStream, "UTF-8"));  
     		
             while (true) {  
-                if (mySocket.isConnected()) {  
+                if (mySocket.isConnected() && !mySocket.isClosed()) {  
                     if (!mySocket.isInputShutdown() ) { 
                     	
                     	//System.out.println(in.read());
                     	content += String.valueOf((char) in.read()); 
                     	
-                       mHandler.sendMessage(new Message());
- 
+                       mHandler.sendMessage(new Message()); 
                     }  
                 }  
            }  
@@ -384,6 +384,7 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 			} ;
 		}
 	};
+	
 	
 	
 //	private class receiveCmd extends AsyncTask<Void, Void, Void>{
@@ -451,5 +452,23 @@ public class ControlActivity extends Activity implements OnClickListener, Runnab
 		SocketRead();
 	}
 
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+	    if(keyCode == KeyEvent.KEYCODE_BACK) { 
+	        
+	    	try {
+				mySocket.close();
+				this.finish();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        return true;
+	    } 
+	    return super.onKeyDown(keyCode, event);
+	}
 
 }
