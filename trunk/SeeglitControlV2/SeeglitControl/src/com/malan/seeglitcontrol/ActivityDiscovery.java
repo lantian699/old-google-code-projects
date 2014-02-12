@@ -17,6 +17,7 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import com.j256.ormlite.dao.Dao;
 import com.malan.seeglitcontrol.library.UserFunctions;
@@ -137,10 +138,12 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 				if(isChecked){
 					textNetMode.setText("外网");
 					setButtons(false);
+					initList();
 					netMode=0;
 				}else{
 					textNetMode.setText("内网");
 					setButtons(false);
+					initList();
 					netMode=1;
 				}
 				
@@ -346,7 +349,7 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 
     protected void cancelTasks() {
         if (mDiscoveryTask != null) {
-            mDiscoveryTask.cancel(true);
+            boolean res = mDiscoveryTask.cancel(true);
             mDiscoveryTask = null;
         }
     }
@@ -460,20 +463,20 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
      * Discover hosts
      */
     private void startDiscovering() {
-        int method = 0;
-        try {
-            method = Integer.parseInt(prefs.getString(Prefs.KEY_METHOD_DISCOVER,
-                    Prefs.DEFAULT_METHOD_DISCOVER));
-        } catch (NumberFormatException e) {
-            Log.e(TAG, e.getMessage());
-        }
-      
+//        int method = 0;
+//        try {
+//            method = Integer.parseInt(prefs.getString(Prefs.KEY_METHOD_DISCOVER,
+//                    Prefs.DEFAULT_METHOD_DISCOVER));
+//        } catch (NumberFormatException e) {
+//            Log.e(TAG, e.getMessage());
+//        }
+//      
 //        method = 1;
       
         switch (netMode) {
             case 0:
             	initList();
-            	
+            	setButtons(true);
 			try {
 				natDao = DatabaseHelper.getInstance(mDiscover).getNatDao();
 				List<Nat> listNat = natDao.queryForAll();
@@ -488,40 +491,45 @@ final public class ActivityDiscovery extends ActivityNet implements OnItemClickL
 					host.nicVendor=nat.getNicVendor();
 					host.hostname=nat.getCameraId();
 					addHost(host);
+					
 					}
 					
 				}
+				
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            	
-            	setButtons(false);
+			stopDiscovering();
                 break;
             case 2:
                 // Root
                 break;    
-            case 1:
-            default:
-                mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
-                mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
-                mDiscoveryTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                
-                makeToast(R.string.discover_start);
-                setProgressBarVisibility(true);
-                setProgressBarIndeterminateVisibility(true);
-                initList();
+            case 1: mDiscoveryTask = new DefaultDiscovery(ActivityDiscovery.this);
+            		mDiscoveryTask.setNetwork(network_ip, network_start, network_end);
+		            mDiscoveryTask.executeOnExecutor(Executors.newCachedThreadPool());
+		            
+		            makeToast(R.string.discover_start);
+		            setProgressBarVisibility(true);
+		            setProgressBarIndeterminateVisibility(true);
+		            initList();
+		            
+		            btn_discover.setText(R.string.btn_discover_cancel);
+		            setButton(btn_discover, R.drawable.cancel, false);
+		            btn_discover.setOnClickListener(new View.OnClickListener() {
+		                public void onClick(View v) {
+		                    cancelTasks();
+		                }
+		            });
+		            
+		            break;
+            
+               
         }
         
  
-        btn_discover.setText(R.string.btn_discover_cancel);
-        setButton(btn_discover, R.drawable.cancel, false);
-        btn_discover.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                cancelTasks();
-            }
-        });
+        
       
     }
     

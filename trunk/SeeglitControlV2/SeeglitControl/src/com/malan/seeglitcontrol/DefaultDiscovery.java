@@ -247,7 +247,7 @@ public class DefaultDiscovery extends AbstractDiscovery {
         }
     }
 
-    private void publish(final HostBean host) {
+    private void publish(HostBean host) {
         hosts_done++;
         if(host == null){
             publishProgress((HostBean) null);
@@ -267,10 +267,11 @@ public class DefaultDiscovery extends AbstractDiscovery {
                 host.nicVendor = HardwareAddress.getNicVendor(host.hardwareAddress);
 
                 }
+               
                 // Is gateway ?
                 if (discover.net.gatewayIp.equals(host.ipAddress)) {
                     host.deviceType = HostBean.TYPE_GATEWAY;
-                }else if(host.nicVendor.equals(CAMERA_VENDOR)){
+                }else if(host.nicVendor!= null && host.nicVendor.equals(CAMERA_VENDOR)){
                 	host.deviceType = HostBean.TYPE_CAMERA;
                 }
 
