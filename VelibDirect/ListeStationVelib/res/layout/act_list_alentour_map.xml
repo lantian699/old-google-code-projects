@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/linearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    
+    
+
+   <FrameLayout 
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent">
+       
+       
+       
+       <com.google.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="fill"
+        android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g"
+        android:clickable="true"
+        android:enabled="true" />
+    	<!-- android:apiKey="02Nmd5diySCoTu2ivz_LUc4CwHApKOYf763Lz0g" android market -->
+       	<!--02Nmd5diySCq6cxbWY5yr1SO1aceiS34H_bwKDg Thinkpad -->
+       	<!--02Nmd5diySCoU3v811DcfJNAbKjEy1m6QdilIzg Poste fixe -->
+       	<!--02Nmd5diySCpaKU8E4djnDtmjotRfqCvcRyhq6A Poste fixe bureau -->
+       	
+       <Button 
+           android:id="@+id/change_radius"
+           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:text="500M"
+           android:textSize="10dp"
+           android:alpha="0.5"
+           android:textColor="#000000"
+           android:layout_marginTop="60dp"
+           android:layout_marginRight="20dp"
+           android:layout_gravity="top|right"/>
+       
+       <ImageButton
+           android:id="@+id/selocaliser"
+           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:src="@drawable/selocaliser"
+           android:alpha="0.5"
+           android:layout_marginLeft="10dp"
+           android:layout_gravity="bottom|left"
+           android:layout_marginBottom="60dp"
+           />
+       
+       <LinearLayout 
+           android:layout_height="wrap_content"
+           android:layout_width="wrap_content"
+           android:layout_gravity="right|bottom"
+           android:layout_marginBottom="60dp"
+           android:layout_marginRight="20dp"
+           android:orientation="vertical">
+           
+           <Button 
+               android:id="@+id/zoomup"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:text="+"/>
+           <TextView 
+               android:layout_width="fill_parent"
+               android:layout_height="2dp"
+               android:background="#FFFFFF"/>
+           <Button 
+               android:id="@+id/zoomdown"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:text="-"/>
+           
+           
+       </LinearLayout>
+       
+       <LinearLayout 
+        android:layout_height="40dp"
+        android:background="@drawable/toolbar_green_dark_background"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:layout_width="fill_parent">
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:src="@drawable/ic_velib"/>
+        
+        <TextView 
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:text="Velib Direct"
+            android:textColor="#FFFFFF"/>
+        
+    </LinearLayout>
+    
+            <com.google.ads.AdView
+        android:id="@+id/adMap"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14eec7a5163bce"
+        ads:backgroundColor="#000000"
+        ads:keywords="Android application"
+        ads:refreshInterval="60"
+        ads:testing="false"
+        android:layout_gravity="top"
+        ads:textColor="#FFFFFF" />
+       
+       <com.ciel.equipe.views.ToolBar
+         android:layout_gravity="bottom"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent">
+         
+     </com.ciel.equipe.views.ToolBar>
+       
+   </FrameLayout>
+       
+
+</LinearLayout>
