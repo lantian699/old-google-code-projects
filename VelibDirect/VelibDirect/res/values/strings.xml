@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, ListeStationVelibActivity!</string>
+    <string name="app_name">VelibDirect</string>
+    <string name="mapKey">02Nmd5diySCrHnScNW6O5eeeGFb62BSj7xhaoWw</string>
+	<string name="dialog_content">Editeur : CIEL EQUIPE \n\nEmail : lantian699@gmail.com\n\n App Version : 4.0</string>
+</resources>
