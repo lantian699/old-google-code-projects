@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      
+    <!-- Action Bar -->
+    <color name="ActionBarColor1">#ee6e1a</color>
+    <color name="ActionBarColor2">#ee6e1a</color>
+    <color name="ButtonTextColor">#00336f</color>
+    <color name="ActionBarTitleColor">#a9a9a9</color>
+    <color name="TexteListeOrange">#0099CC</color>
+    <color name="TexteListeActivite">#FFBB33</color>
+    <color name="TexteColor">#00336f</color>
+    <color name="windowBackgroundColor">#EDEDED</color>
+    <color name="white">#FFFFFF</color>
+    <color name="synchroBarre">#0099CC</color>
+    <color name="BandeauRouge">#FF8800</color>
+    <color name="emphasis">#31b6e7</color>
+    <color name="bg_gray">#cecbce</color>
+    <color name="black">#000000</color>
+</resources>

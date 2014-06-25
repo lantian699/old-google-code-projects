@@ -1,0 +1,48 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light" >
+     
+     </style>   
+    
+    <style name="listSeparator" parent="@android:style/Widget.Holo.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lines">1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">8dip</item>
+        
+    </style>
+    
+    <!-- Style pour un item d'une liste : Marge -->
+    <style name="myMargeTab">
+        <item name="android:paddingBottom">?android:attr/listPreferredItemPaddingLeft</item>
+        <item name="android:paddingTop">?android:attr/listPreferredItemPaddingLeft</item>
+        <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
+        <item name="android:paddingRight">?android:attr/listPreferredItemPaddingRight</item>
+    </style>
+    
+    
+    <style name="TextViewTitle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+    
+     <style name="TextViewValue">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+    
+
+    <style name="dashboard">
+        <item name="android:numColumns">4</item>
+    </style>
+
+
+</resources>
