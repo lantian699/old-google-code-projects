@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     
     <application
-        android:icon="@drawable/ic_velib"
+        android:icon="@drawable/logo_velib"
         android:label="Velib Direct"
         android:hardwareAccelerated="true"
         android:theme="@style/CustomActionBarTheme" >

@@ -20,76 +20,76 @@ import com.j256.ormlite.dao.Dao;
 
 public class  Tools {
 	
-	public static final int CODE_ACTIVITY_GPS_VERIFICATION = 0; 
-	private static final double DISTANCE_UNITAIRE = 82324.0744;
-	
-	/* Ce fonction est pour vérifier que si le module GPS est bien allumÃ© 
-	 * 
-	 */
-	
-	public static void openGPSSettings(Activity context) {
-        LocationManager alm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(context, "GPS fonctionne correctement", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//	public static final int CODE_ACTIVITY_GPS_VERIFICATION = 0; 
+//	private static final double DISTANCE_UNITAIRE = 82324.0744;
+//	
+//	/* Ce fonction est pour vérifier que si le module GPS est bien allumÃ© 
+//	 * 
+//	 */
+//	
+//	public static void openGPSSettings(Activity context) {
+//        LocationManager alm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+//        if (alm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+//            Toast.makeText(context, "GPS fonctionne correctement", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Toast.makeText(context, "GPS est Ã©teint !", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+//        context.startActivityForResult(intent,CODE_ACTIVITY_GPS_VERIFICATION); //æ­¤ä¸ºè®¾ç½®å®Œæˆ�å�Žè¿”å›žåˆ°èŽ·å�–ç•Œé�¢
+//       
+//    }
+//	
+//	
+//	/*
+//	 * c'est pour calculer les stations proches de l'utilisateur dans un rayon dÃ©fini
+//	 */
+//	
+//	public static List<StationVelib> Calculateur_Station_Prox(Context context, Location recentLocation, int Rayon) {
 
-        Toast.makeText(context, "GPS est Ã©teint !", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-        context.startActivityForResult(intent,CODE_ACTIVITY_GPS_VERIFICATION); //æ­¤ä¸ºè®¾ç½®å®Œæˆ�å�Žè¿”å›žåˆ°èŽ·å�–ç•Œé�¢
-       
-    }
-	
-	
-	/*
-	 * c'est pour calculer les stations proches de l'utilisateur dans un rayon dÃ©fini
-	 */
-	
-	public static List<StationVelib> Calculateur_Station_Prox(Context context, Location recentLocation, int Rayon) {
-
-		double mlatitude = recentLocation.getLatitude();
-		double mlongitide = recentLocation.getLongitude();
-
-		double latDiff = 0.0;
-		double longDiff = 0.0;
-		double distanceDiff = 0.0;
-		List<StationVelib> listStationSelect = new ArrayList<StationVelib>();
-		listStationSelect.clear();
-		
-		try{
-		Dao<StationVelib, Integer> listStationDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
-		List<StationVelib> listStation = listStationDao.queryForAll();
-		
-		for (StationVelib station : listStation) {
-
-			latDiff = Math.abs(station.getLatitude() - mlatitude);
-			longDiff = Math.abs(station.getLongitude() - mlongitide);
-			distanceDiff = Math.sqrt(latDiff * latDiff + longDiff * longDiff);
-			
-			if (distanceDiff * DISTANCE_UNITAIRE < Rayon) {
-
-					listStationSelect.add(station);
-
-					Dao<InfoStation, Integer> InfoStationDao; InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
-//					new ParserInfoStation(context,InfoStationDao, station.getNumber(), station.getId());
-					
-					Log.i(context, "Find a station --> " + station.getName());
-
-				}
-
-			}
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Log.i(context, "<-- There is  " + listStationSelect.size() + " station(s) in " + Rayon + "m -->");
-		return listStationSelect;
-		
-	}
-	
-	
-	public static void  DrawStationsOnMap(List<StationVelib> listStationSelect, GoogleMap mMap) {
+//		double mlatitude = recentLocation.getLatitude();
+//		double mlongitide = recentLocation.getLongitude();
+//
+//		double latDiff = 0.0;
+//		double longDiff = 0.0;
+//		double distanceDiff = 0.0;
+//		List<StationVelib> listStationSelect = new ArrayList<StationVelib>();
+//		listStationSelect.clear();
+//		
+//		try{
+//		Dao<StationVelib, Integer> listStationDao = DatabaseHelper.getInstance(context).getDao(StationVelib.class);
+//		List<StationVelib> listStation = listStationDao.queryForAll();
+//		
+//		for (StationVelib station : listStation) {
+//
+//			latDiff = Math.abs(station.getLatitude() - mlatitude);
+//			longDiff = Math.abs(station.getLongitude() - mlongitide);
+//			distanceDiff = Math.sqrt(latDiff * latDiff + longDiff * longDiff);
+//			
+//			if (distanceDiff * DISTANCE_UNITAIRE < Rayon) {
+//
+//					listStationSelect.add(station);
+//
+//					Dao<InfoStation, Integer> InfoStationDao; InfoStationDao = DatabaseHelper.getInstance(context).getDao(InfoStation.class);
+////					new ParserInfoStation(context,InfoStationDao, station.getNumber(), station.getId());
+//					
+//					Log.i(context, "Find a station --> " + station.getName());
+//
+//				}
+//
+//			}
+//		}catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		Log.i(context, "<-- There is  " + listStationSelect.size() + " station(s) in " + Rayon + "m -->");
+//		return listStationSelect;
+//		
+//	}
+//	
+//	
+//	public static void  DrawStationsOnMap(List<StationVelib> listStationSelect, GoogleMap mMap) {
 
 //		List<Overlay> mapOverlays = mapView.getOverlays();
 //		
@@ -131,7 +131,7 @@ public class  Tools {
 //			e.printStackTrace();
 //		}
 
-	}
+//	}
 	
 	
 //	public static void  DrawOneStationOnMap(Activity context, StationVelib station, MapView mapView) {
