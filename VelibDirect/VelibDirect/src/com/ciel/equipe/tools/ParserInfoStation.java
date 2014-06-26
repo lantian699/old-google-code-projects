@@ -105,17 +105,19 @@ public class ParserInfoStation extends DefaultHandler implements Serializable {
 				else
 					ticket = false;
 			infoStation.setTicket(ticket);
-		}else if (qName.equals("updated")) {
+		}else if (qName.equals("open")) {
+				if(Integer.parseInt(current.toString()) == 1)
+					open = true;
+					else
+						open = false;
+				infoStation.setOpen(open);
+				
+				infoStation.setStationVelibId(station.getId());
+		}
+		else if (qName.equals("updated")) {
 			
 			int updated =Integer.parseInt(current.toString());
 			infoStation.setUpdated(updated);
-		}
-		else if (qName.equals("open")) {
-			if(Integer.parseInt(current.toString()) == 1)
-				open = true;
-				else
-					open = false;
-			infoStation.setOpen(open);
 			
 			infoStation.setStationVelibId(station.getId());
 			try {
@@ -128,14 +130,13 @@ public class ParserInfoStation extends DefaultHandler implements Serializable {
 				
 				if(infoList.size()  == 0)
 				infoStationDao.create(infoStation);
-				else
+				else if(infoStation.getUpdated() != updated)
 				infoStationDao.update(infoStation);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
 		
 		/*
 		 * if(qName.equals("ticket")){ ticket = current.toString() != null;
